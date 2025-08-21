@@ -71,7 +71,7 @@ The major topics covered in class are:
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
 - Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
 - Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
-- Syllabus: [CST334 Syllabus](syllabus.md)
+- Syllabus: [CST334 Syllabus](CST334-syllabus.md)
 
 ### Prerequisites/Corequisites
 
@@ -114,7 +114,7 @@ Please consult the section on [academic honesty](#academic-honor-code) for more 
 Throughout the semester there will be 4 exams spaced approximately a month apart.
 Each exam will be semi-cumulative: approximately 50% new material and 50% previously covered material.
 Details on which exam first includes prior material are on the
-[course calendar](calendar.md).
+[course calendar](CST334-calendar.md).
 These exams are in-class and are intended to be approximately 1 hour in length, but you will have the full class period (110 minutes) to work on them.
 Exams are paper-based and you may bring in single sheet of notes (handwritten), and will be given unlimited scrap paper.
 
@@ -130,7 +130,7 @@ In-class participation has four components:
 #### In-class quizzes
 
 Some classes will begin with a short (~5 minute) based on material from readings or previous class discussions.
-Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](calendar.md).
+Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](CST334-calendar.md).
 These quizzes are used to track attendance and encourage preparation prior to class.
 They are open-book and open-note and will be completed on canvas.
 While these quizzes cannot be made up, the lowest 3 quizzes will be dropped.
@@ -303,4 +303,3 @@ This also generally applies when you are ill due to other causes – instead of 
 [^4]: Although LLMs are notoriously bad at math so be very wary of their calculations.
 
 [^5]: Although I recommend you talk to the TAs or the instructor since we likely have a better idea of what the assignment is asking.
-
