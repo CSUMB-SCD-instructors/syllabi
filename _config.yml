@@ -1,0 +1,9 @@
+title: Course Syllabi Collection
+description: Automatically synced syllabi from various courses
+theme: minima
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap

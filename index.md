@@ -1,4 +1,7 @@
 ---
+layout: default
+title: Course Syllabi Collection
+---
 
 # Course Syllabi Collection
 
