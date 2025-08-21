@@ -114,7 +114,7 @@ Please consult the section on [academic honesty](#academic-honor-code) for more 
 Throughout the semester there will be 4 exams spaced approximately a month apart.
 Each exam will be semi-cumulative: approximately 50% new material and 50% previously covered material.
 Details on which exam first includes prior material are on the
-[course calendar](https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false).
+[course calendar](calendar.md).
 These exams are in-class and are intended to be approximately 1 hour in length, but you will have the full class period (110 minutes) to work on them.
 Exams are paper-based and you may bring in single sheet of notes (handwritten), and will be given unlimited scrap paper.
 
@@ -130,7 +130,7 @@ In-class participation has four components:
 #### In-class quizzes
 
 Some classes will begin with a short (~5 minute) based on material from readings or previous class discussions.
-Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](https://docs.google.com/spreadsheets/d/1Et8g4PBEnHo1C4azRpcB34RU0xko0apx8118CVdnyOs/edit?usp=sharing).
+Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](calendar.md).
 These quizzes are used to track attendance and encourage preparation prior to class.
 They are open-book and open-note and will be completed on canvas.
 While these quizzes cannot be made up, the lowest 3 quizzes will be dropped.
