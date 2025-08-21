@@ -1,5 +1,3 @@
----
-
 # Course Syllabi Collection
 
 This repository contains syllabi from various courses, automatically synced from their respective repositories.

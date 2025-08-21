@@ -299,6 +299,7 @@ In short, campus, and class, is a mask-friendly environment.
 If you have been exposed to COVID-19 or are COVID-19 positive please stay home from class and contact me to arrange to attend virtually.
 This also generally applies when you are ill due to other causes – instead of coming to class while sick, please reach out, and we can make a plan.
 
+
 [^1]: As a heads up, don’t edit your unit tests until after you’ve checked with me! If it’s going to lead to changes in the test I’ll make sure there’s an announcement about it!
 
 [^2]: “\[C\]lass attendance \[is\] a better predictor of college grades than any other known predictor of academic performance” from <https://doi.org/10.3102/0034654310362998>
