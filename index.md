@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Course Syllabi Collection
+title: "Course Syllabi Collection"
 ---
 
 # Course Syllabi Collection

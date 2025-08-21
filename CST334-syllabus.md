@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CST334 - Introduction to Operating Systems
+title: "CST334 - Introduction to Operating Systems"
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -308,6 +308,5 @@ This also generally applies when you are ill due to other causes – instead of 
 [^4]: Although LLMs are notoriously bad at math so be very wary of their calculations.
 
 [^5]: Although I recommend you talk to the TAs or the instructor since we likely have a better idea of what the assignment is asking.
-
 
 [← Back to Course List](index.html)

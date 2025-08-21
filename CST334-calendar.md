@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CST334 Course Calendar
+title: "CST334 Course Calendar"
 ---
 
 # CST334 Course Calendar
