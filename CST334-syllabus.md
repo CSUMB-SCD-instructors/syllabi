@@ -203,7 +203,8 @@ Additionally, note that there will be no curve.
 Attending lecture is strongly correlated with academic achievement[^2], and thus is strongly encouraged.
 Attendance is tracked through in-class activities including, but not limited to, [reading quizzes](#in-class-quizzes).
 
-If you are unable to make it to class for reasons such as being sick please contact me.
+If you are sick, please do not come to class.  
+A number of attendance quizzes are dropped to accommodate things that come up in life.
 
 ### Communication
 
@@ -296,8 +297,8 @@ However, it is important to be able to identify *good* examples and *bad* exampl
 
 Please familiarize yourself with the CSUMB COVID-19 policies, which can be found [here](https://csumb.edu/health/coronavirus-information/).
 In short, campus, and class, is a mask-friendly environment.
-If you have been exposed to COVID-19 or are COVID-19 positive please stay home from class and contact me to arrange to attend virtually.
-This also generally applies when you are ill due to other causes – instead of coming to class while sick, please reach out, and we can make a plan.
+If you have been exposed to COVID-19 or are COVID-19 positive please stay home from class and contact me in case you have trouble viewing the record lectures.
+This also generally applies when you are ill due to other causes – instead of coming to class while sick, please review the class videos after the fact.
 
 
 [^1]: As a heads up, don’t edit your unit tests until after you’ve checked with me! If it’s going to lead to changes in the test I’ll make sure there’s an announcement about it!
