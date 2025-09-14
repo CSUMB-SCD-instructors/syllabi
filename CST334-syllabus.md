@@ -26,10 +26,13 @@ In general, you can use the [class slack channel](https://cs-you-monterey.slack.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
 
-**Any other questions?**
-I tried to make this document exhaustive (and it just turned out exhausting...), but if there’s something you can’t find an answer to don’t hesitate to reach out via slack or email!
-
 ## Course Information
+
+### Course Details
+
+- **Course Title:** Introduction to Operating Systems
+- **Course Number:** CST334
+- **Prerequisites:** CST237, CST 238, and MATH 130
 
 ### Course Description
 
@@ -52,9 +55,11 @@ At the end of this class, you should be able to:
 3.  use the Linux command line (e.g. BASH),
 4.  do command-line scripting,
 
+
 ### Topics Covered
 
 The major topics covered in class are:
+
 
 1.  **Using Linux**
 2.  **Process Management** – How processes are started, stopped, and scheduled.
@@ -63,13 +68,28 @@ The major topics covered in class are:
 5.  **IO and Persistence** – How we interface with external components.
 6.  **Language Parsing** – How compilers and interpreters work.
 
-### Personnel
+### Instructor Information
 
 - Dr. Sam Ogden (instructor)
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
   - Office Hours: 2pm-3pm Mondays & 11am-12noon Thursdays, or [by appointment](https://calendly.com/sogden-csumb/15min)
+
+**Getting Help:** Office hours are available throughout the week - make use of them! 
+You can also use the class communication platform to ask questions (but not post code/answers on public channels!), or send me questions via email.
+
+#### Communicating online
+
+I will use email, Canvas, and Slack for online class communication.
+
+1.  **email** is to be used when you need to officially communicate something to me.
+    - e.g. “Can you double check this assignment grade for me?”
+2.  **Slack** will be used to answer content questions and give quick updates.
+    - e.g. “I think I found a bug in this quiz, could you check it out?”
+    - We have a slack channel named [\#cst334-fall2025](https://cs-you-monterey.slack.com/archives/C09C2S2GJ8G) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+3.  **Canvas** will have information on assignments and due dates
+    - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
 
 ### Materials
 
@@ -78,11 +98,8 @@ The major topics covered in class are:
 - Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
 - Syllabus: [CST334 Syllabus](CST334-syllabus.md)
 
-### Prerequisites/Corequisites
-
-CST237, CST 238, and MATH 130
-
 ## Grading
+
 
 There are three groups of assignments, briefly described in <a href="#table:assignment-values" data-reference-type="ref" data-reference="table:assignment-values">Table 1</a>.
 **Getting below a 40% in any of these three groups will result in failing the class.**
@@ -96,6 +113,7 @@ There are three groups of assignments, briefly described in <a href="#table:assi
 | [Participation](#participation)                       | 30%   |
 
 *Table 1. Points available per assignment type.*
+
 
 ### Programming Assignments
 
@@ -176,6 +194,7 @@ Sometimes you catch big ones before I do, and if you let me know I might throw s
 This is generally reserved for big things (e.g. I left out a bunch of files in the repo or some tools out of the docker image), but if you find yourself confused by something please reach out, maybe you found a novel bug!
 [^1]
 
+
 ### Grade Assignment
 
 Grades as assigned based on the standard ranges, which are outlined below, with exceptions made based on the [general grading requirements](#grading) guidance.
@@ -206,24 +225,6 @@ Attendance is tracked through in-class activities including, but not limited to,
 If you are sick, please do not come to class.  
 A number of attendance quizzes are dropped to accommodate things that come up in life.
 
-### Communication
-
-#### Contacting me
-
-You can reach me via email (sogden@csumb.edu, or via slack by either DM or tagging me in a message to the channel.
-In general, I will not see or respond to canvas messages/comments so please use slack or email to contact me.
-
-#### Communicating online
-
-I will use email, Canvas, and Slack for online class communication.
-
-1.  **email** is to be used when you need to officially communicate something to me.
-    - e.g. “Can you double check this assignment grade for me?”
-2.  **Slack** will be used to answer content questions and give quick updates.
-    - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel named [\#cst334-fall2025](https://cs-you-monterey.slack.com/archives/C09C2S2GJ8G) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
-3.  **Canvas** will have information on assignments and due dates
-    - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
 
 ### Late Policy
 
@@ -235,44 +236,21 @@ This late penalty will be a 10% reduction in maximum points per day, with a maxi
 
 ## Academic Honor Code
 
-In addition to the department- and school-wide policies on academic honesty outlined elsewhere on canvas, I wanted to emphasize a few key points about expectations in class.
+**You may talk to other students or LLMs for:**
 
-### Motivation
-
-This class aims to help you learn how to approach systems problems in computer science, consider alternatives, and develop effective solutions.
-In your career, it will be important to not just be able to write code, but also to think about how this code fits into a larger ecosystem and the trade-offs being made.
-These are skills that are essential, and are not developed in isolation, but need to be core skills you can demonstrate during interviews and jobs.
-Therefore, you should learn to search out resources, understand when to ask for more, but also be capable of applying these approaches on your own.
-
-### Summary of policy
-
-**You may talk to other students or LLMs (e.g. ChatGPT) for:**
-
-- Clarification on topics covered in class (e.g. paging, API usage, etc.)
+- Clarification on topics covered in class
 - Clarification of what *provided* code is doing
 - Generating more examples
 - Understanding compiler errors
 
 **You may *not* talk to other students or LLMs for:**
 
-- Code and checkpoints answers – i.e. do not copy-and-paste code or answers from other students or LLMs
+- Code and assignment answers
 - Exam questions and answers
-
-### Getting Help
-
-If you have problems with the homework, please ask the instructor or TA for help.
-On coding assignments, you may also get help from fellow students, but you must follow the [Stanford Honor Code](https://communitystandards.stanford.edu/policies-guidance/honor-code)
-
-1.  You *must not* look at solutions or program code that are not your own.
-2.  You *must not* share your solution code with others, and must maintain the privacy of your solution.
-3.  You *must* indicate on your submission any assistance you received.
-
-To enforce this, I will typically read your code and use a code similarity checker.
-If I have concerns, I will let you know, either through a comment on canvas or an email.
 
 ### The use of LLMs
 
-At the highest level, the use of LLMs in this class is ***prohibited** for programming assignments* and ***encouraged** for improving your own understanding of material*.
+At the highest level, the use of LLMs in this class is ***prohibited*** for complete programming assignments* and ***encouraged*** for improving your own understanding of material.
 Large Language Models (LLMs), such as ChatGPT and GPT4.0, are powerful language generation models.
 They can be used to produce code and summarize text, as well as answer clarifying questions.
 They can be a very effective tool in a programmer’s toolbox if used appropriately.
@@ -293,22 +271,35 @@ You *may not* use LLMs for producing code for programming assignments, but *may*
 They can clarify complex topics we learned in class, give you alternative explanations and can be incredibly helpful in understanding errors and problems.
 However, it is important to be able to identify *good* examples and *bad* examples of LLM output.
 
-### COVID-19 Classroom Policy
+### University Academic Integrity Policy
 
-Please familiarize yourself with the CSUMB COVID-19 policies, which can be found [here](https://csumb.edu/health/coronavirus-information/).
-In short, campus, and class, is a mask-friendly environment.
-If you have been exposed to COVID-19 or are COVID-19 positive please stay home from class and contact me in case you have trouble viewing the record lectures.
-This also generally applies when you are ill due to other causes – instead of coming to class while sick, please review the class videos after the fact.
+For complete academic integrity policies, please refer to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy).
 
+## University Policies and Resources
 
-[^1]: As a heads up, don’t edit your unit tests until after you’ve checked with me! If it’s going to lead to changes in the test I’ll make sure there’s an announcement about it!
+### Enrollment and Registration
 
-[^2]: “\[C\]lass attendance \[is\] a better predictor of college grades than any other known predictor of academic performance” from <https://doi.org/10.3102/0034654310362998>
+For information about requesting an incomplete or withdrawal from the course, please refer to CSUMB's [Enrollment and Registration Policy](https://csumb.edu/policy/enrollment-registration-policy).
 
-[^3]: Please note that lab quizzes resubmitted *after* the initial deadline will cause a late penalty to be assessed by canvas.
+For grade appeals, consult the [Grade Appeal Policy](https://csumb.edu/policy/grade-appeal-policy).
 
-[^4]: Although LLMs are notoriously bad at math so be very wary of their calculations.
+### Disability Services
 
-[^5]: Although I recommend you talk to the TAs or the instructor since we likely have a better idea of what the assignment is asking.
+If you have a disability that may require academic accommodations, please contact the [Student Disability Resources](https://csumb.edu/sdr) office as soon as possible. All discussions will remain confidential. Students who have already received approval for accommodations from SDR should schedule a meeting with the instructor as early in the semester as possible.
 
+### Collection of Student Work
+
+Student work may be collected and used for course assessment and improvement purposes. By enrolling in this course, you consent to the collection and analysis of your academic work for educational assessment. All student work will be handled confidentially and in accordance with FERPA regulations.
+
+## Syllabus Change Policy
+
+This syllabus is subject to change at the instructor's discretion to enhance learning or accommodate unforeseen circumstances. Students will be notified of any substantive changes (such as changes to due dates, point values of assignments, or major policy modifications) via Canvas announcement and/or email at least one week in advance when possible. 
+
+The process for syllabus changes:
+1. Instructor identifies need for change
+2. Revised syllabus section is prepared
+3. Students are notified via Canvas and email
+4. Change takes effect after notification period
+
+Students are responsible for staying current with any announced changes to the syllabus.
 [← Back to Course List](index.html)
