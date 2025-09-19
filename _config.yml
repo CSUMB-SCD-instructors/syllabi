@@ -16,4 +16,17 @@ collections:
     output: true
     permalink: /proposed/:name.html
 
-header_pages: []
+defaults:
+  - scope:
+      path: ""
+      type: "active"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "proposed"
+    values:
+      layout: "default"
+
+header_pages:
+show_excerpts: false
