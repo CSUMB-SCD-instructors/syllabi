@@ -11,7 +11,7 @@ plugins:
 collections:
   active:
     output: true
-    permalink: /active/:name.html
+    permalink: /:name.html
   proposed:
     output: true
     permalink: /proposed/:name.html

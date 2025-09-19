@@ -12,9 +12,5 @@ This page contains proposed syllabi that are under consideration.
 
 | Course Code | Course Name | Syllabus |
 |-------------|-------------|----------|
-{% for doc in site.proposed %}
-| {{ doc.name | replace: '.md', '' }} | {{ doc.title | default: doc.name | replace: '.md', '' }} | [Syllabus 📄]({{ doc.url }}) |
+{% for doc in site.proposed %}| {{ doc.course_code }} | {{ doc.course_name }} | [Syllabus 📄]({{ doc.url }}) |
 {% endfor %}
-
----
-*This page is automatically generated*

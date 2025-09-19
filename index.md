@@ -9,13 +9,7 @@ This repository contains syllabi from various courses, automatically synced from
 
 ## Available Courses
 
-{% assign syllabi = site.active | where_exp: "d", "d.basename contains 'syllabus'" %}
-
 | Course Code | Course Name | Syllabus | Calendar |
 |-------------|-------------|----------|----------|
-| CST334      | OS          | pass     | pass     |
-
-{% for doc in syllabi %}
-{% assign course_code = doc.basename | replace: '-syllabus', '' %}
-| {{ course_code }} | {{ doc.data.title | default: course_code }} | [Syllabus 📄]({{ doc.url | relative_url }}) | [Calendar 📅]({{ '/active/' | append: course_code | append: '-calendar.html' | relative_url }}) |
-{% endfor %}
+{% for doc in site.active %}{% if doc.path contains 'syllabus' %} | {{ doc.course_code }} | {{ doc.course_name }} | [Syllabus 📄]({{ doc.url }}) | [Calendar 📅](/{{ course_code }}-calendar.html) |
+{% endif %}{% endfor %}

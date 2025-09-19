@@ -1,5 +1,7 @@
 ---
 layout: default
+course_code: "CST334"
+course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 ---
 
