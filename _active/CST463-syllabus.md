@@ -3,7 +3,7 @@ layout: default
 course_code: "CST463"
 course_name: "Advanced Machine Learning"
 title: "CST463 - Advanced Machine Learning"
-course_calendar: "/CST463-calendar.html"
+course_calendar: "https://docs.google.com/spreadsheets/d/1KFLgXK-hSDmAMwHeNB44beePZOAZVeYB589Dc2jgeuw/pubhtml?gid=1645044392&amp;single=true&amp;widget=true&amp;headers=false"
 ---
 
 # CST463 (Advanced Machine Learning) Syllabus
@@ -53,7 +53,7 @@ The major topics covered in class are:
 6. Time Series
 7. Text Models
 
-Details can be found in the [course calendar](CST463-calendar.md)
+Details can be found in the [course calendar](CST463-calendar.html)
 
 ### Personnel
 
@@ -75,7 +75,7 @@ In general, I will not see or respond to canvas messages/comments so please use 
   - Hands-on Machine Learning with Scikit-Learn, Keras, and Tensorflow, third edition.  Aurélien Géron, O'Reilly Media, 2019.
 - Course lecture recordings: [Recording location](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=9c2a56f8-c79e-431c-ace6-b1d801434552)
 - Canvas Course Page: [Canvas link](https://csumb.instructure.com/courses/29740)
-- Syllabus: [CST463-syllabus.md](CST463-syllabus.md)
+- Syllabus: [CST463-syllabus.html](CST463-syllabus.html)
 
 
 ## Grading
@@ -116,7 +116,7 @@ There will be three exams in this course worth each worth roughly 12% of your gr
 Each one will cover a mixture of new and old material, with an emphasis on new material.
 During the exam you will be allowed to use a calculator but no other electronics, and have a single sheet of notes.
 
-These exams are spaced roughly 5 weeks apart and can be seen on the course [calendar](CST463-calendar.md).
+These exams are spaced roughly 5 weeks apart and can be seen on the course [calendar](CST463-calendar.html).
 
 Note: there is no final exam for this class, but we may have a project presentations period during this block.
 
@@ -248,4 +248,3 @@ The process for syllabus changes:
 4. Change takes effect after notification period
 
 Students are responsible for staying current with any announced changes to the syllabus.
-[← Back to Course List](index.html)
