@@ -7,3 +7,13 @@ permalink: /:basename.html
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+
+collections:
+  active:
+    output: true
+    permalink: /active/:name.html
+  proposed:
+    output: true
+    permalink: /proposed/:name.html
+
+header_pages: []
