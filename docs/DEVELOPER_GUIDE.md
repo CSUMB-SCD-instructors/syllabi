@@ -84,6 +84,45 @@ bundle exec jekyll serve
 # View at http://localhost:4000/syllabi/
 ```
 
+## Setting Up on a New Computer
+
+When pulling this repository on a fresh computer, follow these steps:
+
+### Prerequisites
+1. **Install Ruby** (version 2.7 or higher)
+   - On macOS: `brew install ruby` or use the system Ruby
+   - On Ubuntu/Debian: `sudo apt-get install ruby-full`
+   - On Windows: Use [RubyInstaller](https://rubyinstaller.org/)
+
+2. **Install Bundler**:
+   ```bash
+   gem install bundler
+   ```
+
+### Setup Steps
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd syllabi
+   ```
+
+2. **Install Jekyll and dependencies**:
+   ```bash
+   bundle install
+   ```
+
+3. **Start the development server**:
+   ```bash
+   bundle exec jekyll serve
+   ```
+
+4. **Open your browser** to http://localhost:4000/syllabi/
+
+### Troubleshooting
+- If you get permission errors with gem installation, you may need to use `sudo` or configure Ruby to install gems in your home directory
+- On macOS, if you encounter issues with system Ruby, consider using `rbenv` or `rvm` to manage Ruby versions
+- If `bundle install` fails, try `bundle update` to update all gems to their latest compatible versions
+
 ## URL Structure
 
 - Active syllabi: `https://site.com/syllabi/course-filename.html`
