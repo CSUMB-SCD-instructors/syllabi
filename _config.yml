@@ -9,6 +9,9 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
+exclude:
+  - docs/
+
 collections:
   active:
     output: true
