@@ -1,5 +1,6 @@
 title: Course Syllabi Collection
 description: Automatically synced syllabi from various courses
+baseurl: /syllabi
 theme: minima
 markdown: kramdown
 highlighter: rouge
