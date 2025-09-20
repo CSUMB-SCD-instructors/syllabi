@@ -4,6 +4,7 @@ course_code: "CST463"
 course_name: "Advanced Machine Learning"
 title: "CST463 - Advanced Machine Learning"
 course_calendar: "https://docs.google.com/spreadsheets/d/1KFLgXK-hSDmAMwHeNB44beePZOAZVeYB589Dc2jgeuw/pubhtml?gid=1645044392&amp;single=true&amp;widget=true&amp;headers=false"
+last_updated: 2025-09-20
 ---
 
 # CST463 (Advanced Machine Learning) Syllabus
@@ -248,3 +249,4 @@ The process for syllabus changes:
 4. Change takes effect after notification period
 
 Students are responsible for staying current with any announced changes to the syllabus.
+
