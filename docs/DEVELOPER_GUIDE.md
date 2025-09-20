@@ -20,6 +20,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "https://example.com/calendar"  # Optional - URL to course calendar
+last_updated: 2025-09-19  # Optional - Date when syllabus was last updated
 ---
 ```
 
@@ -30,6 +31,7 @@ course_calendar: "https://example.com/calendar"  # Optional - URL to course cale
 - **`course_name`**: Full course name for display in tables
 - **`title`**: Page title, typically combines course code and name
 - **`course_calendar`**: Optional URL to the course calendar (can be relative or absolute)
+- **`last_updated`**: Optional date (YYYY-MM-DD format) when the syllabus was last updated
 
 ## File Naming
 
@@ -46,6 +48,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "/CST334-calendar.html"
+last_updated: 2025-09-19
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -61,7 +64,18 @@ Your syllabus content goes here...
 2. **Proposed syllabi** in `_proposed/` automatically appear on the `/proposed/` page
 3. The `course_code` and `course_name` fields populate the table columns
 4. If `course_calendar` is provided, a calendar link appears in the table
-5. Jekyll automatically generates individual pages for each syllabus
+5. If `last_updated` is provided, it displays in both the table and at the top of individual syllabus pages
+6. Jekyll automatically generates individual pages for each syllabus
+
+### Last Updated Feature
+
+When you include the `last_updated` field in your front matter:
+
+- **Index table**: Shows formatted date (e.g., "September 19, 2025") in the "Last Updated" column
+- **Individual pages**: Displays a blue information box at the top with the last updated date
+- **Missing dates**: If no `last_updated` field is provided, the table shows "—" and no info box appears on the page
+
+**Important**: Remember to update the `last_updated` field whenever you make changes to a syllabus to keep the information accurate.
 
 ## Adding a New Syllabus
 

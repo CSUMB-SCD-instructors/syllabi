@@ -4,6 +4,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "/CST334-calendar.html"
+last_updated: 2025-09-19
 ---
 
 # CST334 (Operating Systems) Syllabus

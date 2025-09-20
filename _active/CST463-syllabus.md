@@ -4,6 +4,7 @@ course_code: "CST463"
 course_name: "Advanced Machine Learning"
 title: "CST463 - Advanced Machine Learning"
 course_calendar: "/CST463-calendar.html"
+last_updated: 2025-09-19
 ---
 
 # CST463 (Advanced Machine Learning) Syllabus
