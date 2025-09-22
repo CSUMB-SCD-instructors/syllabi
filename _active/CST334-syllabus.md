@@ -3,8 +3,8 @@ layout: default
 course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
-course_calendar: "/CST334-calendar.html"
-last_updated: 2025-09-19
+course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
+last_updated: 2025-09-22
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -72,7 +72,7 @@ The major topics covered in class are:
 5.  **IO and Persistence** – How we interface with external components.
 6.  **Language Parsing** – How compilers and interpreters work.
 
-### Instructor Information
+### Personnel
 
 - Dr. Sam Ogden (instructor)
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
@@ -100,7 +100,7 @@ I will use email, Canvas, and Slack for online class communication.
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
 - Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
 - Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
-- Syllabus: [CST334 Syllabus](CST334-syllabus.md)
+- Syllabus: [CST334 Syllabus](CST334-syllabus.html)
 
 ## Grading
 
@@ -141,7 +141,7 @@ Please consult the section on [academic honesty](#academic-honor-code) for more 
 Throughout the semester there will be 4 exams spaced approximately a month apart.
 Each exam will be semi-cumulative: approximately 50% new material and 50% previously covered material.
 Details on which exam first includes prior material are on the
-[course calendar](CST334-calendar.md).
+[course calendar](CST334-calendar.html).
 These exams are in-class and are intended to be approximately 1 hour in length, but you will have the full class period (110 minutes) to work on them.
 Exams are paper-based and you may bring in single sheet of notes (handwritten), and will be given unlimited scrap paper.
 
@@ -157,13 +157,13 @@ In-class participation has four components:
 #### In-class quizzes
 
 Some classes will begin with a short (~5 minute) based on material from readings or previous class discussions.
-Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](CST334-calendar.md).
+Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](CST334-calendar.html).
 These quizzes are used to track attendance and encourage preparation prior to class.
 They are open-book and open-note and will be completed on canvas.
 While these quizzes cannot be made up, the lowest 3 quizzes will be dropped.
 Please note that these quizzes may not occur every class, and are more likely on days when attendance is low, as a way to encourage attendance.
 
-#### Lab completion
+#### Labs
 
 Throughout the course there will be several labs that are intended to be completed in class.
 These are designed to help you better understand key topics, get practice with calculations, and get experience with the working environments.
@@ -306,4 +306,3 @@ The process for syllabus changes:
 4. Change takes effect after notification period
 
 Students are responsible for staying current with any announced changes to the syllabus.
-[← Back to Course List](index.html)
