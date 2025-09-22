@@ -1,0 +1,68 @@
+name: Build PDFs
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '_active/**/*.md'
+      - '_proposed/**/*.md'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: '3.2'
+
+      - name: Install TinyTeX
+        uses: r-lib/actions/setup-tinytex@v2
+
+      - name: Install LaTeX packages
+        run: tlmgr install collection-latexrecommended xetex
+
+      - name: Create pdfs directory
+        run: mkdir -p pdfs
+
+      - name: Build PDFs from active syllabi
+        run: |
+          for f in $(find _active -name "*.md" -type f); do
+            base=$(basename "${f%.*}")
+            echo "Processing: $f -> pdfs/$base.pdf"
+            pandoc "$f" -o "pdfs/$base.pdf" \
+              --pdf-engine=xelatex \
+              -V geometry:margin=1in \
+              --resource-path=".:_active:assets:images"
+          done
+
+      - name: Build PDFs from proposed syllabi
+        run: |
+          for f in $(find _proposed -name "*.md" -type f); do
+            base=$(basename "${f%.*}")
+            echo "Processing: $f -> pdfs/proposed-$base.pdf"
+            pandoc "$f" -o "pdfs/proposed-$base.pdf" \
+              --pdf-engine=xelatex \
+              -V geometry:margin=1in \
+              --resource-path=".:_proposed:assets:images"
+          done
+
+      - name: Commit and push PDFs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add pdfs/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-generate PDFs from syllabi"
+            git push
+          fi
+
+      - name: Upload PDFs (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: syllabi-pdfs
+          path: pdfs/*.pdf
