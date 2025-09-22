@@ -29,40 +29,102 @@ jobs:
 
       - name: Build PDFs from active syllabi
         run: |
+          success_count=0
+          failure_count=0
+          failed_files=""
+
           for f in $(find _active -name "*.md" -type f); do
             base=$(basename "${f%.*}")
             echo "Processing: $f -> pdfs/$base.pdf"
-            pandoc "$f" -o "pdfs/$base.pdf" \
+
+            if pandoc "$f" -o "pdfs/$base.pdf" \
               --pdf-engine=xelatex \
               -V geometry:margin=1in \
-              --resource-path=".:_active:assets:images"
+              --resource-path=".:_active:assets:images" 2>&1; then
+              echo "✓ Success: $f"
+              ((success_count++))
+            else
+              echo "✗ Failed: $f"
+              failed_files="$failed_files\n  - $f"
+              ((failure_count++))
+            fi
           done
+
+          echo "Active syllabi summary: $success_count succeeded, $failure_count failed"
+          if [ $failure_count -gt 0 ]; then
+            echo "Failed files:$failed_files"
+          fi
 
       - name: Build PDFs from proposed syllabi
         run: |
+          success_count=0
+          failure_count=0
+          failed_files=""
+
           for f in $(find _proposed -name "*.md" -type f); do
             base=$(basename "${f%.*}")
             echo "Processing: $f -> pdfs/proposed-$base.pdf"
-            pandoc "$f" -o "pdfs/proposed-$base.pdf" \
+
+            if pandoc "$f" -o "pdfs/proposed-$base.pdf" \
               --pdf-engine=xelatex \
               -V geometry:margin=1in \
-              --resource-path=".:_proposed:assets:images"
+              --resource-path=".:_proposed:assets:images" 2>&1; then
+              echo "✓ Success: $f"
+              ((success_count++))
+            else
+              echo "✗ Failed: $f"
+              failed_files="$failed_files\n  - $f"
+              ((failure_count++))
+            fi
           done
+
+          echo "Proposed syllabi summary: $success_count succeeded, $failure_count failed"
+          if [ $failure_count -gt 0 ]; then
+            echo "Failed files:$failed_files"
+          fi
+
+      - name: Generate build summary
+        run: |
+          pdf_count=$(find pdfs -name "*.pdf" -type f | wc -l)
+          echo "📄 Generated $pdf_count PDF(s) total"
+
+          if [ $pdf_count -gt 0 ]; then
+            echo "Generated PDFs:"
+            for pdf in pdfs/*.pdf; do
+              if [ -f "$pdf" ]; then
+                size=$(du -h "$pdf" | cut -f1)
+                echo "  - $(basename "$pdf") ($size)"
+              fi
+            done
+          fi
 
       - name: Commit and push PDFs
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add pdfs/
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
+
+          # Only add PDFs that were successfully generated
+          if find pdfs -name "*.pdf" -type f | grep -q .; then
+            git add pdfs/*.pdf
+            if git diff --staged --quiet; then
+              echo "No new or changed PDFs to commit"
+            else
+              pdf_count=$(git diff --staged --name-only | wc -l)
+              git commit -m "Auto-generate PDFs from syllabi
+
+Generated $pdf_count PDF file(s) from latest syllabi changes.
+
+🤖 Generated with GitHub Actions"
+              git push
+            fi
           else
-            git commit -m "Auto-generate PDFs from syllabi"
-            git push
+            echo "No PDFs were generated successfully - nothing to commit"
           fi
 
       - name: Upload PDFs (artifact)
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: syllabi-pdfs
-          path: pdfs/*.pdf
+          path: pdfs/
+          if-no-files-found: warn
