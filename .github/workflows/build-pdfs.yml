@@ -29,7 +29,9 @@ jobs:
         run: mkdir -p pdfs
 
       - name: Build PDFs from active syllabi
+        shell: bash
         run: |
+          set +e  # Disable exit on error for this step
           success_count=0
           failure_count=0
           failed_files=""
@@ -57,7 +59,9 @@ jobs:
           fi
 
       - name: Build PDFs from proposed syllabi
+        shell: bash
         run: |
+          set +e  # Disable exit on error for this step
           success_count=0
           failure_count=0
           failed_files=""
