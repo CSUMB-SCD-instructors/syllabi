@@ -1,7 +1,8 @@
+---
 name: Build PDFs
-on:
+"on":
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - '_active/**/*.md'
       - '_proposed/**/*.md'
@@ -50,7 +51,7 @@ jobs:
             fi
           done
 
-          echo "Active syllabi summary: $success_count succeeded, $failure_count failed"
+          echo "Active syllabi: $success_count succeeded, $failure_count failed"
           if [ $failure_count -gt 0 ]; then
             echo "Failed files:$failed_files"
           fi
@@ -78,7 +79,7 @@ jobs:
             fi
           done
 
-          echo "Proposed syllabi summary: $success_count succeeded, $failure_count failed"
+          echo "Proposed: $success_count succeeded, $failure_count failed"
           if [ $failure_count -gt 0 ]; then
             echo "Failed files:$failed_files"
           fi
@@ -110,11 +111,7 @@ jobs:
               echo "No new or changed PDFs to commit"
             else
               pdf_count=$(git diff --staged --name-only | wc -l)
-              git commit -m "Auto-generate PDFs from syllabi
-
-Generated $pdf_count PDF file(s) from latest syllabi changes.
-
-🤖 Generated with GitHub Actions"
+              git commit -m "Auto-generate PDFs - $pdf_count files 🤖"
               git push
             fi
           else
