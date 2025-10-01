@@ -9,11 +9,11 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        {% if (page.collection == 'active' or page.collection == 'proposed') and page.last_updated %}
+        {% if page.last_updated %}{% if page.collection == 'active' or page.collection == 'proposed' %}
           <div style="margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff; font-size: 0.9em;">
             <strong>Last Updated:</strong> {{ page.last_updated | date: "%B %d, %Y" }}
           </div>
-        {% endif %}
+        {% endif %}{% endif %}
         {{ content }}
       </div>
     </main>
