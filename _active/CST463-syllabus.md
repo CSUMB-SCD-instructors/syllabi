@@ -249,8 +249,3 @@ The process for syllabus changes:
 4. Change takes effect after notification period
 
 Students are responsible for staying current with any announced changes to the syllabus.
-<<<<<<< HEAD
-[← Back to Course List](index.html)
-=======
-
->>>>>>> 7374091d382757ce8b26524fae535ff88d29153d
