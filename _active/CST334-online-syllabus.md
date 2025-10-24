@@ -25,7 +25,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 *Details can be found in [late policy](#late-policy).*
 
 - **Getting help:**
-There are a ton of office hours spread throughout the week so make use of them if you have any questions!
+There are office hours spread throughout the week so make use of them if you have any questions!
 In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C09NBCUTPAP) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
