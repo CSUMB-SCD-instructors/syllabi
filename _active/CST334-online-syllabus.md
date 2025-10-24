@@ -1,8 +1,8 @@
 ---
 layout: default
-course_code: "CST334"
-course_name: "Introduction to Operating Systems"
-title: "CST334 - Introduction to Operating Systems"
+course_code: "CST334-online"
+course_name: "Introduction to Operating Systems - Online"
+title: "CST334-online - Introduction to Operating Systems - Online"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
 last_updated: 2025-10-24
 ---
@@ -16,7 +16,7 @@ By the end of it, the goal is for you to be able to think about how to design co
 
 - **Grading:**
 There are three assignment groups that you must achieve a minimum grade of 40% in to pass the course.
-They are [Programming Assignments](#programming-assignments) (35%), [Exams](#exams) (35%), and [Participation](#participation) (30%).
+They are [Programming Assignments](#programming-assignments) (35%), [Exams and Quizzes](#exams-and-quizzes) (30%), and [Participation](#participation) (35%).
 Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
 *Details can be found in [grading](#grading).*
 
@@ -26,7 +26,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 
 - **Getting help:**
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
-In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C09C2S2GJ8G) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
+In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C09NBCUTPAP) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
 
@@ -36,7 +36,6 @@ You are **not** allowed to use LLMs or classmates to write code for you, but you
 
 - **Course Title:** Introduction to Operating Systems
 - **Course Number:** CST334
-- **Prerequisites:** CST237, CST 238, and MATH 130
 
 ### Course Description
 
@@ -78,7 +77,14 @@ The major topics covered in class are:
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
-  - Office Hours: 2pm-3pm Mondays & 11am-12noon Thursdays, or [by appointment](https://calendly.com/sogden-csumb/15min)
+  - Office Hours:
+    - Mondays 5-6pm
+    - Thursdays 2-3pm
+    - [By appointment](https://calendly.com/sogden-csumb/15min)
+- Krishna Tagdiwala (TA)
+    - Email: ktagdiwala@csumb.edu
+    - Office Hours:
+    - TBD
 
 **Getting Help:** Office hours are available throughout the week - make use of them! 
 You can also use the class communication platform to ask questions (but not post code/answers on public channels!), or send me questions via email.
@@ -98,9 +104,8 @@ I will use email, Canvas, and Slack for online class communication.
 ### Materials
 
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
-- Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
-- Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
-- Syllabus: [CST334 Syllabus](CST334-syllabus.html)
+- Canvas Course Page: [CST334online on Canvas](https://csumb.instructure.com/courses/31278)
+- (Optional) In-Person Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
 
 ## Grading
 
@@ -113,83 +118,90 @@ There are three groups of assignments, briefly described in <a href="#table:assi
 | Assignment Kind                                       | Value |
 |:------------------------------------------------------|:-----:|
 | [Programming assignments](#programming-assignments)   | 35%   |
-| [Exams](#exams)                                       | 35%   |
-| [Participation](#participation)                       | 30%   |
+| [Exams and Quizzes](#exams-and-quizzes)               | 30%   |
+| [Participation](#participation)                       | 35%   |
+| [Extra Credit](#extra-credit)                         | (2%)  |
 
 *Table 1. Points available per assignment type.*
 
 
-### Programming Assignments
+### Programming Assignments (35%)
 
-Programming assignments are bi-weekly assignments in the C programming language that are intended to deepen your understanding of how operating systems work and expose you to the C programming language.
-In total there are *6* programming assignments, approximately one every two weeks.
-Programming assignments have submissions due on **Sunday nights**.
+Programming assignments are weekly assignments in the C programming language that are intended to deepen your understanding of how operating systems work and expose you to the C programming language.
+In total there are \emph{5} programming assignments, approximately one every week.
+Programming assignments are available for a week and are due on \textbf{Tuesday}.
 
-For each assignment you will submit `student_code.c` and, optionally, `student_code.h`.
-You can submit assignments as many times as you like, although only your last submission will be used for your final grade.
-Late assignments will be accepted, with details in the [late policy on submissions](#late-policy).
-
-Each assignment consists of starter code, a README file outlining the assignment, and unit tests.
+You will be supplied with starter code, a README file outlining the assignment, and unit tests.
 In addition to the supplied unit tests, more comprehensive unit tests may be run by the instructor.
 
 Although the academic honor code is covered in more detail in a [later section](#academic-honor-code), all code and checkpoint responses submitted should be written solely by the submitter.
 Violations of this are considered academic dishonesty.
 Please consult the section on [academic honesty](#academic-honor-code) for more details.
 
-### Exams
+### Exams and Quizzes (30%)
 
-Throughout the semester there will be 4 exams spaced approximately a month apart.
-Each exam will be semi-cumulative: approximately 50% new material and 50% previously covered material.
-Details on which exam first includes prior material are on the
-[course calendar](CST334-calendar.html).
-These exams are in-class and are intended to be approximately 1 hour in length, but you will have the full class period (110 minutes) to work on them.
-Exams are paper-based and you may bring in single sheet of notes (handwritten), and will be given unlimited scrap paper.
+#### Exams (20%)
+
+Throughout the semester, there will be 2 exams that will occur in approximately the 5th and 8th week of the semester.
+Each of these exams will be semi-cumulative, where the majority of the material is based on new material covered since the previous exam and a subset will cover previously tested material.
+These exams will be asynchronous and will consist of a submission of a canvas exam and a screen recording of the exam being taken.
+
+#### Weekly Quizzes (10%)
+
+The weekly quizzes are due once a week and are intended to encourage reading from the textbook and class material. 
+Readings are generally, but not always, from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/).They are open-book, open-note, and open-internet and will be completed on canvas.
+
 
 ### Participation
 
-In-class participation has four components:
+Participation has four components:
 
-1.  [**In-class quizzes**](#in-class-quizzes) (10%)
-2.  [**Lab completion**](#labs) (5%)
-3.  [**Learning Logs**](#learning-logs) (5%)
-4.  [**Research Project**](#research-project) (10%)
+1. [**Group Project**](#group-project) (10%)
+2. [**Learning Logs**](#learning-logs) (5%)
+3. [**Lab completion**](#labs) (5%)
+4. [**Lecture Videos**](#lecture-videos) (5%)
+4. [**Discussion Posts**](#discussion-posts) (10%)
 
-#### In-class quizzes
 
-Some classes will begin with a short (~5 minute) based on material from readings or previous class discussions.
-Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](CST334-calendar.html).
-These quizzes are used to track attendance and encourage preparation prior to class.
-They are open-book and open-note and will be completed on canvas.
-While these quizzes cannot be made up, the lowest 3 quizzes will be dropped.
-Please note that these quizzes may not occur every class, and are more likely on days when attendance is low, as a way to encourage attendance.
+#### Research Project (10%)
 
-#### Labs
+The group project will be a team project you complete with your cohort groups.
+This project will consist of exploring some aspect of research into systems.
+More details will be provided in the 2nd week of class.
+
+#### Labs (5%)
 
 Throughout the course there will be several labs that are intended to be completed in class.
 These are designed to help you better understand key topics, get practice with calculations, and get experience with the working environments.
-Generally, these are designed to take 30 minutes and will happen every two weeks, with submissions due on **Sunday night**.
 Students are strongly encouraged to work in groups on the labs and use any available outside resources.
 Although in general I aim to provide sufficient information to complete the labs, students are encouraged to use any additional resources they find helpful to complete them since they often are only an introduction to the material.
 
-#### Learning Logs
+#### Learning Logs (5%)
 
 Each week students need to complete a learning log.
-These learning logs are intended to help you collect your thoughts on the previous week’s material and identify topics you may benefit from revisiting and are useful as study guides in the lead-up to exams.
-Learning logs do not need to be long but demonstrate that you have thought back on the previous week’s topics.
+These learning logs are intended to help you collect your thoughts on the previous week's material and identify topics you may benefit from revisiting and are useful as study guides in the lead-up to exams.
+Learning logs do not need to be long but demonstrate that you have thought back on the previous week's topics.
 
-#### Research Project
 
-During the semester you will complete a group research project.
-This research project will consist of exploring academic literature related to class and summarizing it, drawing particular attention to how it connects to the course material.
-Details will be provided during the semester, but it will be a group-based project with both group and individual deliverables.
+#### Lecture Videos (5%)
 
-### Extra Credit Potential
+The videos cover the core material from class.  
+They are based on the readings, so I strongly recommend doing the readings prior to watching the videos.
+They must be watched within the canvas window for credit to be recorded.
 
-#### Introductory Meeting (2%)
+#### Weekly Discussion  (10%)
 
-During the first month of class, stop by my office and chat for a bit to get to know each other and you’ll get a small number of bonus points.
-You can either stop by my office during my regularly scheduled hours or schedule an appointment.
-See details in [the personnel section](#personnel) to find out how to schedule a meeting.
+The weekly discussion is your chance to interact with your cohort and discuss the topics that we are covering in class.  
+Each week there are a few prompts for you to post on the canvas forum regarding.
+You should respond to these and your classmates.
+
+
+### Extra Credit
+
+Each week, Kayla sends out surveys about the course asking what is working for you and what improvements you would like to see.
+These are very helpful for assessing what I can do to improve the course so you will be rewarded by submitting them.
+
+Your submission for these will in most cases be a screenshot of the "you have responded to this form", although there may be some weeks where submission is slightly different (e.g. the first week and the last week have different submission modalities so pay close attention!)
 
 #### Bug Hunting
 
@@ -221,15 +233,6 @@ Additionally, note that there will be no curve.
 
 ## Course Policies
 
-### Attendance
-
-Attending lecture is strongly correlated with academic achievement[^2], and thus is strongly encouraged.
-Attendance is tracked through in-class activities including, but not limited to, [reading quizzes](#in-class-quizzes).
-
-If you are sick, please do not come to class.  
-A number of attendance quizzes are dropped to accommodate things that come up in life.
-
-
 ### Late Policy
 
 With two exceptions, no late work will be accepted and no extensions will be granted.
@@ -257,7 +260,7 @@ This late penalty will be a 10% reduction in maximum points per day, with a maxi
 At the highest level, the use of LLMs in this class is ***prohibited*** for complete programming assignments* and ***encouraged*** for improving your own understanding of material.
 Large Language Models (LLMs), such as ChatGPT and GPT4.0, are powerful language generation models.
 They can be used to produce code and summarize text, as well as answer clarifying questions.
-They can be a very effective tool in a programmer’s toolbox if used appropriately.
+They can be a very effective tool in a programmer's toolbox if used appropriately.
 In this class, you should use them as a resource similar to [stackoverflow](https://stackoverflow.com/) – a good resource that should be critically considered since the code might be wrong, and not as effective as coming to talk to a TA or instructor.
 
 **You may use** LLMs for asking clarifying questions and generating examples.
