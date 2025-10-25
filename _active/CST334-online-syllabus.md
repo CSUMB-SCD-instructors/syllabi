@@ -52,9 +52,8 @@ At the end of this class, you should be able to:
 
 1.  explain core OS design problems and solutions to each of them,
 2.  write C code that:
-    1.  Demonstrates key operating systems concepts
+    1.  Demonstrates key operating systems concepts such as memory management, process management, and low level data manipulation
     2.  correctly leverages concurrency
-    3.  parses BNF grammars
 3.  use the Linux command line (e.g. BASH),
 4.  do command-line scripting,
 
@@ -97,7 +96,7 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel named [\#cst334-fall2025](https://cs-you-monterey.slack.com/archives/C09C2S2GJ8G) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have a slack channel named [\#cst334-fall2025-online](https://cs-you-monterey.slack.com/archives/C09NBCUTPAP) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
     - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
 
