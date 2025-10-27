@@ -62,7 +62,6 @@ At the end of this class, you should be able to:
 
 The major topics covered in class are:
 
-
 1.  **Using Linux**
 2.  **Process Management** – How processes are started, stopped, and scheduled.
 3.  **Memory Management** – How memory is divided up among various processes.
