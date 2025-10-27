@@ -4,7 +4,7 @@ course_code: "CST334-online"
 course_name: "Introduction to Operating Systems - Online"
 title: "CST334-online - Introduction to Operating Systems - Online"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2025-10-25
+last_updated: 2025-10-27
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -77,8 +77,8 @@ The major topics covered in class are:
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
   - Office Hours:
-    - Mondays 5-6pm
-    - Thursdays 2-3pm
+    - Mondays 5-6pm [on zoom](https://csumb.zoom.us/j/82730227830)
+    - Thursdays 2-3pm [on zoom](https://csumb.zoom.us/j/82730227830)
     - [By appointment](https://calendly.com/sogden-csumb/15min)
 - Krishna Tagdiwala (TA)
     - Email: ktagdiwala@csumb.edu
