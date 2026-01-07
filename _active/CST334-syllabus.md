@@ -4,7 +4,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2025-10-28
+last_updated: 2026-01-07
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -27,7 +27,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 
 - **Getting help:**
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
-In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C09C2S2GJ8G) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
+In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
 
@@ -79,9 +79,9 @@ The major topics covered in class are:
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
-  - Office Hours: 2pm-3pm Mondays & 11am-12noon Thursdays, or [by appointment](https://calendly.com/sogden-csumb/15min)
+  - Office Hours: 2pm-3pm Mondays & 11am-12noon Thursdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
 
-**Getting Help:** Office hours are available throughout the week - make use of them! 
+**Getting Help:** Office hours (both mine and the TAs') are available throughout the week - make use of them! 
 You can also use the class communication platform to ask questions (but not post code/answers on public channels!), or send me questions via email.
 
 #### Communicating online
@@ -92,14 +92,14 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel named [\#cst334-fall2025](https://cs-you-monterey.slack.com/archives/C09C2S2GJ8G) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have a slack channel named [\#cst334-spring2026](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
-    - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
+    - In general I don’t read things in canvas messages or comments.  For questions or comments please use Slack or email instead.
 
 ### Materials
 
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
-- Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
+- Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: Previous semesters videos are great for extra reference but also might change so coming to class is incredibly important!)
 - Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
 - Syllabus: [CST334 Syllabus](CST334-syllabus.html)
 
@@ -140,11 +140,10 @@ Please consult the section on [academic honesty](#academic-honor-code) for more 
 ### Exams
 
 Throughout the semester there will be 4 exams spaced approximately a month apart.
-Each exam will be semi-cumulative: approximately 50% new material and 50% previously covered material.
-Details on which exam first includes prior material are on the
-[course calendar](CST334-calendar.html).
-These exams are in-class and are intended to be approximately 1 hour in length, but you will have the full class period (110 minutes) to work on them.
-Exams are paper-based and you may bring in single sheet of notes (handwritten), and will be given unlimited scrap paper.
+Each exam will be a mix of new and old material.
+Details on which exam first includes prior material are on the [course calendar](https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&amp;single=true&amp;widget=true&amp;headers=false).
+These exams are in-class and you will have the full class period (110 minutes) to complete them.
+Exams are paper-based and you may bring in single sheet of notes (handwritten).
 
 ### Participation
 
@@ -152,15 +151,15 @@ In-class participation has four components:
 
 1.  [**In-class quizzes**](#in-class-quizzes) (10%)
 2.  [**Lab completion**](#labs) (5%)
-3.  [**Learning Logs**](#learning-logs) (5%)
+3.  [**Weekly Study Notes**](#weekly-study-notes) (5%)
 4.  [**Research Project**](#research-project) (10%)
 
 #### In-class quizzes
 
-Some classes will begin with a short (~5 minute) based on material from readings or previous class discussions.
-Readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) can be found on the [course calendar](CST334-calendar.html).
-These quizzes are used to track attendance and encourage preparation prior to class.
-They are open-book and open-note and will be completed on canvas.
+Attendance will be taken through short in-class quizzes or surveys.
+These surveys may either be based on readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) (the appropriate chapters for a day can be found in the class calendar) or be surveys used to check attendance.
+Quizzes are open-book and open-note and will be completed on canvas.
+
 While these quizzes cannot be made up, the lowest 3 quizzes will be dropped.
 Please note that these quizzes may not occur every class, and are more likely on days when attendance is low, as a way to encourage attendance.
 
@@ -172,11 +171,16 @@ Generally, these are designed to take 30 minutes and will happen every two weeks
 Students are strongly encouraged to work in groups on the labs and use any available outside resources.
 Although in general I aim to provide sufficient information to complete the labs, students are encouraged to use any additional resources they find helpful to complete them since they often are only an introduction to the material.
 
-#### Learning Logs
+#### Weekly Study Notes
 
-Each week students need to complete a learning log.
-These learning logs are intended to help you collect your thoughts on the previous week’s material and identify topics you may benefit from revisiting and are useful as study guides in the lead-up to exams.
-Learning logs do not need to be long but demonstrate that you have thought back on the previous week’s topics.
+Each week students complete a Weekly Study Note to consolidate and organize their understanding of that week's material. These notes serve as your personalized study guide throughout the semester—a cumulative resource you'll build week by week and return to when preparing for exams.
+
+Weekly Study Notes should:
+- Capture key concepts, techniques, and insights from the week
+- Note connections between topics and identify areas needing review
+- Be written in a way that will be useful to your future self when studying
+
+Think of each note as adding another section to your exam review sheet. The clearer and more organized your notes are now, the more valuable they'll be later when you're studying.
 
 #### Research Project
 
@@ -186,11 +190,13 @@ Details will be provided during the semester, but it will be a group-based proje
 
 ### Extra Credit Potential
 
+<!-- 
 #### Introductory Meeting (2%)
 
 During the first month of class, stop by my office and chat for a bit to get to know each other and you’ll get a small number of bonus points.
 You can either stop by my office during my regularly scheduled hours or schedule an appointment.
 See details in [the personnel section](#personnel) to find out how to schedule a meeting.
+ -->
 
 #### Bug Hunting
 
@@ -203,7 +209,7 @@ This is generally reserved for big things (e.g. I left out a bunch of files in t
 ### Grade Assignment
 
 Grades as assigned based on the standard ranges, which are outlined below, with exceptions made based on the [general grading requirements](#grading) guidance.
-Note that $`[90,93)`$ means “at least 90 but less than 93” (e.g. $`90 \leq score < 93`$) and that all grades will be rounded to the nearest whole number (e.g. a 92.1 will be rounded to a 92, but a 92.5 will be rounded to a 93).
+Note that $[90,93)$ means “at least 90 but less than 93” (e.g. $90 \leq score < 93$) and that all grades will be rounded to the nearest whole number (e.g. a 92.1 will be rounded to a 92, but a 92.5 will be rounded to a 93).
 Additionally, note that there will be no curve.
 
 | Grade Range     | Letter Grade |
@@ -255,7 +261,7 @@ This late penalty will be a 10% reduction in maximum points per day, with a maxi
 
 ### The use of LLMs
 
-At the highest level, the use of LLMs in this class is ***prohibited*** for complete programming assignments* and ***encouraged*** for improving your own understanding of material.
+At the highest level, the use of LLMs in this class is ***prohibited*** for completing programming assignments and ***encouraged*** for improving your own understanding of material.
 Large Language Models (LLMs), such as ChatGPT and GPT4.0, are powerful language generation models.
 They can be used to produce code and summarize text, as well as answer clarifying questions.
 They can be a very effective tool in a programmer’s toolbox if used appropriately.
@@ -263,8 +269,8 @@ In this class, you should use them as a resource similar to [stackoverflow](http
 
 **You may use** LLMs for asking clarifying questions and generating examples.
 I will demonstrate a number of these such questions in class but “how do I use XX command?” and “how does a free list in memory management work?” are examples.
-Additionally, asking for example problems (e.g. “can I have five examples of turnaround time calculation with FIFO and RR scheduling?”) is an excellent use [^4].
-Further, if you are confused about what a homework problem is asking or how it relates to operating systems at a larger scale you can ask them [^5].
+Additionally, asking for example problems (e.g. “can I have five examples of turnaround time calculation with FIFO and RR scheduling?”) is an excellent use[^4].
+Further, if you are confused about what a homework problem is asking or how it relates to operating systems at a larger scale you can ask them[^5].
 
 **You may *not*** use LLMs for producing answers on programming assignments, quizzes or exams.
 Asking for an LLM’s solution to a coding assignment is conceptually the same as asking another student to write you code for you, and will be treated as such.
@@ -307,3 +313,12 @@ The process for syllabus changes:
 4. Change takes effect after notification period
 
 Students are responsible for staying current with any announced changes to the syllabus.
+
+---
+
+[^1]: I should note that it's not like there's a place for direct extra credit for bugs, but I generally find a way to tweak things a bit depending on how big a bug it is.  Regardless I always appreciate feedback.
+[^2]: Attendance and grade are [strongly correlated](https://oapub.org/edu/index.php/ejes/article/view/3887) (not just because of the attendance quizzes but they also factor in).
+[^3]: This is done automatically through canvas and it "chops off" the points that you can't get.  For example, if you turn in an assignment 1 day late and would have gotten a 95% on it you will get a 90% for it.
+[^4]: But don't trust their math.  They're getting better but not great.  Practice quizzes are a better place to check this out as I try to provide walk throughs.
+[^5]: Or, you know, come talk to me.  I know a lot more about the specifics of this class than the AI does.
+
