@@ -4,7 +4,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-01-07
+last_updated: 2026-01-08
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -209,7 +209,7 @@ This is generally reserved for big things (e.g. I left out a bunch of files in t
 ### Grade Assignment
 
 Grades as assigned based on the standard ranges, which are outlined below, with exceptions made based on the [general grading requirements](#grading) guidance.
-Note that $[90,93)$ means “at least 90 but less than 93” (e.g. $90 \leq score < 93$) and that all grades will be rounded to the nearest whole number (e.g. a 92.1 will be rounded to a 92, but a 92.5 will be rounded to a 93).
+Note that $[90,93)$ means "at least 90 but less than 93" (e.g. $90 \leq score < 93$) and that all grades will be rounded to the nearest whole number (e.g. a 92.1 will be rounded to a 92, but a 92.5 will be rounded to a 93).
 Additionally, note that there will be no curve.
 
 | Grade Range     | Letter Grade |
