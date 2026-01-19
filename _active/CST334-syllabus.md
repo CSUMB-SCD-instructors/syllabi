@@ -4,11 +4,10 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-01-08
+last_updated: 2026-01-19
 ---
 
 # CST334 (Operating Systems) Syllabus
-
 
 ## Summary
 
@@ -79,7 +78,7 @@ The major topics covered in class are:
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
-  - Office Hours: 2pm-3pm Mondays & 11am-12noon Thursdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
+  - Office Hours: 2pm-3pm Mondays & 1pm-2pm Wednesdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
 
 **Getting Help:** Office hours (both mine and the TAs') are available throughout the week - make use of them! 
 You can also use the class communication platform to ask questions (but not post code/answers on public channels!), or send me questions via email.
