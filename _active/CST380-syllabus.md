@@ -65,7 +65,7 @@ I will use email, Canvas, and Slack for online class communication.
 
 ### Materials
 
-- Most all of the assignments are located on [CodePath](https://www.codepath.org/)
+- Most all of the assignments are located on [CodePath](https://courses.codepath.org/courses/ios102_swiftUI/)
 - Canvas Course Page: [CST380 on Canvas](https://csumb.instructure.com/courses/32639)
 - Syllabus: [CST380 Syllabus](CST380-syllabus.html)
 
