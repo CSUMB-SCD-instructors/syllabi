@@ -9,27 +9,6 @@ last_updated: 2026-01-20
 
 # CST380 (Mobile and Ubiquitous Computing) Syllabus
 
-## Summary
-
-The goal of this course is to introduce you to the design and usage of operating systems.
-By the end of it, the goal is for you to be able to think about how to design core parts of the operating system, as well as be able to explain why design decisions were made along the way, and know how to navigate and develop software in a systems-oriented manner.
-
-- **Grading:**
-There are three assignment groups that you must achieve a minimum grade of 40% in to pass the course.
-They are [Programming Assignments](#programming-assignments) (35%), [Exams](#exams) (35%), and [Participation](#participation) (30%).
-Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
-*Details can be found in [grading](#grading).*
-
-- **Late work:**
-Late submissions are accepted only for Programming assignments and Labs, and have a 10% deduction per calendar day late.
-*Details can be found in [late policy](#late-policy).*
-
-- **Getting help:**
-There are a ton of office hours spread throughout the week so make use of them if you have any questions!
-In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
-You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
-*Details can be found in [personnel](#personnel).*
-
 ## Course Information
 
 ### Course Details
@@ -80,21 +59,20 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel on the codepaths workspace and I'm available on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have a slack channel on the CodePath workspace and I'm available on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
     - In general I don’t read things in canvas messages or comments.  For questions or comments please use Slack or email instead.
 
 ### Materials
 
-- Most all of the assignments are located on [CodePaths](https://www.codepath.org/)
-- Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/32639)
+- Most all of the assignments are located on [CodePath](https://www.codepath.org/)
+- Canvas Course Page: [CST380 on Canvas](https://csumb.instructure.com/courses/32639)
 - Syllabus: [CST380 Syllabus](CST380-syllabus.html)
 
 ## Grading
 
 
-There are three groups of assignments, briefly described in <a href="#table:assignment-values" data-reference-type="ref" data-reference="table:assignment-values">Table 1</a>.
-**Getting below a 40% in any of these three groups will result in failing the class.**
+There are three groups of assignments, briefly described in <a href="#table-assignment-values" data-reference-type="ref" data-reference="table-assignment-values">Table 1</a>.
 
 <a id="table-assignment-values"></a>
 
@@ -114,25 +92,26 @@ They should be turned in on Canvas.
 
 ***Weekly Projects*** are projects that you create to showcase the skills learned each week.
 These are the homework associated with the course.
-They should be turned in via Codepaths and with a screenshot submitted on canvas.
-Note that on Codepaths the scoring for these projects is broken up into ``required'' and ``stretch'' goals, with roughly a third of the points being stretch goals; for our class, all of these are considered when grading.
+They should be turned in via CodePath and with a screenshot submitted on canvas.
+Note that on CodePath the scoring for these projects is broken up into "required" and "stretch" goals, with roughly a third of the points being stretch goals.
+For grading I use a formula that has required points graded at 1 point and stretch points graded at 0.5 points -- encouraging, but not requiring, stretch goal completion.
 
 ***Special Topics*** are going to be presented part way through the semester.
 As a small team you will pick a topic of interest in mobile development or iOS programming and present it to the class, along with a small Minimum Working Example.
 The goal is to get you, and your classmates, interested in something you might use in your final project.
 
 ***Final Project*** are group projects we will complete in the second half of the semester, where you develop a project together.
-This project will be a finished application and will include code, a demonstration, and a presentation highlighting the application you have build.
+This project will be a finished application and will include code, a demonstration, and a presentation highlighting the application you have built.
 
-***Misc*** work will be for tasks that need to be completed, such as signing up for codepaths.
+***Misc*** work will be for tasks that need to be completed, such as signing up for CodePath.
 
-## CodePaths
+## CodePath
 
-CodePaths is providing a number of assignments designed to help you learn how to develop applications for iOS.
-These assignments are submitted through the CodePaths portal and are graded by CodePaths.
+CodePath is providing a number of assignments designed to help you learn how to develop applications for iOS.
+These assignments are submitted through the CodePath portal and are graded by CodePath.
 Their team grades two days a week (Monday and Wednesday), and so will provide feedback within 24hours of these days.
-They will also provide feedback and be available for discussion on the CodePaths slack workspace.
-While they do accept late work and will provide the grade out of 100\%, any late work will have it's score adjusted by me in canvas per late policy.
+They will also provide feedback and be available for discussion on the CodePath slack workspace.
+While they do accept late work and will provide the grade out of 100\%, any late work will have its score adjusted by me in canvas per late policy.
 
 
 ### Grade Assignment
@@ -213,9 +192,6 @@ Students are responsible for staying current with any announced changes to the s
 
 ---
 
-[^1]: I should note that it's not like there's a place for direct extra credit for bugs, but I generally find a way to tweak things a bit depending on how big a bug it is.  Regardless I always appreciate feedback.
 [^2]: Attendance and grade are [strongly correlated](https://oapub.org/edu/index.php/ejes/article/view/3887) (not just because of the attendance quizzes but they also factor in).
 [^3]: This is done automatically through canvas and it "chops off" the points that you can't get.  For example, if you turn in an assignment 1 day late and would have gotten a 95% on it you will get a 90% for it.
-[^4]: But don't trust their math.  They're getting better but not great.  Practice quizzes are a better place to check this out as I try to provide walk throughs.
-[^5]: Or, you know, come talk to me.  I know a lot more about the specifics of this class than the AI does.
 
