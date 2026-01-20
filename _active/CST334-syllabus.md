@@ -4,7 +4,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-01-19
+last_updated: 2026-01-20
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -15,7 +15,7 @@ The goal of this course is to introduce you to the design and usage of operating
 By the end of it, the goal is for you to be able to think about how to design core parts of the operating system, as well as be able to explain why design decisions were made along the way, and know how to navigate and develop software in a systems-oriented manner.
 
 - **Grading:**
-There are three assignment groups that you must achieve a minimum grade of 40% in to pass the course.
+In addition to earning a passing overall grade, you must score at least 40% in **each** of the three assignment groups.
 They are [Programming Assignments](#programming-assignments) (35%), [Exams](#exams) (35%), and [Participation](#participation) (30%).
 Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
 *Details can be found in [grading](#grading).*
@@ -106,7 +106,7 @@ I will use email, Canvas, and Slack for online class communication.
 
 
 There are three groups of assignments, briefly described in <a href="#table:assignment-values" data-reference-type="ref" data-reference="table:assignment-values">Table 1</a>.
-**Getting below a 40% in any of these three groups will result in failing the class.**
+**To pass this course, you must meet both of the following requirements: (1) achieve an overall passing grade (≥60%), and (2) score at least 40% in each of the three assignment groups below. Failing to meet either requirement will result in failing the course.**
 
 <a id="table-assignment-values"></a>
 
