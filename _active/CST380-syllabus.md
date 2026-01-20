@@ -59,7 +59,7 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel on the CodePath workspace and I'm available on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have a [slack channel on the CodePath workspace](http://codepath.slack.com/) and I'm available on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
     - In general I don’t read things in canvas messages or comments.  For questions or comments please use Slack or email instead.
 
