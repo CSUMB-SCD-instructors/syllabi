@@ -4,7 +4,7 @@ course_code: "CST334"
 course_name: "Introduction to Operating Systems"
 title: "CST334 - Introduction to Operating Systems"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-01-20
+last_updated: 2026-01-26
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -159,7 +159,7 @@ Attendance will be taken through short in-class quizzes or surveys.
 These surveys may either be based on readings from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/) (the appropriate chapters for a day can be found in the class calendar) or be surveys used to check attendance.
 Quizzes are open-book and open-note and will be completed on canvas.
 
-While these quizzes cannot be made up, the lowest 3 quizzes will be dropped.
+While these quizzes cannot be made up, the lowest 4 quizzes will be dropped.
 Please note that these quizzes may not occur every class, and are more likely on days when attendance is low, as a way to encourage attendance.
 
 #### Labs
