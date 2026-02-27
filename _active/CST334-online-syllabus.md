@@ -4,7 +4,7 @@ course_code: "CST334-online"
 course_name: "Introduction to Operating Systems - Online"
 title: "CST334-online - Introduction to Operating Systems - Online"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-01-26
+last_updated: 2026-02-27
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -26,7 +26,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 
 - **Getting help:**
 There are office hours spread throughout the week so make use of them if you have any questions!
-In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C09NBCUTPAP) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
+In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0AHT0PAKA8) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
 
@@ -77,11 +77,11 @@ The major topics covered in class are:
   - Office: BIT205
   - Office Hours:
     - Mondays 5-6pm [on zoom](https://csumb.zoom.us/j/82730227830)
-    - Thursdays 2-3pm [on zoom](https://csumb.zoom.us/j/82730227830)
+    - Thursdays 4-5pm [on zoom](https://csumb.zoom.us/j/82730227830)
     - [By appointment](https://calendly.com/sogden-csumb/15min)
-- Krishna Tagdiwala (TA)
-    - Email: ktagdiwala@csumb.edu
-    - Office Hours:
+- Alejandro Larson (TA)
+  - Email: alarson@csumb.edu
+  - Office Hours:
     - TBD
 
 **Getting Help:** Office hours are available throughout the week - make use of them! 
@@ -95,14 +95,14 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel named [\#cst334-fall2025-online](https://cs-you-monterey.slack.com/archives/C09NBCUTPAP) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have [a slack channel](https://cs-you-monterey.slack.com/archives/C0AHT0PAKA8) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
     - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
 
 ### Materials
 
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
-- Canvas Course Page: [CST334online on Canvas](https://csumb.instructure.com/courses/31278)
+- Canvas Course Page: [CST334online on Canvas](https://csumb.instructure.com/courses/33041)
 - (Optional) In-Person Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
 
 ## Grading
