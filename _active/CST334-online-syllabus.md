@@ -4,7 +4,7 @@ course_code: "CST334-online"
 course_name: "Introduction to Operating Systems - Online"
 title: "CST334-online - Introduction to Operating Systems - Online"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-02-27
+last_updated: 2026-03-10
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -78,7 +78,7 @@ The major topics covered in class are:
   - Office Hours:
     - Mondays 5-6pm [on zoom](https://csumb.zoom.us/j/82730227830)
     - Thursdays 4-5pm [on zoom](https://csumb.zoom.us/j/82730227830)
-    - [By appointment](https://calendly.com/sogden-csumb/15min)
+    - [By appointment](https://calendar.app.google/2RYodKD61GpQRmodA)
 - Alejandro Larson (TA)
   - Email: alarson@csumb.edu
   - Office Hours:
