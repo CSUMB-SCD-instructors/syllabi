@@ -10,3 +10,4 @@ Printable slide handouts for CST334.
 | Deck | PDF |
 | --- | --- |
 | Docker Setup | [Open](00-docker_setup.pdf) |
+| BNF Grammars | [Open](40-bnf_grammers.pdf) |

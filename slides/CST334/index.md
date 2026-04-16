@@ -12,3 +12,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Deck | State | HTML | PDF |
 | --- | --- | --- | --- |
 | Docker Setup | final | [Open](00-docker_setup.html) | [PDF](pdfs/00-docker_setup.pdf) |
+| BNF Grammars | beta | [Open](40-bnf_grammers.html) | [PDF](pdfs/40-bnf_grammers.pdf) |
