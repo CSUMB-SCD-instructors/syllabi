@@ -489,10 +489,10 @@ void stmt() {
 <p>How do we handle “” (i.e.&nbsp;the empty string, <span class="math inline">\(\epsilon\)</span>)?</p>
 <p><br><br></p>
 <div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href=""></a><span class="dt">void</span> expr1<span class="op">()</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href=""></a><span class="dt">void</span> parse_R1<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb3-2"><a href=""></a>  <span class="cf">switch</span> <span class="op">(</span>token<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb3-3"><a href=""></a>    <span class="cf">case</span> <span class="ch">'+'</span><span class="op">:</span></span>
-<span id="cb3-4"><a href=""></a>      match<span class="op">(</span><span class="ch">'+'</span><span class="op">);</span> expr<span class="op">();</span> expr1<span class="op">();</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb3-4"><a href=""></a>      match<span class="op">(</span><span class="ch">'+'</span><span class="op">);</span> prase_R1<span class="op">();</span> prase_R2<span class="op">();</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb3-5"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
 <span id="cb3-6"><a href=""></a>      <span class="op">;</span>    <span class="co">// empty production</span></span>
 <span id="cb3-7"><a href=""></a>  <span class="op">}</span></span>
@@ -552,19 +552,6 @@ void stmt() {
 </div>
 </div>
 <p>We transform the grammar in a way such that language of the grammar doesn’t change.</p>
-<aside class="notes">
-<p>Have students convince themselves that the two grammars for expr produce the same strings. This is called “eliminating left recursion”. We won’t cover more general rules for eliminating left recursion. With a little practice it becomes pretty easy to do this. 12</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
