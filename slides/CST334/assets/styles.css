@@ -203,3 +203,16 @@
   top: auto !important;
   bottom: 10px !important;
 }
+
+/* Quarto Graphviz (`dot`) outputs inline SVG with `max-width: none`,
+   which can overflow RevealJS columns. Constrain to the container. */
+.reveal .cell-output-display svg {
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* In RevealJS columns, scale diagrams to fill the column width. */
+.reveal .columns .cell-output-display svg {
+  width: 100% !important;
+}
