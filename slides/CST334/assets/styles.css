@@ -199,6 +199,93 @@
   padding: 3px 8px !important;
 }
 
+/* RevealJS: Quarto image captions */
+.reveal .slides p.caption {
+  text-align: center;
+  margin-top: 0.35rem;
+  font-size: 0.8em;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* RevealJS: list hierarchy styling */
+.reveal .slides section :is(ul, ol) > li {
+  font-weight: 700;
+  font-size: 1.06em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) > li {
+  font-weight: 500;
+  font-size: 0.96em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) > li {
+  font-weight: 450;
+  font-size: 0.92em;
+}
+
+/* RevealJS: "big picture" slides (centered, larger text)
+   Usage:
+   - Put attributes on the slide break: `--- {.bigpicture}`
+   - Or wrap slide contents in a div: `::: {.bigpicture}` */
+.reveal .slides section.bigpicture,
+.reveal .slides section .bigpicture {
+  text-align: center;
+}
+
+.reveal .slides section.bigpicture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.reveal .slides section.bigpicture > :is(p, ul, ol, blockquote, pre) {
+  font-size: 2em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.reveal .slides section.bigpicture > h2 {
+  font-size: 2.2em;
+  line-height: 1.05;
+  margin-bottom: 0.4rem;
+}
+
+.reveal .slides section.bigpicture > :is(ul, ol) {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+/* Container variant: `::: {.bigpicture}` inside a slide.
+   Note: to vertically center *everything*, include the heading inside
+   the container OR use `--- {.bigpicture}` on the slide itself. */
+.reveal .slides section .bigpicture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  height: 100%;
+}
+
+.reveal .slides section .bigpicture > :is(p, ul, ol, blockquote, pre) {
+  font-size: 2em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.reveal .slides section .bigpicture > :is(h1, h2, h3) {
+  font-size: 2.2em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.reveal .slides section .bigpicture > :is(ul, ol) {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
 .reveal.has-logo .slide-number {
   top: auto !important;
   bottom: 10px !important;

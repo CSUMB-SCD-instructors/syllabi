@@ -98,7 +98,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="languages-4-predictive-parsing-2_files/libs/revealjs/dist/theme/quarto-23af7aaf759128d68389fb06d05f03cd.css">
+  <link rel="stylesheet" href="languages-4-predictive-parsing-2_files/libs/revealjs/dist/theme/quarto-851919559ab3ab32b865454c00833a56.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="languages-4-predictive-parsing-2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="languages-4-predictive-parsing-2_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -1039,9 +1039,9 @@ Sam Ogden
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1600,
 
-        height: 700,
+        height: 900,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -1071,6 +1071,72 @@ Sam Ogden
           RevealSearch,
           RevealZoom
         ]
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const titleSlide = document.querySelector("section#title-slide");
+        if (!titleSlide) return;
+
+        const chapter = titleSlide.dataset.chapter;
+        const chapterUrl = titleSlide.dataset.chapterUrl;
+        const bookUrl = titleSlide.dataset.bookUrl;
+        const bookText = titleSlide.dataset.bookText;
+
+        const subtitleEl = titleSlide.querySelector("p.subtitle");
+        const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
+        const showChapter = !!(chapter && (!subtitleText || subtitleText !== chapter));
+
+        // If we have a chapter URL, make the subtitle on the title slide clickable.
+        // This is especially useful when subtitle == chapter (auto-filled via filter).
+        if (subtitleEl && chapterUrl && !subtitleEl.querySelector("a")) {
+          const a = document.createElement("a");
+          a.href = chapterUrl;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = subtitleText || chapter || "Chapter";
+          subtitleEl.textContent = "";
+          subtitleEl.appendChild(a);
+        }
+
+        if (!showChapter && !bookUrl && !bookText) return;
+
+        const meta = document.createElement("div");
+        meta.className = "title-slide-meta";
+
+        if (showChapter) {
+          if (chapterUrl) {
+            const a = document.createElement("a");
+            a.className = "title-slide-meta-chapter";
+            a.href = chapterUrl;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.textContent = chapter;
+            meta.appendChild(a);
+          } else {
+            const c = document.createElement("div");
+            c.className = "title-slide-meta-chapter";
+            c.textContent = chapter;
+            meta.appendChild(c);
+          }
+        }
+
+        if (bookUrl) {
+          const a = document.createElement("a");
+          a.className = "title-slide-meta-book";
+          a.href = bookUrl;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = bookText || "Book";
+          meta.appendChild(a);
+        } else if (bookText) {
+          const b = document.createElement("div");
+          b.className = "title-slide-meta-book";
+          b.textContent = bookText;
+          meta.appendChild(b);
+        }
+
+        titleSlide.appendChild(meta);
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">

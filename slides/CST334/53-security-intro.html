@@ -32,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="53-security-intro_files/libs/revealjs/dist/theme/quarto-23af7aaf759128d68389fb06d05f03cd.css">
+  <link rel="stylesheet" href="53-security-intro_files/libs/revealjs/dist/theme/quarto-851919559ab3ab32b865454c00833a56.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="53-security-intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="53-security-intro_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -130,8 +130,9 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 53" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-intro.pdf" class="quarto-title-block center">
   <h1 class="title">Introduction to Security</h1>
+  <p class="subtitle">OSTEP 53</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -171,21 +172,15 @@ Sam Ogden
 </section>
 <section id="resource-sharing-is-still-important" class="slide level2">
 <h2>Resource Sharing is still important</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
 <ul>
 <li>Not all applications can share memory with just threads</li>
 <li>Sometimes we need to communicate between processes</li>
-<li>Should all processes have equal footing?</li>
 </ul>
-</div><div class="column" style="width:50%;">
-<p><img data-src="assets/ostep-53-security-intro/slide04-image1.png" style="width:100.0%"></p>
-</div></div>
-</section>
+
+<img data-src="assets/ostep-53-security-intro/slide04-image1.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">Many servers run databases in separate processes</p></section>
 <section id="what-might-we-want-to-protect" class="slide level2">
 <h2>What might we want to protect?</h2>
 <ul>
-<li>Security starts by naming the assets that matter</li>
 <li>Process memory
 <ul>
 <li>Passwords, personal information, execution pathways</li>
@@ -199,23 +194,39 @@ Sam Ogden
 <li>e.g.&nbsp;Who should be able to print?</li>
 <li>e.g.&nbsp;Who should be able to send network messages?</li>
 </ul></li>
-<li>Resource decisions!</li>
+<li>Resource decisions!
+<ul>
+<li>We need to make sure we are still the one allocating memory/compute</li>
+</ul></li>
 </ul>
 </section>
-<section id="we-need-the-os-to-help-us-with-this" class="slide level2">
-<h2>We need the OS to help us with this!</h2>
-<p><br></p>
+<section class="slide level2">
+
+<div class="bigpicture">
 <p><strong>The OS already controls the resources we need to protect</strong></p>
 <p><br></p>
 <p><strong>That makes it the natural place to enforce security policy</strong></p>
+</div>
 </section>
-<section id="os-responsibilities" class="slide level2">
-<h2>OS Responsibilities</h2>
+<section id="core-responsibilities" class="slide level2">
+<h2>Core Responsibilities</h2>
+<p><br><br></p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<h3 id="because">Because…</h3>
 <ul>
-<li>The OS owns memory management and sharing, so it must protect each process’s memory</li>
-<li>The OS starts, pauses, and terminates processes, so it must make reasonable choices</li>
-<li>Resources are made available by the OS, so it must allocate them safely</li>
+<li>Owns memory management &amp; sharing</li>
+<li>Starts/pauses/terminates processes</li>
+<li>Makes resources available</li>
 </ul>
+</div><div class="column" style="width:45%;">
+<h3 id="therefore">Therefore…</h3>
+<ul>
+<li>Protect each process’s memory</li>
+<li>Make reasonable choices</li>
+<li>Allocate them safely</li>
+</ul>
+</div></div>
 </section>
 <section id="security-goals" class="slide level2">
 <h2>Security Goals</h2>
@@ -501,9 +512,9 @@ Sam Ogden
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1600,
 
-        height: 700,
+        height: 900,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -533,6 +544,72 @@ Sam Ogden
           RevealSearch,
           RevealZoom
         ]
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const titleSlide = document.querySelector("section#title-slide");
+        if (!titleSlide) return;
+
+        const chapter = titleSlide.dataset.chapter;
+        const chapterUrl = titleSlide.dataset.chapterUrl;
+        const bookUrl = titleSlide.dataset.bookUrl;
+        const bookText = titleSlide.dataset.bookText;
+
+        const subtitleEl = titleSlide.querySelector("p.subtitle");
+        const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
+        const showChapter = !!(chapter && (!subtitleText || subtitleText !== chapter));
+
+        // If we have a chapter URL, make the subtitle on the title slide clickable.
+        // This is especially useful when subtitle == chapter (auto-filled via filter).
+        if (subtitleEl && chapterUrl && !subtitleEl.querySelector("a")) {
+          const a = document.createElement("a");
+          a.href = chapterUrl;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = subtitleText || chapter || "Chapter";
+          subtitleEl.textContent = "";
+          subtitleEl.appendChild(a);
+        }
+
+        if (!showChapter && !bookUrl && !bookText) return;
+
+        const meta = document.createElement("div");
+        meta.className = "title-slide-meta";
+
+        if (showChapter) {
+          if (chapterUrl) {
+            const a = document.createElement("a");
+            a.className = "title-slide-meta-chapter";
+            a.href = chapterUrl;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.textContent = chapter;
+            meta.appendChild(a);
+          } else {
+            const c = document.createElement("div");
+            c.className = "title-slide-meta-chapter";
+            c.textContent = chapter;
+            meta.appendChild(c);
+          }
+        }
+
+        if (bookUrl) {
+          const a = document.createElement("a");
+          a.className = "title-slide-meta-book";
+          a.href = bookUrl;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = bookText || "Book";
+          meta.appendChild(a);
+        } else if (bookText) {
+          const b = document.createElement("div");
+          b.className = "title-slide-meta-book";
+          b.textContent = bookText;
+          meta.appendChild(b);
+        }
+
+        titleSlide.appendChild(meta);
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
