@@ -10,3 +10,4 @@ Browse slide decks by class.
 | Class | Decks |
 | --- | ---: |
 | [CST334](CST334/) | 4 |
+| [CSUMB](CSUMB/) | 2 |
