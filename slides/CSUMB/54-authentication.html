@@ -166,15 +166,21 @@ Sam Ogden
 </section>
 <section id="how-to-assign-credentials" class="slide level2">
 <h2>How to assign credentials?</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
 <ul>
 <li>We need to figure out who to let run</li>
 <li>And what permissions they should have</li>
+<li>Authentication only matters if the OS can tie identity to access</li>
 </ul>
-
-<img data-src="assets/ostep-54-authentication/slide04-image1.png" style="width:100.0%" class="r-stretch"></section>
+</div><div class="column" style="width:48%;">
+<p><img data-src="assets/ostep-54-authentication/slide04-image1.png" style="width:100.0%"></p>
+</div></div>
+</section>
 <section id="main-ways-to-check" class="slide level2">
 <h2>Main ways to check</h2>
 <ul>
+<li>Authentication usually comes from one of three kinds of evidence</li>
 <li><strong>What you know</strong></li>
 <li><strong>What you have</strong></li>
 <li><strong>What you are</strong></li>
@@ -186,12 +192,12 @@ Sam Ogden
 <section>
 <section id="what-do-you-know" class="title-slide slide level1 center">
 <h1>What do you know?</h1>
-<p>Passwords</p>
+<p>Passwords are the most familiar form of authentication, but they are not the easiest to get right.</p>
 </section>
 <section id="what-do-you-know-1" class="slide level2">
 <h2>What do you know?</h2>
 <ul>
-<li>Key questions:
+<li>Before we trust passwords, we need to ask:
 <ul>
 <li>What makes a good secret?</li>
 <li>How do we store secrets?</li>
@@ -216,14 +222,8 @@ Sam Ogden
 <h2>How do we protect secrets?</h2>
 <p>Say somebody manages to get our password file….</p>
 <p>If it’s hashed, do we have a problem?</p>
-<div class="fragment">
-<p><br><br></p>
-<p><strong>YES! They can try all the hashes!</strong></p>
-</div>
-<div class="fragment">
-<p><br><br></p>
-<p>How do we fix this?</p>
-</div>
+<p><strong>YES!</strong> They can try all the hashes!</p>
+<p>So how do we fix this?</p>
 </section>
 <section id="we-add-a-salt" class="slide level2">
 <h2>We add a <code>salt</code></h2>
@@ -266,14 +266,10 @@ Sam Ogden
 <section id="what-problems-are-there" class="slide level2">
 <h2>What problems are there?</h2>
 <ul>
-<li>What happens if you lose your device?
-<ul>
+<li>What happens if you lose your device?</li>
+<li>What happens if somebody steals your device?</li>
 <li>How do you prove you’re still you?</li>
-</ul></li>
-<li>What happens if somebody steals your device?
-<ul>
 <li>Can somebody else use it?</li>
-</ul></li>
 <li>How often does it update?</li>
 <li>Will people use it?</li>
 </ul>
@@ -298,8 +294,6 @@ Sam Ogden
 <section id="biometrics-challenges" class="slide level2">
 <h2>Biometrics Challenges</h2>
 <p><strong>Data authenticity</strong></p>
-<div class="fragment">
-<hr>
 <p>Are these the same cat?</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -307,7 +301,6 @@ Sam Ogden
 </div><div class="column" style="width:50%;">
 <p><img data-src="assets/ostep-54-authentication/slide21-image8.png" style="width:100.0%"></p>
 </div></div>
-</div>
 </section>
 <section id="sensitivity" class="slide level2">
 <h2>Sensitivity</h2>
@@ -317,8 +310,8 @@ Sam Ogden
 <li>We need to strike a balance between being too relaxed and too stringent</li>
 <li>Context matters!
 <ul>
-<li><em>How mission-critical is this?</em></li>
-<li><em>Heck, what is our mission?</em></li>
+<li>How mission-critical is this?</li>
+<li>What is our mission?</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:48%;">
@@ -335,7 +328,7 @@ Sam Ogden
 </section>
 <section id="how-can-we-make-it-better" class="slide level2">
 <h2>How can we make it better?</h2>
-<p>Let’s use multiple things:</p>
+<p>Authentication is stronger when we combine things that fail in different ways.</p>
 <ul>
 <li>Password + phone</li>
 <li>Multi-Factor Authentication</li>
@@ -373,16 +366,10 @@ Sam Ogden
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
-<p>Three main authentication methods</p>
-<ol type="1">
-<li>What you know</li>
-<li>What you have</li>
-<li>What you are</li>
-</ol>
-<p>These work best when combined</p>
-<p><br></p>
-<p>Need to balance strictness and usability</p>
 <ul>
+<li>Three main authentication methods: what you know, what you have, and what you are</li>
+<li>These work best when combined</li>
+<li>Need to balance strictness and usability</li>
 <li>Think back to our goals from earlier</li>
 </ul>
 
