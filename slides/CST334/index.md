@@ -13,5 +13,7 @@ PDF handouts are available in [pdfs/](pdfs/).
 | --- | --- | --- | --- |
 | Docker Setup | final | [Open](00-docker_setup.html) | [PDF](pdfs/00-docker_setup.pdf) |
 | BNF Grammars | final | [Open](40-bnf_grammers.html) | [PDF](pdfs/40-bnf_grammers.pdf) |
+| Introduction to Security | beta | [Open](53-security-intro.html) | [PDF](pdfs/53-security-intro.pdf) |
+| Authentication | beta | [Open](54-authentication.html) | [PDF](pdfs/54-authentication.pdf) |
 | Predictive Parsing (1) | beta | [Open](languages-3-predictive-parsing-1.html) | [PDF](pdfs/languages-3-predictive-parsing-1.pdf) |
 | Predictive Parsing (2) | beta | [Open](languages-4-predictive-parsing-2.html) | [PDF](pdfs/languages-4-predictive-parsing-2.pdf) |
