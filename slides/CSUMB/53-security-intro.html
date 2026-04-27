@@ -158,17 +158,16 @@ Sam Ogden
 </section>
 <section id="what-weve-done-so-far" class="slide level2">
 <h2>What we’ve done so far</h2>
-<p>So far we’ve virtualized resources</p>
+<ul>
+<li>So far we’ve virtualized resources:
 <ul>
 <li>Limited Direct Execution for processes</li>
 <li>Paging for memory</li>
+</ul></li>
+<li>That keeps processes apart from each other</li>
+<li>But isolation alone does not answer how shared resources should be controlled</li>
+<li>Is that really enough?</li>
 </ul>
-<p><br><br></p>
-<p><strong>This keeps processes apart from each other</strong></p>
-<div class="fragment">
-<p><br><br></p>
-<p>Is this really what we want?</p>
-</div>
 </section>
 <section id="resource-sharing-is-still-important" class="slide level2">
 <h2>Resource Sharing is still important</h2>
@@ -183,9 +182,10 @@ Sam Ogden
 <p><img data-src="assets/ostep-53-security-intro/slide04-image1.png" style="width:100.0%"></p>
 </div></div>
 </section>
-<section id="whats-might-we-want-to-protect" class="slide level2">
-<h2>What’s might we want to protect?</h2>
+<section id="what-might-we-want-to-protect" class="slide level2">
+<h2>What might we want to protect?</h2>
 <ul>
+<li>Security starts by naming the assets that matter</li>
 <li>Process memory
 <ul>
 <li>Passwords, personal information, execution pathways</li>
@@ -204,13 +204,17 @@ Sam Ogden
 </section>
 <section id="we-need-the-os-to-help-us-with-this" class="slide level2">
 <h2>We need the OS to help us with this!</h2>
+<p><br></p>
+<p><strong>The OS already controls the resources we need to protect</strong></p>
+<p><br></p>
+<p><strong>That makes it the natural place to enforce security policy</strong></p>
 </section>
 <section id="os-responsibilities" class="slide level2">
 <h2>OS Responsibilities</h2>
 <ul>
-<li>The OS owns memory management and sharing, so it must be relied upon to protect each process’s memory</li>
-<li>The OS starts, pauses, and terminates processes, so it must be relied upon to make reasonable choices</li>
-<li>Resources are made available by the OS, so it must be able to allocate them</li>
+<li>The OS owns memory management and sharing, so it must protect each process’s memory</li>
+<li>The OS starts, pauses, and terminates processes, so it must make reasonable choices</li>
+<li>Resources are made available by the OS, so it must allocate them safely</li>
 </ul>
 </section>
 <section id="security-goals" class="slide level2">
@@ -238,26 +242,38 @@ Sam Ogden
 <p><em>Availability</em></p>
 </div>
 </section>
-<section class="slide level2">
-
-</section>
-<section>
-<section id="some-key-things-to-remember" class="title-slide slide level1 center">
-<h1>Some key things to remember</h1>
-
+<section id="security-design-is-about-tradeoffs" class="slide level2">
+<h2>Security design is about tradeoffs</h2>
+<ul>
+<li>The goal is not just to block attacks</li>
+<li>The goal is to protect the system without making it unusable</li>
+<li>Good security design reduces damage when something goes wrong</li>
+</ul>
 </section>
 <section id="design-principles" class="slide level2">
 <h2>Design Principles</h2>
+<div class="columns columns-divider">
+<div class="column">
+<p><strong>Keep it simple</strong></p>
 <ul>
-<li><strong>Economy of mechanism</strong> - keep it simple</li>
-<li><strong>Fail-safe defaults</strong> - default to safety</li>
-<li><strong>Complete mediation</strong> - always check</li>
-<li><strong>Open Design</strong> - obfuscation isn’t enough</li>
-<li><strong>Separation of Privilege</strong> - double, or triple, check</li>
-<li><strong>Least privilege</strong> - minimize access</li>
-<li><strong>Least common mechanism</strong> - separate functionality</li>
-<li><strong>Acceptability</strong> - make it easy to use</li>
+<li>Economy of mechanism</li>
+<li>Open design</li>
 </ul>
+</div><div class="column">
+<p><strong>Enforce policy carefully</strong></p>
+<ul>
+<li>Fail-safe defaults</li>
+<li>Complete mediation</li>
+<li>Separation of privilege</li>
+</ul>
+</div><div class="column">
+<p><strong>Limit blast radius</strong></p>
+<ul>
+<li>Least privilege</li>
+<li>Least common mechanism</li>
+<li>Acceptability</li>
+</ul>
+</div></div>
 </section>
 <section id="encouraging-good-security" class="slide level2">
 <h2>Encouraging good security</h2>
@@ -268,8 +284,10 @@ Sam Ogden
 <li>Breaking “password” (i.e.&nbsp;the literal word as a password) is really easy</li>
 </ul></li>
 </ul>
-
-<img data-src="https://imgs.xkcd.com/comics/security.png" style="width:80.0%" class="r-stretch"></section>
+<div class="fragment">
+<p><img data-src="https://imgs.xkcd.com/comics/security.png" style="width:80.0%"></p>
+</div>
+</section>
 <section id="system-calls---not-all-are-equal" class="slide level2">
 <h2>System Calls - Not all are equal</h2>
 <div class="columns">
@@ -293,16 +311,15 @@ Sam Ogden
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
-<p><strong>Security is essential to any system</strong></p>
 <ul>
-<li>We’ve gone through all the trouble to virtualize and share resources, so we shouldn’t let somebody else use them</li>
-</ul>
-<p><strong>We need to focus on what we can do, and make sure that it’s possible and acceptable</strong></p>
-<ul>
-<li>As with everything in OS, focus on what works</li>
+<li>Security is essential to any system</li>
+<li>Virtualization and sharing are useful, but they create policy decisions that the OS must enforce</li>
+<li>The security goals are confidentiality, integrity, and availability</li>
+<li>Good security comes from simple mechanisms, careful checks, and designs people can actually use</li>
+<li>In practice: focus on what works, and make sure it still works when things go wrong</li>
 </ul>
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
