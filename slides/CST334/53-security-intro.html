@@ -32,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="53-security-intro_files/libs/revealjs/dist/theme/quarto-851919559ab3ab32b865454c00833a56.css">
+  <link rel="stylesheet" href="53-security-intro_files/libs/revealjs/dist/theme/quarto-cb83f1cca4f45f94d7ecca62da2254d4.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="53-security-intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="53-security-intro_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -130,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 53" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-intro.pdf" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 53" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-intro.pdf" data-last-updated="2026-04-28" class="quarto-title-block center">
   <h1 class="title">Introduction to Security</h1>
   <p class="subtitle">OSTEP 53</p>
 
@@ -566,6 +566,7 @@ Sam Ogden
         const chapterUrl = titleSlide.dataset.chapterUrl;
         const bookUrl = titleSlide.dataset.bookUrl;
         const bookText = titleSlide.dataset.bookText;
+        const lastUpdated = titleSlide.dataset.lastUpdated;
 
         const subtitleEl = titleSlide.querySelector("p.subtitle");
         const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
@@ -583,7 +584,7 @@ Sam Ogden
           subtitleEl.appendChild(a);
         }
 
-        if (!showChapter && !bookUrl && !bookText) return;
+        if (!showChapter && !bookUrl && !bookText && !lastUpdated) return;
 
         const meta = document.createElement("div");
         meta.className = "title-slide-meta";
@@ -618,6 +619,13 @@ Sam Ogden
           b.className = "title-slide-meta-book";
           b.textContent = bookText;
           meta.appendChild(b);
+        }
+
+        if (lastUpdated) {
+          const u = document.createElement("div");
+          u.className = "title-slide-meta-updated";
+          u.textContent = `Updated ${lastUpdated}`;
+          meta.appendChild(u);
         }
 
         titleSlide.appendChild(meta);
