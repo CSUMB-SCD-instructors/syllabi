@@ -118,72 +118,6 @@
   margin-right: auto;
 }
 
-/* Step-by-step parsing traces (Reveal fragments) */
-.trace {
-  margin: 0.75rem auto 0 auto;
-  font-family: var(
-    --r-code-font,
-    var(
-      --bs-font-monospace,
-      ui-monospace,
-      SFMono-Regular,
-      Menlo,
-      Monaco,
-      Consolas,
-      "Liberation Mono",
-      "Courier New",
-      monospace
-    )
-  );
-  font-size: 0.9em;
-}
-
-.trace sub {
-  line-height: 0;
-}
-
-.trace-row {
-  display: grid;
-  grid-template-columns: auto 1fr auto 1fr;
-  column-gap: 0.6rem;
-  row-gap: 0.2rem;
-  justify-content: center;
-  align-items: center;
-  margin: 0.25rem 0;
-}
-
-.trace-label {
-  font-weight: 650;
-  color: rgba(0, 0, 0, 0.65);
-  text-align: right;
-  white-space: nowrap;
-}
-
-.trace-tokens {
-  display: inline-flex;
-  gap: 0.25rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.tok {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.25rem;
-  padding: 0.06rem 0.22rem;
-  border: 1px solid rgba(0, 0, 0, 0.14);
-  border-radius: 5px;
-  background: rgba(221, 227, 234, 0.28);
-  box-sizing: border-box;
-}
-
-.trace-note {
-  margin-top: 0.5rem;
-  font-size: 0.85em;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 /* RevealJS: current/total slide number in bottom center */
 .reveal .slide-number {
   left: 50% !important;
@@ -215,6 +149,17 @@
   max-height: 78vh;
   height: auto;
   object-fit: contain;
+}
+
+/* Standalone image paragraphs should use most of the slide area.
+   This keeps image-only slides visually large without affecting mixed layouts. */
+.reveal .slides section > p > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain) {
+  display: block;
+  width: 95%;
+  max-width: 95%;
+  max-height: calc(95vh - 9rem);
+  height: auto;
+  margin: 0.35rem auto;
 }
 
 /* If the slide has substantial text (lists/paragraphs/etc), cap images more. */
