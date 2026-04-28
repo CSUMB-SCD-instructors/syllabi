@@ -211,10 +211,15 @@
    Opt out per-image with `.no-constrain`. */
 .reveal .slides section img:not(.no-constrain) {
   max-width: 100%;
-  /* Constrain reasonably so images don't run off the bottom when there is text. */
-  max-height: 55vh;
+  /* Default: allow fairly large images. */
+  max-height: 78vh;
   height: auto;
   object-fit: contain;
+}
+
+/* If the slide has substantial text (lists/paragraphs/etc), cap images more. */
+.reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img:not(.no-constrain) {
+  max-height: 55vh;
 }
 
 /* Reveal's `.r-stretch` explicitly removes max-width/height constraints.
@@ -222,8 +227,13 @@
 .reveal .slides section img.r-stretch:not(.no-constrain),
 .reveal .slides section img.stretch:not(.no-constrain) {
   max-width: 100% !important;
-  max-height: 55vh !important;
+  max-height: 78vh !important;
   height: auto !important;
+}
+
+.reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img.r-stretch:not(.no-constrain),
+.reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img.stretch:not(.no-constrain) {
+  max-height: 55vh !important;
 }
 
 /* RevealJS PDF printing: strongly hint landscape pages when using `?print-pdf`. */
@@ -233,7 +243,7 @@ html.print-pdf @page {
 
 /* RevealJS: list hierarchy styling */
 .reveal .slides section :is(ul, ol) > li {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1.06em;
 }
 
@@ -294,7 +304,7 @@ html.print-pdf @page {
 
 /* Inside units, keep lists consistent (don’t apply global depth-based sizing). */
 .reveal .slides .box :is(ul, ol) > li {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1em;
 }
 
