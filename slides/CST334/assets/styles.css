@@ -207,6 +207,30 @@
   color: rgba(0, 0, 0, 0.75);
 }
 
+/* RevealJS: keep images from overflowing the slide canvas by default.
+   Opt out per-image with `.no-constrain`. */
+.reveal .slides section img:not(.no-constrain) {
+  max-width: 100%;
+  /* Constrain reasonably so images don't run off the bottom when there is text. */
+  max-height: 55vh;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Reveal's `.r-stretch` explicitly removes max-width/height constraints.
+   Re-apply constraints for images so they don't overflow. */
+.reveal .slides section img.r-stretch:not(.no-constrain),
+.reveal .slides section img.stretch:not(.no-constrain) {
+  max-width: 100% !important;
+  max-height: 55vh !important;
+  height: auto !important;
+}
+
+/* RevealJS PDF printing: strongly hint landscape pages when using `?print-pdf`. */
+html.print-pdf @page {
+  size: landscape;
+}
+
 /* RevealJS: list hierarchy styling */
 .reveal .slides section :is(ul, ol) > li {
   font-weight: 700;
@@ -221,6 +245,62 @@
 .reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) > li {
   font-weight: 450;
   font-size: 0.92em;
+}
+
+/* "Box" macro output (see assets/filters/unit.lua) */
+.reveal .slides .box {
+  --box-bg: rgba(221, 227, 234, 0.35);
+  --box-header-color: rgba(49, 69, 107, 0.92);
+  --box-content-color: inherit;
+  background: var(--box-bg);
+  color: var(--box-content-color);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem 0.85rem 0.9rem;
+}
+
+.reveal .slides .box .box-header {
+  margin: 0 0 0.45rem 0;
+  font-weight: 800;
+  font-size: 1.15em;
+  color: var(--box-header-color);
+}
+
+.reveal .slides .box .box-header > p {
+  margin: 0;
+}
+
+.reveal .slides .box a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+/* Box grid wrapper: responsive grid for multiple boxes */
+.reveal .slides .boxgrid {
+  --boxgrid-cols: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--boxgrid-cols), minmax(0, 1fr));
+  gap: 1.1rem;
+  align-items: start;
+}
+
+/* Common case: 2 columns and odd number of boxes -> center the last one */
+.reveal .slides .boxgrid[style*="--boxgrid-cols:2"] > .box:last-child:nth-child(odd),
+.reveal .slides .boxgrid[style*="--boxgrid-cols: 2"] > .box:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(70%, 52rem);
+}
+
+/* Inside units, keep lists consistent (don’t apply global depth-based sizing). */
+.reveal .slides .box :is(ul, ol) > li {
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.reveal .slides .box :is(ul, ol) :is(ul, ol) > li {
+  font-weight: 500;
+  font-size: 0.95em;
 }
 
 /* RevealJS: "big picture" slides (centered, larger text)

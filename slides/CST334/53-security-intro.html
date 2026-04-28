@@ -263,28 +263,37 @@ Sam Ogden
 </section>
 <section id="design-principles" class="slide level2">
 <h2>Design Principles</h2>
-<div class="columns columns-divider">
-<div class="column">
-<p><strong>Keep it simple</strong></p>
+<div class="boxgrid" cols="2" data-incremental="true" style="--boxgrid-cols:2;">
+<div class="box" data-header="Keep it simple">
+<div class="box-header">
+<p>Keep it simple</p>
+</div>
 <ul>
 <li>Economy of mechanism</li>
 <li>Open design</li>
 </ul>
-</div><div class="column">
-<p><strong>Enforce policy carefully</strong></p>
+</div>
+<div class="box fragment" data-header="Enforce policy carefully">
+<div class="box-header">
+<p>Enforce policy carefully</p>
+</div>
 <ul>
 <li>Fail-safe defaults</li>
 <li>Complete mediation</li>
 <li>Separation of privilege</li>
 </ul>
-</div><div class="column">
-<p><strong>Limit blast radius</strong></p>
+</div>
+<div class="box fragment" data-header="Limit blast radius">
+<div class="box-header">
+<p>Limit blast radius</p>
+</div>
 <ul>
 <li>Least privilege</li>
 <li>Least common mechanism</li>
 <li>Acceptability</li>
 </ul>
-</div></div>
+</div>
+</div>
 </section>
 <section id="encouraging-good-security" class="slide level2">
 <h2>Encouraging good security</h2>
@@ -296,7 +305,7 @@ Sam Ogden
 </ul></li>
 </ul>
 <div class="fragment">
-<p><img data-src="https://imgs.xkcd.com/comics/security.png" style="width:80.0%"></p>
+<img data-src="https://imgs.xkcd.com/comics/security.png" class="r-stretch" style="width:80.0%">
 </div>
 </section>
 <section id="system-calls---not-all-are-equal" class="slide level2">
@@ -304,11 +313,11 @@ Sam Ogden
 <div class="columns">
 <div class="column">
 <ul>
-<li><code>exit()</code></li>
 <li><code>getpid()</code></li>
 <li><code>getppid()</code></li>
 <li><code>time()</code></li>
 <li><code>wait()</code></li>
+<li><code>exit()</code></li>
 </ul>
 </div><div class="column">
 <ul>
@@ -322,11 +331,13 @@ Sam Ogden
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
+<p>Security is essential to any system</p>
 <ul>
-<li>Security is essential to any system</li>
 <li>Virtualization and sharing are useful, but they create policy decisions that the OS must enforce</li>
-<li>The security goals are confidentiality, integrity, and availability</li>
-<li>Good security comes from simple mechanisms, careful checks, and designs people can actually use</li>
+</ul>
+<p>The security goals are <strong>confidentiality</strong>, <strong>integrity</strong>, and <strong>availability</strong></p>
+<p>Good security comes from simple mechanisms, careful checks, and designs people can actually use</p>
+<ul>
 <li>In practice: focus on what works, and make sure it still works when things go wrong</li>
 </ul>
 
