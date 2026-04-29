@@ -151,13 +151,17 @@
   object-fit: contain;
 }
 
-/* Standalone image paragraphs should use most of the slide area.
-   This keeps image-only slides visually large without affecting mixed layouts. */
-.reveal .slides section > p > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain) {
+/* Slide-local images should use most of the available width without
+   affecting inline images or small decorative icons. */
+.reveal .slides section > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > p > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > figure > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > .columns img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > .column img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain) {
   display: block;
-  width: 95%;
-  max-width: 95%;
-  max-height: calc(95vh - 9rem);
+  width: 100%;
+  max-width: 100%;
+  max-height: 78vh;
   height: auto;
   margin: 0.35rem auto;
 }
