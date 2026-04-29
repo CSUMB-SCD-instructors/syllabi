@@ -130,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 56" data-last-updated="2026-04-29 09:41" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 56" data-last-updated="2026-04-29 09:56" class="quarto-title-block center">
   <h1 class="title">Cryptography</h1>
   <p class="subtitle">CSUMB</p>
 
@@ -242,13 +242,14 @@ Sam Ogden
 <ul>
 <li>A <strong>public</strong> <span class="math inline">\(K_{public}\)</span></li>
 <li>A <strong>secret</strong> <span class="math inline">\(K_{private}\)</span></li>
+<li>The scheme is public; the keys are what matter</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:52%;">
 <p><br><br></p>
 <div class="box">
 <p><span class="math inline">\(C = E(P,K_{public})\)</span></p>
-<p><span class="math inline">\(P = E(C,K_{private})\)</span></p>
+<p><span class="math inline">\(P = D(C,K_{private})\)</span></p>
 </div>
 </div></div>
 </section>
@@ -271,11 +272,15 @@ Sam Ogden
 <h2>Diffie-Hellman Key Exchange</h2>
 
 <img data-src="assets/ostep-56-cryptography/diffie-hellman-key-exchange.png" class="r-stretch"></section>
-<section class="slide level2">
-
-<div class="bigpicture">
-<p>The Cryptography’s Benefit Relies Entirely On The Secrecy Of The Key</p>
-</div>
+<section id="encryption-summary" class="slide level2">
+<h2>Encryption Summary</h2>
+<ul>
+<li>Encryption protects confidentiality</li>
+<li>The algorithm is public; security comes from the key, not from hiding the method</li>
+<li>Symmetric encryption uses one shared secret key</li>
+<li>Asymmetric encryption uses a public key to encrypt and a private key to decrypt</li>
+<li>Good systems use encryption as part of a larger design, not as a magic shield</li>
+</ul>
 </section>
 <section id="integrity" class="slide level2 bigpicture">
 <h2>Integrity</h2>
@@ -332,12 +337,27 @@ Sam Ogden
 <h2>Hashes: One-way</h2>
 
 <img data-src="assets/ostep-56-cryptography/sha1-size_and_hash.png" class="r-stretch"><div class="center">
-<p>Notice that we went from a 4649 byte file to a short string!</p>
+<p>A hash compresses a large input into a fixed-size digest</p>
+<p>It should be infeasible to recover the input from that digest</p>
 </div>
 </section>
 <section id="authentication" class="slide level2 bigpicture">
 <h2>Authentication</h2>
 <p>Verifying we are us</p>
+</section>
+<section id="authentication-two-common-models" class="slide level2">
+<h2>Authentication: two common models</h2>
+<ul>
+<li>Shared-secret authentication uses one key on both sides
+<ul>
+<li>Example: HMAC</li>
+</ul></li>
+<li>Public-key authentication uses a private key to sign and a public key to verify
+<ul>
+<li>Example: digital signatures</li>
+</ul></li>
+<li>Both prove authenticity, but they trust different things</li>
+</ul>
 </section>
 <section id="core-idea-authentication" class="slide level2">
 <h2>Core Idea: Authentication</h2>
@@ -353,6 +373,7 @@ Sam Ogden
 </section>
 <section id="example-of-authentication-hmac" class="slide level2">
 <h2>Example of Authentication: HMAC</h2>
+<p>HMAC is shared-secret authentication.</p>
 
 <img data-src="assets/ostep-56-cryptography/hmac-diagram.png" class="r-stretch"></section>
 <section id="breaking-crytography" class="slide level2 bigpicture">
@@ -366,12 +387,9 @@ Sam Ogden
 <p>Computational threats</p>
 </div>
 <ul>
-<li>Computational threats
-<ul>
 <li>Brute-forcing keys</li>
 <li>Side-channel attacks</li>
 <li>Quantum Computers</li>
-</ul></li>
 </ul>
 </div>
 <div class="box" data-header="Operational Issues">
@@ -379,11 +397,8 @@ Sam Ogden
 <p>Operational Issues</p>
 </div>
 <ul>
-<li>Operational Issues
-<ul>
 <li>Social Engineering</li>
 <li>Backdoors</li>
-</ul></li>
 </ul>
 </div>
 <div class="box" data-header="Design Flaws">
