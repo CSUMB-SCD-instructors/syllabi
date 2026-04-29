@@ -9,11 +9,11 @@ Printable slide handouts for CST334.
 
 | Deck | PDF |
 | --- | --- |
-| Docker Setup | [Open](00-docker_setup.pdf) |
-| BNF Grammars | [Open](40-bnf_grammers.pdf) |
-| Introduction to Security | [Open](53-security-intro.pdf) |
-| Authentication | [Open](54-authentication.pdf) |
-| Access Control | [Open](55-access-control.pdf) |
-| Cryptography | [Open](56-cryptography.pdf) |
-| Predictive Parsing (1) | [Open](languages-3-predictive-parsing-1.pdf) |
-| Predictive Parsing (2) | [Open](languages-4-predictive-parsing-2.pdf) |
+| BNF Grammars | [Open](BNF-Grammars.pdf) |
+| Docker Setup | [Open](Docker-Setup.pdf) |
+| OSTEP 53 - Introduction to Security | [Open](OSTEP-53-Introduction-to-Security.pdf) |
+| OSTEP 54 - Authentication | [Open](OSTEP-54-Authentication.pdf) |
+| OSTEP 55 - Access Control | [Open](OSTEP-55-Access-Control.pdf) |
+| OSTEP 56 - Cryptography | [Open](OSTEP-56-Cryptography.pdf) |
+| Predictive Parsing (1) | [Open](Predictive-Parsing-1.pdf) |
+| Predictive Parsing (2) | [Open](Predictive-Parsing-2.pdf) |
