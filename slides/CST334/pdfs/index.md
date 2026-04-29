@@ -13,5 +13,6 @@ Printable slide handouts for CST334.
 | BNF Grammars | [Open](40-bnf_grammers.pdf) |
 | Introduction to Security | [Open](53-security-intro.pdf) |
 | Authentication | [Open](54-authentication.pdf) |
+| Access Control | [Open](55-access-control.pdf) |
 | Predictive Parsing (1) | [Open](languages-3-predictive-parsing-1.pdf) |
 | Predictive Parsing (2) | [Open](languages-4-predictive-parsing-2.pdf) |

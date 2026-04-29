@@ -15,5 +15,6 @@ PDF handouts are available in [pdfs/](pdfs/).
 | BNF Grammars | final | [Open](40-bnf_grammers.html) | [PDF](pdfs/40-bnf_grammers.pdf) |
 | Introduction to Security | beta | [Open](53-security-intro.html) | [PDF](pdfs/53-security-intro.pdf) |
 | Authentication | beta | [Open](54-authentication.html) | [PDF](pdfs/54-authentication.pdf) |
+| Access Control | beta | [Open](55-access-control.html) | [PDF](pdfs/55-access-control.pdf) |
 | Predictive Parsing (1) | beta | [Open](languages-3-predictive-parsing-1.html) | [PDF](pdfs/languages-3-predictive-parsing-1.pdf) |
 | Predictive Parsing (2) | beta | [Open](languages-4-predictive-parsing-2.html) | [PDF](pdfs/languages-4-predictive-parsing-2.pdf) |
