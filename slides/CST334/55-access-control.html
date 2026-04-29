@@ -196,7 +196,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 55" data-last-updated="2026-04-28 21:54" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 55" data-last-updated="2026-04-28 22:06" class="quarto-title-block center">
   <h1 class="title">Access Control</h1>
   <p class="subtitle">OSTEP 55</p>
 
@@ -221,8 +221,8 @@ Sam Ogden
 <section id="background-on-access-controls" class="slide level2 bigpicture">
 <h2>Background on Access Controls</h2>
 </section>
-<section id="the-obligatory-defines-slide" class="slide level2">
-<h2>The obligatory defines slide</h2>
+<section id="key-definitions" class="slide level2">
+<h2>Key definitions</h2>
 <ol type="1">
 <li><strong>Subject</strong>: The entity that wants to perform the access
 <ul>
@@ -320,7 +320,7 @@ Sam Ogden
 </div></div>
 </section>
 <section id="how-do-acls-work" class="slide level2">
-<h2>How do ACLs work</h2>
+<h2>How do ACLs work?</h2>
 <ol type="1">
 <li>When a resource is requested the OS finds the ACL associated with it</li>
 <li>The OS searches through the list for the current <em>subject</em>
@@ -354,9 +354,9 @@ Sam Ogden
 </div></div>
 </section>
 <section id="what-do-acls-look-like" class="slide level2">
-<h2>What do ACLs look like</h2>
+<h2>What do ACLs look like?</h2>
 
-<img data-src="assets/ostep-55-access-control/acls-linux.png" class="r-stretch"><p>We’ve seen this before when we look at folders in linux</p>
+<img data-src="assets/ostep-55-access-control/acls-linux.png" class="r-stretch"><p>We’ve seen this before when we look at folders in Linux</p>
 <div class="center">
 <p><strong>ACLs are what are used in Linux</strong></p>
 </div>
@@ -364,26 +364,26 @@ Sam Ogden
 <section id="capabilities" class="slide level2 bigpicture">
 <h2>Capabilities</h2>
 </section>
-<section id="capabilties" class="slide level2">
-<h2>Capabilties</h2>
+<section id="capabilities-1" class="slide level2">
+<h2>Capabilities</h2>
 <div class="columns">
 <div class="column">
 <p><img data-src="assets/ostep-55-access-control/sign-not-elon.jpg"></p>
 </div><div class="column">
 <ul>
-<li>Core idea is that <em>subects</em> have a token that identifies them
+<li>Core idea is that <em>subjects</em> have a token that identifies them
 <ul>
-<li>Such as a sign sayign they aren’t Elon</li>
+<li>Such as a sign saying they aren’t Elon</li>
 </ul></li>
 <li>If the subject doesn’t have the token, they aren’t allowed</li>
 </ul>
 </div></div>
 </section>
-<section id="how-do-capabiilties-work" class="slide level2">
-<h2>How do capabiilties work?</h2>
+<section id="how-do-capabilities-work" class="slide level2">
+<h2>How do capabilities work?</h2>
 <ol type="1">
 <li>When the <em>subject</em> requests access the OS we check if the process has that capability</li>
-<li>If the process has that capabilty then we allow it
+<li>If the process has that capability then we allow it
 <ul>
 <li>If not we deny</li>
 </ul></li>
@@ -392,7 +392,7 @@ Sam Ogden
 <section id="okay-but-how-do-they-actually-work" class="slide level2">
 <h2>Okay, but how do they actually work?</h2>
 <p>This sounds like ACLs so far, with the lookup…</p>
-<p><em>The capabilities list isn’t a “file”, it’s assigned to the process.</em></p>
+<p><em>The capabilities list isn’t a “file”; it’s assigned to the process.</em></p>
 <p>It’ll be kept in the Process Control struct (like the context!)</p>
 </section>
 <section id="what-are-capabilities" class="slide level2">
@@ -446,7 +446,7 @@ Sam Ogden
 <section id="role-based-access-control-rbac" class="slide level2">
 <h2>Role-Based Access Control (RBAC)</h2>
 <p><strong>Core Idea</strong>:</p>
-<p>Let’s assign access based on people’s classification</p>
+<p>Let’s assign access based on people’s roles</p>
 <div class="fragment">
 <div class="columns">
 <div class="column">
@@ -455,7 +455,7 @@ Sam Ogden
 <p>Accounting shouldn’t touch code.</p>
 </div><div class="column">
 <p>We can switch between groups depending on what role we are currently in.</p>
-<p>This is an example of <em>Least Privilege</em></p>
+<p>This is an example of <em>least privilege</em></p>
 </div></div>
 </div>
 </section>
@@ -468,7 +468,7 @@ Sam Ogden
 <div class="column">
 <p><strong>Mandatory</strong></p>
 <p>A system admin decides who gets access</p>
-<p>Often used in controled environments</p>
+<p>Often used in controlled environments</p>
 </div><div class="column">
 <p><strong>Discretionary</strong></p>
 <p>Owner of the file decides</p>
@@ -480,12 +480,12 @@ Sam Ogden
 </section>
 <section id="how-to-do-dangerous-things" class="slide level2">
 <h2>How to do dangerous things</h2>
-<p>Sometimes it’s necessary to run applications with higher privleges than you have.</p>
-<p>For example, windows managers need extra permissions</p>
+<p>Sometimes it’s necessary to run applications with higher privileges than you have.</p>
+<p>For example, window managers need extra permissions</p>
 <div class="fragment">
 <div class="center">
 <p><strong><code>setuid</code></strong></p>
-<p>This allows us to run a program as the <em>owner</em> of the file (rather than themselves)</p>
+<p>This allows us to run a program as the <em>owner</em> of the file rather than as ourselves</p>
 </div>
 </div>
 </section>
