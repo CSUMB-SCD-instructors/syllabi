@@ -130,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 56" data-last-updated="2026-04-29 09:33" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 56" data-last-updated="2026-04-29 09:41" class="quarto-title-block center">
   <h1 class="title">Cryptography</h1>
   <p class="subtitle">CSUMB</p>
 
@@ -238,10 +238,10 @@ Sam Ogden
 <ul>
 <li>An algorithm (aka <code>cipher</code>), <span class="math inline">\(E\)</span></li>
 <li>Some data (aka <code>plaintext</code>), <span class="math inline">\(P\)</span></li>
-<li>Two secret keys
+<li>Two keys
 <ul>
-<li><span class="math inline">\(K_{public}\)</span></li>
-<li><span class="math inline">\(K_{private}\)</span></li>
+<li>A <strong>public</strong> <span class="math inline">\(K_{public}\)</span></li>
+<li>A <strong>secret</strong> <span class="math inline">\(K_{private}\)</span></li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:52%;">
@@ -292,10 +292,12 @@ Sam Ogden
 <section id="features-of-cryptographic-hashes" class="slide level2">
 <h2>Features of Cryptographic Hashes</h2>
 <ul>
-<li>Collusion Resistance: Collisions are computationally infeasible</li>
-<li>Input sensitivity: Any input change results in large output change</li>
+<li><strong>Collision Resistance</strong>: Collisions are computationally infeasible</li>
+<li><strong>Input sensitivity</strong>: Any input change results in large output change
+<ul>
 <li>Roughly 50% of bits in output should change for any single input bit change</li>
-<li>One-way: Computationally infeasible to infer input properties</li>
+</ul></li>
+<li><strong>One-way</strong>: Computationally infeasible to infer input properties</li>
 </ul>
 </section>
 <section id="computationally-infeasible" class="slide level2">
@@ -405,10 +407,10 @@ Sam Ogden
 <section id="what-the-os-should-think-about" class="slide level2">
 <h2>What the OS should think about</h2>
 <ul>
-<li>How to provide <code>entropy</code></li>
-<li>How to protect the user against <code>us</code></li>
-<li>How to provide at-rest data encryption</li>
-<li>How to safely authenticate users in different environments</li>
+<li>How to provide <strong>entropy</strong></li>
+<li>How to protect the user against <strong>us</strong></li>
+<li>How to provide <strong>at-rest data encryption</strong></li>
+<li>How to safely authenticate users across systems</li>
 </ul>
 
 </section>
