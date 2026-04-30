@@ -130,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-04-30 11:44" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-04-30 11:50" class="quarto-title-block center">
   <h1 class="title">Cryptography</h1>
   <p class="subtitle">CSUMB</p>
 
@@ -304,9 +304,10 @@ Sam Ogden
 <h2>Features of Cryptographic Hashes</h2>
 <ul>
 <li><strong>Collision Resistance</strong>: Collisions are computationally infeasible</li>
-<li><strong>Input sensitivity</strong>: Any input change results in large output change
+<li><strong>Input sensitivity (avalanche)</strong>: flipping 1 input bit should flip each output bit with probability ~1/2
 <ul>
-<li>Roughly 50% of bits in output should change for any single input bit change</li>
+<li>So on average ~50% of output bits change (with normal variation)</li>
+<li>Systematic deviation from 50% can indicate bias / weak diffusion</li>
 </ul></li>
 <li><strong>One-way</strong>: Computationally infeasible to infer input properties</li>
 </ul>
@@ -315,22 +316,23 @@ Sam Ogden
 <h2>Computationally Infeasible</h2>
 <p><img data-src="assets/ostep-56-cryptography/computationally-infeasible.png"></p>
 </section>
-<section id="hashes-collisions" class="slide level2">
-<h2>Hashes: Collisions</h2>
+<section id="hash-collisions-sha-1" class="slide level2">
+<h2>Hash Collisions: SHA-1</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
 <p><img data-src="assets/ostep-56-cryptography/hash-collisions.png"></p>
-</section>
-<section id="hashes-sha-1-collision" class="slide level2">
-<h2>Hashes: SHA-1 Collision</h2>
+</div><div class="column" style="width:45%;">
 <ul>
-<li>Google made a SHA-1 collision happen in 2017</li>
-<li>It was previously considered secure</li>
-<li>Some numbers:
+<li>A <strong>collision</strong> means two different inputs have the same hash output</li>
+<li>SHA-1 collisions were demonstrated publicly in <strong>2017</strong> (Google)</li>
+<li>Takeaway: “collision resistance” is a real requirement, and older hashes break</li>
+<li>Numbers (roughly):
 <ul>
-<li>Nine quintillion (9,223,372,036,854,775,808) SHA1 computations in total</li>
-<li>6,500 years of CPU computation to complete the attack first phase</li>
-<li>110 years of GPU computation to complete the second phase</li>
+<li>~9 quintillion SHA-1 computations total</li>
+<li>Thousands of CPU-years + hundreds of GPU-years</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="hashes-small-changes-to-big-changes" class="slide level2">
 <h2>Hashes: Small Changes to Big Changes</h2>
