@@ -271,6 +271,16 @@
   margin: 0.35rem auto;
 }
 
+/* Quarto/Graphviz (`dot`) output: the SVGs come with fixed 960x480 sizing and
+   `max-width: none`, which can force Reveal to shrink the entire slide.
+   Make them responsive and cap their height. */
+.reveal .slides section .cell-output-display svg {
+  width: min(100%, 1100px) !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 42vh !important;
+}
+
 /* If the slide has substantial text (lists/paragraphs/etc), cap images more. */
 .reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img:not(.no-constrain) {
   max-height: 55vh;
