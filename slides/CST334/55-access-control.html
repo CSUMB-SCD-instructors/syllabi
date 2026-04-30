@@ -196,7 +196,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 55" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-access.pdf" data-last-updated="2026-04-29 19:14" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 55" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-access.pdf" data-last-updated="2026-04-30 11:15" class="quarto-title-block center">
   <h1 class="title">Access Control</h1>
   <p class="subtitle">OSTEP 55</p>
 
@@ -214,11 +214,11 @@ Sam Ogden
 <p>This slide deck is still under active development. Expect changes before it is finalized.</p>
 </section>
 
-<section id="the-big-question" class="slide level2 bigpicture">
+<section id="the-big-question" class="slide level2 section-header">
 <h2>The Big Question</h2>
 <p>How do we control who gets what resources?</p>
 </section>
-<section id="background-on-access-controls" class="slide level2 bigpicture">
+<section id="background-on-access-controls" class="slide level2 section-header">
 <h2>Background on Access Controls</h2>
 </section>
 <section id="key-definitions" class="slide level2">
@@ -303,7 +303,7 @@ Sam Ogden
 </div>
 </div></div>
 </section>
-<section id="access-control-lists" class="slide level2 bigpicture">
+<section id="access-control-lists" class="slide level2 section-header">
 <h2>Access Control Lists</h2>
 </section>
 <section id="access-control-lists-1" class="slide level2">
@@ -356,12 +356,12 @@ Sam Ogden
 <section id="what-do-acls-look-like" class="slide level2">
 <h2>What do ACLs look like?</h2>
 <p><img data-src="assets/ostep-55-access-control/acls-linux.png"></p>
-<p>We’ve seen this before when we look at folders in Linux</p>
+<p><br></p>
 <div class="center">
-<p><strong>ACLs are what are used in Linux</strong></p>
+<p><strong>ACLs are the basis in Linux</strong></p>
 </div>
 </section>
-<section id="capabilities" class="slide level2 bigpicture">
+<section id="capabilities" class="slide level2 section-header">
 <h2>Capabilities</h2>
 </section>
 <section id="capabilities-1" class="slide level2">
@@ -422,7 +422,7 @@ Sam Ogden
 </ul>
 </div></div>
 </section>
-<section id="which-is-better" class="slide level2 bigpicture">
+<section id="which-is-better" class="slide level2 section-header">
 <h2>Which is better?</h2>
 </section>
 <section id="as-always-it-depends" class="slide level2">
@@ -459,7 +459,7 @@ Sam Ogden
 </div></div>
 </div>
 </section>
-<section id="who-decides-this" class="slide level2 bigpicture">
+<section id="who-decides-this" class="slide level2 section-header">
 <h2>Who decides this?</h2>
 </section>
 <section id="mandatory-vs-discretionary" class="slide level2">
@@ -475,13 +475,13 @@ Sam Ogden
 <p>The default on most systems</p>
 </div></div>
 </section>
-<section id="dangerous-things" class="slide level2 bigpicture">
+<section id="dangerous-things" class="slide level2 section-header">
 <h2>Dangerous Things</h2>
 </section>
 <section id="how-to-do-dangerous-things" class="slide level2">
 <h2>How to do dangerous things</h2>
 <p>Sometimes it’s necessary to run applications with higher privileges than you have.</p>
-<p>For example, window managers need extra permissions</p>
+<p>For example, parts of the windowing / display stack may need extra permissions (hardware, input devices, etc.)</p>
 <div class="fragment">
 <div class="center">
 <p><strong><code>setuid</code></strong></p>
@@ -510,6 +510,68 @@ Sam Ogden
 <li>That program had better be safe!</li>
 </ul>
 </div></div>
+</section>
+<section id="a-concrete-access-control-mess-x11-xorg" class="slide level2">
+<h2>A concrete access-control mess: X11 / Xorg</h2>
+<p>The <strong>X11 protocol</strong> (and X servers that implement it, like <strong>Xorg</strong>) are a great example of how “access control” shows up in real systems.</p>
+<ul>
+<li>If a program can connect to your X server, it can often:
+<ul>
+<li>Read keystrokes / clipboard</li>
+<li>Take screenshots</li>
+<li>Inject mouse + keyboard events</li>
+</ul></li>
+</ul>
+<p>So: <strong>“Who is allowed to connect to my display?”</strong> is an access-control question.</p>
+</section>
+<section id="x11-uses-both-acl-ish-and-capability-ish-ideas" class="slide level2">
+<h2>X11 uses both ACL-ish and capability-ish ideas</h2>
+<ul>
+<li>The X server maintains an “allowed clients” policy (ACL flavor)</li>
+<li>But the common mechanism is a secret token:
+<ul>
+<li>Your X session cookie in <code>~/.Xauthority</code></li>
+<li>If someone gets it, they can often connect (capability flavor)</li>
+</ul></li>
+</ul>
+<p>This is why accidentally sharing credentials (or disabling checks) is such a big deal.</p>
+</section>
+<section id="why-setuid-is-scary-here" class="slide level2">
+<h2>Why <code>setuid</code> is scary here</h2>
+<ul>
+<li>Historically, the <strong>Xorg X server</strong> sometimes needed elevated privileges on some systems
+<ul>
+<li>So you might see <code>Xorg</code> (or a wrapper like <code>Xorg.wrap</code>) installed <code>setuid root</code></li>
+</ul></li>
+<li>Any memory-safety bug in a <code>setuid</code> binary can become a <strong>privilege escalation</strong></li>
+</ul>
+<p>Design goal: keep privileged code <strong>small</strong>, and drop privileges as soon as possible.</p>
+</section>
+<section id="how-xorg-reduced-its-setuid-surface-rootless-x" class="slide level2">
+<h2>How Xorg reduced its <code>setuid</code> surface (rootless X)</h2>
+<p>Modern Linux setups try to keep Xorg unprivileged and move the dangerous parts elsewhere.</p>
+<ul>
+<li>A small privileged helper / service (e.g., <code>systemd-logind</code>) enforces policy:
+<ul>
+<li>“Is this user/session allowed to use the GPU / input devices?”</li>
+<li>Often implemented via device ACLs tied to the active seat/session</li>
+</ul></li>
+<li>The helper opens device files (like <code>/dev/dri/*</code>) and passes <strong>file descriptors</strong> to Xorg
+<ul>
+<li>Those FDs are effectively <strong>capabilities</strong>: if you have the handle, you can use the device</li>
+</ul></li>
+</ul>
+<p>Net effect: privileged code is smaller, and Xorg can drop (or avoid) <code>setuid root</code>.</p>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li>Access control is <strong>authorization</strong>: can a subject do an action to an object?</li>
+<li>ACLs and capabilities are two useful mental models (and real systems mix them)</li>
+<li>Least privilege (RBAC, groups) helps reduce blast radius</li>
+<li><code>setuid</code> is a sharp tool: necessary sometimes, dangerous always</li>
+<li>Concrete reminder: X11/Xorg is “just access control” in disguise (and mistakes are painful)</li>
+</ul>
 
 </section>
     </div>

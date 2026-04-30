@@ -130,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-04-29 19:14" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-04-30 11:15" class="quarto-title-block center">
   <h1 class="title">Cryptography</h1>
   <p class="subtitle">CSUMB</p>
 
@@ -151,10 +151,10 @@ Sam Ogden
 <section id="lecture-objectives" class="slide level2">
 <h2>Lecture Objectives</h2>
 <ul>
-<li>After this lecture, you should be able to:</li>
-<li>Talk about the two main kinds of cryptography</li>
-<li>Discuss how we use cryptography in operating systems and computer science</li>
-<li>Know to never, ever roll your own (at least until you do much too much math)</li>
+<li>Distinguish confidentiality, integrity, and authenticity</li>
+<li>Compare symmetric vs.&nbsp;asymmetric encryption (and why we mix them)</li>
+<li>Explain hashes, HMACs, and digital signatures at a high level</li>
+<li>Recognize common ways systems fail (“don’t roll your own”)</li>
 </ul>
 </section>
 <section id="major-goals-of-cryptography" class="slide level2">
@@ -184,12 +184,15 @@ Sam Ogden
 </div>
 <ul>
 <li>Ensure the data is correct</li>
-<li>Checksums</li>
+<li>Cryptographic hashes + MACs (not simple checksums)</li>
 </ul>
 </div>
 </div>
 </section>
-<section id="confidentiality" class="slide level2 bigpicture">
+<section class="slide level2">
+
+</section>
+<section id="confidentiality" class="slide level2 section-header">
 <h2>Confidentiality</h2>
 <p>Ensuring data is secret</p>
 </section>
@@ -271,6 +274,9 @@ Sam Ogden
 <section id="diffie-hellman-key-exchange" class="slide level2">
 <h2>Diffie-Hellman Key Exchange</h2>
 <p><img data-src="assets/ostep-56-cryptography/diffie-hellman-key-exchange.png"></p>
+<div class="center">
+<p>Goal: agree on a shared secret, then switch to fast symmetric encryption.</p>
+</div>
 </section>
 <section id="encryption-summary" class="slide level2">
 <h2>Encryption Summary</h2>
@@ -282,7 +288,10 @@ Sam Ogden
 <li>Good systems use encryption as part of a larger design, not as a magic shield</li>
 </ul>
 </section>
-<section id="integrity" class="slide level2 bigpicture">
+<section class="slide level2">
+
+</section>
+<section id="integrity" class="slide level2 section-header">
 <h2>Integrity</h2>
 <p>Verifying data is right</p>
 </section>
@@ -290,8 +299,8 @@ Sam Ogden
 <h2>Integrity: Core Idea</h2>
 <ul>
 <li>Include a piece of information to ensure that a file is unaltered</li>
-<li>We accomplish this by adding in an extra piece of information: a <code>hash</code></li>
-<li>Hashes are one-way functions that represent data in a compact form</li>
+<li>We often accomplish this by adding an extra piece of information: a cryptographic <code>hash</code></li>
+<li>Hashes are one-way functions that represent data in a compact digest</li>
 </ul>
 </section>
 <section id="features-of-cryptographic-hashes" class="slide level2">
@@ -341,7 +350,24 @@ Sam Ogden
 <p>It should be infeasible to recover the input from that digest</p>
 </div>
 </section>
-<section id="authentication" class="slide level2 bigpicture">
+<section id="hashes-vs.-attacker-proof-integrity" class="slide level2">
+<h2>Hashes vs.&nbsp;attacker-proof integrity</h2>
+<ul>
+<li>A plain hash detects accidental corruption
+<ul>
+<li>But an attacker can modify the file <strong>and</strong> recompute the hash</li>
+</ul></li>
+<li>To detect malicious tampering you usually need a secret or a key:
+<ul>
+<li><code>HMAC(key, message)</code> (shared secret)</li>
+<li>Digital signature (public-key)</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section>
+<section id="authentication" class="slide level2 section-header">
 <h2>Authentication</h2>
 <p>Verifying we are us</p>
 </section>
@@ -498,8 +524,8 @@ Sam Ogden
 <li>If the verification passes, the message is authentic and unchanged</li>
 </ul>
 </section>
-<section id="breaking-crytography" class="slide level2 bigpicture">
-<h2>Breaking Crytography</h2>
+<section id="breaking-cryptography" class="slide level2 section-header">
+<h2>Breaking Cryptography</h2>
 </section>
 <section id="common-ways-to-crack-cryptography" class="slide level2">
 <h2>Common Ways to crack Cryptography</h2>
@@ -538,16 +564,24 @@ Sam Ogden
 <h2>Example of a flawed system: DES</h2>
 <p><img data-src="assets/ostep-56-cryptography/des-diagram.png"></p>
 </section>
-<section id="cryptography-in-operating-systems" class="slide level2 bigpicture">
+<section id="cryptography-in-operating-systems" class="slide level2 section-header">
 <h2>Cryptography in Operating Systems</h2>
 </section>
 <section id="what-the-os-should-think-about" class="slide level2">
 <h2>What the OS should think about</h2>
 <ul>
 <li>How to provide <strong>entropy</strong></li>
-<li>How to protect the user against <strong>us</strong></li>
+<li>How to protect secrets from <strong>other users / attackers</strong></li>
 <li>How to provide <strong>at-rest data encryption</strong></li>
 <li>How to safely authenticate users across systems</li>
+</ul>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li>Crypto tools map to goals: confidentiality (encryption), integrity (MAC/signatures), authenticity (HMAC/signatures)</li>
+<li>We mix asymmetric + symmetric because performance and key distribution both matter</li>
+<li>Most real-world breaks are operational or implementation failures, not “math is wrong”</li>
 </ul>
 
 </section>

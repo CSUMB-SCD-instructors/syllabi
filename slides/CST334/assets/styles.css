@@ -119,15 +119,48 @@
 }
 
 /* RevealJS: section-break slides.
-   Usage:
-   ::: {.section-header}
-   # Section title
-   Optional subtitle
-   :::
+   Supported usage patterns:
+
+   1) Heading-based (recommended for simple break slides):
+      ---
+      ## Capabilities {.section-header}
+      ---
+
+      Quarto promotes the class onto the slide <section>, so we center the
+      slide and style the heading as the "card".
+
+   2) Div-based (for title + subtitle blocks):
+      ::: {.section-header}
+      # Section title
+      Optional subtitle
+      :::
 */
-.reveal .slides .section-header {
+.reveal .slides section.section-header {
   display: flex;
-  min-height: 64vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0;
+}
+
+.reveal .slides section.section-header > :is(h1, h2, h3) {
+  margin: 0;
+  line-height: 1.05;
+  width: min(78vw, 52rem);
+  padding: 2rem 2.5rem;
+  background:
+    linear-gradient(180deg, rgba(221, 227, 234, 0.55), rgba(221, 227, 234, 0.28)),
+    rgba(255, 255, 255, 0.86);
+  border: 2px solid rgba(49, 69, 107, 0.15);
+  border-radius: 22px;
+  box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
+}
+
+/* Div-based card (use inside an otherwise-empty slide). */
+.reveal .slides div.section-header {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -144,19 +177,20 @@
   box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
 }
 
-.reveal .slides .section-header > :is(h1, h2, h3) {
+.reveal .slides div.section-header > :is(h1, h2, h3) {
   margin: 0;
   line-height: 1.05;
 }
 
-.reveal .slides .section-header > :first-child {
+.reveal .slides div.section-header > :first-child {
   font-size: 2.25em;
 }
 
-.reveal .slides .section-header > :not(:first-child) {
+.reveal .slides div.section-header > :not(:first-child) {
   font-size: 1.15em;
   color: rgba(26, 26, 26, 0.82);
 }
+
 
 /* RevealJS: current/total slide number in bottom center */
 .reveal .slide-number {
