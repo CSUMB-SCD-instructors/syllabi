@@ -130,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-04-30 11:15" class="quarto-title-block center">
+<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-04-30 11:44" class="quarto-title-block center">
   <h1 class="title">Cryptography</h1>
   <p class="subtitle">CSUMB</p>
 
@@ -151,10 +151,13 @@ Sam Ogden
 <section id="lecture-objectives" class="slide level2">
 <h2>Lecture Objectives</h2>
 <ul>
-<li>Distinguish confidentiality, integrity, and authenticity</li>
+<li>Distinguish confidentiality, integrity, and authenticity (authentication)</li>
 <li>Compare symmetric vs.&nbsp;asymmetric encryption (and why we mix them)</li>
-<li>Explain hashes, HMACs, and digital signatures at a high level</li>
-<li>Recognize common ways systems fail (“don’t roll your own”)</li>
+<li>Explain hashes and digital signatures at a high level</li>
+<li>Recognize common ways systems fail
+<ul>
+<li>TLDR: “don’t roll your own”</li>
+</ul></li>
 </ul>
 </section>
 <section id="major-goals-of-cryptography" class="slide level2">
@@ -169,9 +172,9 @@ Sam Ogden
 <li>Encryption</li>
 </ul>
 </div>
-<div class="box" data-header="Authenticity">
+<div class="box" data-header="Authenticity (Authentication)">
 <div class="box-header">
-<p>Authenticity</p>
+<p>Authenticity (Authentication)</p>
 </div>
 <ul>
 <li>Ensure the data came from who it says it came from</li>
@@ -188,9 +191,6 @@ Sam Ogden
 </ul>
 </div>
 </div>
-</section>
-<section class="slide level2">
-
 </section>
 <section id="confidentiality" class="slide level2 section-header">
 <h2>Confidentiality</h2>
@@ -259,7 +259,7 @@ Sam Ogden
 <section id="trade-offs" class="slide level2">
 <h2>Trade-offs</h2>
 <ul>
-<li>Public Key encryption is expensive
+<li>Public-key encryption is expensive
 <ul>
 <li>Long keys (thousands of bits)</li>
 <li>Lots of calculations (huge exponents)</li>
@@ -287,9 +287,6 @@ Sam Ogden
 <li>Asymmetric encryption uses a public key to encrypt and a private key to decrypt</li>
 <li>Good systems use encryption as part of a larger design, not as a magic shield</li>
 </ul>
-</section>
-<section class="slide level2">
-
 </section>
 <section id="integrity" class="slide level2 section-header">
 <h2>Integrity</h2>
@@ -363,9 +360,6 @@ Sam Ogden
 <li>Digital signature (public-key)</li>
 </ul></li>
 </ul>
-</section>
-<section class="slide level2">
-
 </section>
 <section id="authentication" class="slide level2 section-header">
 <h2>Authentication</h2>

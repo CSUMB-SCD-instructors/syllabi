@@ -158,6 +158,37 @@
   box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
 }
 
+/* If the slide has a subtitle/body (e.g. a paragraph), visually merge it into the same card. */
+.reveal .slides section.section-header > :is(h1, h2, h3):not(:last-child) {
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: 1.25rem;
+  box-shadow: none;
+}
+
+.reveal .slides section.section-header > :not(:is(h1, h2, h3)) {
+  width: min(78vw, 52rem);
+  margin: 0;
+  padding: 0 2.5rem 2rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(221, 227, 234, 0.28), rgba(255, 255, 255, 0.86));
+  border: 2px solid rgba(49, 69, 107, 0.15);
+  border-top: 0;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
+}
+
+/* Tighten default paragraph spacing inside section-header cards. */
+.reveal .slides section.section-header > p {
+  padding-top: 0.5rem;
+  line-height: 1.15;
+  color: rgba(26, 26, 26, 0.82);
+  font-size: 1.15em;
+}
+
 /* Div-based card (use inside an otherwise-empty slide). */
 .reveal .slides div.section-header {
   display: flex;
@@ -265,6 +296,85 @@ html.print-pdf @page {
 }
 
 /* RevealJS: list hierarchy styling */
+.reveal .slides section :is(ul, ol) {
+  /* Slightly deeper indent than Reveal defaults (easier to scan). */
+  margin-left: 1.35em;
+  padding-left: 0.35em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) {
+  /* Keep nested lists indented, but not wildly so. */
+  margin-left: 1.25em;
+  padding-left: 0.3em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) {
+  margin-left: 1.15em;
+  padding-left: 0.25em;
+}
+
+/* RevealJS: indent guides (IDE-style gutters) for nested lists.
+   Draw the guide slightly *left* of the nested list so it lines up under the
+   parent bullet (rather than under the child bullets). */
+.reveal .slides section :is(ul, ol) :is(ul, ol) {
+  position: relative;
+  padding-left: 0.7em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: -1.05em;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgba(49, 69, 107, 0.18);
+  border-radius: 2px;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) {
+  position: relative;
+  padding-left: 0.65em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgba(49, 69, 107, 0.12);
+  border-radius: 2px;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) {
+  position: relative;
+  padding-left: 0.6em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgba(49, 69, 107, 0.09);
+  border-radius: 2px;
+}
+
+/* Don't add indent guides inside boxed callouts (too visually busy). */
+.reveal .slides .box :is(ul, ol) :is(ul, ol) {
+  /* Disable guides inside boxes. */
+  position: static;
+  padding-left: 0.35em;
+}
+
+.reveal .slides .box :is(ul, ol) :is(ul, ol)::before {
+  content: none;
+}
+
 .reveal .slides section :is(ul, ol) > li {
   font-weight: 500;
   font-size: 1.06em;
