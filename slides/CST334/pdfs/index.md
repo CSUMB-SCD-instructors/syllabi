@@ -11,6 +11,7 @@ Printable slide handouts for CST334.
 | --- | --- |
 | BNF Grammars | [Open](BNF-Grammars.pdf) |
 | Docker Setup | [Open](Docker-Setup.pdf) |
+| Exam 4 Review | [Open](Exam-4-Review.pdf) |
 | OSTEP 53 - Introduction to Security | [Open](OSTEP-53-Introduction-to-Security.pdf) |
 | OSTEP 54 - Authentication | [Open](OSTEP-54-Authentication.pdf) |
 | OSTEP 55 - Access Control | [Open](OSTEP-55-Access-Control.pdf) |

@@ -13,6 +13,7 @@ PDF handouts are available in [pdfs/](pdfs/).
 | --- | --- | --- | --- |
 | BNF Grammars | final | [Open](40-bnf_grammers.html) | [PDF](pdfs/BNF-Grammars.pdf) |
 | Docker Setup | final | [Open](00-docker_setup.html) | [PDF](pdfs/Docker-Setup.pdf) |
+| Exam 4 Review | beta | [Open](exam4-review.html) | [PDF](pdfs/Exam-4-Review.pdf) |
 | OSTEP 53 - Introduction to Security | beta | [Open](53-security-intro.html) | [PDF](pdfs/OSTEP-53-Introduction-to-Security.pdf) |
 | OSTEP 54 - Authentication | beta | [Open](54-authentication.html) | [PDF](pdfs/OSTEP-54-Authentication.pdf) |
 | OSTEP 55 - Access Control | beta | [Open](55-access-control.html) | [PDF](pdfs/OSTEP-55-Access-Control.pdf) |
