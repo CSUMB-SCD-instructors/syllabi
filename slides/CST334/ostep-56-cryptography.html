@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="55-access-control_files/libs/clipboard/clipboard.min.js"></script>
-<script src="55-access-control_files/libs/quarto-html/tabby.min.js"></script>
-<script src="55-access-control_files/libs/quarto-html/popper.min.js"></script>
-<script src="55-access-control_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="55-access-control_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="55-access-control_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="55-access-control_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="ostep-56-cryptography_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ostep-56-cryptography_files/libs/quarto-html/tabby.min.js"></script>
+<script src="ostep-56-cryptography_files/libs/quarto-html/popper.min.js"></script>
+<script src="ostep-56-cryptography_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="ostep-56-cryptography_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ostep-56-cryptography_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="ostep-56-cryptography_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
-  <title>Access Control</title>
+  <title>Cryptography</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="55-access-control_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="55-access-control_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="ostep-56-cryptography_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="ostep-56-cryptography_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -31,79 +31,13 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="55-access-control_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="ostep-56-cryptography_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
   <link rel="stylesheet" href="assets/styles.css">
-  <link href="55-access-control_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="55-access-control_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="55-access-control_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="55-access-control_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="ostep-56-cryptography_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="ostep-56-cryptography_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="ostep-56-cryptography_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="ostep-56-cryptography_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -196,9 +130,9 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 55" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-access.pdf" data-last-updated="2026-04-30 11:15" class="quarto-title-block center">
-  <h1 class="title">Access Control</h1>
-  <p class="subtitle">OSTEP 55</p>
+<section id="title-slide" data-chapter="OSTEP 56" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-crypto.pdf" data-last-updated="2026-05-13 11:07" class="quarto-title-block center">
+  <h1 class="title">Cryptography</h1>
+  <p class="subtitle">CSUMB</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -214,363 +148,436 @@ Sam Ogden
 <p>This slide deck is still under active development. Expect changes before it is finalized.</p>
 </section>
 
-<section id="the-big-question" class="slide level2 section-header">
-<h2>The Big Question</h2>
-<p>How do we control who gets what resources?</p>
-</section>
-<section id="background-on-access-controls" class="slide level2 section-header">
-<h2>Background on Access Controls</h2>
-</section>
-<section id="key-definitions" class="slide level2">
-<h2>Key definitions</h2>
-<ol type="1">
-<li><strong>Subject</strong>: The entity that wants to perform the access
+<section id="lecture-objectives" class="slide level2">
+<h2>Lecture Objectives</h2>
 <ul>
-<li>A process representing a user</li>
-</ul></li>
-<li><strong>Object</strong>: The thing the <em>subject</em> wants to access
+<li>Distinguish confidentiality, integrity, and authenticity (authentication)</li>
+<li>Compare symmetric vs.&nbsp;asymmetric encryption (and why we mix them)</li>
+<li>Explain hashes and digital signatures at a high level</li>
+<li>Recognize common ways systems fail
 <ul>
-<li>e.g.&nbsp;a file</li>
-</ul></li>
-<li><strong>Access</strong>: The mode of dealing with the <em>object</em>
-<ul>
-<li>e.g.&nbsp;writing to a file</li>
-</ul></li>
-</ol>
-<p><strong>Authorization</strong>: Determining whether a <em>subject</em> can <em>access</em> an <em>object</em></p>
-</section>
-<section id="authorization" class="slide level2">
-<h2>Authorization</h2>
-<p>Before allowing access to a resource, we need to do authorization.</p>
-<p>Our <strong>reference monitor</strong> is what performs this</p>
-<p>Resources might be handled in different ways</p>
-<div class="boxgrid" style="--boxgrid-cols:2;">
-<div class="box">
-<ul>
-<li>Memory
-<ul>
-<li>Virtual memory</li>
-<li>Page sharing?</li>
+<li>TLDR: “don’t roll your own”</li>
 </ul></li>
 </ul>
+</section>
+<section id="major-goals-of-cryptography" class="slide level2">
+<h2>Major Goals of Cryptography</h2>
+<div class="boxgrid" cols="3" style="--boxgrid-cols:3;">
+<div class="box" data-header="Confidentiality">
+<div class="box-header">
+<p>Confidentiality</p>
 </div>
-<div class="box">
 <ul>
-<li>Files
-<ul>
-<li>Executable programs</li>
-<li>log files</li>
-</ul></li>
+<li>Hide the information from prying eyes</li>
+<li>Encryption</li>
 </ul>
 </div>
-<div class="box">
+<div class="box" data-header="Authenticity (Authentication)">
+<div class="box-header">
+<p>Authenticity (Authentication)</p>
+</div>
 <ul>
-<li>Devices
+<li>Ensure the data came from who it says it came from</li>
+<li>Signing</li>
+</ul>
+</div>
+<div class="box" data-header="Integrity">
+<div class="box-header">
+<p>Integrity</p>
+</div>
 <ul>
-<li>A keyboard</li>
-</ul></li>
+<li>Ensure the data is correct</li>
+<li>Cryptographic hashes + MACs (not simple checksums)</li>
 </ul>
 </div>
 </div>
 </section>
-<section id="accessing-resources" class="slide level2">
-<h2>Accessing Resources</h2>
-<p>A good way to think about how we are opening resources is to think of opening a file.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>open("/var/foo", O_RDWR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong><code>open(...)</code> is a syscall</strong></p>
-<p><em>When access to the resource is requested the OS sees if the subject is allowed to access it.</em></p>
+<section id="confidentiality" class="slide level2 section-header">
+<h2>Confidentiality</h2>
+<p>Ensuring data is secret</p>
 </section>
-<section id="access-control-lists-and-capabilities" class="slide level2">
-<h2>Access Control Lists and Capabilities</h2>
-<div class="columns columns-center">
-<div class="column" style="width:45%;">
-<div class="box">
-<p><strong>Access Control Lists</strong></p>
+<section id="two-main-kinds-of-encryption" class="slide level2">
+<h2>Two main kinds of Encryption</h2>
 <ul>
-<li>List of who can access resources</li>
-<li>Attached to the resources themselves</li>
+<li>Symmetric Key encryption
+<ul>
+<li>Both the sender and receiver use the same key</li>
+<li>Examples: DES, AES, Blowfish</li>
+</ul></li>
+<li>Asymmetric key encryption
+<ul>
+<li>The sender and the receiver use two different keys, the public key and a private key</li>
+<li>Examples: RSA, ECC</li>
+</ul></li>
 </ul>
+</section>
+<section id="shared-key-encryption-symmetric" class="slide level2">
+<h2>Shared-Key Encryption (Symmetric)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>We are given:</p>
+<ul>
+<li>An algorithm (aka <code>cipher</code>), <span class="math inline">\(E\)</span></li>
+<li>Some data (aka <code>plaintext</code>), <span class="math inline">\(P\)</span></li>
+<li>One secret (aka <code>key</code>), <span class="math inline">\(K\)</span></li>
+</ul>
+<p>We output:</p>
+<ul>
+<li>Encrypted data (aka <code>ciphertext</code>), <span class="math inline">\(C\)</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><br><br></p>
+<div class="box">
+<p><span class="math inline">\(C = E(P,K)\)</span></p>
+<p><span class="math inline">\(P = D(C,K)\)</span></p>
 </div>
-</div><div class="column" style="width:10%;">
-
+</div></div>
+</section>
+<section id="public-key-encryption-asymmetric" class="slide level2">
+<h2>Public-Key Encryption (Asymmetric)</h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<p>We are given:</p>
+<ul>
+<li>An algorithm (aka <code>cipher</code>), <span class="math inline">\(E\)</span></li>
+<li>Some data (aka <code>plaintext</code>), <span class="math inline">\(P\)</span></li>
+<li>Two keys
+<ul>
+<li>A <strong>public</strong> <span class="math inline">\(K_{public}\)</span></li>
+<li>A <strong>secret</strong> <span class="math inline">\(K_{private}\)</span></li>
+<li>The scheme is public; the keys are what matter</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:52%;">
+<p><br><br></p>
+<div class="box">
+<p><span class="math inline">\(C = E(P,K_{public})\)</span></p>
+<p><span class="math inline">\(P = D(C,K_{private})\)</span></p>
+</div>
+</div></div>
+</section>
+<section id="trade-offs" class="slide level2">
+<h2>Trade-offs</h2>
+<ul>
+<li>Public-key encryption is expensive
+<ul>
+<li>Long keys (thousands of bits)</li>
+<li>Lots of calculations (huge exponents)</li>
+</ul></li>
+<li>Shared Key encryption is onerous
+<ul>
+<li>Either you have many unique keys, or you reduce privacy greatly</li>
+</ul></li>
+<li>Often we use a mix of both!</li>
+</ul>
+</section>
+<section id="diffie-hellman-key-exchange" class="slide level2">
+<h2>Diffie-Hellman Key Exchange</h2>
+<p><img data-src="assets/ostep-56-cryptography/diffie-hellman-key-exchange.png"></p>
+<div class="center">
+<p>Goal: agree on a shared secret, then switch to fast symmetric encryption.</p>
+</div>
+</section>
+<section id="encryption-summary" class="slide level2">
+<h2>Encryption Summary</h2>
+<ul>
+<li>Encryption protects confidentiality</li>
+<li>The algorithm is public; security comes from the key, not from hiding the method</li>
+<li>Symmetric encryption uses one shared secret key</li>
+<li>Asymmetric encryption uses a public key to encrypt and a private key to decrypt</li>
+<li>Good systems use encryption as part of a larger design, not as a magic shield</li>
+</ul>
+</section>
+<section id="integrity" class="slide level2 section-header">
+<h2>Integrity</h2>
+<p>Verifying data is right</p>
+</section>
+<section id="integrity-core-idea" class="slide level2">
+<h2>Integrity: Core Idea</h2>
+<ul>
+<li>Include a piece of information to ensure that a file is unaltered</li>
+<li>We often accomplish this by adding an extra piece of information: a cryptographic <code>hash</code></li>
+<li>Hashes are one-way functions that represent data in a compact digest</li>
+</ul>
+</section>
+<section id="features-of-cryptographic-hashes" class="slide level2">
+<h2>Features of Cryptographic Hashes</h2>
+<ul>
+<li><strong>Collision Resistance</strong>: Collisions are computationally infeasible</li>
+<li><strong>Input sensitivity (avalanche)</strong>: flipping 1 input bit should flip each output bit with probability ~1/2
+<ul>
+<li>So on average ~50% of output bits change (with normal variation)</li>
+<li>Systematic deviation from 50% can indicate bias / weak diffusion</li>
+</ul></li>
+<li><strong>One-way</strong>: Computationally infeasible to infer input properties</li>
+</ul>
+</section>
+<section id="computationally-infeasible" class="slide level2">
+<h2>Computationally Infeasible</h2>
+<p><img data-src="assets/ostep-56-cryptography/computationally-infeasible.png"></p>
+</section>
+<section id="hash-collisions-sha-1" class="slide level2">
+<h2>Hash Collisions: SHA-1</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="assets/ostep-56-cryptography/hash-collisions.png"></p>
 </div><div class="column" style="width:45%;">
-<div class="box">
-<p><strong>Capabilities</strong></p>
 <ul>
-<li>A token that grants access</li>
-<li>Held when access is requested</li>
-</ul>
-</div>
-</div></div>
-</section>
-<section id="access-control-lists" class="slide level2 section-header">
-<h2>Access Control Lists</h2>
-</section>
-<section id="access-control-lists-1" class="slide level2">
-<h2>Access Control Lists</h2>
-<div class="columns">
-<div class="column">
-<p><img data-src="assets/ostep-55-access-control/bouncer-with-a-list.jpg"></p>
-</div><div class="column">
+<li>A <strong>collision</strong> means two different inputs have the same hash output</li>
+<li>SHA-1 collisions were demonstrated publicly in <strong>2017</strong> (Google)</li>
+<li>Takeaway: “collision resistance” is a real requirement, and older hashes break</li>
+<li>Numbers (roughly):
 <ul>
-<li><p>Core idea is that we check users against a list of who is allowed to access the resource</p></li>
-<li><p>If the user is on the list, they can access the resource</p></li>
-<li><p>If <em>not</em> then the access is rejected</p></li>
-</ul>
-</div></div>
-</section>
-<section id="how-do-acls-work" class="slide level2">
-<h2>How do ACLs work?</h2>
-<ol type="1">
-<li>When a resource is requested the OS finds the ACL associated with it</li>
-<li>The OS searches through the list for the current <em>subject</em>
-<ul>
-<li>For a process, this is the user that owns the process</li>
+<li>~9 quintillion SHA-1 computations total</li>
+<li>Thousands of CPU-years + hundreds of GPU-years</li>
 </ul></li>
-<li>If the <em>subject</em> is on the list ⇒ <em><em>Allow</em></em>
-<ul>
-<li>Otherwise ⇒ <em><em>Disallow</em></em></li>
-</ul></li>
-</ol>
-</section>
-<section id="are-they-good" class="slide level2">
-<h2>Are they good?</h2>
-<div class="columns">
-<div class="column">
-<p><strong>Pros</strong></p>
-<ul>
-<li>Easy to check</li>
-<li>Easy to change</li>
-<li>Close to the resource typically</li>
-</ul>
-</div><div class="column">
-<p><strong>Cons</strong></p>
-<ul>
-<li>Where do we store it?</li>
-<li>What if we want to know all resources a <em>subject</em> can access?</li>
-<li>How do we identify users across networks?</li>
-<li>We have to check each time we access a resource</li>
 </ul>
 </div></div>
 </section>
-<section id="what-do-acls-look-like" class="slide level2">
-<h2>What do ACLs look like?</h2>
-<p><img data-src="assets/ostep-55-access-control/acls-linux.png"></p>
-<p><br></p>
+<section id="hashes-small-changes-to-big-changes" class="slide level2">
+<h2>Hashes: Small Changes to Big Changes</h2>
+<p><img data-src="assets/ostep-56-cryptography/sha1-example.png"></p>
 <div class="center">
-<p><strong>ACLs are the basis in Linux</strong></p>
+<p>We change one bit in the input and it changes everything in the output</p>
 </div>
 </section>
-<section id="capabilities" class="slide level2 section-header">
-<h2>Capabilities</h2>
-</section>
-<section id="capabilities-1" class="slide level2">
-<h2>Capabilities</h2>
-<div class="columns">
-<div class="column">
-<p><img data-src="assets/ostep-55-access-control/sign-not-elon.jpg"></p>
-</div><div class="column">
-<ul>
-<li>Core idea is that <em>subjects</em> have a token that identifies them
-<ul>
-<li>Such as a sign saying they aren’t Elon</li>
-</ul></li>
-<li>If the subject doesn’t have the token, they aren’t allowed</li>
-</ul>
-</div></div>
-</section>
-<section id="how-do-capabilities-work" class="slide level2">
-<h2>How do capabilities work?</h2>
-<ol type="1">
-<li>When the <em>subject</em> requests access the OS we check if the process has that capability</li>
-<li>If the process has that capability then we allow it
-<ul>
-<li>If not we deny</li>
-</ul></li>
-</ol>
-</section>
-<section id="okay-but-how-do-they-actually-work" class="slide level2">
-<h2>Okay, but how do they actually work?</h2>
-<p>This sounds like ACLs so far, with the lookup…</p>
-<p><em>The capabilities list isn’t a “file”; it’s assigned to the process.</em></p>
-<p>It’ll be kept in the Process Control struct (like the context!)</p>
-</section>
-<section id="what-are-capabilities" class="slide level2">
-<h2>What are capabilities?</h2>
-<p><br></p>
-<p>Capabilities are <em>just</em> a binary string</p>
-<p><br></p>
-<p>If it’s short then a process can guess it!</p>
-<p><br></p>
-<p>If it’s long and cryptographic then we’re probably safe!</p>
-</section>
-<section id="capabilities-pros-and-cons" class="slide level2">
-<h2>Capabilities pros and cons</h2>
-<div class="columns">
-<div class="column">
-<p><strong>Pros</strong></p>
-<ul>
-<li>It’s easy to check</li>
-<li>Revoking access is super simple</li>
-<li>It’s cheap to check!</li>
-</ul>
-</div><div class="column">
-<p><strong>Cons</strong></p>
-<ul>
-<li>Checking everybody who can access a resource is painful</li>
-<li>There’s been less work on making them work well</li>
-</ul>
-</div></div>
-</section>
-<section id="which-is-better" class="slide level2 section-header">
-<h2>Which is better?</h2>
-</section>
-<section id="as-always-it-depends" class="slide level2">
-<h2>As always, it depends…</h2>
+<section id="hashes-one-way" class="slide level2">
+<h2>Hashes: One-way</h2>
+<p><img data-src="assets/ostep-56-cryptography/sha1-size_and_hash.png"></p>
 <div class="center">
-<p><em>Linux uses a combination of both</em></p>
-</div>
-<div class="columns">
-<div class="column">
-<ul>
-<li>When you are trying to access a file, the ACL is queried</li>
-<li>When you have a file open, you have a file handle
-<ul>
-<li>The file handle <em>is</em> a capability</li>
-</ul></li>
-</ul>
-</div><div class="column">
-<p><img data-src="assets/ostep-55-access-control/process-struct.png"></p>
-</div></div>
-</section>
-<section id="role-based-access-control-rbac" class="slide level2">
-<h2>Role-Based Access Control (RBAC)</h2>
-<p><strong>Core Idea</strong>:</p>
-<p>Let’s assign access based on people’s roles</p>
-<div class="fragment">
-<div class="columns">
-<div class="column">
-<p><strong>Example:</strong></p>
-<p>Programmers shouldn’t touch payroll.</p>
-<p>Accounting shouldn’t touch code.</p>
-</div><div class="column">
-<p>We can switch between groups depending on what role we are currently in.</p>
-<p>This is an example of <em>least privilege</em></p>
-</div></div>
+<p>A hash compresses a large input into a fixed-size digest</p>
+<p>It should be infeasible to recover the input from that digest</p>
 </div>
 </section>
-<section id="who-decides-this" class="slide level2 section-header">
-<h2>Who decides this?</h2>
+<section id="hashes-vs.-attacker-proof-integrity" class="slide level2">
+<h2>Hashes vs.&nbsp;attacker-proof integrity</h2>
+<ul>
+<li>A plain hash detects accidental corruption
+<ul>
+<li>But an attacker can modify the file <strong>and</strong> recompute the hash</li>
+</ul></li>
+<li>To detect malicious tampering you usually need a secret or a key:
+<ul>
+<li><code>HMAC(key, message)</code> (shared secret)</li>
+<li>Digital signature (public-key)</li>
+</ul></li>
+</ul>
 </section>
-<section id="mandatory-vs-discretionary" class="slide level2">
-<h2>Mandatory vs Discretionary</h2>
-<div class="columns">
-<div class="column">
-<p><strong>Mandatory</strong></p>
-<p>A system admin decides who gets access</p>
-<p>Often used in controlled environments</p>
-</div><div class="column">
-<p><strong>Discretionary</strong></p>
-<p>Owner of the file decides</p>
-<p>The default on most systems</p>
-</div></div>
+<section id="authentication" class="slide level2 section-header">
+<h2>Authentication</h2>
+<p>Verifying we are us</p>
 </section>
-<section id="dangerous-things" class="slide level2 section-header">
-<h2>Dangerous Things</h2>
+<section id="authentication-two-common-models" class="slide level2">
+<h2>Authentication: two common models</h2>
+<ul>
+<li>Shared-secret authentication uses one key on both sides
+<ul>
+<li>Example: HMAC</li>
+</ul></li>
+<li>Public-key authentication uses a private key to sign and a public key to verify
+<ul>
+<li>Example: digital signatures</li>
+</ul></li>
+<li>Both prove authenticity, but they trust different things</li>
+</ul>
 </section>
-<section id="how-to-do-dangerous-things" class="slide level2">
-<h2>How to do dangerous things</h2>
-<p>Sometimes it’s necessary to run applications with higher privileges than you have.</p>
-<p>For example, parts of the windowing / display stack may need extra permissions (hardware, input devices, etc.)</p>
-<div class="fragment">
-<div class="center">
-<p><strong><code>setuid</code></strong></p>
-<p>This allows us to run a program as the <em>owner</em> of the file rather than as ourselves</p>
+<section id="core-idea-authentication" class="slide level2">
+<h2>Core Idea: Authentication</h2>
+<p>Our goal is to prove that we are us, and that we did a thing</p>
+<ul>
+<li>We can do this by sharing something <strong>only</strong> we would know</li>
+<li>We can sign the file with our <strong>private</strong> key, which is known only to us</li>
+<li>Recipient can then verify with our <strong>public</strong> key
+<ul>
+<li>Remember that our public and private keys are two sides of the same algorithm</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-of-authentication-digital-signatures" class="slide level2">
+<h2>Example of Authentication: Digital Signatures</h2>
+<p>Digital signatures are the public-key version of authentication.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 720.00 143.91" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(0.827053 0.827053) rotate(0) translate(4 170)">
+<title>G</title>
+<g id="clust2" class="cluster">
+<title>cluster_receiver</title>
+<path fill="transparent" stroke="#dfe8ef" d="M173.93,-8C173.93,-8 842.56,-8 842.56,-8 848.56,-8 854.56,-14 854.56,-20 854.56,-20 854.56,-71 854.56,-71 854.56,-77 848.56,-83 842.56,-83 842.56,-83 173.93,-83 173.93,-83 167.93,-83 161.93,-77 161.93,-71 161.93,-71 161.93,-20 161.93,-20 161.93,-14 167.93,-8 173.93,-8"></path>
+<text text-anchor="middle" x="508.24" y="-66.4" font-family="Times,serif" font-size="14.00">Receiver</text>
+</g>
+<g id="clust1" class="cluster">
+<title>cluster_sender</title>
+<path fill="transparent" stroke="#dfe8ef" d="M20,-83C20,-83 654.76,-83 654.76,-83 660.76,-83 666.76,-89 666.76,-95 666.76,-95 666.76,-146 666.76,-146 666.76,-152 660.76,-158 654.76,-158 654.76,-158 20,-158 20,-158 14,-158 8,-152 8,-146 8,-146 8,-95 8,-95 8,-89 14,-83 20,-83"></path>
+<text text-anchor="middle" x="337.38" y="-141.4" font-family="Times,serif" font-size="14.00">Sender</text>
+</g>
+<!-- m1 -->
+<g id="node1" class="node">
+<title>m1</title>
+<path fill="#fff4cc" stroke="black" d="M84.88,-126C84.88,-126 20.04,-126 20.04,-126 14.04,-126 8.04,-120 8.04,-114 8.04,-114 8.04,-102 8.04,-102 8.04,-96 14.04,-90 20.04,-90 20.04,-90 84.88,-90 84.88,-90 90.88,-90 96.88,-96 96.88,-102 96.88,-102 96.88,-114 96.88,-114 96.88,-120 90.88,-126 84.88,-126"></path>
+<text text-anchor="middle" x="52.46" y="-103.2" font-family="Helvetica,sans-Serif" font-size="16.00">Message</text>
+</g>
+<!-- h1 -->
+<g id="node2" class="node">
+<title>h1</title>
+<path fill="#d9dfea" stroke="black" d="M262.82,-126C262.82,-126 149.96,-126 149.96,-126 143.96,-126 137.96,-120 137.96,-114 137.96,-114 137.96,-102 137.96,-102 137.96,-96 143.96,-90 149.96,-90 149.96,-90 262.82,-90 262.82,-90 268.82,-90 274.82,-96 274.82,-102 274.82,-102 274.82,-114 274.82,-114 274.82,-120 268.82,-126 262.82,-126"></path>
+<text text-anchor="middle" x="206.39" y="-103.2" font-family="Helvetica,sans-Serif" font-size="16.00">Hash(message)</text>
+</g>
+<!-- m1&#45;&gt;h1 -->
+<g id="edge1" class="edge">
+<title>m1-&gt;h1</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" d="M97,-108C107.23,-108 118.42,-108 129.62,-108"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="129.75,-110.8 137.75,-108 129.75,-105.2 129.75,-110.8"></polygon>
+</g>
+<!-- s1 -->
+<g id="node3" class="node">
+<title>s1</title>
+<path fill="#cfe6cf" stroke="black" d="M439.58,-133.4C439.58,-133.4 329.05,-133.4 329.05,-133.4 323.05,-133.4 317.05,-127.4 317.05,-121.4 317.05,-121.4 317.05,-94.6 317.05,-94.6 317.05,-88.6 323.05,-82.6 329.05,-82.6 329.05,-82.6 439.58,-82.6 439.58,-82.6 445.58,-82.6 451.58,-88.6 451.58,-94.6 451.58,-94.6 451.58,-121.4 451.58,-121.4 451.58,-127.4 445.58,-133.4 439.58,-133.4"></path>
+<text text-anchor="middle" x="384.32" y="-112.8" font-family="Helvetica,sans-Serif" font-size="16.00">Sign hash</text>
+<text text-anchor="middle" x="384.32" y="-93.6" font-family="Helvetica,sans-Serif" font-size="16.00">with private key</text>
+</g>
+<!-- h1&#45;&gt;s1 -->
+<g id="edge2" class="edge">
+<title>h1-&gt;s1</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" d="M274.9,-108C286.05,-108 297.67,-108 308.97,-108"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="309.14,-110.8 317.14,-108 309.14,-105.2 309.14,-110.8"></polygon>
+</g>
+<!-- out1 -->
+<g id="node4" class="node">
+<title>out1</title>
+<path fill="#f7f7f7" stroke="black" d="M654.75,-122C654.75,-122 505.79,-122 505.79,-122 499.79,-122 493.79,-116 493.79,-110 493.79,-110 493.79,-98 493.79,-98 493.79,-92 499.79,-86 505.79,-86 505.79,-86 654.75,-86 654.75,-86 660.75,-86 666.75,-92 666.75,-98 666.75,-98 666.75,-110 666.75,-110 666.75,-116 660.75,-122 654.75,-122"></path>
+<text text-anchor="middle" x="580.27" y="-99.2" font-family="Helvetica,sans-Serif" font-size="16.00">Message + signature</text>
+</g>
+<!-- s1&#45;&gt;out1 -->
+<g id="edge3" class="edge">
+<title>s1-&gt;out1</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" d="M451.52,-106.63C462.38,-106.41 473.82,-106.17 485.2,-105.94"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="485.53,-108.73 493.47,-105.77 485.42,-103.14 485.53,-108.73"></polygon>
+</g>
+<!-- ok -->
+<g id="node8" class="node">
+<title>ok</title>
+<path fill="#f7f7f7" stroke="black" d="M842.37,-56C842.37,-56 767.15,-56 767.15,-56 761.15,-56 755.15,-50 755.15,-44 755.15,-44 755.15,-32 755.15,-32 755.15,-26 761.15,-20 767.15,-20 767.15,-20 842.37,-20 842.37,-20 848.37,-20 854.37,-26 854.37,-32 854.37,-32 854.37,-44 854.37,-44 854.37,-50 848.37,-56 842.37,-56"></path>
+<text text-anchor="middle" x="804.76" y="-33.2" font-family="Helvetica,sans-Serif" font-size="16.00">Authentic?</text>
+</g>
+<!-- out1&#45;&gt;ok -->
+<g id="edge7" class="edge">
+<title>out1-&gt;ok</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" stroke-dasharray="5,2" d="M652.72,-85.95C657.48,-84.64 662.19,-83.32 666.76,-82 693.29,-74.33 722.45,-65.08 747.02,-57.05"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="748.1,-59.64 754.83,-54.49 746.35,-54.32 748.1,-59.64"></polygon>
+<text text-anchor="middle" x="710.85" y="-79.2" font-family="Times,serif" font-size="14.00">compare</text>
+</g>
+<!-- m2 -->
+<g id="node5" class="node">
+<title>m2</title>
+<path fill="#fff4cc" stroke="black" d="M238.81,-51C238.81,-51 173.96,-51 173.96,-51 167.96,-51 161.96,-45 161.96,-39 161.96,-39 161.96,-27 161.96,-27 161.96,-21 167.96,-15 173.96,-15 173.96,-15 238.81,-15 238.81,-15 244.81,-15 250.81,-21 250.81,-27 250.81,-27 250.81,-39 250.81,-39 250.81,-45 244.81,-51 238.81,-51"></path>
+<text text-anchor="middle" x="206.39" y="-28.2" font-family="Helvetica,sans-Serif" font-size="16.00">Message</text>
+</g>
+<!-- h2 -->
+<g id="node6" class="node">
+<title>h2</title>
+<path fill="#d9dfea" stroke="black" d="M440.75,-51C440.75,-51 327.89,-51 327.89,-51 321.89,-51 315.89,-45 315.89,-39 315.89,-39 315.89,-27 315.89,-27 315.89,-21 321.89,-15 327.89,-15 327.89,-15 440.75,-15 440.75,-15 446.75,-15 452.75,-21 452.75,-27 452.75,-27 452.75,-39 452.75,-39 452.75,-45 446.75,-51 440.75,-51"></path>
+<text text-anchor="middle" x="384.32" y="-28.2" font-family="Helvetica,sans-Serif" font-size="16.00">Hash(message)</text>
+</g>
+<!-- m2&#45;&gt;h2 -->
+<g id="edge4" class="edge">
+<title>m2-&gt;h2</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" d="M250.87,-33C267.97,-33 288.11,-33 307.45,-33"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="307.67,-35.8 315.67,-33 307.67,-30.2 307.67,-35.8"></polygon>
+</g>
+<!-- v1 -->
+<g id="node7" class="node">
+<title>v1</title>
+<path fill="#cfe6cf" stroke="black" d="M635.93,-58.4C635.93,-58.4 524.61,-58.4 524.61,-58.4 518.61,-58.4 512.61,-52.4 512.61,-46.4 512.61,-46.4 512.61,-19.6 512.61,-19.6 512.61,-13.6 518.61,-7.6 524.61,-7.6 524.61,-7.6 635.93,-7.6 635.93,-7.6 641.93,-7.6 647.93,-13.6 647.93,-19.6 647.93,-19.6 647.93,-46.4 647.93,-46.4 647.93,-52.4 641.93,-58.4 635.93,-58.4"></path>
+<text text-anchor="middle" x="580.27" y="-37.8" font-family="Helvetica,sans-Serif" font-size="16.00">Verify signature</text>
+<text text-anchor="middle" x="580.27" y="-18.6" font-family="Helvetica,sans-Serif" font-size="16.00">with public key</text>
+</g>
+<!-- h2&#45;&gt;v1 -->
+<g id="edge5" class="edge">
+<title>h2-&gt;v1</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" d="M452.88,-33C469.51,-33 487.41,-33 504.37,-33"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="504.6,-35.8 512.6,-33 504.6,-30.2 504.6,-35.8"></polygon>
+</g>
+<!-- v1&#45;&gt;ok -->
+<g id="edge6" class="edge">
+<title>v1-&gt;ok</title>
+<path fill="none" stroke="#31456b" stroke-width="1.6" d="M648.02,-34.5C679.5,-35.21 716.66,-36.04 746.78,-36.72"></path>
+<polygon fill="#31456b" stroke="#31456b" stroke-width="1.6" points="747.02,-39.53 755.08,-36.91 747.15,-33.93 747.02,-39.53"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li>The sender signs a hash of the message with a private key</li>
+<li>The receiver hashes the message again and verifies the signature with the public key</li>
+<li>If the verification passes, the message is authentic and unchanged</li>
+</ul>
+</section>
+<section id="breaking-cryptography" class="slide level2 section-header">
+<h2>Breaking Cryptography</h2>
+</section>
+<section id="common-ways-to-crack-cryptography" class="slide level2">
+<h2>Common Ways to crack Cryptography</h2>
+<div class="boxgrid" style="--boxgrid-cols:2;">
+<div class="box" data-header="Computational threats">
+<div class="box-header">
+<p>Computational threats</p>
+</div>
+<ul>
+<li>Brute-forcing keys</li>
+<li>Side-channel attacks</li>
+<li>Quantum Computers</li>
+</ul>
+</div>
+<div class="box" data-header="Operational Issues">
+<div class="box-header">
+<p>Operational Issues</p>
+</div>
+<ul>
+<li>Social Engineering</li>
+<li>Backdoors</li>
+</ul>
+</div>
+<div class="box" data-header="Design Flaws">
+<div class="box-header">
+<p>Design Flaws</p>
+</div>
+<ul>
+<li>Software errors</li>
+<li>Bad cryptosystem design</li>
+</ul>
 </div>
 </div>
 </section>
-<section id="setuid" class="slide level2">
-<h2><code>setuid</code></h2>
-<div class="columns">
-<div class="column">
-<p><strong>Uses</strong></p>
-<ul>
-<li>Allows us to run programs with escalated privileges
-<ul>
-<li>Run as root!</li>
-</ul></li>
-<li>Allows us to run as somebody else
-<ul>
-<li>CRON jobs!</li>
-</ul></li>
-</ul>
-</div><div class="column">
-<p><strong>Dangers</strong></p>
-<ul>
-<li>That program had better be safe!</li>
-</ul>
-</div></div>
+<section id="example-of-a-flawed-system-des" class="slide level2">
+<h2>Example of a flawed system: DES</h2>
+<p><img data-src="assets/ostep-56-cryptography/des-diagram.png"></p>
 </section>
-<section id="a-concrete-access-control-mess-x11-xorg" class="slide level2">
-<h2>A concrete access-control mess: X11 / Xorg</h2>
-<p>The <strong>X11 protocol</strong> (and X servers that implement it, like <strong>Xorg</strong>) are a great example of how “access control” shows up in real systems.</p>
-<ul>
-<li>If a program can connect to your X server, it can often:
-<ul>
-<li>Read keystrokes / clipboard</li>
-<li>Take screenshots</li>
-<li>Inject mouse + keyboard events</li>
-</ul></li>
-</ul>
-<p>So: <strong>“Who is allowed to connect to my display?”</strong> is an access-control question.</p>
+<section id="cryptography-in-operating-systems" class="slide level2 section-header">
+<h2>Cryptography in Operating Systems</h2>
 </section>
-<section id="x11-uses-both-acl-ish-and-capability-ish-ideas" class="slide level2">
-<h2>X11 uses both ACL-ish and capability-ish ideas</h2>
+<section id="what-the-os-should-think-about" class="slide level2">
+<h2>What the OS should think about</h2>
 <ul>
-<li>The X server maintains an “allowed clients” policy (ACL flavor)</li>
-<li>But the common mechanism is a secret token:
-<ul>
-<li>Your X session cookie in <code>~/.Xauthority</code></li>
-<li>If someone gets it, they can often connect (capability flavor)</li>
-</ul></li>
+<li>How to provide <strong>entropy</strong></li>
+<li>How to protect secrets from <strong>other users / attackers</strong></li>
+<li>How to provide <strong>at-rest data encryption</strong></li>
+<li>How to safely authenticate users across systems</li>
 </ul>
-<p>This is why accidentally sharing credentials (or disabling checks) is such a big deal.</p>
-</section>
-<section id="why-setuid-is-scary-here" class="slide level2">
-<h2>Why <code>setuid</code> is scary here</h2>
-<ul>
-<li>Historically, the <strong>Xorg X server</strong> sometimes needed elevated privileges on some systems
-<ul>
-<li>So you might see <code>Xorg</code> (or a wrapper like <code>Xorg.wrap</code>) installed <code>setuid root</code></li>
-</ul></li>
-<li>Any memory-safety bug in a <code>setuid</code> binary can become a <strong>privilege escalation</strong></li>
-</ul>
-<p>Design goal: keep privileged code <strong>small</strong>, and drop privileges as soon as possible.</p>
-</section>
-<section id="how-xorg-reduced-its-setuid-surface-rootless-x" class="slide level2">
-<h2>How Xorg reduced its <code>setuid</code> surface (rootless X)</h2>
-<p>Modern Linux setups try to keep Xorg unprivileged and move the dangerous parts elsewhere.</p>
-<ul>
-<li>A small privileged helper / service (e.g., <code>systemd-logind</code>) enforces policy:
-<ul>
-<li>“Is this user/session allowed to use the GPU / input devices?”</li>
-<li>Often implemented via device ACLs tied to the active seat/session</li>
-</ul></li>
-<li>The helper opens device files (like <code>/dev/dri/*</code>) and passes <strong>file descriptors</strong> to Xorg
-<ul>
-<li>Those FDs are effectively <strong>capabilities</strong>: if you have the handle, you can use the device</li>
-</ul></li>
-</ul>
-<p>Net effect: privileged code is smaller, and Xorg can drop (or avoid) <code>setuid root</code>.</p>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
-<li>Access control is <strong>authorization</strong>: can a subject do an action to an object?</li>
-<li>ACLs and capabilities are two useful mental models (and real systems mix them)</li>
-<li>Least privilege (RBAC, groups) helps reduce blast radius</li>
-<li><code>setuid</code> is a sharp tool: necessary sometimes, dangerous always</li>
-<li>Concrete reminder: X11/Xorg is “just access control” in disguise (and mistakes are painful)</li>
+<li>Crypto tools map to goals: confidentiality (encryption), integrity (MAC/signatures), authenticity (HMAC/signatures)</li>
+<li>We mix asymmetric + symmetric because performance and key distribution both matter</li>
+<li>Most real-world breaks are operational or implementation failures, not “math is wrong”</li>
 </ul>
 
 </section>
@@ -582,19 +589,19 @@ Sam Ogden
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="55-access-control_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="55-access-control_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="55-access-control_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="55-access-control_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="ostep-56-cryptography_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

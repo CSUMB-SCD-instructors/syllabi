@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="40-bnf_grammers_files/libs/clipboard/clipboard.min.js"></script>
-<script src="40-bnf_grammers_files/libs/quarto-html/tabby.min.js"></script>
-<script src="40-bnf_grammers_files/libs/quarto-html/popper.min.js"></script>
-<script src="40-bnf_grammers_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="40-bnf_grammers_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="40-bnf_grammers_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="40-bnf_grammers_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="ostep-55-access-control_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ostep-55-access-control_files/libs/quarto-html/tabby.min.js"></script>
+<script src="ostep-55-access-control_files/libs/quarto-html/popper.min.js"></script>
+<script src="ostep-55-access-control_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="ostep-55-access-control_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ostep-55-access-control_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="ostep-55-access-control_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
-  <title>BNF Grammars</title>
+  <title>Access Control</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="40-bnf_grammers_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="40-bnf_grammers_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="ostep-55-access-control_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="ostep-55-access-control_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -31,13 +31,79 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="40-bnf_grammers_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="ostep-55-access-control_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
   <link rel="stylesheet" href="assets/styles.css">
-  <link href="40-bnf_grammers_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="40-bnf_grammers_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="40-bnf_grammers_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="40-bnf_grammers_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="ostep-55-access-control_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="ostep-55-access-control_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="ostep-55-access-control_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="ostep-55-access-control_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -130,8 +196,9 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-04-29 19:14" class="quarto-title-block center">
-  <h1 class="title">BNF Grammars</h1>
+<section id="title-slide" data-chapter="OSTEP 55" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-access.pdf" data-last-updated="2026-05-13 11:07" class="quarto-title-block center">
+  <h1 class="title">Access Control</h1>
+  <p class="subtitle">OSTEP 55</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -142,180 +209,370 @@ Sam Ogden
 </div>
 
 </section>
-<section id="motivating-example" class="slide level2">
-<h2>Motivating Example</h2>
-<h3 id="writing-a-json-parser">Writing a JSON Parser</h3>
-<div class="columns">
-<div class="column" style="width:40%;">
-<pre><code>{
-  "1": {
-    "location": "assign-ostep7",
-    "weight": 20
-  },
-  "2": {
-    "location": "assign-ostep8",
-    "weight": 20
-  },
-  "3": {
-    "location": "assign-msh3",
-    "weight": 60
-  },
-}</code></pre>
-<p>(example input text)</p>
+<section id="draft" class="title-slide slide level1 draft-slide center">
+<h1>DRAFT</h1>
+<p>This slide deck is still under active development. Expect changes before it is finalized.</p>
+</section>
+
+<section id="the-big-question" class="slide level2 section-header">
+<h2>The Big Question</h2>
+<p>How do we control who gets what resources?</p>
+</section>
+<section id="background-on-access-controls" class="slide level2 section-header">
+<h2>Background on Access Controls</h2>
+</section>
+<section id="key-definitions" class="slide level2">
+<h2>Key definitions</h2>
+<ol type="1">
+<li><strong>Subject</strong>: The entity that wants to perform the access
+<ul>
+<li>A process representing a user</li>
+</ul></li>
+<li><strong>Object</strong>: The thing the <em>subject</em> wants to access
+<ul>
+<li>e.g.&nbsp;a file</li>
+</ul></li>
+<li><strong>Access</strong>: The mode of dealing with the <em>object</em>
+<ul>
+<li>e.g.&nbsp;writing to a file</li>
+</ul></li>
+</ol>
+<p><strong>Authorization</strong>: Determining whether a <em>subject</em> can <em>access</em> an <em>object</em></p>
+</section>
+<section id="authorization" class="slide level2">
+<h2>Authorization</h2>
+<p>Before allowing access to a resource, we need to do authorization.</p>
+<p>Our <strong>reference monitor</strong> is what performs this</p>
+<p>Resources might be handled in different ways</p>
+<div class="boxgrid" style="--boxgrid-cols:2;">
+<div class="box">
+<ul>
+<li>Memory
+<ul>
+<li>Virtual memory</li>
+<li>Page sharing?</li>
+</ul></li>
+</ul>
+</div>
+<div class="box">
+<ul>
+<li>Files
+<ul>
+<li>Executable programs</li>
+<li>log files</li>
+</ul></li>
+</ul>
+</div>
+<div class="box">
+<ul>
+<li>Devices
+<ul>
+<li>A keyboard</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="accessing-resources" class="slide level2">
+<h2>Accessing Resources</h2>
+<p>A good way to think about how we are opening resources is to think of opening a file.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>open("/var/foo", O_RDWR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><code>open(...)</code> is a syscall</strong></p>
+<p><em>When access to the resource is requested the OS sees if the subject is allowed to access it.</em></p>
+</section>
+<section id="access-control-lists-and-capabilities" class="slide level2">
+<h2>Access Control Lists and Capabilities</h2>
+<div class="columns columns-center">
+<div class="column" style="width:45%;">
+<div class="box">
+<p><strong>Access Control Lists</strong></p>
+<ul>
+<li>List of who can access resources</li>
+<li>Attached to the resources themselves</li>
+</ul>
+</div>
 </div><div class="column" style="width:10%;">
 
-</div><div class="column" style="width:40%;">
-<p>Someone asks you to build a JSON parser. How do you approach it?</p>
-<hr>
-<p><em>Input</em>: A blob of text <em>Output</em>: A dictionary <strong><em>or</em></strong> error</p>
+</div><div class="column" style="width:45%;">
+<div class="box">
+<p><strong>Capabilities</strong></p>
+<ul>
+<li>A token that grants access</li>
+<li>Held when access is requested</li>
+</ul>
+</div>
 </div></div>
 </section>
-<section id="what-is-a-language" class="slide level2">
-<h2>What is a “language”?</h2>
-<p>A language is a set of strings</p>
-<ul>
-<li><code>{"a", "ab", "abc"}</code></li>
-<li><code>{"x=1", "x=y"}</code></li>
-</ul>
-<div class="fragment">
-<p>Infinite languages can’t be defined by listing all their strings</p>
-<ul>
-<li><code>{"a", "ab", ...}</code></li>
-</ul>
-</div>
-<div class="fragment">
-<p>But we have to be careful because these aren’t <em>explicit</em> definitions</p>
-<p>Is the next string <code>"aba"</code> or <code>"abc"</code>?</p>
-</div>
-<div class="fragment">
-<p>We need a better way to define languages</p>
-</div>
+<section id="access-control-lists" class="slide level2 section-header">
+<h2>Access Control Lists</h2>
 </section>
-<section id="backus-naur-form-bnf-grammars" class="slide level2">
-<h2>Backus-Naur Form (BNF) Grammars</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span> <span class="bnf">|</span> <span class="terminal">a</span><span class="nonterminal">R<sub>2</sub></span></p>
-<p><span class="nonterminal">R<sub>2</sub></span> <span class="bnf">::=</span> <span class="terminal">b</span> <span class="bnf">|</span> <span class="terminal">b</span><span class="nonterminal">R<sub>1</sub></span></p>
-</div>
-<p>Three parts of grammars:</p>
-<ol type="1">
-<li><span class="nonterminal">non-terminal</span> <em>symbols</em> are placeholders that <em>must</em> be replaced</li>
-<li><span class="terminal">terminals</span> are concrete parts of the output string</li>
-<li><span class="bnf">productions</span> are what we replace <span class="nonterminal">non-terminals</span> with
+<section id="access-control-lists-1" class="slide level2">
+<h2>Access Control Lists</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="assets/ostep-55-access-control/bouncer-with-a-list.jpg"></p>
+</div><div class="column">
 <ul>
-<li>e.g.&nbsp;“<span class="terminal">b</span><span class="nonterminal">R<sub>1</sub></span>” in the above example</li>
+<li><p>Core idea is that we check users against a list of who is allowed to access the resource</p></li>
+<li><p>If the user is on the list, they can access the resource</p></li>
+<li><p>If <em>not</em> then the access is rejected</p></li>
+</ul>
+</div></div>
+</section>
+<section id="how-do-acls-work" class="slide level2">
+<h2>How do ACLs work?</h2>
+<ol type="1">
+<li>When a resource is requested the OS finds the ACL associated with it</li>
+<li>The OS searches through the list for the current <em>subject</em>
+<ul>
+<li>For a process, this is the user that owns the process</li>
+</ul></li>
+<li>If the <em>subject</em> is on the list ⇒ <em><em>Allow</em></em>
+<ul>
+<li>Otherwise ⇒ <em><em>Disallow</em></em></li>
 </ul></li>
 </ol>
 </section>
-<section id="what-a-bnf-grammar-defines" class="slide level2">
-<h2>What a BNF Grammar Defines</h2>
-<p>A BNF grammar is a <em>recipe</em> for building strings.</p>
+<section id="are-they-good" class="slide level2">
+<h2>Are they good?</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Pros</strong></p>
 <ul>
-<li>Start at the <strong>start symbol</strong> (the first <span class="nonterminal">non-terminal</span> rule)</li>
-<li>Repeatedly replace a <span class="nonterminal">non-terminal</span> using a rule (a <span class="bnf">production</span>)</li>
-<li>Stop when you have only <span class="terminal">terminals</span></li>
+<li>Easy to check</li>
+<li>Easy to change</li>
+<li>Close to the resource typically</li>
 </ul>
-<p>The <strong>language</strong> of the grammar is the set of <em>all</em> strings you can build this way.</p>
-<div class="fragment">
-<hr class="bnf-sep">
-<div class="columns columns-center">
-<p>These two are equivalent:</p><div class="column" style="width:50%;">
-<p><code>{"a", "ab", "abc"}</code></p>
-</div><div class="column" style="width:50%;">
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span> <span class="bnf">|</span> <span class="terminal">ab</span> <span class="bnf">|</span> <span class="terminal">abc</span></p>
-</div>
-</div><section id="using-bnfs" class="slide level2">
-<h2>Using BNFs</h2>
-<div class="columns columns-divider">
-<div class="column" style="width:50%;">
-<p>To use a BNF:</p>
-<ol type="1">
-<li>Start with a the start symbol
+</div><div class="column">
+<p><strong>Cons</strong></p>
 <ul>
-<li>This is the first listed <span class="nonterminal">non-terminal</span></li>
-</ul></li>
-<li>Replace any <span class="nonterminal">non-terminal</span> with one of its <span class="bnf">productions</span></li>
-<li>Repeat #2 until we have no <span class="nonterminal">non-terminal</span> symbols left</li>
-</ol>
-</div><div class="column" style="width:50%;">
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span> <span class="bnf">|</span> <span class="terminal">a</span><span class="nonterminal">R<sub>2</sub></span></p>
-<p><span class="nonterminal">R<sub>2</sub></span> <span class="bnf">::=</span> <span class="terminal">b</span> <span class="bnf">|</span> <span class="terminal">b</span><span class="nonterminal">R<sub>1</sub></span></p>
-</div>
+<li>Where do we store it?</li>
+<li>What if we want to know all resources a <em>subject</em> can access?</li>
+<li>How do we identify users across networks?</li>
+<li>We have to check each time we access a resource</li>
+</ul>
 </div></div>
-</section><section id="bnf-practice" class="title-slide slide level1 center">
-<h1>BNF Practice</h1>
+</section>
+<section id="what-do-acls-look-like" class="slide level2">
+<h2>What do ACLs look like?</h2>
+<p><img data-src="assets/ostep-55-access-control/acls-linux.png"></p>
+<p><br></p>
+<div class="center">
+<p><strong>ACLs are the basis in Linux</strong></p>
+</div>
+</section>
+<section id="capabilities" class="slide level2 section-header">
+<h2>Capabilities</h2>
+</section>
+<section id="capabilities-1" class="slide level2">
+<h2>Capabilities</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="assets/ostep-55-access-control/sign-not-elon.jpg"></p>
+</div><div class="column">
+<ul>
+<li>Core idea is that <em>subjects</em> have a token that identifies them
+<ul>
+<li>Such as a sign saying they aren’t Elon</li>
+</ul></li>
+<li>If the subject doesn’t have the token, they aren’t allowed</li>
+</ul>
+</div></div>
+</section>
+<section id="how-do-capabilities-work" class="slide level2">
+<h2>How do capabilities work?</h2>
+<ol type="1">
+<li>When the <em>subject</em> requests access the OS we check if the process has that capability</li>
+<li>If the process has that capability then we allow it
+<ul>
+<li>If not we deny</li>
+</ul></li>
+</ol>
+</section>
+<section id="okay-but-how-do-they-actually-work" class="slide level2">
+<h2>Okay, but how do they actually work?</h2>
+<p>This sounds like ACLs so far, with the lookup…</p>
+<p><em>The capabilities list isn’t a “file”; it’s assigned to the process.</em></p>
+<p>It’ll be kept in the Process Control struct (like the context!)</p>
+</section>
+<section id="what-are-capabilities" class="slide level2">
+<h2>What are capabilities?</h2>
+<p><br></p>
+<p>Capabilities are <em>just</em> a binary string</p>
+<p><br></p>
+<p>If it’s short then a process can guess it!</p>
+<p><br></p>
+<p>If it’s long and cryptographic then we’re probably safe!</p>
+</section>
+<section id="capabilities-pros-and-cons" class="slide level2">
+<h2>Capabilities pros and cons</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Pros</strong></p>
+<ul>
+<li>It’s easy to check</li>
+<li>Revoking access is super simple</li>
+<li>It’s cheap to check!</li>
+</ul>
+</div><div class="column">
+<p><strong>Cons</strong></p>
+<ul>
+<li>Checking everybody who can access a resource is painful</li>
+<li>There’s been less work on making them work well</li>
+</ul>
+</div></div>
+</section>
+<section id="which-is-better" class="slide level2 section-header">
+<h2>Which is better?</h2>
+</section>
+<section id="as-always-it-depends" class="slide level2">
+<h2>As always, it depends…</h2>
+<div class="center">
+<p><em>Linux uses a combination of both</em></p>
+</div>
+<div class="columns">
+<div class="column">
+<ul>
+<li>When you are trying to access a file, the ACL is queried</li>
+<li>When you have a file open, you have a file handle
+<ul>
+<li>The file handle <em>is</em> a capability</li>
+</ul></li>
+</ul>
+</div><div class="column">
+<p><img data-src="assets/ostep-55-access-control/process-struct.png"></p>
+</div></div>
+</section>
+<section id="role-based-access-control-rbac" class="slide level2">
+<h2>Role-Based Access Control (RBAC)</h2>
+<p><strong>Core Idea</strong>:</p>
+<p>Let’s assign access based on people’s roles</p>
+<div class="fragment">
+<div class="columns">
+<div class="column">
+<p><strong>Example:</strong></p>
+<p>Programmers shouldn’t touch payroll.</p>
+<p>Accounting shouldn’t touch code.</p>
+</div><div class="column">
+<p>We can switch between groups depending on what role we are currently in.</p>
+<p>This is an example of <em>least privilege</em></p>
+</div></div>
+</div>
+</section>
+<section id="who-decides-this" class="slide level2 section-header">
+<h2>Who decides this?</h2>
+</section>
+<section id="mandatory-vs-discretionary" class="slide level2">
+<h2>Mandatory vs Discretionary</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Mandatory</strong></p>
+<p>A system admin decides who gets access</p>
+<p>Often used in controlled environments</p>
+</div><div class="column">
+<p><strong>Discretionary</strong></p>
+<p>Owner of the file decides</p>
+<p>The default on most systems</p>
+</div></div>
+</section>
+<section id="dangerous-things" class="slide level2 section-header">
+<h2>Dangerous Things</h2>
+</section>
+<section id="how-to-do-dangerous-things" class="slide level2">
+<h2>How to do dangerous things</h2>
+<p>Sometimes it’s necessary to run applications with higher privileges than you have.</p>
+<p>For example, parts of the windowing / display stack may need extra permissions (hardware, input devices, etc.)</p>
+<div class="fragment">
+<div class="center">
+<p><strong><code>setuid</code></strong></p>
+<p>This allows us to run a program as the <em>owner</em> of the file rather than as ourselves</p>
+</div>
+</div>
+</section>
+<section id="setuid" class="slide level2">
+<h2><code>setuid</code></h2>
+<div class="columns">
+<div class="column">
+<p><strong>Uses</strong></p>
+<ul>
+<li>Allows us to run programs with escalated privileges
+<ul>
+<li>Run as root!</li>
+</ul></li>
+<li>Allows us to run as somebody else
+<ul>
+<li>CRON jobs!</li>
+</ul></li>
+</ul>
+</div><div class="column">
+<p><strong>Dangers</strong></p>
+<ul>
+<li>That program had better be safe!</li>
+</ul>
+</div></div>
+</section>
+<section id="a-concrete-access-control-mess-x11-xorg" class="slide level2">
+<h2>A concrete access-control mess: X11 / Xorg</h2>
+<p>The <strong>X11 protocol</strong> (and X servers that implement it, like <strong>Xorg</strong>) are a great example of how “access control” shows up in real systems.</p>
+<ul>
+<li>If a program can connect to your X server, it can often:
+<ul>
+<li>Read keystrokes / clipboard</li>
+<li>Take screenshots</li>
+<li>Inject mouse + keyboard events</li>
+</ul></li>
+</ul>
+<p>So: <strong>“Who is allowed to connect to my display?”</strong> is an access-control question.</p>
+</section>
+<section id="x11-uses-both-acl-ish-and-capability-ish-ideas" class="slide level2">
+<h2>X11 uses both ACL-ish and capability-ish ideas</h2>
+<ul>
+<li>The X server maintains an “allowed clients” policy (ACL flavor)</li>
+<li>But the common mechanism is a secret token:
+<ul>
+<li>Your X session cookie in <code>~/.Xauthority</code></li>
+<li>If someone gets it, they can often connect (capability flavor)</li>
+</ul></li>
+</ul>
+<p>This is why accidentally sharing credentials (or disabling checks) is such a big deal.</p>
+</section>
+<section id="why-setuid-is-scary-here" class="slide level2">
+<h2>Why <code>setuid</code> is scary here</h2>
+<ul>
+<li>Historically, the <strong>Xorg X server</strong> sometimes needed elevated privileges on some systems
+<ul>
+<li>So you might see <code>Xorg</code> (or a wrapper like <code>Xorg.wrap</code>) installed <code>setuid root</code></li>
+</ul></li>
+<li>Any memory-safety bug in a <code>setuid</code> binary can become a <strong>privilege escalation</strong></li>
+</ul>
+<p>Design goal: keep privileged code <strong>small</strong>, and drop privileges as soon as possible.</p>
+</section>
+<section id="how-xorg-reduced-its-setuid-surface-rootless-x" class="slide level2">
+<h2>How Xorg reduced its <code>setuid</code> surface (rootless X)</h2>
+<p>Modern Linux setups try to keep Xorg unprivileged and move the dangerous parts elsewhere.</p>
+<ul>
+<li>A small privileged helper / service (e.g., <code>systemd-logind</code>) enforces policy:
+<ul>
+<li>“Is this user/session allowed to use the GPU / input devices?”</li>
+<li>Often implemented via device ACLs tied to the active seat/session</li>
+</ul></li>
+<li>The helper opens device files (like <code>/dev/dri/*</code>) and passes <strong>file descriptors</strong> to Xorg
+<ul>
+<li>Those FDs are effectively <strong>capabilities</strong>: if you have the handle, you can use the device</li>
+</ul></li>
+</ul>
+<p>Net effect: privileged code is smaller, and Xorg can drop (or avoid) <code>setuid root</code>.</p>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li>Access control is <strong>authorization</strong>: can a subject do an action to an object?</li>
+<li>ACLs and capabilities are two useful mental models (and real systems mix them)</li>
+<li>Least privilege (RBAC, groups) helps reduce blast radius</li>
+<li><code>setuid</code> is a sharp tool: necessary sometimes, dangerous always</li>
+<li>Concrete reminder: X11/Xorg is “just access control” in disguise (and mistakes are painful)</li>
+</ul>
 
-</section>
-<section id="lets-try-generating-some-strings" class="slide level2">
-<h2>Let’s try generating some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">foo</span> <span class="bnf">|</span> <span class="terminal">bar</span></p>
-</div>
-</section>
-<section id="lets-try-generating-some-strings-1" class="slide level2">
-<h2>Let’s try generating some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">[</span><span class="nonterminal">R<sub>2</sub></span><span class="terminal">]</span></p>
-<p><span class="nonterminal">R<sub>2</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span> <span class="bnf">|</span> <span class="terminal">b</span> <span class="bnf">|</span> <span class="terminal">c</span></p>
-</div>
-</section>
-<section id="lets-try-generating-some-strings-2" class="slide level2">
-<h2>Let’s try generating some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span><span class="nonterminal">R<sub>1</sub></span><span class="terminal">b</span></p>
-</div>
-</section>
-<section id="lets-try-parsing-some-strings" class="slide level2">
-<h2>Let’s try <em>parsing</em> some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span><span class="nonterminal">R<sub>1</sub></span><span class="terminal">b</span></p>
-</div>
-<div class="center">
-<p>aabb</p>
-</div>
-</section>
-<section id="lets-try-parsing-some-strings-1" class="slide level2">
-<h2>Let’s try <em>parsing</em> some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span><span class="nonterminal">R<sub>1</sub></span><span class="terminal">b</span></p>
-</div>
-<div class="center">
-<p>abb</p>
-</div>
-</section>
-<section id="lets-try-parsing-some-strings-2" class="slide level2">
-<h2>Let’s try <em>parsing</em> some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="nonterminal">R<sub>1</sub></span><span class="terminal">+</span><span class="nonterminal">R<sub>1</sub></span></p>
-</div>
-<div class="center">
-<p>abb</p>
-</div>
-</section>
-<section id="lets-try-parsing-some-strings-3" class="slide level2">
-<h2>Let’s try <em>parsing</em> some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span><span class="nonterminal">R<sub>1</sub></span><span class="terminal">b</span> <span class="bnf">|</span> <span class="terminal">1</span> <span class="bnf">|</span> <span class="terminal">x</span></p>
-</div>
-<div class="center">
-<p>1 + x + x</p>
-</div>
-</section>
-<section id="lets-try-parsing-some-strings-4" class="slide level2">
-<h2>Let’s try <em>parsing</em> some strings</h2>
-<div class="grammar">
-<p><span class="nonterminal">R<sub>1</sub></span> <span class="bnf">::=</span> <span class="terminal">a</span><span class="nonterminal">R<sub>1</sub></span><span class="terminal">b</span> <span class="bnf">|</span> <span class="terminal">1</span> <span class="bnf">|</span> <span class="terminal">x</span></p>
-</div>
-<div class="center">
-<p>1 + x +</p>
-</div>
-
-</section>
-
-</div>
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
@@ -325,19 +582,19 @@ Sam Ogden
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="40-bnf_grammers_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="40-bnf_grammers_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="ostep-55-access-control_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

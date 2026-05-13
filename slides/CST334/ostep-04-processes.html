@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="54-authentication_files/libs/clipboard/clipboard.min.js"></script>
-<script src="54-authentication_files/libs/quarto-html/tabby.min.js"></script>
-<script src="54-authentication_files/libs/quarto-html/popper.min.js"></script>
-<script src="54-authentication_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="54-authentication_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="54-authentication_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="54-authentication_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="ostep-04-processes_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ostep-04-processes_files/libs/quarto-html/tabby.min.js"></script>
+<script src="ostep-04-processes_files/libs/quarto-html/popper.min.js"></script>
+<script src="ostep-04-processes_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="ostep-04-processes_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ostep-04-processes_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="ostep-04-processes_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
-  <meta name="author" content="Sam Ogden">
-  <title>Authentication</title>
+  <meta name="author" content="Sam Ogden (slides by Glenn Brunns)">
+  <title>Processes</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="54-authentication_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="54-authentication_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="ostep-04-processes_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="ostep-04-processes_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -31,13 +31,79 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="54-authentication_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="ostep-04-processes_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
   <link rel="stylesheet" href="assets/styles.css">
-  <link href="54-authentication_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="54-authentication_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="54-authentication_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="54-authentication_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="ostep-04-processes_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="ostep-04-processes_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="ostep-04-processes_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="ostep-04-processes_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -130,14 +196,14 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 54" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-authentication.pdf" data-last-updated="2026-04-30 11:15" class="quarto-title-block center">
-  <h1 class="title">Authentication</h1>
-  <p class="subtitle">OSTEP 54</p>
+<section id="title-slide" data-chapter="OSTEP 04" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf" data-last-updated="2026-05-13 11:07" class="quarto-title-block center">
+  <h1 class="title">Processes</h1>
+  <p class="subtitle">Chapter 4</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Sam Ogden 
+Sam Ogden (slides by Glenn Brunns) 
 </div>
 </div>
 </div>
@@ -150,257 +216,303 @@ Sam Ogden
 
 <section id="lecture-objectives" class="slide level2">
 <h2>Lecture Objectives</h2>
+<p>After this lecture, you should be able to:</p>
 <ul>
-<li>After this lecture, you should be able to:</li>
-<li>Explain three main authentication methods</li>
-<li>Consider the challenges of each method</li>
+<li>Define a process, and describe the difference between a program and a process.</li>
+<li>Name 4 process states.</li>
+<li>List the steps the OS uses to initialize a process.</li>
+<li>List a few items contained in a Linux <code>task_struct</code>.</li>
+<li>Use 2 bash commands to list processes.</li>
 </ul>
 </section>
-<section id="some-definitions-before-we-begin" class="slide level2">
-<h2>Some definitions before we begin</h2>
+<section id="key-topics" class="slide level2">
+<h2>Key Topics</h2>
 <ul>
-<li><strong>Principal</strong>: who or what is asking for permission</li>
-<li><strong>Object</strong>: the resource being asked for</li>
-<li><strong>Credential</strong>: tracking of permissions granted</li>
+<li>Processes</li>
+<li>Virtualization</li>
+<li>Context Switch</li>
+<li>Scheduling Policy</li>
+<li>Process State</li>
 </ul>
 </section>
-<section id="how-to-assign-credentials" class="slide level2">
-<h2>How to assign credentials?</h2>
-<div class="columns">
-<div class="column" style="width:52%;">
+<section id="key-terms" class="slide level2">
+<h2>Key Terms</h2>
 <ul>
-<li>We need to figure out who to let run</li>
-<li>And what permissions they should have</li>
-<li>Authentication only matters if the OS can tie identity to access</li>
-</ul>
-</div><div class="column" style="width:48%;">
-<p><img data-src="assets/ostep-54-authentication/slide04-image1.png"></p>
-</div></div>
-</section>
-<section id="main-ways-to-check" class="slide level2">
-<h2>Main ways to check</h2>
-<p><strong>Authentication usually comes from one of three kinds of evidence</strong></p>
-<ol type="1">
-<li><strong>What you know</strong></li>
-<li><strong>What you have</strong></li>
-<li><strong>What you are</strong></li>
-</ol>
-</section>
-<section class="slide level2">
-
-</section>
-<section id="what-do-you-know" class="slide level2 section-header">
-<h2>What do you know?</h2>
-<p>Passwords</p>
-</section>
-<section id="what-do-you-know-1" class="slide level2">
-<h2>What do you know?</h2>
-<p><strong>Before we trust passwords, we need to ask:</strong></p>
-<ul>
-<li>What makes a good secret?</li>
-<li>How do we store secrets?</li>
-<li>How do we check secrets?</li>
-<li>How do we protect secrets?</li>
+<li>Machine State</li>
+<li>Program Counter</li>
+<li>Stack Pointer</li>
+<li>Process States</li>
+<li>Proc Struct</li>
+<li>Process Identifier (PID)</li>
 </ul>
 </section>
-<section id="password-entropy" class="slide level2">
-<h2>Password entropy</h2>
-<p><img data-src="assets/ostep-54-authentication/slide08-image2.png"></p>
+<section id="programs-processes" class="slide level2">
+<h2>Programs &amp; Processes</h2>
 </section>
-<section id="how-do-we-store-them" class="slide level2">
-<h2>How do we store them?</h2>
-<p><img data-src="assets/ostep-54-authentication/slide09-10-image3.png"></p>
+<section id="what-is-a-process" class="slide level2">
+<h2>What is a process?</h2>
+<ul>
+<li>Processes are running programs.</li>
+<li>They have memory and a thread of execution.</li>
+<li>A process is a “running program”, or an “executing program”.</li>
+<li>An OS manages the processes on a computer.</li>
+<li>For example:
+<ul>
+<li>create a process</li>
+<li>destroy a process</li>
+</ul></li>
+</ul>
 </section>
-<section id="how-do-we-check-them" class="slide level2">
-<h2>How do we check them?</h2>
-<p><img data-src="assets/ostep-54-authentication/slide09-10-image3.png"></p>
-</section>
-<section id="how-do-we-protect-secrets" class="slide level2">
-<h2>How do we protect secrets?</h2>
-<div class="boxgrid" style="--boxgrid-cols:2;">
-<div class="box">
-<p>Say somebody manages to get our password file….</p>
-<p>If it’s hashed, do we have a problem?</p>
-</div>
-</div>
-<div class="fragment">
-<p><br><br></p>
-<div class="boxgrid" style="--boxgrid-cols:2;">
-<div class="box">
-<p><strong>YES!</strong> They can try all the hashes!</p>
-<p>So how do we fix this?</p>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="assets/ostep-54-authentication/password-crack-time.png"></p>
-<figcaption>Time to crack a password of a given length</figcaption>
-</figure>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="assets/ostep-54-authentication/rainbowtable.png"></p>
-<figcaption>Rainbow Table illustration presented at Crypto 2003</figcaption>
-</figure>
-</div>
-</section>
-<section id="we-add-a-salt" class="slide level2">
-<h2>We add a <code>salt</code></h2>
+<section id="program-versus-process" class="slide level2">
+<h2>Program versus Process</h2>
 <div class="columns">
 <div class="column">
-<p><img data-src="assets/ostep-54-authentication/slide12-image4.png"></p>
+<h3 id="program">Program</h3>
+<ul>
+<li>Just the compiled code
+<ul>
+<li>does not change</li>
+<li>just a byte stream on disk</li>
+<li>every copy is identical</li>
+</ul></li>
+</ul>
 </div><div class="column">
+<h3 id="process">Process</h3>
 <ul>
-<li>A <code>salt</code> is a little extra information added to every password
+<li><p>Wraps around a program</p>
 <ul>
-<li>Effectively maks it longer</li>
+<li>has a current “state of execution”:
+<ul>
+<li>what’s the next statement to run?</li>
+<li>what are the values in memory?</li>
+<li>what files are open?</li>
 </ul></li>
-<li>Each user has their own <code>salt</code>
+<li>multiple copies of a program can be running at once
 <ul>
-<li>It doesn’t need to be private</li>
+<li>each copy is unique</li>
 </ul></li>
-<li>They effectively remove the benefits of precomputation (aka rainbow tables)</li>
-</ul>
-</div></div>
-</section>
-<section id="how-does-salting-work" class="slide level2">
-<h2>How does <code>salt</code>ing work?</h2>
-<p><img data-src="assets/ostep-54-authentication/slide13-image5.png"></p>
-</section>
-<section id="what-do-you-know-key-takeaways" class="slide level2">
-<h2>What do you know? Key Takeaways</h2>
-<ul>
-<li>Use an expertly designed hashing function</li>
-<li>Protect your password file</li>
-<li>Always add salt to the hash</li>
-<li>Passwords that people can remember are better than ones they write down</li>
-</ul>
-</section>
-<section class="slide level2">
-
-</section>
-<section id="what-do-you-have" class="slide level2 section-header">
-<h2>What do you have?</h2>
-<p>Cards and Keys</p>
-</section>
-<section id="what-you-have-what-is-it" class="slide level2">
-<h2>What you have: What is it?</h2>
-<ul>
-<li>Authentication based on having a specific thing
-<ul>
-<li>A concert ticket</li>
-<li>A lanyard</li>
-<li>Your physical ATM card</li>
-<li>Your cell phone</li>
-<li>A security dongle</li>
 </ul></li>
 </ul>
-</section>
-<section id="what-problems-are-there" class="slide level2">
-<h2>What problems are there?</h2>
-<ul>
-<li>What happens if you lose your device?</li>
-<li>What happens if somebody steals your device?</li>
-<li>How do you prove you’re still you?</li>
-<li>Can somebody else use it?</li>
-<li>How often does it update?</li>
-<li>Will people use it?</li>
-</ul>
-</section>
-<section class="slide level2">
-
-</section>
-<section id="what-you-are" class="slide level2 section-header">
-<h2>What you are</h2>
-<p>Biometrics</p>
-</section>
-<section id="what-are-biometrics" class="slide level2">
-<h2>What are biometrics?</h2>
-<ul>
-<li>Measurements of what makes you you</li>
-<li>Retinal scan (Mission Impossible)</li>
-<li>Palm print (Whole Foods)</li>
-<li>Thumb print (iPhone SE)</li>
-</ul>
-</section>
-<section id="biometrics-challenges" class="slide level2">
-<h2>Biometrics Challenges</h2>
-<p>Are these the same cat?</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="assets/ostep-54-authentication/slide21-image7.png"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="assets/ostep-54-authentication/slide21-image8.png"></p>
 </div></div>
 </section>
-<section id="sensitivity" class="slide level2">
-<h2>Sensitivity</h2>
+<section id="virtualization" class="slide level2 section-header">
+<h2>Virtualization</h2>
+</section>
+<section id="why-processes" class="slide level2">
+<h2>Why processes?</h2>
+<ul>
+<li>Processes allow us to share resources by considering programs as abstract objects.</li>
+<li>Allows us to reason about processes more cleanly.</li>
+<li>Allows us to pretend we have one computer per process.</li>
+</ul>
+</section>
+<section id="process-management" class="slide level2 section-header">
+<h2>Process Management</h2>
+</section>
+<section id="os-data-structures-for-process-mgmt." class="slide level2">
+<h2>OS data structures for process mgmt.</h2>
+<ul>
+<li>For each process there is an OS data structure containing things like:
+<ul>
+<li>the process id</li>
+<li>the process state</li>
+<li>the process register values</li>
+<li>the size of process memory</li>
+</ul></li>
+<li>In Linux, the data structure is called <code>task_struct</code>.</li>
+<li>When a process is created, a new <code>task_struct</code> is allocated.</li>
+</ul>
+</section>
+<section id="os-data-structures-for-process-mgmt.-1" class="slide level2">
+<h2>OS data structures for process mgmt.</h2>
+<p>Context Switching saves all of this to memory</p>
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:45%;">
+<p><img data-src="assets/ostep-04-processes/ostep-4_5-process_struct.png"></p>
+</div><div class="column" style="width:55%;">
+<p><img data-src="assets/ostep-04-processes/ostep-4_5-context_struct.png"></p>
+</div></div>
+</section>
+<section id="process-states" class="slide level2">
+<h2>Process states</h2>
+<div class="columns">
+<div class="column">
+<p>Four main states we care about</p>
 <ul>
-<li>We need to strike a balance between being too relaxed and too stringent</li>
-<li>Context matters!
+<li>ready
 <ul>
-<li>How mission-critical is this?</li>
-<li>What is our mission?</li>
+<li>Job has no blockers and is waiting to be chosen by the OS</li>
+</ul></li>
+<li>running
+<ul>
+<li>Job is currently on the processor</li>
+</ul></li>
+<li>blocked
+<ul>
+<li>Job is waiting on something (e.g.&nbsp;I/O)</li>
+</ul></li>
+<li>terminated
+<ul>
+<li>Job is no longer running</li>
 </ul></li>
 </ul>
-</div><div class="column" style="width:48%;">
-<p><img data-src="assets/ostep-54-authentication/slide22-image9.png"></p>
+</div><div class="column">
+<p><img data-src="assets/ostep-04-processes/ostep-4_2-process_state_transitions.png"></p>
 </div></div>
+<p><strong>Note: “Job” == “Process”</strong></p>
 </section>
-<section id="how-can-we-make-it-better" class="slide level2">
-<h2>How can we make it better?</h2>
-<p>Authentication is stronger when we combine things that fail in different ways.</p>
+<section id="how-does-the-os-create-a-process" class="slide level2">
+<h2>How does the OS create a process?</h2>
 <div class="columns">
-<div class="column" style="width:42%;">
-<ul>
-<li>Password + phone</li>
-<li>Multi-Factor Authentication</li>
-</ul>
-</div><div class="column" style="width:58%;">
-<p><img data-src="assets/ostep-54-authentication/slide18-image6.png"></p>
+<div class="column" style="width:58%;">
+<ol type="1">
+<li>get the program code off disk, load it into memory</li>
+<li>load static data into memory</li>
+<li>allocate memory for stack</li>
+<li>allocate memory for heap</li>
+<li>initialize some file descriptors</li>
+<li>transfer control to the program</li>
+</ol>
+</div><div class="column" style="width:42%;">
+<p><img data-src="assets/ostep-04-processes/slide14_img01.png"></p>
 </div></div>
 </section>
-<section id="how-to-design-a-system" class="slide level2">
-<h2>How to design a system</h2>
-<ul>
-<li>The swiss cheese model says add lots of layers to help protect yourself</li>
-<li>If something makes it through one layer, stop it before the next</li>
-</ul>
-<p><img data-src="assets/ostep-54-authentication/slide24-image10.png"></p>
+<section id="process-scheduling" class="slide level2 section-header">
+<h2>Process Scheduling</h2>
 </section>
-<section id="how-to-authenticate-the-system" class="slide level2">
-<h2>How to authenticate the system?</h2>
+<section id="two-main-kinds-of-scheduling" class="slide level2">
+<h2>Two main kinds of Scheduling</h2>
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column">
+<h3 id="batch-scheduling">Batch Scheduling</h3>
 <ul>
-<li>Sometimes you want to run tasks not as yourself</li>
-<li>And you don’t want to sign in</li>
-<li>How do we do this?</li>
+<li><strong>Typical use case</strong>: There is a set of jobs that needs to be completed</li>
+<li><strong>General idea</strong>: We pick a job and run it until it’s completed or preempted</li>
+<li><strong>Goal</strong>: We finish all the jobs as quickly as possible</li>
 </ul>
-</div><div class="column" style="width:48%;">
-<p><img data-src="assets/ostep-54-authentication/slide26-image11.png"></p>
+</div><div class="column">
+<h3 id="multi-programming">Multi-Programming</h3>
+<ul>
+<li><strong>Typical use case</strong>: One or more users are interacting with processes</li>
+<li><strong>General idea</strong>: We run each job for a short period of time.
+<ul>
+<li>It is still one at a time, but if we do it fast enough we can pretend they’re running at the same time!</li>
+</ul></li>
+<li><strong>Goal</strong>: We are highly responsive</li>
+</ul>
 </div></div>
+</section>
+<section id="how-to-pause-and-resume-programs" class="slide level2">
+<h2>How to pause and resume programs?</h2>
+<ul>
+<li>Conceptually, to pause:
+<ul>
+<li>stop process and record its execution state</li>
+</ul></li>
+<li>To resume:
+<ul>
+<li>restore the process execution state, and restart</li>
+</ul></li>
+<li>We’ll get into the details later</li>
+</ul>
+</section>
+<section id="mechanism-and-policy" class="slide level2">
+<h2>Mechanism and Policy</h2>
+<ul>
+<li>The OS has a <strong>mechanism</strong> to allow it to stop and start processes. (“<em>How?</em>”)</li>
+<li>The OS defines a <strong>policy</strong> about how to use the mechanism to achieve goals. (“<em>Why?</em>”)
+<ul>
+<li>how long should a process be allowed to run?</li>
+<li>which processes should get higher priority?</li>
+<li>how to ensure every process eventually gets a chance to run?</li>
+</ul></li>
+</ul>
+<hr>
+<div class="center">
+<p>Mechanism vs Policy is a recurring theme in OS design.</p>
+</div>
+</section>
+<section id="listing-processes-with-bash" class="slide level2">
+<h2>Listing processes with bash</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>$ ps</span>
+<span id="cb1-2"><a href=""></a>  PID TTY          TIME CMD</span>
+<span id="cb1-3"><a href=""></a> 5568 pts/0    00:00:00 bash</span>
+<span id="cb1-4"><a href=""></a> 5593 pts/0    00:00:00 ps</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>$ ps -ef</span>
+<span id="cb1-7"><a href=""></a>...</span>
+<span id="cb1-8"><a href=""></a>ziel5122  4872  4868  0 15:16 ?        00:00:00 sshd: ziel5122@notty</span>
+<span id="cb1-9"><a href=""></a>ziel5122  4873  4872  0 15:16 ?        00:00:00 sshd: ziel5122@internal...</span>
+<span id="cb1-10"><a href=""></a>root      5562  4257  0 15:31 ?        00:00:00 sshd: brun1992 [priv]</span>
+<span id="cb1-11"><a href=""></a>root      5564     2  0 15:31 ?        00:00:00 [flush-253:0]</span>
+<span id="cb1-12"><a href=""></a>brun1992  5567  5562  0 15:31 ?        00:00:00 sshd: brun1992@pts/0</span>
+<span id="cb1-13"><a href=""></a>brun1992  5568  5567  0 15:31 pts/0    00:00:00 -bash</span>
+<span id="cb1-14"><a href=""></a>apache    5666 10367  0 Sep06 ?        00:00:01 /usr/sbin/httpd</span>
+<span id="cb1-15"><a href=""></a>apache    5667 10367  0 Sep06 ?        00:00:01 /usr/sbin/httpd</span>
+<span id="cb1-16"><a href=""></a>apache    5668 10367  0 Sep06 ?        00:00:01 /usr/sbin/httpd</span>
+<span id="cb1-17"><a href=""></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>with no options, <code>ps</code> shows processes of current user in current terminal</li>
+<li>with the <code>-e</code> (all processes) and <code>-f</code> (full output) options:</li>
+</ul>
+</section>
+<section id="ps---details" class="slide level2">
+<h2>ps - details</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href=""></a>$ ps -ef</span>
+<span id="cb2-2"><a href=""></a>UID        PID  PPID  C STIME TTY          TIME CMD</span>
+<span id="cb2-3"><a href=""></a>...</span>
+<span id="cb2-4"><a href=""></a>ziel5122  4872  4868  0 15:16 ?        00:00:00 sshd: ziel5122@notty</span>
+<span id="cb2-5"><a href=""></a>ziel5122  4873  4872  0 15:16 ?        00:00:00 sshd: ziel5122@internal...</span>
+<span id="cb2-6"><a href=""></a>root      5562  4257  0 15:31 ?        00:00:00 sshd: brun1992 [priv]</span>
+<span id="cb2-7"><a href=""></a>root      5564     2  0 15:31 ?        00:00:00 [flush-253:0]</span>
+<span id="cb2-8"><a href=""></a>brun1992  5567  5562  0 15:31 ?        00:00:00 sshd: brun1992@pts/0</span>
+<span id="cb2-9"><a href=""></a>brun1992  5568  5567  0 15:31 pts/0    00:00:00 -bash</span>
+<span id="cb2-10"><a href=""></a>apache    5666 10367  0 Sep06 ?        00:00:01 /usr/sbin/httpd</span>
+<span id="cb2-11"><a href=""></a>apache    5667 10367  0 Sep06 ?        00:00:01 /usr/sbin/httpd</span>
+<span id="cb2-12"><a href=""></a>apache    5668 10367  0 Sep06 ?        00:00:01 /usr/sbin/httpd</span>
+<span id="cb2-13"><a href=""></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>user responsible for launching the process</li>
+<li>process ID</li>
+<li>parent process ID</li>
+<li>proc. utilization</li>
+<li>system time at process creation</li>
+<li>terminal from which process launched</li>
+<li>cumulative CPU time for this process</li>
+<li>program running in the process</li>
+</ul>
+</section>
+<section id="top---show-processes-interactively" class="slide level2">
+<h2>top - show processes interactively</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href=""></a>$ top</span>
+<span id="cb3-2"><a href=""></a>top - 15:48:16 up 24 days,  9:11,  2 users,  load average: 0.00, 0.00, 0.00</span>
+<span id="cb3-3"><a href=""></a>Tasks: 196 total,   1 running, 195 sleeping,   0 stopped,   0 zombie</span>
+<span id="cb3-4"><a href=""></a>Cpu(s):  0.7%us,  0.7%sy,  0.0%ni, 98.3%id,  0.3%wa,  0.0%hi,  0.0%si,  0.0%st</span>
+<span id="cb3-5"><a href=""></a>Mem:   4019552k total,  2737172k used,  1282380k free,   440900k buffers</span>
+<span id="cb3-6"><a href=""></a>Swap:  4161532k total,       44k used,  4161488k free,  1845072k cached</span>
+<span id="cb3-7"><a href=""></a>PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span>
+<span id="cb3-8"><a href=""></a>2084 root      20   0  121m 9292 4668 S  0.3  0.2   2:23.50 nsrexecd</span>
+<span id="cb3-9"><a href=""></a>6520 brun1992  20   0  2704 1180  872 R  0.3  0.0   0:00.19 top</span>
+<span id="cb3-10"><a href=""></a>11268 root      20   0 26664 4128 3348 S  0.3  0.1  55:01.68 vmtoolsd</span>
+<span id="cb3-11"><a href=""></a>1 root      20   0  2900 1380 1208 S  0.0  0.0   1:06.58 init</span>
+<span id="cb3-12"><a href=""></a>2 root      20   0     0    0    0 S  0.0  0.0   0:04.22 kthreadd</span>
+<span id="cb3-13"><a href=""></a>3 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 migration/0</span>
+<span id="cb3-14"><a href=""></a>4 root      20   0     0    0    0 S  0.0  0.0   0:21.83 ksoftirqd/0</span>
+<span id="cb3-15"><a href=""></a>5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 stopper/0</span>
+<span id="cb3-16"><a href=""></a>6 root      RT   0     0    0    0 S  0.0  0.0   0:21.44 watchdog/0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>1, 5, and 15-minute load averages</li>
+<li>%CPU: process’s share of the elapsed CPU time since last screen update</li>
+<li>%MEM: process’s currently-used share of available physical memory</li>
+</ul>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
 <ul>
-<li>Three main authentication methods:
-<ul>
-<li>what you know</li>
-<li>what you have</li>
-<li>what you are</li>
-</ul></li>
-<li>These work best when combined</li>
-<li>Need to balance strictness and usability</li>
+<li>A process is a running program.</li>
+<li>A main job of the OS is to manage processes: create them, destroy them, stop them, start them, …</li>
+<li>Multi-programming is when the OS runs multiple programs “at once” on a single processor.</li>
+<li>Mechanism vs Policy.</li>
 </ul>
 
 </section>
@@ -412,19 +524,19 @@ Sam Ogden
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="54-authentication_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="54-authentication_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="54-authentication_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="54-authentication_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="ostep-04-processes_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
