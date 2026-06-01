@@ -13,6 +13,7 @@ Printable slide handouts for CST334.
 | Docker Setup | [Open](Docker-Setup.pdf) |
 | Exam 4 Review | [Open](Exam-4-Review.pdf) |
 | OSTEP 04 - Processes | [Open](OSTEP-04-Processes.pdf) |
+| OSTEP 05 - C Process API | [Open](OSTEP-05-C-Process-API.pdf) |
 | OSTEP 53 - Introduction to Security | [Open](OSTEP-53-Introduction-to-Security.pdf) |
 | OSTEP 54 - Authentication | [Open](OSTEP-54-Authentication.pdf) |
 | OSTEP 55 - Access Control | [Open](OSTEP-55-Access-Control.pdf) |
