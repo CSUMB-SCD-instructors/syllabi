@@ -4,7 +4,7 @@ course_code: "CST334-online"
 course_name: "Introduction to Operating Systems - Online"
 title: "CST334-online - Introduction to Operating Systems - Online"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-03-10
+last_updated: 2026-06-17
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -76,9 +76,9 @@ The major topics covered in class are:
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
   - Office Hours:
-    - Mondays 5-6pm [on zoom](https://csumb.zoom.us/j/82730227830)
-    - Thursdays 4-5pm [on zoom](https://csumb.zoom.us/j/82730227830)
-    - [By appointment](https://calendar.app.google/2RYodKD61GpQRmodA)
+    - Mondays 8-9am [on zoom](https://csumb.zoom.us/j/86454892981)
+    - Saturdays 9-10am [on zoom](https://csumb.zoom.us/j/86454892981)
+    - [By appointment](https://calendar.app.google/5TL35A3Nc1pjewD29)
 - Alejandro Larson (TA)
   - Email: alarson@csumb.edu
   - Office Hours:
@@ -118,7 +118,7 @@ There are three groups of assignments, briefly described in <a href="#table:assi
 | [Programming assignments](#programming-assignments)   | 35%   |
 | [Exams and Quizzes](#exams-and-quizzes)               | 30%   |
 | [Participation](#participation)                       | 35%   |
-| [Extra Credit](#extra-credit)                         | (2%)  |
+| [Extra Credit](#extra-credit)                         | (1%)  |
 
 *Table 1. Points available per assignment type.*
 
@@ -194,7 +194,7 @@ Each week there are a few prompts for you to post on the canvas forum regarding.
 You should respond to these and your classmates.
 
 
-### Extra Credit
+### Extra Credit (1%)
 
 Each week, Kayla sends out surveys about the course asking what is working for you and what improvements you would like to see.
 These are very helpful for assessing what I can do to improve the course so you will be rewarded by submitting them.
@@ -263,8 +263,8 @@ In this class, you should use them as a resource similar to [stackoverflow](http
 
 **You may use** LLMs for asking clarifying questions and generating examples.
 I will demonstrate a number of these such questions in class but “how do I use XX command?” and “how does a free list in memory management work?” are examples.
-Additionally, asking for example problems (e.g. “can I have five examples of turnaround time calculation with FIFO and RR scheduling?”) is an excellent use [^4].
-Further, if you are confused about what a homework problem is asking or how it relates to operating systems at a larger scale you can ask them [^5].
+Additionally, asking for example problems (e.g. “can I have five examples of turnaround time calculation with FIFO and RR scheduling?”) is an excellent use[^4].
+Further, if you are confused about what a homework problem is asking or how it relates to operating systems at a larger scale you can ask them[^5].
 
 **You may *not*** use LLMs for producing answers on programming assignments, quizzes or exams.
 Asking for an LLM’s solution to a coding assignment is conceptually the same as asking another student to write you code for you, and will be treated as such.
@@ -307,3 +307,11 @@ The process for syllabus changes:
 4. Change takes effect after notification period
 
 Students are responsible for staying current with any announced changes to the syllabus.
+
+---
+
+
+[^1]: As a note, you should let me know about the error you're running into and I might apply some extra credit for it.  Asking for the extra credit, especially as the lead in, is generally discouraged much like it's discouraged to ask for money in the same breath as reporting a bug to a vendor. Depending on the size of the bug I'll try to find a way to show appreciation, and appreciate the feedback.
+[^3]: This is done automatically through canvas and it "chops off" the points that you can't get.  For example, if you turn in an assignment 1 day late and would have gotten a 95% on it you will get a 90% for it.
+[^4]: But don't trust their math.  They're getting better but not great.  Practice quizzes are a better place to check this out as I try to provide walk throughs.
+[^5]: Or, you know, come talk to me.  I know a lot more about the specifics of this class than the AI does.
