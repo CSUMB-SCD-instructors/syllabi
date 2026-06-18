@@ -4,7 +4,7 @@ course_code: "CST334-online"
 course_name: "Introduction to Operating Systems - Online"
 title: "CST334-online - Introduction to Operating Systems - Online"
 course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-06-17
+last_updated: 2026-06-18
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -26,7 +26,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 
 - **Getting help:**
 There are office hours spread throughout the week so make use of them if you have any questions!
-In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0AHT0PAKA8) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
+In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0BAKQLTFM5) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
 
@@ -95,7 +95,7 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have [a slack channel](https://cs-you-monterey.slack.com/archives/C0AHT0PAKA8) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have [a slack channel](https://cs-you-monterey.slack.com/archives/C0BAKQLTFM5) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
     - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
 
