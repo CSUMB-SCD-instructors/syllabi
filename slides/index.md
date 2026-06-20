@@ -9,4 +9,4 @@ Browse slide decks by class.
 
 | Class | Decks |
 | --- | ---: |
-| [CST334](CST334/) | 16 |
+| [CST334](CST334/) | 17 |
