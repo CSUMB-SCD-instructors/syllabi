@@ -1,10 +1,10 @@
 ---
 layout: default
-course_code: "CST334"
-course_name: "Introduction to Operating Systems"
-title: "CST334 - Introduction to Operating Systems"
-course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-06-18
+course_code: CST334
+course_name: Introduction to Operating Systems
+title: CST334 - Introduction to Operating Systems
+last_updated: '2026-08-18'
+course_calendar: https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -16,7 +16,9 @@ By the end of it, the goal is for you to be able to think about how to design co
 
 - **Grading:**
 In addition to earning a passing overall grade, you must score at least 40% in **each** of the three assignment groups.
-They are [Programming Assignments](#programming-assignments) (35%), [Exams](#exams) (35%), and [Participation](#participation) (30%).
+
+They are [**Programming Assignments**](#programming-assignments) (35%), [**Exams**](#exams) (35%), and [**Participation**](#participation) (30%).
+
 Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
 *Details can be found in [grading](#grading).*
 
@@ -25,7 +27,9 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 *Details can be found in [late policy](#late-policy).*
 
 - **Getting help:**
+
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
+
 In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
@@ -36,7 +40,9 @@ You are **not** allowed to use LLMs or classmates to write code for you, but you
 
 - **Course Title:** Introduction to Operating Systems
 - **Course Number:** CST334
+
 - **Prerequisites:** CST237, CST 238, and MATH 130
+
 
 ### Course Description
 
@@ -55,7 +61,9 @@ At the end of this class, you should be able to:
 2.  write C code that:
     1.  Demonstrates key operating systems concepts
     2.  correctly leverages concurrency
+
     3.  parses BNF grammars
+
 3.  use the Linux command line (e.g. BASH),
 4.  do command-line scripting,
 
@@ -78,10 +86,14 @@ The major topics covered in class are:
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
+
   - Office Hours: 2pm-3pm Mondays & 1pm-2pm Wednesdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
 
-**Getting Help:** Office hours (both mine and the TAs') are available throughout the week - make use of them! 
-You can also use the class communication platform to ask questions (but not post code/answers on public channels!), or send me questions via email.
+
+
+**Getting Help:** Office hours are available throughout the week - make use of them! 
+You can also use slack to ask questions (but not post code/answers on public channels!), or send me questions via email.
+
 
 #### Communicating online
 
@@ -91,18 +103,22 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have a slack channel named [\#cst334-spring2026](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have a slack channel on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
     - In general I don’t read things in canvas messages or comments.  For questions or comments please use Slack or email instead.
 
 ### Materials
 
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
+
 - Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: Previous semesters videos are great for extra reference but also might change so coming to class is incredibly important!)
+
 - Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
 - Syllabus: [CST334 Syllabus](CST334-syllabus.html)
 
+
 ## Grading
+
 
 
 There are three groups of assignments, briefly described in <a href="#table:assignment-values" data-reference-type="ref" data-reference="table:assignment-values">Table 1</a>.
@@ -189,20 +205,13 @@ Details will be provided during the semester, but it will be a group-based proje
 
 ### Extra Credit Potential
 
-<!-- 
-#### Introductory Meeting (2%)
-
-During the first month of class, stop by my office and chat for a bit to get to know each other and you’ll get a small number of bonus points.
-You can either stop by my office during my regularly scheduled hours or schedule an appointment.
-See details in [the personnel section](#personnel) to find out how to schedule a meeting.
- -->
-
 #### Bug Hunting
 
 We all make mistakes – my github commit history is proof of that.
 Sometimes you catch big ones before I do, and if you let me know I might throw some extra credit your way.
 This is generally reserved for big things (e.g. I left out a bunch of files in the repo or some tools out of the docker image), but if you find yourself confused by something please reach out, maybe you found a novel bug!
 [^1]
+
 
 
 ### Grade Assignment
@@ -226,6 +235,7 @@ Additionally, note that there will be no curve.
 | $[0,60)$        | F            |
 
 ## Course Policies
+
 
 ### Attendance
 
@@ -320,4 +330,3 @@ Students are responsible for staying current with any announced changes to the s
 [^3]: This is done automatically through canvas and it "chops off" the points that you can't get.  For example, if you turn in an assignment 1 day late and would have gotten a 95% on it you will get a 90% for it.
 [^4]: But don't trust their math.  They're getting better but not great.  Practice quizzes are a better place to check this out as I try to provide walk throughs.
 [^5]: Or, you know, come talk to me.  I know a lot more about the specifics of this class than the AI does.
-

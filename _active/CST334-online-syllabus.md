@@ -1,10 +1,9 @@
 ---
 layout: default
-course_code: "CST334-online"
-course_name: "Introduction to Operating Systems - Online"
-title: "CST334-online - Introduction to Operating Systems - Online"
-course_calendar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false"
-last_updated: 2026-06-18
+course_code: CST334-online
+course_name: Introduction to Operating Systems - Online
+title: CST334-online - Introduction to Operating Systems - Online
+last_updated: '2026-08-18'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -15,8 +14,10 @@ The goal of this course is to introduce you to the design and usage of operating
 By the end of it, the goal is for you to be able to think about how to design core parts of the operating system, as well as be able to explain why design decisions were made along the way, and know how to navigate and develop software in a systems-oriented manner.
 
 - **Grading:**
-There are three assignment groups that you must achieve a minimum grade of 40% in to pass the course.
-They are [Programming Assignments](#programming-assignments) (35%), [Exams and Quizzes](#exams-and-quizzes) (30%), and [Participation](#participation) (35%).
+In addition to earning a passing overall grade, you must score at least 40% in **each** of the three assignment groups.
+
+They are [**Programming Assignments**](#programming-assignments) (35%), [**Exams and Quizzes**](#exams-and-quizzes) (30%), and [**Participation**](#participation) (35%).
+
 Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
 *Details can be found in [grading](#grading).*
 
@@ -25,7 +26,9 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 *Details can be found in [late policy](#late-policy).*
 
 - **Getting help:**
+
 There are office hours spread throughout the week so make use of them if you have any questions!
+
 In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0BAKQLTFM5) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
 *Details can be found in [personnel](#personnel).*
@@ -36,6 +39,7 @@ You are **not** allowed to use LLMs or classmates to write code for you, but you
 
 - **Course Title:** Introduction to Operating Systems
 - **Course Number:** CST334
+
 
 ### Course Description
 
@@ -52,8 +56,9 @@ At the end of this class, you should be able to:
 
 1.  explain core OS design problems and solutions to each of them,
 2.  write C code that:
-    1.  Demonstrates key operating systems concepts such as memory management, process management, and low level data manipulation
+    1.  Demonstrates key operating systems concepts
     2.  correctly leverages concurrency
+
 3.  use the Linux command line (e.g. BASH),
 4.  do command-line scripting,
 
@@ -61,6 +66,7 @@ At the end of this class, you should be able to:
 ### Topics Covered
 
 The major topics covered in class are:
+
 
 1.  **Using Linux**
 2.  **Process Management** – How processes are started, stopped, and scheduled.
@@ -75,17 +81,22 @@ The major topics covered in class are:
   - E-mail: [`sogden@csumb.edu`](mailto:sogden@csumb.edu)
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
+
   - Office Hours:
     - Mondays 8-9am [on zoom](https://csumb.zoom.us/j/86454892981)
     - Saturdays 9-10am [on zoom](https://csumb.zoom.us/j/86454892981)
     - [By appointment](https://calendar.app.google/5TL35A3Nc1pjewD29)
+
+
 - Alejandro Larson (TA)
   - Email: alarson@csumb.edu
   - Office Hours:
     - TBD
 
+
 **Getting Help:** Office hours are available throughout the week - make use of them! 
-You can also use the class communication platform to ask questions (but not post code/answers on public channels!), or send me questions via email.
+You can also use slack to ask questions (but not post code/answers on public channels!), or send me questions via email.
+
 
 #### Communicating online
 
@@ -95,15 +106,17 @@ I will use email, Canvas, and Slack for online class communication.
     - e.g. “Can you double check this assignment grade for me?”
 2.  **Slack** will be used to answer content questions and give quick updates.
     - e.g. “I think I found a bug in this quiz, could you check it out?”
-    - We have [a slack channel](https://cs-you-monterey.slack.com/archives/C0BAKQLTFM5) on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
+    - We have a slack channel on the [CS-U-Monterey](https://cs-you-monterey.slack.com/archives/C04LQ29KWV6) workspace that you should join.
 3.  **Canvas** will have information on assignments and due dates
-    - In general I don’t see canvas messages, and the likelihood of me seeing a comment on an assignment is extremely low. If you have questions for comments for me please reach out via either slack or email.
+    - In general I don’t read things in canvas messages or comments.  For questions or comments please use Slack or email instead.
 
 ### Materials
 
 - Course textbook available for free online: [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
-- Canvas Course Page: [CST334online on Canvas](https://csumb.instructure.com/courses/33041)
-- (Optional) In-Person Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: I will not be adding videos from this semester, so heads up that some material may change and coming to class is incredibly important!)
+
+- Canvas Course Page: [CST334-online on Canvas](https://csumb.instructure.com/courses/33041)
+- Syllabus: [CST334-online Syllabus](CST334-online-syllabus.html)
+
 
 ## Grading
 
@@ -146,9 +159,8 @@ These exams will be asynchronous and will consist of a submission of a canvas ex
 
 #### Weekly Quizzes (10%)
 
-The weekly quizzes are due once a week and are intended to encourage reading from the textbook and class material. 
-Readings are generally, but not always, from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/).They are open-book, open-note, and open-internet and will be completed on canvas.
-
+The weekly quizzes are due once a week and are intended to encourage reading from the textbook and class material.
+Readings are generally, but not always, from [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/). They are open-book, open-note, and open-internet and will be completed on canvas.
 
 ### Participation
 
@@ -158,8 +170,7 @@ Participation has four components:
 2. [**Learning Logs**](#learning-logs) (5%)
 3. [**Lab completion**](#labs) (5%)
 4. [**Lecture Videos**](#lecture-videos) (5%)
-4. [**Discussion Posts**](#discussion-posts) (10%)
-
+5. [**Discussion Posts**](#discussion-posts) (10%)
 
 #### Research Project (10%)
 
@@ -183,13 +194,13 @@ Learning logs do not need to be long but demonstrate that you have thought back 
 
 #### Lecture Videos (5%)
 
-The videos cover the core material from class.  
+The videos cover the core material from class.
 They are based on the readings, so I strongly recommend doing the readings prior to watching the videos.
 They must be watched within the canvas window for credit to be recorded.
 
-#### Weekly Discussion  (10%)
+#### Weekly Discussion (10%)
 
-The weekly discussion is your chance to interact with your cohort and discuss the topics that we are covering in class.  
+The weekly discussion is your chance to interact with your cohort and discuss the topics that we are covering in class.
 Each week there are a few prompts for you to post on the canvas forum regarding.
 You should respond to these and your classmates.
 
@@ -209,10 +220,12 @@ This is generally reserved for big things (e.g. I left out a bunch of files in t
 [^1]
 
 
+
+
 ### Grade Assignment
 
 Grades as assigned based on the standard ranges, which are outlined below, with exceptions made based on the [general grading requirements](#grading) guidance.
-Note that $`[90,93)`$ means “at least 90 but less than 93” (e.g. $`90 \leq score < 93`$) and that all grades will be rounded to the nearest whole number (e.g. a 92.1 will be rounded to a 92, but a 92.5 will be rounded to a 93).
+Note that $[90,93)$ means "at least 90 but less than 93" (e.g. $90 \leq score < 93$) and that all grades will be rounded to the nearest whole number (e.g. a 92.1 will be rounded to a 92, but a 92.5 will be rounded to a 93).
 Additionally, note that there will be no curve.
 
 | Grade Range     | Letter Grade |
@@ -230,6 +243,8 @@ Additionally, note that there will be no curve.
 | $[0,60)$        | F            |
 
 ## Course Policies
+
+
 
 ### Late Policy
 
@@ -255,10 +270,10 @@ This late penalty will be a 10% reduction in maximum points per day, with a maxi
 
 ### The use of LLMs
 
-At the highest level, the use of LLMs in this class is ***prohibited*** for complete programming assignments* and ***encouraged*** for improving your own understanding of material.
+At the highest level, the use of LLMs in this class is ***prohibited*** for completing programming assignments and ***encouraged*** for improving your own understanding of material.
 Large Language Models (LLMs), such as ChatGPT and GPT4.0, are powerful language generation models.
 They can be used to produce code and summarize text, as well as answer clarifying questions.
-They can be a very effective tool in a programmer's toolbox if used appropriately.
+They can be a very effective tool in a programmer’s toolbox if used appropriately.
 In this class, you should use them as a resource similar to [stackoverflow](https://stackoverflow.com/) – a good resource that should be critically considered since the code might be wrong, and not as effective as coming to talk to a TA or instructor.
 
 **You may use** LLMs for asking clarifying questions and generating examples.
@@ -310,8 +325,8 @@ Students are responsible for staying current with any announced changes to the s
 
 ---
 
-
-[^1]: As a note, you should let me know about the error you're running into and I might apply some extra credit for it.  Asking for the extra credit, especially as the lead in, is generally discouraged much like it's discouraged to ask for money in the same breath as reporting a bug to a vendor. Depending on the size of the bug I'll try to find a way to show appreciation, and appreciate the feedback.
+[^1]: I should note that it's not like there's a place for direct extra credit for bugs, but I generally find a way to tweak things a bit depending on how big a bug it is.  Regardless I always appreciate feedback.
+[^2]: Attendance and grade are [strongly correlated](https://oapub.org/edu/index.php/ejes/article/view/3887) (not just because of the attendance quizzes but they also factor in).
 [^3]: This is done automatically through canvas and it "chops off" the points that you can't get.  For example, if you turn in an assignment 1 day late and would have gotten a 95% on it you will get a 90% for it.
 [^4]: But don't trust their math.  They're getting better but not great.  Practice quizzes are a better place to check this out as I try to provide walk throughs.
 [^5]: Or, you know, come talk to me.  I know a lot more about the specifics of this class than the AI does.
