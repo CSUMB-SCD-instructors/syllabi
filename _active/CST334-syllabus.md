@@ -3,7 +3,7 @@ layout: default
 course_code: CST334
 course_name: Introduction to Operating Systems
 title: CST334 - Introduction to Operating Systems
-last_updated: '2026-08-18'
+last_updated: '2026-08-19'
 course_calendar: https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false
 ---
 
@@ -15,9 +15,9 @@ The goal of this course is to introduce you to the design and usage of operating
 By the end of it, the goal is for you to be able to think about how to design core parts of the operating system, as well as be able to explain why design decisions were made along the way, and know how to navigate and develop software in a systems-oriented manner.
 
 - **Grading:**
-In addition to earning a passing overall grade, you must score at least 40% in **each** of the three assignment groups.
+To pass this course you must (1) earn an overall grade of at least 60%, **and** (2) score at least 40% in **each** of the three assignment groups.
 
-They are [**Programming Assignments**](#programming-assignments) (35%), [**Exams**](#exams) (35%), and [**Participation**](#participation) (30%).
+They are [Programming Assignments](#programming-assignments) (40%), [Exams](#exams) (40%), and [Participation](#participation) (20%).
 
 Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
 *Details can be found in [grading](#grading).*
@@ -27,12 +27,10 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 *Details can be found in [late policy](#late-policy).*
 
 - **Getting help:**
-
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
-
 In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
-You are **not** allowed to use LLMs or classmates to write code for you, but you can ask them clarifying questions about material.
-*Details can be found in [personnel](#personnel).*
+Anything you submit, you should be able to explain and discuss — see the [Academic Honor Code](#academic-honor-code) for the full policy and why.
+*Details on office hours can be found in [personnel](#personnel).*
 
 ## Course Information
 
@@ -119,7 +117,7 @@ I will use email, Canvas, and Slack for online class communication.
 
 ## Grading
 
-
+ 
 
 There are three groups of assignments, briefly described in <a href="#table:assignment-values" data-reference-type="ref" data-reference="table:assignment-values">Table 1</a>.
 **To pass this course, you must meet both of the following requirements: (1) achieve an overall passing grade (≥60%), and (2) score at least 40% in each of the three assignment groups below. Failing to meet either requirement will result in failing the course.**
@@ -128,9 +126,9 @@ There are three groups of assignments, briefly described in <a href="#table:assi
 
 | Assignment Kind                                       | Value |
 |:------------------------------------------------------|:-----:|
-| [Programming assignments](#programming-assignments)   | 35%   |
-| [Exams](#exams)                                       | 35%   |
-| [Participation](#participation)                       | 30%   |
+| [Programming assignments](#programming-assignments)   | 40%   |
+| [Exams](#exams)                                       | 40%   |
+| [Participation](#participation)                       | 20%   |
 
 *Table 1. Points available per assignment type.*
 
@@ -160,14 +158,16 @@ Details on which exam first includes prior material are on the [course calendar]
 These exams are in-class and you will have the full class period (110 minutes) to complete them.
 Exams are paper-based and you may bring in single sheet of notes (handwritten).
 
+Exam questions vary in point value and type: higher-point-value questions are typically direct recall and calculation while lower-point-value are typically typically ask for synthsis such as justifying a design choice or reason about trade-offs.
+In preparing for exams both are worthwhile, but calculations are often a good approach for securing baseline points.
+
 ### Participation
 
-In-class participation has four components:
+In-class participation has three components:
 
 1.  [**In-class quizzes**](#in-class-quizzes) (10%)
 2.  [**Lab completion**](#labs) (5%)
 3.  [**Weekly Study Notes**](#weekly-study-notes) (5%)
-4.  [**Research Project**](#research-project) (10%)
 
 #### In-class quizzes
 
@@ -188,20 +188,14 @@ Although in general I aim to provide sufficient information to complete the labs
 
 #### Weekly Study Notes
 
-Each week students complete a Weekly Study Note to consolidate and organize their understanding of that week's material. These notes serve as your personalized study guide throughout the semester—a cumulative resource you'll build week by week and return to when preparing for exams.
+Each week students complete a Weekly Study Note as a habit-building exercise: a short, low-stakes checkpoint where you pause and consolidate your own understanding of that week's material, ideally building toward a personalized study guide you can return to later.
 
-Weekly Study Notes should:
-- Capture key concepts, techniques, and insights from the week
-- Note connections between topics and identify areas needing review
-- Be written in a way that will be useful to your future self when studying
+Weekly Study Notes are graded on completion rather than content quality or depth — the goal is building the habit of regular reflection, not producing a polished document.
 
-Think of each note as adding another section to your exam review sheet. The clearer and more organized your notes are now, the more valuable they'll be later when you're studying.
+Weekly Study Notes are graded with the help of an LLM. Aggregated and anonymized, they're a useful signal for me: they help me see which topics need more coverage or a different explanation in future classes, so the more genuinely yours the notes are, the more useful this feedback loop is for the class as a whole.
 
-#### Research Project
 
-During the semester you will complete a group research project.
-This research project will consist of exploring academic literature related to class and summarizing it, drawing particular attention to how it connects to the course material.
-Details will be provided during the semester, but it will be a group-based project with both group and individual deliverables.
+
 
 ### Extra Credit Potential
 
@@ -256,40 +250,28 @@ This late penalty will be a 10% reduction in maximum points per day, with a maxi
 
 ## Academic Honor Code
 
-**You may talk to other students or LLMs for:**
+**The core standard: anything you submit, you should be able to explain and discuss.**
+If you can't explain why your code does what it does, why you chose one approach over another, or walk through it line by line if asked, that's treated as an academic honor code concern — regardless of where the code or idea originally came from.
 
-- Clarification on topics covered in class
+**Why this standard, and not a rule about tools or line counts:** rules like "don't use more than N lines from an LLM" are easy to argue around and hard to enforce consistently. What actually matters is whether *you* understand what you're submitting. This standard is also directly enforceable — I or a TA can ask you to walk through your code in office hours, during grading, or on a paper exam, and "I'm not sure, I just used what worked" is not an acceptable answer.
+
+### Idea-sourcing vs. code-sourcing
+
+**Allowed** — talking to other students, TAs, or LLMs for general or mechanical questions not tied to your specific assignment:
+- Clarification on topics covered in class (e.g. "how do mutexes differ from semaphores?")
 - Clarification of what *provided* code is doing
-- Generating more examples
-- Understanding compiler errors
+- Understanding a compiler error
+- Generating additional practice examples (e.g. "can I have five examples of turnaround time calculation with FIFO and RR scheduling?")[^4]
+- General language questions (e.g. "how do I write a do-while loop in C?")
 
-**You may *not* talk to other students or LLMs for:**
-
+**Not allowed** — feeding your assignment's specific problem statement, starter code, or exam questions to another student or an LLM for implementation help or answers:
 - Code and assignment answers
 - Exam questions and answers
+- Asking an LLM to write or complete a function that solves your assignment (a prompt like "write me a function to do..." is a sign you've crossed this line)
 
-### The use of LLMs
+Asking an LLM for a solution to a coding assignment is conceptually the same as asking another student to write the code for you, and is treated the same way.
 
-At the highest level, the use of LLMs in this class is ***prohibited*** for completing programming assignments and ***encouraged*** for improving your own understanding of material.
-Large Language Models (LLMs), such as ChatGPT and GPT4.0, are powerful language generation models.
-They can be used to produce code and summarize text, as well as answer clarifying questions.
-They can be a very effective tool in a programmer’s toolbox if used appropriately.
-In this class, you should use them as a resource similar to [stackoverflow](https://stackoverflow.com/) – a good resource that should be critically considered since the code might be wrong, and not as effective as coming to talk to a TA or instructor.
-
-**You may use** LLMs for asking clarifying questions and generating examples.
-I will demonstrate a number of these such questions in class but “how do I use XX command?” and “how does a free list in memory management work?” are examples.
-Additionally, asking for example problems (e.g. “can I have five examples of turnaround time calculation with FIFO and RR scheduling?”) is an excellent use[^4].
-Further, if you are confused about what a homework problem is asking or how it relates to operating systems at a larger scale you can ask them[^5].
-
-**You may *not*** use LLMs for producing answers on programming assignments, quizzes or exams.
-Asking for an LLM’s solution to a coding assignment is conceptually the same as asking another student to write you code for you, and will be treated as such.
-While you may ask for individual parts to help understand the C language better (e.g. “how do I write a do-while loop in C”), using it for more than ~2 lines of code is not allowed.
-As a rule of thumb, a prompt of “write me a function to do...” indicates that you are headed in a problematic direction.
-
-You are encouraged to use LLMs like you would a TA or an instructor.
-You *may not* use LLMs for producing code for programming assignments, but *may* use it to learn how to better use the language and to clarify topics.
-They can clarify complex topics we learned in class, give you alternative explanations and can be incredibly helpful in understanding errors and problems.
-However, it is important to be able to identify *good* examples and *bad* examples of LLM output.
+Use LLMs the way you'd use a TA or instructor: they're great for clarifying complex topics, offering alternative explanations, and helping you understand errors — but not for producing your submitted work. As with any outside source (including [stackoverflow](https://stackoverflow.com/)), critically evaluate what they tell you; they can be confidently wrong[^5].
 
 ### University Academic Integrity Policy
 
