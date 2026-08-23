@@ -3,8 +3,7 @@ layout: default
 course_code: CST334
 course_name: Introduction to Operating Systems
 title: CST334 - Introduction to Operating Systems
-last_updated: '2026-08-19'
-course_calendar: https://docs.google.com/spreadsheets/d/e/2PACX-1vSfCFlcT6Vhz4R0Lg3fB1I_KVK69oY04uWy24lLNDxgEvB7Zt1KzGnnNny1TdbTE5XYeejNphli9UVI/pubhtml?gid=777267647&single=true&widget=true&headers=false
+last_updated: '2026-08-23'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -28,7 +27,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 
 - **Getting help:**
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
-In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0A752GDXQA) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
+In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0BSVGKAAKS) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 Anything you submit, you should be able to explain and discuss — see the [Academic Honor Code](#academic-honor-code) for the full policy and why.
 *Details on office hours can be found in [personnel](#personnel).*
 
@@ -88,6 +87,13 @@ The major topics covered in class are:
   - Office Hours: 2pm-3pm Mondays & 1pm-2pm Wednesdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
 
 
+- Ryan Hopper
+  - Email: rhopper@csumb.edu
+  - Office Hours: TBD
+- Edwin Kofler
+  - Email: ekofler@csumb.edu
+  - Office Hours: TBD
+
 
 **Getting Help:** Office hours are available throughout the week - make use of them! 
 You can also use slack to ask questions (but not post code/answers on public channels!), or send me questions via email.
@@ -111,7 +117,7 @@ I will use email, Canvas, and Slack for online class communication.
 
 - Course lecture recordings: [CST334 on Panopto](https://csumb.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=f31de310-f0c2-4160-b07b-aefb00f64ff8) (Note: Previous semesters videos are great for extra reference but also might change so coming to class is incredibly important!)
 
-- Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/29978)
+- Canvas Course Page: [CST334 on Canvas](https://csumb.instructure.com/courses/34426)
 - Syllabus: [CST334 Syllabus](CST334-syllabus.html)
 
 
