@@ -6,10 +6,7 @@
 <script src="ostep-54-authentication_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="ostep-54-authentication_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="ostep-54-authentication_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="ostep-54-authentication_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ostep-54-authentication_files/libs/quarto-axe/axe-check.js" type="module"></script>
-<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
-<link href="ostep-54-authentication_files/libs/reveal-theme/reveal-theme-fbdf5483e0ddfe31285d6b14cbe1ea0e.min.css" rel="stylesheet" append-hash="true" data-mode="light"><meta charset="utf-8">
+<link href="ostep-54-authentication_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
@@ -35,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="ostep-54-authentication_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="ostep-54-authentication_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="ostep-54-authentication_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="ostep-54-authentication_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -133,9 +130,8 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-chapter="OSTEP 54" data-chapter-url="https://pages.cs.wisc.edu/~remzi/OSTEP/security-authentication.pdf" data-last-updated="2026-05-13 11:07" class="quarto-title-block center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Authentication</h1>
-  <p class="subtitle">OSTEP 54</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -208,19 +204,19 @@ Sam Ogden
 </section>
 <section id="password-entropy" class="slide level2">
 <h2>Password entropy</h2>
-<p><img data-src="assets/ostep-54-authentication/slide08-image2.png"></p>
-</section>
+
+<img data-src="assets/ostep-54-authentication/slide08-image2.png" class="r-stretch"></section>
 <section id="how-do-we-store-them" class="slide level2">
 <h2>How do we store them?</h2>
-<p><img data-src="assets/ostep-54-authentication/slide09-10-image3.png"></p>
-</section>
+
+<img data-src="assets/ostep-54-authentication/slide09-10-image3.png" class="r-stretch"></section>
 <section id="how-do-we-check-them" class="slide level2">
 <h2>How do we check them?</h2>
-<p><img data-src="assets/ostep-54-authentication/slide09-10-image3.png"></p>
-</section>
+
+<img data-src="assets/ostep-54-authentication/slide09-10-image3.png" class="r-stretch"></section>
 <section id="how-do-we-protect-secrets" class="slide level2">
 <h2>How do we protect secrets?</h2>
-<div class="boxgrid" style="--boxgrid-cols:2;">
+<div class="boxgrid">
 <div class="box">
 <p>Say somebody manages to get our password file….</p>
 <p>If it’s hashed, do we have a problem?</p>
@@ -228,7 +224,7 @@ Sam Ogden
 </div>
 <div class="fragment">
 <p><br><br></p>
-<div class="boxgrid" style="--boxgrid-cols:2;">
+<div class="boxgrid">
 <div class="box">
 <p><strong>YES!</strong> They can try all the hashes!</p>
 <p>So how do we fix this?</p>
@@ -238,22 +234,12 @@ Sam Ogden
 </section>
 <section class="slide level2">
 
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="assets/ostep-54-authentication/password-crack-time.png"></p>
-<figcaption>Time to crack a password of a given length</figcaption>
-</figure>
-</div>
-</section>
+
+<img data-src="assets/ostep-54-authentication/password-crack-time.png" class="r-stretch quarto-figure-center"><p class="caption">Time to crack a password of a given length</p></section>
 <section class="slide level2">
 
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="assets/ostep-54-authentication/rainbowtable.png"></p>
-<figcaption>Rainbow Table illustration presented at Crypto 2003</figcaption>
-</figure>
-</div>
-</section>
+
+<img data-src="assets/ostep-54-authentication/rainbowtable.png" class="r-stretch quarto-figure-center"><p class="caption">Rainbow Table illustration presented at Crypto 2003</p></section>
 <section id="we-add-a-salt" class="slide level2">
 <h2>We add a <code>salt</code></h2>
 <div class="columns">
@@ -275,8 +261,8 @@ Sam Ogden
 </section>
 <section id="how-does-salting-work" class="slide level2">
 <h2>How does <code>salt</code>ing work?</h2>
-<p><img data-src="assets/ostep-54-authentication/slide13-image5.png"></p>
-</section>
+
+<img data-src="assets/ostep-54-authentication/slide13-image5.png" class="r-stretch"></section>
 <section id="what-do-you-know-key-takeaways" class="slide level2">
 <h2>What do you know? Key Takeaways</h2>
 <ul>
@@ -378,8 +364,8 @@ Sam Ogden
 <li>The swiss cheese model says add lots of layers to help protect yourself</li>
 <li>If something makes it through one layer, stop it before the next</li>
 </ul>
-<p><img data-src="assets/ostep-54-authentication/slide24-image10.png"></p>
-</section>
+
+<img data-src="assets/ostep-54-authentication/slide24-image10.png" class="r-stretch"></section>
 <section id="how-to-authenticate-the-system" class="slide level2">
 <h2>How to authenticate the system?</h2>
 <div class="columns">
@@ -435,7 +421,7 @@ Sam Ogden
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': false,
+'controlsAuto': true,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
@@ -446,7 +432,7 @@ Sam Ogden
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: true,
+        controls: false,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -463,7 +449,7 @@ Sam Ogden
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: 'c/t',
+        slideNumber: false,
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -588,9 +574,9 @@ Sam Ogden
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1600,
+        width: 1050,
 
-        height: 900,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -620,80 +606,6 @@ Sam Ogden
           RevealSearch,
           RevealZoom
         ]
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const titleSlide = document.querySelector("section#title-slide");
-        if (!titleSlide) return;
-
-        const chapter = titleSlide.dataset.chapter;
-        const chapterUrl = titleSlide.dataset.chapterUrl;
-        const bookUrl = titleSlide.dataset.bookUrl;
-        const bookText = titleSlide.dataset.bookText;
-        const lastUpdated = titleSlide.dataset.lastUpdated;
-
-        const subtitleEl = titleSlide.querySelector("p.subtitle");
-        const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
-        const showChapter = !!(chapter && (!subtitleText || subtitleText !== chapter));
-
-        // If we have a chapter URL, make the subtitle on the title slide clickable.
-        // This is especially useful when subtitle == chapter (auto-filled via filter).
-        if (subtitleEl && chapterUrl && !subtitleEl.querySelector("a")) {
-          const a = document.createElement("a");
-          a.href = chapterUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = subtitleText || chapter || "Chapter";
-          subtitleEl.textContent = "";
-          subtitleEl.appendChild(a);
-        }
-
-        if (!showChapter && !bookUrl && !bookText && !lastUpdated) return;
-
-        const meta = document.createElement("div");
-        meta.className = "title-slide-meta";
-
-        if (showChapter) {
-          if (chapterUrl) {
-            const a = document.createElement("a");
-            a.className = "title-slide-meta-chapter";
-            a.href = chapterUrl;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = chapter;
-            meta.appendChild(a);
-          } else {
-            const c = document.createElement("div");
-            c.className = "title-slide-meta-chapter";
-            c.textContent = chapter;
-            meta.appendChild(c);
-          }
-        }
-
-        if (bookUrl) {
-          const a = document.createElement("a");
-          a.className = "title-slide-meta-book";
-          a.href = bookUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = bookText || "Book";
-          meta.appendChild(a);
-        } else if (bookText) {
-          const b = document.createElement("div");
-          b.className = "title-slide-meta-book";
-          b.textContent = bookText;
-          meta.appendChild(b);
-        }
-
-        if (lastUpdated) {
-          const u = document.createElement("div");
-          u.className = "title-slide-meta-updated";
-          u.textContent = `Updated ${lastUpdated}`;
-          meta.appendChild(u);
-        }
-
-        titleSlide.appendChild(meta);
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">

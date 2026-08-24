@@ -6,10 +6,7 @@
 <script src="01a-introduction_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="01a-introduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="01a-introduction_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01a-introduction_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="01a-introduction_files/libs/quarto-axe/axe-check.js" type="module"></script>
-<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
-<link href="01a-introduction_files/libs/reveal-theme/reveal-theme-fbdf5483e0ddfe31285d6b14cbe1ea0e.min.css" rel="stylesheet" append-hash="true" data-mode="light"><meta charset="utf-8">
+<link href="01a-introduction_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
@@ -35,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01a-introduction_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="01a-introduction_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="01a-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01a-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -133,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-06-20 17:17" class="quarto-title-block center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Introduction to Operating Systems</h1>
 
 <div class="quarto-title-authors">
@@ -152,7 +149,7 @@ Sam Ogden
 
 <section id="me-dr.-sam-ogden" class="slide level2">
 <h2>Me (Dr.&nbsp;Sam Ogden)</h2>
-<div class="boxgrid" cols="2" style="--boxgrid-cols:2;">
+<div class="boxgrid" cols="2">
 <div class="box">
 <ul>
 <li>Office hours:</li>
@@ -161,14 +158,14 @@ Sam Ogden
 <li>By Appointment</li>
 </ul>
 </div>
-<div class="box" color="#b0f8b133" style="--box-bg:#b0f8b133;">
+<div class="box" color="#b0f8b133">
 <ul>
 <li>BS (Math&amp;EE), Univ. of Vermont</li>
 <li>MS (CS), Univ. of Vermont</li>
 <li>PhD (Comp. Sci.), WPI</li>
 </ul>
 </div>
-<div class="box" color="#b0f0f833" style="--box-bg:#b0f0f833;">
+<div class="box" color="#b0f0f833">
 <ul>
 <li>Rock climbing</li>
 <li>Running</li>
@@ -179,7 +176,7 @@ Sam Ogden
 <li><a href="#/nerd-sniping">Nerdy questions</a></li>
 </ul>
 </div>
-<div class="box" color="#ffdea133" style="--box-bg:#ffdea133;">
+<div class="box" color="#ffdea133">
 <ul>
 <li>Product Engineer @ IBM/GF (5 years)</li>
 <li>Grad Student @ WPI (5 years)</li>
@@ -190,7 +187,16 @@ Sam Ogden
 </section>
 <section id="nerd-sniping" class="slide level2">
 <h2>Nerd Sniping</h2>
-<p><img data-src="assets/01a-introduction/slide03_img01.png"></p>
+
+<img data-src="assets/01a-introduction/slide03_img01.png" class="r-stretch"></section>
+<section id="course-tas" class="slide level2 in-person-only">
+<h2>Course TAs</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="assets/01a-introduction/slide05_img01.png"> Ryan Hopper</p>
+</div><div class="column">
+<p><img data-src="assets/01a-introduction/slide05_img02.png"> Daniel Solano</p>
+</div></div>
 </section>
 <section id="getting-help" class="slide level2">
 <h2>Getting Help</h2>
@@ -240,6 +246,16 @@ Sam Ogden
 </ul></li>
 </ul>
 </section>
+<section id="class-structure" class="slide level2 in-person-only">
+<h2>Class Structure</h2>
+<ul>
+<li>Most days the class will try to go like this:</li>
+<li>lecture (50 minutes)</li>
+<li>break (10 minutes)</li>
+<li>lecture (35 minutes)</li>
+<li>lab (15 minutes)</li>
+</ul>
+</section>
 <section id="textbook-ostep" class="slide level2">
 <h2>Textbook: OSTEP</h2>
 <div class="columns">
@@ -262,6 +278,18 @@ Sam Ogden
 </section>
 <section id="grading-and-assignments" class="slide level2 section-header">
 <h2>Grading and Assignments</h2>
+</section>
+<section id="grading" class="slide level2 in-person-only">
+<h2>Grading</h2>
+<ul>
+<li>Three big groups of grades:
+<ul>
+<li>(35%) Exams</li>
+<li>(30%) Participation</li>
+<li>(35%) Programming Assignments</li>
+</ul></li>
+<li>You must get at least a 40% in each of these to pass</li>
+</ul>
 </section>
 <section id="grading-1" class="slide level2 online-only">
 <h2>Grading</h2>
@@ -293,6 +321,48 @@ Sam Ogden
 </tbody>
 </table>
 </div>
+</section>
+<section id="exams" class="slide level2 in-person-only">
+<h2>Exams</h2>
+<ul>
+<li>Tests (35%):
+<ul>
+<li>four exams
+<ul>
+<li>8.75% each</li>
+</ul></li>
+<li>closed book, but 1 single-sided handwritten page of notes</li>
+<li>generally cumulative — about half the material will be from previous sections (but percentage varies)</li>
+<li>Practice Quizzes are provided beforehand!
+<ul>
+<li>(and are worth bonus points!)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="participation" class="slide level2 in-person-only">
+<h2>Participation</h2>
+<ul>
+<li>Class Attendance (10%):
+<ul>
+<li>many classes start with in-class reading quizzes</li>
+<li>reading is linked on weekly schedule</li>
+<li>More likely to have quizzes when class looks empty</li>
+</ul></li>
+<li>Learning logs (5%)
+<ul>
+<li>Reflect on what you learned this week, or what you struggled with</li>
+<li>The guidelines are not bullet points but meant as an algorithm</li>
+</ul></li>
+<li>Lab activities (5%):
+<ul>
+<li>due Sunday night</li>
+</ul></li>
+<li>Research Project (10%):
+<ul>
+<li>Group project that will have checkpoints through the semester</li>
+</ul></li>
+</ul>
 </section>
 <section id="programming-assignments" class="slide level2">
 <h2>Programming Assignments</h2>
@@ -390,6 +460,10 @@ Sam Ogden
 <section id="how-to-get-help" class="slide level2 section-header">
 <h2>How to get help</h2>
 </section>
+<section id="ta-office-hours" class="slide level2 in-person-only">
+<h2>TA Office Hours!</h2>
+
+<img data-src="assets/01a-introduction/slide24_img01.png" class="r-stretch"></section>
 <section id="how-to-get-help-whats-okay" class="slide level2">
 <h2>How to get help: what’s okay</h2>
 <ul>
@@ -494,7 +568,7 @@ Sam Ogden
 <li>play video games, surf the web, talk to friends, text friends, TV</li>
 </ul></li>
 </ul>
-<div class="citation box">
+<div class="citation">
 <ul>
 <li>A mind for numbers, Barbara Oakley</li>
 <li>https://www.coursera.org/lecture/learning-how-to-learn/introduction-to-the-focused-and-diffuse-modes-75EsZ</li>
@@ -515,8 +589,8 @@ Sam Ogden
 </section>
 <section id="whats-an-operating-system" class="slide level2">
 <h2>What’s an Operating System?</h2>
-<p><img data-src="assets/01a-introduction/slide34_img01.png"></p>
-<div class="citation box">
+
+<img data-src="assets/01a-introduction/slide34_img01.png" class="r-stretch"><div class="citation">
 <p>Tanenbaum</p>
 </div>
 </section>
@@ -635,8 +709,8 @@ Sam Ogden
 <li>If OS lets an app have the CPU, how does it get control back?</li>
 </ul></li>
 </ul>
-<p><img data-src="assets/01a-introduction/slide43_img01.jpeg"></p>
-</section>
+
+<img data-src="assets/01a-introduction/slide43_img01.jpeg" class="r-stretch"></section>
 <section id="example-guiding-questions" class="slide level2">
 <h2>Example Guiding questions</h2>
 <ul>
@@ -715,7 +789,7 @@ Sam Ogden
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': false,
+'controlsAuto': true,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
@@ -726,7 +800,7 @@ Sam Ogden
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: true,
+        controls: false,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -743,7 +817,7 @@ Sam Ogden
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: 'c/t',
+        slideNumber: false,
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -868,9 +942,9 @@ Sam Ogden
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1600,
+        width: 1050,
 
-        height: 900,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -900,80 +974,6 @@ Sam Ogden
           RevealSearch,
           RevealZoom
         ]
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const titleSlide = document.querySelector("section#title-slide");
-        if (!titleSlide) return;
-
-        const chapter = titleSlide.dataset.chapter;
-        const chapterUrl = titleSlide.dataset.chapterUrl;
-        const bookUrl = titleSlide.dataset.bookUrl;
-        const bookText = titleSlide.dataset.bookText;
-        const lastUpdated = titleSlide.dataset.lastUpdated;
-
-        const subtitleEl = titleSlide.querySelector("p.subtitle");
-        const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
-        const showChapter = !!(chapter && (!subtitleText || subtitleText !== chapter));
-
-        // If we have a chapter URL, make the subtitle on the title slide clickable.
-        // This is especially useful when subtitle == chapter (auto-filled via filter).
-        if (subtitleEl && chapterUrl && !subtitleEl.querySelector("a")) {
-          const a = document.createElement("a");
-          a.href = chapterUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = subtitleText || chapter || "Chapter";
-          subtitleEl.textContent = "";
-          subtitleEl.appendChild(a);
-        }
-
-        if (!showChapter && !bookUrl && !bookText && !lastUpdated) return;
-
-        const meta = document.createElement("div");
-        meta.className = "title-slide-meta";
-
-        if (showChapter) {
-          if (chapterUrl) {
-            const a = document.createElement("a");
-            a.className = "title-slide-meta-chapter";
-            a.href = chapterUrl;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = chapter;
-            meta.appendChild(a);
-          } else {
-            const c = document.createElement("div");
-            c.className = "title-slide-meta-chapter";
-            c.textContent = chapter;
-            meta.appendChild(c);
-          }
-        }
-
-        if (bookUrl) {
-          const a = document.createElement("a");
-          a.className = "title-slide-meta-book";
-          a.href = bookUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = bookText || "Book";
-          meta.appendChild(a);
-        } else if (bookText) {
-          const b = document.createElement("div");
-          b.className = "title-slide-meta-book";
-          b.textContent = bookText;
-          meta.appendChild(b);
-        }
-
-        if (lastUpdated) {
-          const u = document.createElement("div");
-          u.className = "title-slide-meta-updated";
-          u.textContent = `Updated ${lastUpdated}`;
-          meta.appendChild(u);
-        }
-
-        titleSlide.appendChild(meta);
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">

@@ -6,10 +6,7 @@
 <script src="languages-3-predictive-parsing-1_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="languages-3-predictive-parsing-1_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="languages-3-predictive-parsing-1_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="languages-3-predictive-parsing-1_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="languages-3-predictive-parsing-1_files/libs/quarto-axe/axe-check.js" type="module"></script>
-<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
-<link href="languages-3-predictive-parsing-1_files/libs/reveal-theme/reveal-theme-fbdf5483e0ddfe31285d6b14cbe1ea0e.min.css" rel="stylesheet" append-hash="true" data-mode="light"><meta charset="utf-8">
+<link href="languages-3-predictive-parsing-1_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
@@ -101,7 +98,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="languages-3-predictive-parsing-1_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="languages-3-predictive-parsing-1_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="languages-3-predictive-parsing-1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="languages-3-predictive-parsing-1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -199,7 +196,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-05-03 22:07" class="quarto-title-block center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Predictive Parsing (1)</h1>
 
 <div class="quarto-title-authors">
@@ -230,12 +227,12 @@ Sam Ogden
 </section>
 <section id="warmup-deriving-strings-from-bnf" class="slide level2">
 <h2>Warmup: deriving strings from BNF</h2>
-<div class="grammar">
-<p><span class="nonterminal">stmt</span> <span class="bnf">::=</span> <span class="terminal">print</span><span class="terminal">(</span><span class="nonterminal">expr</span><span class="terminal">)</span> <span class="bnf">|</span> <span class="nonterminal">id</span><span class="terminal">=</span><span class="nonterminal">expr</span></p>
-<p><span class="nonterminal">expr</span> <span class="bnf">::=</span> <span class="nonterminal">id</span> <span class="bnf">|</span> <span class="nonterminal">num</span></p>
-<p><span class="nonterminal">num</span> <span class="bnf">::=</span> <span class="terminal">[0-9]+</span></p>
-<p><span class="nonterminal">id</span> <span class="bnf">::=</span> <span class="terminal">[a-zA-Z]+</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb1-2"><a href=""></a># terminals: print</span>
+<span id="cb1-3"><a href=""></a>stmt ::= print ( expr ) | id = expr</span>
+<span id="cb1-4"><a href=""></a>expr ::= id | num</span>
+<span id="cb1-5"><a href=""></a>num ::= [0-9]+</span>
+<span id="cb1-6"><a href=""></a>id ::= [a-zA-Z]+</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Are these part of our language?</p>
 <ul>
 <li><code>print(5)</code></li>
@@ -246,12 +243,12 @@ Sam Ogden
 </section>
 <section id="recap-a-parser-checks-syntax" class="slide level2">
 <h2>Recap: a parser checks syntax</h2>
-<div class="grammar">
-<p><span class="nonterminal">stmt</span> <span class="bnf">::=</span> <span class="terminal">print</span><span class="terminal">(</span><span class="nonterminal">expr</span><span class="terminal">)</span> <span class="bnf">|</span> <span class="nonterminal">id</span><span class="terminal">=</span><span class="nonterminal">expr</span></p>
-<p><span class="nonterminal">expr</span> <span class="bnf">::=</span> <span class="nonterminal">id</span> <span class="bnf">|</span> <span class="nonterminal">num</span></p>
-<p><span class="nonterminal">num</span> <span class="bnf">::=</span> <span class="terminal">[0-9]+</span></p>
-<p><span class="nonterminal">id</span> <span class="bnf">::=</span> <span class="terminal">[a-zA-Z]+</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb2-2"><a href=""></a># terminals: print</span>
+<span id="cb2-3"><a href=""></a>stmt ::= print ( expr ) | id = expr</span>
+<span id="cb2-4"><a href=""></a>expr ::= id | num</span>
+<span id="cb2-5"><a href=""></a>num ::= [0-9]+</span>
+<span id="cb2-6"><a href=""></a>id ::= [a-zA-Z]+</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -333,12 +330,12 @@ Sam Ogden
 </section>
 <section id="how-to-write-parser-for-this-grammar" class="slide level2">
 <h2>How to write parser for this grammar?</h2>
-<div class="grammar">
-<p><span class="nonterminal">stmt</span> <span class="bnf">::=</span> <span class="terminal">print</span><span class="terminal">(</span><span class="nonterminal">expr</span><span class="terminal">)</span> <span class="bnf">|</span> <span class="nonterminal">id</span><span class="terminal">=</span><span class="nonterminal">expr</span></p>
-<p><span class="nonterminal">expr</span> <span class="bnf">::=</span> <span class="nonterminal">id</span> <span class="bnf">|</span> <span class="nonterminal">num</span></p>
-<p><span class="nonterminal">num</span> <span class="bnf">::=</span> <span class="terminal">[0-9]+</span></p>
-<p><span class="nonterminal">id</span> <span class="bnf">::=</span> <span class="terminal">[a-zA-Z]+</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb3-2"><a href=""></a># terminals: print</span>
+<span id="cb3-3"><a href=""></a>stmt ::= print ( expr ) | id = expr</span>
+<span id="cb3-4"><a href=""></a>expr ::= id | num</span>
+<span id="cb3-5"><a href=""></a>num ::= [0-9]+</span>
+<span id="cb3-6"><a href=""></a>id ::= [a-zA-Z]+</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>Core Idea</em></strong></p>
 <ul>
 <li><code>stmt()</code> will parse statements</li>
@@ -374,61 +371,57 @@ void stmt() {
 <li>match on token DONE (end of input)</li>
 </ul>
 <p><br><br></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href=""></a><span class="dt">void</span> parser<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href=""></a>  Tokenizer t <span class="op">=</span> init__tokenizer<span class="op">(</span>str_to_parse<span class="op">);</span></span>
-<span id="cb1-3"><a href=""></a>  Stmt<span class="op">*</span> e <span class="op">=</span> parse_stmt<span class="op">(&amp;</span>t<span class="op">);</span></span>
-<span id="cb1-4"><a href=""></a>  <span class="cf">if</span> <span class="op">(</span>is_done<span class="op">(</span>t<span class="op">))</span> <span class="op">{</span> printf<span class="op">(</span><span class="st">"Success!"</span><span class="op">);</span> <span class="op">}</span></span>
-<span id="cb1-5"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href=""></a><span class="dt">void</span> parser<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href=""></a>  Tokenizer t <span class="op">=</span> init__tokenizer<span class="op">(</span>str_to_parse<span class="op">);</span></span>
+<span id="cb4-3"><a href=""></a>  Stmt<span class="op">*</span> e <span class="op">=</span> parse_stmt<span class="op">(&amp;</span>t<span class="op">);</span></span>
+<span id="cb4-4"><a href=""></a>  <span class="cf">if</span> <span class="op">(</span>is_done<span class="op">(</span>t<span class="op">))</span> <span class="op">{</span> printf<span class="op">(</span><span class="st">"Success!"</span><span class="op">);</span> <span class="op">}</span></span>
+<span id="cb4-5"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="example-function-for-stmt" class="slide level2">
 <h2>Example: function for ‘stmt’</h2>
-<div class="grammar">
-<p><span class="nonterminal">stmt</span> <span class="bnf">::=</span> <span class="terminal">print</span><span class="terminal">(</span><span class="nonterminal">expr</span><span class="terminal">)</span> <span class="bnf">|</span> <span class="nonterminal">id</span><span class="terminal">=</span><span class="nonterminal">expr</span></p>
-<p><span class="nonterminal">expr</span> <span class="bnf">::=</span> <span class="nonterminal">id</span> <span class="bnf">|</span> <span class="nonterminal">num</span></p>
-<p><span class="nonterminal">num</span> <span class="bnf">::=</span> <span class="terminal">[0-9]+</span></p>
-<p><span class="nonterminal">id</span> <span class="bnf">::=</span> <span class="terminal">[a-zA-Z]+</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb5-2"><a href=""></a># terminals: print</span>
+<span id="cb5-3"><a href=""></a>stmt ::= print ( expr ) | id = expr</span>
+<span id="cb5-4"><a href=""></a>expr ::= id | num</span>
+<span id="cb5-5"><a href=""></a>num ::= [0-9]+</span>
+<span id="cb5-6"><a href=""></a>id ::= [a-zA-Z]+</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><br><br></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href=""></a><span class="dt">void</span> stmt<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb2-2"><a href=""></a>  <span class="cf">switch</span> <span class="op">(</span>token<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-3"><a href=""></a>    <span class="cf">case</span> PRINT<span class="op">:</span></span>
-<span id="cb2-4"><a href=""></a>      match<span class="op">(</span>PRINT<span class="op">);</span> match<span class="op">(</span><span class="st">"("</span><span class="op">);</span> expr<span class="op">();</span> match<span class="op">(</span><span class="st">")"</span><span class="op">);</span></span>
-<span id="cb2-5"><a href=""></a>      <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb2-6"><a href=""></a>    <span class="cf">case</span> ID<span class="op">:</span></span>
-<span id="cb2-7"><a href=""></a>      match<span class="op">(</span>ID<span class="op">);</span> match<span class="op">(</span><span class="st">"="</span><span class="op">);</span> expr<span class="op">();</span></span>
-<span id="cb2-8"><a href=""></a>      <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb2-9"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
-<span id="cb2-10"><a href=""></a>      error<span class="op">(</span><span class="st">"syntax error"</span><span class="op">);</span></span>
-<span id="cb2-11"><a href=""></a>  <span class="op">}</span></span>
-<span id="cb2-12"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href=""></a><span class="dt">void</span> stmt<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href=""></a>  <span class="cf">switch</span> <span class="op">(</span>token<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href=""></a>    <span class="cf">case</span> PRINT<span class="op">:</span></span>
+<span id="cb6-4"><a href=""></a>      match<span class="op">(</span>PRINT<span class="op">);</span> match<span class="op">(</span><span class="st">"("</span><span class="op">);</span> expr<span class="op">();</span> match<span class="op">(</span><span class="st">")"</span><span class="op">);</span></span>
+<span id="cb6-5"><a href=""></a>      <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb6-6"><a href=""></a>    <span class="cf">case</span> ID<span class="op">:</span></span>
+<span id="cb6-7"><a href=""></a>      match<span class="op">(</span>ID<span class="op">);</span> match<span class="op">(</span><span class="st">"="</span><span class="op">);</span> expr<span class="op">();</span></span>
+<span id="cb6-8"><a href=""></a>      <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb6-9"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb6-10"><a href=""></a>      error<span class="op">(</span><span class="st">"syntax error"</span><span class="op">);</span></span>
+<span id="cb6-11"><a href=""></a>  <span class="op">}</span></span>
+<span id="cb6-12"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="challenge-1-left-recursion" class="slide level2">
 <h2>Challenge 1: Left recursion</h2>
 <ul>
 <li>Any problems with a predictive parser here?</li>
 </ul>
-<div class="grammar">
-<p><span class="nonterminal">R1</span> <span class="bnf">::=</span> <span class="nonterminal">R1</span><span class="terminal">+</span><span class="terminal">term</span> <span class="bnf">|</span> <span class="terminal">term</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href=""></a># terminals: term</span>
+<span id="cb7-2"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb7-3"><a href=""></a>R1 ::= R1 + term | term</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>The BNF can be transformed into this:</p>
-<div class="grammar">
-<p><span class="nonterminal">R1</span> <span class="bnf">::=</span> <span class="terminal">term</span><span class="nonterminal">R2</span></p>
-<p><span class="nonterminal">R2</span> <span class="bnf">::=</span> <span class="terminal">+</span><span class="terminal">term</span><span class="nonterminal">R2</span> <span class="bnf">|</span> <span class="terminal">""</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb8-2"><a href=""></a># terminals: term</span>
+<span id="cb8-3"><a href=""></a>R1 ::= term R2</span>
+<span id="cb8-4"><a href=""></a>R2 ::= + term R2 | ""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 <div class="columns">
 <div class="column">
 <p>A general rule:</p>
-<div class="grammar">
-<p><span class="nonterminal">A</span> <span class="bnf">::=</span> <span class="nonterminal">A</span><span class="terminal">𝛼</span> <span class="bnf">|</span> <span class="terminal">𝛽</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href=""></a>A ::= A 𝛼 | 𝛽</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <p>Derives the same strings as:</p>
-<div class="grammar">
-<p><span class="nonterminal">A</span> <span class="bnf">::=</span> <span class="terminal">𝛽</span><span class="nonterminal">R</span></p>
-<p><span class="nonterminal">R</span> <span class="bnf">::=</span> <span class="terminal">𝛼</span><span class="nonterminal">R</span> <span class="bnf">|</span> <span class="terminal">""</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href=""></a>A ::= 𝛽 R</span>
+<span id="cb10-2"><a href=""></a>R ::= 𝛼 R | ""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><p>𝛼, 𝛽 are sequences of <span class="terminal">terminals</span> and <span class="nonterminal">non-terminals</span> that don’t start with <span class="nonterminal">A</span></p>
 </div>
 </div>
@@ -436,44 +429,44 @@ void stmt() {
 <section id="exercise" class="slide level2">
 <h2>Exercise</h2>
 <p>Rewrite to eliminate left recursion</p>
-<div class="grammar">
-<p><span class="nonterminal">R1</span> <span class="bnf">::=</span> <span class="nonterminal">R1</span><span class="terminal">+</span><span class="nonterminal">R1</span> <span class="bnf">|</span> <span class="terminal">var</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb11-2"><a href=""></a># terminals: var</span>
+<span id="cb11-3"><a href=""></a>R1 ::= R1 + R1 | var</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><br><br></p>
 <div class="columns">
 <div class="column">
 <p>Solution:</p>
-<div class="grammar">
-<p><span class="nonterminal">R1</span> <span class="bnf">::=</span> <span class="terminal">var</span><span class="nonterminal">R2</span></p>
-<p><span class="nonterminal">R2</span> <span class="bnf">::=</span> <span class="terminal">+</span><span class="nonterminal">R1</span><span class="nonterminal">R2</span> <span class="bnf">|</span> <span class="terminal">""</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb12-2"><a href=""></a># terminals: var</span>
+<span id="cb12-3"><a href=""></a>R1 ::= var R2</span>
+<span id="cb12-4"><a href=""></a>R2 ::= + R1 R2 | ""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <p>Another solution:</p>
-<div class="grammar">
-<p><span class="nonterminal">R1</span> <span class="bnf">::=</span> <span class="terminal">var</span><span class="nonterminal">R2</span></p>
-<p><span class="nonterminal">R2</span> <span class="bnf">::=</span> <span class="terminal">+</span><span class="nonterminal">R1</span><span class="nonterminal">R2</span> <span class="bnf">|</span> <span class="terminal">""</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb13-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb13-2"><a href=""></a># terminals: var</span>
+<span id="cb13-3"><a href=""></a>R1 ::= var R2</span>
+<span id="cb13-4"><a href=""></a>R2 ::= + R1 R2 | ""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </div>
 </section>
 <section id="challenge-2-empty-productions" class="slide level2">
 <h2>Challenge 2: Empty productions</h2>
-<div class="grammar">
-<p><span class="nonterminal">R1</span> <span class="bnf">::=</span> <span class="terminal">var</span><span class="nonterminal">R2</span></p>
-<p><span class="nonterminal">R2</span> <span class="bnf">::=</span> <span class="terminal">+</span><span class="nonterminal">R1</span><span class="nonterminal">R2</span> <span class="bnf">|</span> <span class="terminal">""</span></p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bnf number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a href=""></a># mode: lhs+identifier</span>
+<span id="cb14-2"><a href=""></a># terminals: var</span>
+<span id="cb14-3"><a href=""></a>R1 ::= var R2</span>
+<span id="cb14-4"><a href=""></a>R2 ::= + R1 R2 | ""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>How do we handle “” (i.e.&nbsp;the empty string, <span class="math inline">\(\epsilon\)</span>)?</p>
 <p><br><br></p>
 <div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href=""></a><span class="dt">void</span> parse_R1<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb3-2"><a href=""></a>  <span class="cf">switch</span> <span class="op">(</span>token<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-3"><a href=""></a>    <span class="cf">case</span> <span class="ch">'+'</span><span class="op">:</span></span>
-<span id="cb3-4"><a href=""></a>      match<span class="op">(</span><span class="ch">'+'</span><span class="op">);</span> prase_R1<span class="op">();</span> prase_R2<span class="op">();</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb3-5"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
-<span id="cb3-6"><a href=""></a>      <span class="op">;</span>    <span class="co">// empty production</span></span>
-<span id="cb3-7"><a href=""></a>  <span class="op">}</span></span>
-<span id="cb3-8"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href=""></a><span class="dt">void</span> parse_R1<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href=""></a>  <span class="cf">switch</span> <span class="op">(</span>token<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-3"><a href=""></a>    <span class="cf">case</span> <span class="ch">'+'</span><span class="op">:</span></span>
+<span id="cb15-4"><a href=""></a>      match<span class="op">(</span><span class="ch">'+'</span><span class="op">);</span> prase_R1<span class="op">();</span> prase_R2<span class="op">();</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb15-5"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb15-6"><a href=""></a>      <span class="op">;</span>    <span class="co">// empty production</span></span>
+<span id="cb15-7"><a href=""></a>  <span class="op">}</span></span>
+<span id="cb15-8"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="transforming-a-grammar" class="slide level2">
@@ -566,7 +559,7 @@ void stmt() {
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': false,
+'controlsAuto': true,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
@@ -577,7 +570,7 @@ void stmt() {
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: true,
+        controls: false,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -594,7 +587,7 @@ void stmt() {
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: 'c/t',
+        slideNumber: false,
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -719,9 +712,9 @@ void stmt() {
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1600,
+        width: 1050,
 
-        height: 900,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -751,80 +744,6 @@ void stmt() {
           RevealSearch,
           RevealZoom
         ]
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const titleSlide = document.querySelector("section#title-slide");
-        if (!titleSlide) return;
-
-        const chapter = titleSlide.dataset.chapter;
-        const chapterUrl = titleSlide.dataset.chapterUrl;
-        const bookUrl = titleSlide.dataset.bookUrl;
-        const bookText = titleSlide.dataset.bookText;
-        const lastUpdated = titleSlide.dataset.lastUpdated;
-
-        const subtitleEl = titleSlide.querySelector("p.subtitle");
-        const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
-        const showChapter = !!(chapter && (!subtitleText || subtitleText !== chapter));
-
-        // If we have a chapter URL, make the subtitle on the title slide clickable.
-        // This is especially useful when subtitle == chapter (auto-filled via filter).
-        if (subtitleEl && chapterUrl && !subtitleEl.querySelector("a")) {
-          const a = document.createElement("a");
-          a.href = chapterUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = subtitleText || chapter || "Chapter";
-          subtitleEl.textContent = "";
-          subtitleEl.appendChild(a);
-        }
-
-        if (!showChapter && !bookUrl && !bookText && !lastUpdated) return;
-
-        const meta = document.createElement("div");
-        meta.className = "title-slide-meta";
-
-        if (showChapter) {
-          if (chapterUrl) {
-            const a = document.createElement("a");
-            a.className = "title-slide-meta-chapter";
-            a.href = chapterUrl;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = chapter;
-            meta.appendChild(a);
-          } else {
-            const c = document.createElement("div");
-            c.className = "title-slide-meta-chapter";
-            c.textContent = chapter;
-            meta.appendChild(c);
-          }
-        }
-
-        if (bookUrl) {
-          const a = document.createElement("a");
-          a.className = "title-slide-meta-book";
-          a.href = bookUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = bookText || "Book";
-          meta.appendChild(a);
-        } else if (bookText) {
-          const b = document.createElement("div");
-          b.className = "title-slide-meta-book";
-          b.textContent = bookText;
-          meta.appendChild(b);
-        }
-
-        if (lastUpdated) {
-          const u = document.createElement("div");
-          u.className = "title-slide-meta-updated";
-          u.textContent = `Updated ${lastUpdated}`;
-          meta.appendChild(u);
-        }
-
-        titleSlide.appendChild(meta);
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">

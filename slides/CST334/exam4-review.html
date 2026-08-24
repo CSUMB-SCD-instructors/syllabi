@@ -6,10 +6,7 @@
 <script src="exam4-review_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="exam4-review_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="exam4-review_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="exam4-review_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="exam4-review_files/libs/quarto-axe/axe-check.js" type="module"></script>
-<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
-<link href="exam4-review_files/libs/reveal-theme/reveal-theme-fbdf5483e0ddfe31285d6b14cbe1ea0e.min.css" rel="stylesheet" append-hash="true" data-mode="light"><meta charset="utf-8">
+<link href="exam4-review_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
@@ -35,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="exam4-review_files/libs/revealjs/dist/theme/quarto-6c2b7c9104374fbab6a3e8e3d705c366.css">
+  <link rel="stylesheet" href="exam4-review_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="assets/styles.css">
   <link href="exam4-review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="exam4-review_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -133,7 +130,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-05-06 09:58" class="quarto-title-block center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Exam 4 Review</h1>
   <p class="subtitle">Greatest hits of the semester</p>
 
@@ -423,7 +420,7 @@ Sam Ogden
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': false,
+'controlsAuto': true,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
@@ -434,7 +431,7 @@ Sam Ogden
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: true,
+        controls: false,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -451,7 +448,7 @@ Sam Ogden
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: 'c/t',
+        slideNumber: false,
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -576,9 +573,9 @@ Sam Ogden
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1600,
+        width: 1050,
 
-        height: 900,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -608,80 +605,6 @@ Sam Ogden
           RevealSearch,
           RevealZoom
         ]
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const titleSlide = document.querySelector("section#title-slide");
-        if (!titleSlide) return;
-
-        const chapter = titleSlide.dataset.chapter;
-        const chapterUrl = titleSlide.dataset.chapterUrl;
-        const bookUrl = titleSlide.dataset.bookUrl;
-        const bookText = titleSlide.dataset.bookText;
-        const lastUpdated = titleSlide.dataset.lastUpdated;
-
-        const subtitleEl = titleSlide.querySelector("p.subtitle");
-        const subtitleText = subtitleEl ? subtitleEl.textContent.trim() : "";
-        const showChapter = !!(chapter && (!subtitleText || subtitleText !== chapter));
-
-        // If we have a chapter URL, make the subtitle on the title slide clickable.
-        // This is especially useful when subtitle == chapter (auto-filled via filter).
-        if (subtitleEl && chapterUrl && !subtitleEl.querySelector("a")) {
-          const a = document.createElement("a");
-          a.href = chapterUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = subtitleText || chapter || "Chapter";
-          subtitleEl.textContent = "";
-          subtitleEl.appendChild(a);
-        }
-
-        if (!showChapter && !bookUrl && !bookText && !lastUpdated) return;
-
-        const meta = document.createElement("div");
-        meta.className = "title-slide-meta";
-
-        if (showChapter) {
-          if (chapterUrl) {
-            const a = document.createElement("a");
-            a.className = "title-slide-meta-chapter";
-            a.href = chapterUrl;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = chapter;
-            meta.appendChild(a);
-          } else {
-            const c = document.createElement("div");
-            c.className = "title-slide-meta-chapter";
-            c.textContent = chapter;
-            meta.appendChild(c);
-          }
-        }
-
-        if (bookUrl) {
-          const a = document.createElement("a");
-          a.className = "title-slide-meta-book";
-          a.href = bookUrl;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = bookText || "Book";
-          meta.appendChild(a);
-        } else if (bookText) {
-          const b = document.createElement("div");
-          b.className = "title-slide-meta-book";
-          b.textContent = bookText;
-          meta.appendChild(b);
-        }
-
-        if (lastUpdated) {
-          const u = document.createElement("div");
-          u.className = "title-slide-meta-updated";
-          u.textContent = `Updated ${lastUpdated}`;
-          meta.appendChild(u);
-        }
-
-        titleSlide.appendChild(meta);
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
