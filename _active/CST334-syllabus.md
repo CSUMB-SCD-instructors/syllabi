@@ -3,7 +3,7 @@ layout: default
 course_code: CST334
 course_name: Introduction to Operating Systems
 title: CST334 - Introduction to Operating Systems
-last_updated: '2026-08-23'
+last_updated: '2026-08-24'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -84,7 +84,7 @@ The major topics covered in class are:
   - Web: [**`https://csumb.edu/scd/sogden/`**](https://csumb.edu/scd/sogden/)
   - Office: BIT205
 
-  - Office Hours: 2pm-3pm Mondays & 1pm-2pm Wednesdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
+  - Office Hours: 10am-11am Tuesday & 1pm-2pm Wednesdays, or [by appointment](https://calendar.app.google/5nqiqco4yzprUztS6)
 
 
 - Ryan Hopper
