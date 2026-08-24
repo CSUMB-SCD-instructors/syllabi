@@ -16,7 +16,6 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Docker Setup | final | [Open](00-docker_setup.html) | [PDF](pdfs/Docker-Setup.pdf) |
 | Exam 4 Review | beta | [Open](exam4-review.html) | [PDF](pdfs/Exam-4-Review.pdf) |
 | Introduction to Operating Systems | beta | [Open](00-introduction.html) | [PDF](pdfs/Introduction-to-Operating-Systems.pdf) |
-| Introduction to Operating Systems | beta | [Open](01a-introduction.html) | [PDF](pdfs/Introduction-to-Operating-Systems.pdf) |
 | OSTEP 04 - Processes | beta | [Open](ostep-04-processes.html) | [PDF](pdfs/OSTEP-04-Processes.pdf) |
 | OSTEP 05 - C Process API | beta | [Open](ostep-05-c-process-api.html) | [PDF](pdfs/OSTEP-05-C-Process-API.pdf) |
 | OSTEP 53 - Introduction to Security | beta | [Open](53-security-intro.html) | [PDF](pdfs/OSTEP-53-Introduction-to-Security.pdf) |
