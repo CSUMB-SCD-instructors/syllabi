@@ -3,7 +3,7 @@ layout: default
 course_code: CST334
 course_name: Introduction to Operating Systems
 title: CST334 - Introduction to Operating Systems
-last_updated: '2026-08-24'
+last_updated: '2026-08-25'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -93,6 +93,7 @@ The major topics covered in class are:
 - Edwin Kofler
   - Email: ekofler@csumb.edu
   - Office Hours: TBD
+  - By Appointment: [link](https://zcal.co/hyperupcall)
 
 
 **Getting Help:** Office hours are available throughout the week - make use of them! 
