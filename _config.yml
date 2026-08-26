@@ -39,4 +39,6 @@ defaults:
       layout: "default"
 
 header_pages:
+  - index.md
+  - slides/index.md
 show_excerpts: false
