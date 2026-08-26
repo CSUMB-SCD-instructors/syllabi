@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="01-data_manipulation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="01-data_manipulation_files/libs/clipboard/clipboard.min.js"></script>
 <script src="01-data_manipulation_files/libs/quarto-html/tabby.min.js"></script>
 <script src="01-data_manipulation_files/libs/quarto-html/popper.min.js"></script>
 <script src="01-data_manipulation_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -192,12 +192,15 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-25 22:37" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-25 22:54" class="quarto-title-block center">
   <h1 class="title">Data Manipulation &amp; Preprocessing</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -254,7 +257,7 @@ Sam Ogden
 <div class="columns">
 <div class="column">
 <p><strong>NumPy</strong></p>
-<div id="de5c89bf" class="cell" data-execution_count="1">
+<div id="14a1d7b1" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href=""></a></span>
 <span id="cb1-3"><a href=""></a>a <span class="op">=</span> np.arange(<span class="dv">12</span>)</span>
@@ -265,7 +268,7 @@ Sam Ogden
 </div>
 </div><div class="column">
 <p><strong>PyTorch</strong></p>
-<div id="ece5e0e7" class="cell" data-execution_count="2">
+<div id="6eb775f2" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb3-2"><a href=""></a></span>
 <span id="cb3-3"><a href=""></a>t <span class="op">=</span> torch.arange(<span class="dv">12</span>)</span>
@@ -281,7 +284,7 @@ Sam Ogden
 <div class="columns">
 <div class="column">
 <p><strong>NumPy</strong></p>
-<div id="0e5975aa" class="cell" data-execution_count="3">
+<div id="8809e215" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="bu">print</span>(a[<span class="dv">2</span>:<span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[2 3 4]</code></pre>
@@ -289,7 +292,7 @@ Sam Ogden
 </div>
 </div><div class="column">
 <p><strong>PyTorch</strong></p>
-<div id="22b8e5d3" class="cell" data-execution_count="4">
+<div id="27f425f0" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="bu">print</span>(t[<span class="dv">2</span>:<span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tensor([2, 3, 4])</code></pre>
@@ -302,7 +305,7 @@ Sam Ogden
 <div class="columns">
 <div class="column">
 <p><strong>NumPy</strong></p>
-<div id="25687cd4" class="cell" data-execution_count="5">
+<div id="af36ec5c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="bu">print</span>(a.reshape(<span class="dv">3</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[ 0  1  2  3]
@@ -312,7 +315,7 @@ Sam Ogden
 </div>
 </div><div class="column">
 <p><strong>PyTorch</strong></p>
-<div id="f36babee" class="cell" data-execution_count="6">
+<div id="314e5ee5" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="bu">print</span>(t.reshape(<span class="dv">3</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tensor([[ 0,  1,  2,  3],
@@ -327,7 +330,7 @@ Sam Ogden
 <div class="columns">
 <div class="column">
 <p><strong>NumPy</strong></p>
-<div id="f5e9e917" class="cell" data-execution_count="7">
+<div id="6ced04fd" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="bu">print</span>(np.ones(<span class="dv">3</span>).dtype)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>float64</code></pre>
@@ -335,7 +338,7 @@ Sam Ogden
 </div>
 </div><div class="column">
 <p><strong>PyTorch</strong></p>
-<div id="abd386d2" class="cell" data-execution_count="8">
+<div id="6c588db7" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="bu">print</span>(torch.ones(<span class="dv">3</span>).dtype)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch.float32</code></pre>
@@ -349,7 +352,7 @@ Sam Ogden
 <div class="caution">
 <p><code>np.arange(12)</code> and <code>torch.arange(12)</code> don’t give you the same dtype by default. Be explicit when it matters:</p>
 </div>
-<div id="643ba0bd" class="cell" data-execution_count="9">
+<div id="06b77b13" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a>t32 <span class="op">=</span> torch.arange(<span class="dv">12</span>, dtype<span class="op">=</span>torch.float32)</span>
 <span id="cb17-2"><a href=""></a><span class="bu">print</span>(t32.dtype)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -362,7 +365,7 @@ Sam Ogden
 <div class="columns">
 <div class="column">
 <p><strong>NumPy → PyTorch</strong></p>
-<div id="d9077db8" class="cell" data-execution_count="10">
+<div id="23044b0a" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a>shared <span class="op">=</span> torch.from_numpy(a)</span>
 <span id="cb19-2"><a href=""></a>shared[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">99</span></span>
 <span id="cb19-3"><a href=""></a><span class="bu">print</span>(a[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -372,7 +375,7 @@ Sam Ogden
 </div>
 </div><div class="column">
 <p><strong>PyTorch → NumPy</strong></p>
-<div id="d0879709" class="cell" data-execution_count="11">
+<div id="ead77f71" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a>back <span class="op">=</span> t.numpy()</span>
 <span id="cb21-2"><a href=""></a>back[<span class="dv">0</span>] <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
 <span id="cb21-3"><a href=""></a><span class="bu">print</span>(t[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -387,7 +390,7 @@ Sam Ogden
 </section>
 <section id="foreshadowing-requires_grad" class="slide level2">
 <h2>Foreshadowing: <code>requires_grad</code></h2>
-<div id="f1d297bf" class="cell" data-execution_count="12">
+<div id="8a933bcd" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>w <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>], requires_grad<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb23-2"><a href=""></a><span class="bu">print</span>(w)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -437,7 +440,7 @@ Sam Ogden
 </section>
 <section id="reshape-reinterpreting-the-same-data" class="slide level2">
 <h2>Reshape: reinterpreting the same data</h2>
-<div id="1a74932d" class="cell" data-execution_count="13">
+<div id="f53a83a6" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a>x <span class="op">=</span> torch.arange(<span class="dv">1</span>, <span class="dv">10</span>)</span>
 <span id="cb25-2"><a href=""></a><span class="bu">print</span>(x)</span>
 <span id="cb25-3"><a href=""></a><span class="bu">print</span>(x.shape)</span>
@@ -466,7 +469,7 @@ torch.Size([3, 3])</code></pre>
 </section>
 <section id="the-same-idea-at-model-scale" class="slide level2">
 <h2>The same idea, at model scale</h2>
-<div id="fe9fbb4d" class="cell" data-execution_count="14">
+<div id="183d711e" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>x <span class="op">=</span> torch.arange(<span class="dv">64</span> <span class="op">*</span> <span class="dv">1</span> <span class="op">*</span> <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>).reshape(<span class="dv">64</span>, <span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>)</span>
 <span id="cb27-2"><a href=""></a><span class="bu">print</span>(x.shape)</span>
 <span id="cb27-3"><a href=""></a></span>
@@ -490,7 +493,7 @@ torch.Size([64, 784])</code></pre>
 <div class="columns">
 <div class="column">
 <p><strong><code>torch.cat</code></strong></p>
-<div id="42d33f20" class="cell" data-execution_count="15">
+<div id="82537114" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a>a1 <span class="op">=</span> torch.zeros(<span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb29-2"><a href=""></a>a2 <span class="op">=</span> torch.ones(<span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb29-3"><a href=""></a><span class="bu">print</span>(torch.cat([a1, a2], dim<span class="op">=</span><span class="dv">0</span>).shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -500,7 +503,7 @@ torch.Size([64, 784])</code></pre>
 </div>
 </div><div class="column">
 <p><strong><code>torch.stack</code></strong></p>
-<div id="d71f0aef" class="cell" data-execution_count="16">
+<div id="9f9e60f0" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href=""></a><span class="bu">print</span>(torch.stack([a1, a2], dim<span class="op">=</span><span class="dv">0</span>).shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch.Size([2, 2, 3])</code></pre>
@@ -514,7 +517,7 @@ torch.Size([64, 784])</code></pre>
 </section>
 <section id="squeeze-unsqueeze-adding-or-removing-size-1-axes" class="slide level2">
 <h2><code>squeeze</code> / <code>unsqueeze</code>: adding or removing size-1 axes</h2>
-<div id="e7116ec4" class="cell" data-execution_count="17">
+<div id="016c5061" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href=""></a>example <span class="op">=</span> torch.arange(<span class="dv">5</span>)</span>
 <span id="cb33-2"><a href=""></a><span class="bu">print</span>(example.shape)</span>
 <span id="cb33-3"><a href=""></a></span>
@@ -531,30 +534,50 @@ torch.Size([1, 5])</code></pre>
 <li><code>squeeze(0)</code> undoes it — strip the batch axis back off once you’re done</li>
 </ul>
 </section>
-<section id="broadcasting-the-rule-that-lets-shapes-differ" class="slide level2">
-<h2>Broadcasting: the rule that lets shapes differ</h2>
+<section id="broadcasting-how-pytorch-lines-up-mismatched-shapes" class="slide level2">
+<h2>Broadcasting: how PyTorch lines up mismatched shapes</h2>
 <div class="example">
-<p>Compare shapes from the <em>last</em> dimension backward. Two dimensions are compatible if they’re equal, or one of them is 1.</p>
+<p>Line the two <strong>shapes</strong> up on their <strong>right</strong> edge. Walk right to left, axis by axis. At each axis, you need either the same number, or one of them to be <code>1</code> (which gets stretched to match).</p>
 </div>
-<div id="ea698ae7" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href=""></a>batch <span class="op">=</span> torch.ones(<span class="dv">4</span>, <span class="dv">3</span>)</span>
-<span id="cb35-2"><a href=""></a>bias <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>])</span>
-<span id="cb35-3"><a href=""></a><span class="bu">print</span>((batch <span class="op">+</span> bias).shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>shape(batch):  (4, 3)
+shape(bias) :      (3,)
+              ------
+shape(result): (4, 3)</code></pre>
+<ul>
+<li>These rows are <em>shapes</em>, not the actual numbers in the tensors</li>
+<li>Rightmost axis: <code>3</code> vs <code>3</code> → match</li>
+<li>Next axis: <code>4</code> vs <em>nothing</em> → treat the missing axis as <code>1</code>, stretch it to <code>4</code></li>
+</ul>
+</section>
+<section id="same-rule-in-code" class="slide level2">
+<h2>Same rule, in code</h2>
+<div id="422abcb7" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href=""></a>batch <span class="op">=</span> torch.ones(<span class="dv">4</span>, <span class="dv">3</span>)</span>
+<span id="cb36-2"><a href=""></a>bias <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>])</span>
+<span id="cb36-3"><a href=""></a><span class="bu">print</span>((batch <span class="op">+</span> bias).shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch.Size([4, 3])</code></pre>
 </div>
 </div>
 <ul>
-<li><code>(4, 3)</code> and <code>(3,)</code> line up: <code>3 == 3</code>, then the missing dimension is treated as <code>1</code></li>
-<li><code>bias</code> gets applied to every row without you writing a loop or copying it 4 times</li>
+<li><code>bias</code> (shape <code>(3,)</code>) gets added to every one of the 4 rows in <code>batch</code></li>
+<li>No loop, no manual copying — broadcasting does the repeating for you</li>
 </ul>
 </section>
 <section id="when-broadcasting-cant-save-you" class="slide level2">
 <h2>When broadcasting can’t save you</h2>
-<div id="f071f1f9" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href=""></a>batch <span class="op">=</span> torch.ones(<span class="dv">4</span>, <span class="dv">3</span>)</span>
-<span id="cb37-2"><a href=""></a>wrong <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
-<span id="cb37-3"><a href=""></a>batch <span class="op">+</span> wrong</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>shape(batch):  (4, 3)
+shape(wrong):      (2,)
+              ------
+shape(result):    ✗</code></pre>
+<ul>
+<li>Again, these rows are <em>shapes</em> — <code>batch</code> and <code>wrong</code> are still just tensors of numbers</li>
+<li>Rightmost axis: <code>3</code> vs <code>2</code> → neither matches, and neither is <code>1</code> → broadcasting gives up here</li>
+</ul>
+<div id="c04a52f8" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href=""></a>batch <span class="op">=</span> torch.ones(<span class="dv">4</span>, <span class="dv">3</span>)</span>
+<span id="cb39-2"><a href=""></a>wrong <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
+<span id="cb39-3"><a href=""></a>batch <span class="op">+</span> wrong</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
@@ -569,7 +592,7 @@ torch.Size([1, 5])</code></pre>
 </div>
 </div>
 <div class="caution">
-<p><code>(4, 3)</code> vs <code>(2,)</code> — 3 and 2 don’t match, and neither is 1. This is the most common shape error you’ll hit in this class. Read the error, find the two shapes, find the axis that disagrees.</p>
+<p>This is the most common shape error you’ll hit in this class. When you see it: read the error, find the two shapes, find the axis that disagrees.</p>
 </div>
 </section>
 <section id="predict-before-you-run" class="slide level2">
@@ -583,39 +606,542 @@ w = z.reshape(z.shape[0], -1)</code></pre>
 </div>
 <p><br></p>
 <div class="fragment">
-<div id="4373e775" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href=""></a>x <span class="op">=</span> torch.arange(<span class="dv">24</span>).reshape(<span class="dv">4</span>, <span class="dv">6</span>)</span>
-<span id="cb39-2"><a href=""></a>y <span class="op">=</span> x[:, :<span class="dv">3</span>]</span>
-<span id="cb39-3"><a href=""></a>z <span class="op">=</span> torch.stack([y, y], dim<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb39-4"><a href=""></a>w <span class="op">=</span> z.reshape(z.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb39-5"><a href=""></a><span class="bu">print</span>(x.shape, y.shape, z.shape, w.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="04bd3362" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href=""></a>x <span class="op">=</span> torch.arange(<span class="dv">24</span>).reshape(<span class="dv">4</span>, <span class="dv">6</span>)</span>
+<span id="cb41-2"><a href=""></a>y <span class="op">=</span> x[:, :<span class="dv">3</span>]</span>
+<span id="cb41-3"><a href=""></a>z <span class="op">=</span> torch.stack([y, y], dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb41-4"><a href=""></a>w <span class="op">=</span> z.reshape(z.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb41-5"><a href=""></a><span class="bu">print</span>(x.shape, y.shape, z.shape, w.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch.Size([4, 6]) torch.Size([4, 3]) torch.Size([2, 4, 3]) torch.Size([2, 12])</code></pre>
 </div>
 </div>
 </div>
 </section>
-<section class="slide level2">
+<section id="pandas-refresher" class="slide level2 section">
+<h2>Pandas refresher</h2>
+</section>
+<section id="youve-already-used-this-fast-recap" class="slide level2">
+<h2>You’ve already used this — fast recap</h2>
+<ul>
+<li>A DataFrame is a table: rows are examples, columns are features</li>
+<li>Today’s version skips the syntax tour and goes straight to what you’ll actually reach for</li>
+</ul>
+</section>
+<section id="from-disk-to-a-dataframe" class="slide level2">
+<h2>From disk to a DataFrame</h2>
+<div id="9f7bd0d0" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb43-2"><a href=""></a></span>
+<span id="cb43-3"><a href=""></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb43-4"><a href=""></a>    <span class="st">"age"</span>: [<span class="fl">22.0</span>, <span class="fl">35.0</span>, <span class="va">None</span>, <span class="fl">58.0</span>],</span>
+<span id="cb43-5"><a href=""></a>    <span class="st">"fare"</span>: [<span class="fl">7.25</span>, <span class="fl">71.83</span>, <span class="fl">8.05</span>, <span class="fl">26.00</span>],</span>
+<span id="cb43-6"><a href=""></a>    <span class="st">"sex"</span>: [<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>, <span class="st">"male"</span>],</span>
+<span id="cb43-7"><a href=""></a>    <span class="st">"survived"</span>: [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb43-8"><a href=""></a>})</span>
+<span id="cb43-9"><a href=""></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<!-- TODO next pass:
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-## Pandas refresher {.section}
-- read_csv, dtypes, isna().sum(), describe()
-- one groupby example as a "sanity check" not a feature
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 
-## DataFrame -> Tensor bridge {.section}
-- encoding categoricals, handling NaN before converting
-- fit on train only (leakage caution)
-- end state: X_train, y_train tensors
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">fare</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">survived</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>22.0</td>
+<td>7.25</td>
+<td>male</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>35.0</td>
+<td>71.83</td>
+<td>female</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>NaN</td>
+<td>8.05</td>
+<td>female</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>58.0</td>
+<td>26.00</td>
+<td>male</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
 
-## Wrap {.section}
-- takeaways
-- preview of titanic lab
+</div>
+</div>
+</div>
+<ul>
+<li>In practice: <code>pd.read_csv("your_file.csv")</code> — same DataFrame, loaded from disk instead of typed by hand</li>
+</ul>
+</section>
+<section id="what-you-check-first" class="slide level2">
+<h2>What you check first</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Did it parse right?</strong></p>
+<div id="fe1916b7" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href=""></a>df.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>age         float64
+fare        float64
+sex             str
+survived      int64
+dtype: object</code></pre>
+</div>
+</div>
+</div><div class="column">
+<p><strong>What’s missing?</strong></p>
+<div id="d5bb3e65" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href=""></a>df.isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>age         1
+fare        0
+sex         0
+survived    0
+dtype: int64</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="describe-a-fast-sanity-check-on-the-numbers" class="slide level2">
+<h2><code>describe()</code>: a fast sanity check on the numbers</h2>
+<div id="820fc51b" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href=""></a>df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-## [Backup] Autograd teaser {.section}
-- requires_grad=True, .backward(), .grad
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
--->
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">fare</th>
+<th data-quarto-table-cell-role="th">survived</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>3.000000</td>
+<td>4.000000</td>
+<td>4.00000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>38.333333</td>
+<td>28.282500</td>
+<td>0.50000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>18.230012</td>
+<td>30.294745</td>
+<td>0.57735</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>22.000000</td>
+<td>7.250000</td>
+<td>0.00000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>28.500000</td>
+<td>7.850000</td>
+<td>0.00000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>35.000000</td>
+<td>17.025000</td>
+<td>0.50000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>46.500000</td>
+<td>37.457500</td>
+<td>1.00000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>58.000000</td>
+<td>71.830000</td>
+<td>1.00000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>Skim for the obviously wrong: negative ages, a suspicious max, a count that doesn’t match the row total</li>
+</ul>
+</section>
+<section id="selecting-rows-and-columns" class="slide level2">
+<h2>Selecting rows and columns</h2>
+<div id="2a60db80" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href=""></a>df[<span class="st">"age"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>0    22.0
+1    35.0
+2     NaN
+3    58.0
+Name: age, dtype: float64</code></pre>
+</div>
+</div>
+<div id="15200c4d" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href=""></a>df.loc[df[<span class="st">"sex"</span>] <span class="op">==</span> <span class="st">"female"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">fare</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">survived</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>35.0</td>
+<td>71.83</td>
+<td>female</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>NaN</td>
+<td>8.05</td>
+<td>female</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="worth-knowing-groupby" class="slide level2">
+<h2>Worth knowing: <code>groupby</code></h2>
+<div id="eb2372bd" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href=""></a>df.groupby(<span class="st">"sex"</span>)[<span class="st">"survived"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>sex
+female    1.0
+male      0.0
+Name: survived, dtype: float64</code></pre>
+</div>
+</div>
+<ul>
+<li>A quick sanity check before you build features: does this column even look related to what you’re predicting?</li>
+<li>We won’t lean on this heavily this semester — just worth knowing it’s there</li>
+</ul>
+</section>
+<section id="creating-tensors-from-dataframes" class="slide level2 section">
+<h2>Creating Tensors from DataFrames</h2>
+</section>
+<section id="can-we-just-do-torch.tensordf.values" class="slide level2">
+<h2>Can we just do <code>torch.tensor(df.values)</code>?</h2>
+<p><code>df</code> still has a string column (<code>sex</code>) and a missing value (<code>age</code>) in it. Let’s try converting it straight to a tensor anyway:</p>
+<div id="f4ca0551" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href=""></a><span class="bu">print</span>(df.values.dtype)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>object</code></pre>
+</div>
+</div>
+<div id="8494579f" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href=""></a>torch.tensor(df.values)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[29]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> torch.tensor(df.values)
+
+<span class="ansi-red-fg">TypeError</span>: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint64, uint32, uint16, uint8, and bool.</pre>
+</div>
+</div>
+</div>
+<div class="caution">
+<p>Mixed strings and numbers force numpy into <code>dtype=object</code> — an array of arbitrary Python objects, not numbers. Torch has no idea how to turn that into a tensor. You have to clean the DataFrame <em>before</em> converting.</p>
+</div>
+</section>
+<section id="step-1-handle-missing-values" class="slide level2">
+<h2>Step 1: handle missing values</h2>
+<div id="8bc3ffe1" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href=""></a>df[<span class="st">"age"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].median())</span>
+<span id="cb57-2"><a href=""></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">fare</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">survived</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>22.0</td>
+<td>7.25</td>
+<td>male</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>35.0</td>
+<td>71.83</td>
+<td>female</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>35.0</td>
+<td>8.05</td>
+<td>female</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>58.0</td>
+<td>26.00</td>
+<td>male</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>Decide this deliberately — fill with median? drop the row? A tensor has no concept of “missing,” so this decision has to happen in pandas, before conversion</li>
+</ul>
+</section>
+<section id="step-2-turn-categories-into-numbers" class="slide level2">
+<h2>Step 2: turn categories into numbers</h2>
+<div id="2e2d208d" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href=""></a>df[<span class="st">"sex_male"</span>] <span class="op">=</span> (df[<span class="st">"sex"</span>] <span class="op">==</span> <span class="st">"male"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb58-2"><a href=""></a>df[[<span class="st">"age"</span>, <span class="st">"fare"</span>, <span class="st">"sex_male"</span>, <span class="st">"survived"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">fare</th>
+<th data-quarto-table-cell-role="th">sex_male</th>
+<th data-quarto-table-cell-role="th">survived</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>22.0</td>
+<td>7.25</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>35.0</td>
+<td>71.83</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>35.0</td>
+<td>8.05</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>58.0</td>
+<td>26.00</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>A tensor is just numbers — no strings allowed</li>
+<li>Here, a simple 0/1 map is enough; with more than two categories you’d reach for <code>pd.get_dummies</code></li>
+</ul>
+</section>
+<section id="step-3-assemble-the-tensors" class="slide level2">
+<h2>Step 3: assemble the tensors</h2>
+<div id="94e0cdf8" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href=""></a>features <span class="op">=</span> df[[<span class="st">"age"</span>, <span class="st">"fare"</span>, <span class="st">"sex_male"</span>]].values</span>
+<span id="cb59-2"><a href=""></a>labels <span class="op">=</span> df[<span class="st">"survived"</span>].values</span>
+<span id="cb59-3"><a href=""></a></span>
+<span id="cb59-4"><a href=""></a>X <span class="op">=</span> torch.tensor(features, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb59-5"><a href=""></a>y <span class="op">=</span> torch.tensor(labels, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb59-6"><a href=""></a></span>
+<span id="cb59-7"><a href=""></a><span class="bu">print</span>(X.shape, y.shape)</span>
+<span id="cb59-8"><a href=""></a><span class="bu">print</span>(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([4, 3]) torch.Size([4])
+tensor([[22.0000,  7.2500,  1.0000],
+        [35.0000, 71.8300,  0.0000],
+        [35.0000,  8.0500,  0.0000],
+        [58.0000, 26.0000,  1.0000]])</code></pre>
+</div>
+</div>
+<ul>
+<li><code>X</code> is <code>(examples, features)</code>, <code>y</code> is <code>(examples,)</code> — this is the shape every model in this class will expect</li>
+</ul>
+</section>
+<section id="the-catch-fit-preprocessing-on-train-only" class="slide level2">
+<h2>The catch: fit preprocessing on train only</h2>
+<div id="5408edfe" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href=""></a>raw <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb61-2"><a href=""></a>    <span class="st">"age"</span>: [<span class="fl">22.0</span>, <span class="fl">35.0</span>, <span class="va">None</span>, <span class="fl">58.0</span>],</span>
+<span id="cb61-3"><a href=""></a>    <span class="st">"fare"</span>: [<span class="fl">7.25</span>, <span class="fl">71.83</span>, <span class="fl">8.05</span>, <span class="fl">26.00</span>],</span>
+<span id="cb61-4"><a href=""></a>})</span>
+<span id="cb61-5"><a href=""></a></span>
+<span id="cb61-6"><a href=""></a>train, test <span class="op">=</span> raw.iloc[:<span class="dv">3</span>], raw.iloc[<span class="dv">3</span>:]</span>
+<span id="cb61-7"><a href=""></a></span>
+<span id="cb61-8"><a href=""></a>age_median <span class="op">=</span> train[<span class="st">"age"</span>].median()      <span class="co"># fit on train only</span></span>
+<span id="cb61-9"><a href=""></a>train <span class="op">=</span> train.fillna({<span class="st">"age"</span>: age_median})</span>
+<span id="cb61-10"><a href=""></a>test <span class="op">=</span> test.fillna({<span class="st">"age"</span>: age_median})  <span class="co"># reuse the train statistic</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="caution">
+<p>Never call <code>.fillna(raw["age"].median())</code> on the whole dataset before splitting</p>
+<ul>
+<li>that lets test-set information leak into training.</li>
+</ul>
+<p>Any statistic you fit (mean, median, category list, min/max for scaling) gets calculated on train, then reused as-is on validation and test.</p>
+</div>
+</section>
+<section id="takeaways" class="slide level2">
+<h2>Takeaways</h2>
+<ul>
+<li>Tensors and numpy arrays are basically the same idea — shape, dtype, indexing, and broadcasting all carry over</li>
+<li>Track shapes deliberately: reshape doesn’t move data, <code>cat</code>/<code>stack</code>/<code>squeeze</code>/<code>unsqueeze</code> compose predictably, and broadcasting has exactly one rule</li>
+<li>Getting from a DataFrame to a tensor means handling missing values and categoricals explicitly, then fitting any preprocessing statistic on train only</li>
+</ul>
+</section>
+<section id="backup-autograd-teaser" class="slide level2 section">
+<h2>[Backup] Autograd teaser</h2>
+</section>
+<section id="requires_grad-in-action" class="slide level2">
+<h2><code>requires_grad</code> in action</h2>
+<div id="5edf37c3" class="cell" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href=""></a>w <span class="op">=</span> torch.tensor([<span class="fl">2.0</span>], requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb62-2"><a href=""></a>loss <span class="op">=</span> (w <span class="op">-</span> <span class="dv">5</span>) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb62-3"><a href=""></a>loss.backward()</span>
+<span id="cb62-4"><a href=""></a><span class="bu">print</span>(w.grad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([-6.])</code></pre>
+</div>
+</div>
+<ul>
+<li>torch tracked every operation from <code>w</code> to <code>loss</code></li>
+<li><code>.backward()</code> computes <code>d(loss)/d(w)</code> automatically — no calculus done by hand</li>
+<li>That gradient is exactly what an optimizer uses to update <code>w</code>. This is the entire mechanism training runs on — we’ll spend real time here soon</li>
+</ul>
 
 </section>
     </div>
