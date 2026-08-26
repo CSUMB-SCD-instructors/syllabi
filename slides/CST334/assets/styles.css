@@ -1,0 +1,597 @@
+.grammar {
+  background: #dfe8ef;
+  padding: 0.5rem 0.75rem;
+  border-radius: 2px;
+  font-family: var(
+    --r-code-font,
+    var(
+      --bs-font-monospace,
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Monaco,
+      Consolas,
+      "Liberation Mono",
+      "Courier New",
+      monospace
+    )
+  );
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.1;
+  font-size: 0.95em;
+}
+
+.grammar p {
+  margin: 0;
+}
+
+.grammar p + p {
+  margin-top: 0.15rem;
+}
+
+.grammar sub {
+  line-height: 0;
+}
+
+.nonterminal {
+  font-weight: 650;
+  /* Okabe-Ito "vermillion" (color-blind friendly) */
+  color: #d55e00;
+}
+
+.terminal {
+  color: #111;
+  font-weight: 650;
+}
+
+.bnf {
+  /* Okabe-Ito "blue" (color-blind friendly) */
+  color: #0072b2;
+  font-weight: 650;
+}
+
+.columns-center {
+  justify-content: center;
+  text-align: center;
+}
+
+/* If someone puts plain text inside a columns container (before the column divs),
+   make it act like a full-width centered row above the columns. */
+.columns-center > p {
+  flex-basis: 100%;
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+}
+
+.columns-center .column {
+  text-align: center;
+}
+
+.columns-center :is(ol, ul) {
+  display: inline-block;
+  text-align: left;
+}
+
+.columns-divider .column {
+  box-sizing: border-box;
+}
+
+.columns-divider .column:first-child {
+  padding-right: 1rem;
+}
+
+.columns-divider .column:last-child {
+  border-left: 2px solid rgba(0, 0, 0, 0.15);
+  padding-left: 1rem;
+}
+
+@media screen and (max-width: 800px) {
+  .columns-divider .column:first-child {
+    padding-right: 0;
+  }
+
+  .columns-divider .column:last-child {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.15);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+  }
+}
+
+.bnf-sep {
+  width: min(900px, 95%);
+  margin: 0.75rem auto;
+  border: 0;
+  border-top: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Utility */
+.center {
+  text-align: center;
+}
+
+.center > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* RevealJS: section-break slides.
+   Supported usage patterns:
+
+   1) Heading-based (recommended for simple break slides):
+      ---
+      ## Capabilities {.section-header}
+      ---
+
+      Quarto promotes the class onto the slide <section>, so we center the
+      slide and style the heading as the "card".
+
+      `section` is accepted as a backward-compatible alias, but `section-header`
+      is preferred because it is less generic.
+
+   2) Div-based (for title + subtitle blocks):
+      ::: {.section-header}
+      # Section title
+      Optional subtitle
+      :::
+*/
+.reveal .slides section:is(.section-header, .section) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0;
+}
+
+.reveal .slides section:is(.section-header, .section) > :is(h1, h2, h3) {
+  margin: 0;
+  line-height: 1.05;
+  width: min(78vw, 52rem);
+  padding: 2rem 2.5rem;
+  background:
+    linear-gradient(180deg, rgba(221, 227, 234, 0.55), rgba(221, 227, 234, 0.28)),
+    rgba(255, 255, 255, 0.86);
+  border: 2px solid rgba(49, 69, 107, 0.15);
+  border-radius: 22px;
+  box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
+}
+
+/* If the slide has a subtitle/body (e.g. a paragraph), visually merge it into the same card. */
+.reveal .slides section:is(.section-header, .section) > :is(h1, h2, h3):not(:last-child) {
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: 1.25rem;
+  box-shadow: none;
+}
+
+.reveal .slides section:is(.section-header, .section) > :not(:is(h1, h2, h3)) {
+  width: min(78vw, 52rem);
+  margin: 0;
+  padding: 0 2.5rem 2rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(221, 227, 234, 0.28), rgba(255, 255, 255, 0.86));
+  border: 2px solid rgba(49, 69, 107, 0.15);
+  border-top: 0;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
+}
+
+/* Tighten default paragraph spacing inside section-header cards. */
+.reveal .slides section:is(.section-header, .section) > p {
+  padding-top: 0.5rem;
+  line-height: 1.15;
+  color: rgba(26, 26, 26, 0.82);
+  font-size: 1.15em;
+}
+
+/* Div-based card (use inside an otherwise-empty slide). */
+.reveal .slides div:is(.section-header, .section) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
+  width: min(78vw, 52rem);
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(221, 227, 234, 0.55), rgba(221, 227, 234, 0.28)),
+    rgba(255, 255, 255, 0.86);
+  border: 2px solid rgba(49, 69, 107, 0.15);
+  border-radius: 22px;
+  box-shadow: 0 18px 42px rgba(49, 69, 107, 0.08);
+}
+
+.reveal .slides div:is(.section-header, .section) > :is(h1, h2, h3) {
+  margin: 0;
+  line-height: 1.05;
+}
+
+.reveal .slides div:is(.section-header, .section) > :first-child {
+  font-size: 2.25em;
+}
+
+.reveal .slides div:is(.section-header, .section) > :not(:first-child) {
+  font-size: 1.15em;
+  color: rgba(26, 26, 26, 0.82);
+}
+
+
+/* RevealJS: current/total slide number in bottom center */
+.reveal .slide-number {
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 10px !important;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: block !important;
+  background: rgba(49, 69, 107, 0.9) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 3px 8px !important;
+}
+
+/* RevealJS: Quarto image captions */
+.reveal .slides p.caption {
+  text-align: center;
+  margin-top: 0.35rem;
+  font-size: 0.8em;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* RevealJS: keep images from overflowing the slide canvas by default.
+   Opt out per-image with `.no-constrain`. */
+.reveal .slides section img:not(.no-constrain) {
+  max-width: 100%;
+  /* Default: allow fairly large images. */
+  max-height: 78vh;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Slide-local images should use most of the available width without
+   affecting inline images or small decorative icons. */
+.reveal .slides section > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > p > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > figure > img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > .columns img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain),
+.reveal .slides section > .column img:not([style*="width"]):not(.r-stretch):not(.stretch):not(.no-constrain) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 78vh;
+  height: auto;
+  margin: 0.35rem auto;
+}
+
+/* Quarto/Graphviz (`dot`) output: the SVGs come with fixed 960x480 sizing and
+   `max-width: none`, which can force Reveal to shrink the entire slide.
+   Make them responsive and cap their height. */
+.reveal .slides section .cell-output-display svg {
+  width: min(100%, 1100px) !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 42vh !important;
+}
+
+/* If the slide has substantial text (lists/paragraphs/etc), cap images more. */
+.reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img:not(.no-constrain) {
+  max-height: 55vh;
+}
+
+/* Reveal's `.r-stretch` explicitly removes max-width/height constraints.
+   Re-apply constraints for images so they don't overflow. */
+.reveal .slides section img.r-stretch:not(.no-constrain),
+.reveal .slides section img.stretch:not(.no-constrain) {
+  max-width: 100% !important;
+  max-height: 78vh !important;
+  height: auto !important;
+}
+
+.reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img.r-stretch:not(.no-constrain),
+.reveal .slides section:has(> ul, > ol, > p, > blockquote, > pre, > table, > div.columns) img.stretch:not(.no-constrain) {
+  max-height: 55vh !important;
+}
+
+/* RevealJS PDF printing: strongly hint landscape pages when using `?print-pdf`. */
+html.print-pdf @page {
+  size: landscape;
+}
+
+/* RevealJS: list hierarchy styling */
+.reveal .slides section :is(ul, ol) {
+  /* Slightly deeper indent than Reveal defaults (easier to scan). */
+  margin-left: 1.35em;
+  padding-left: 0.35em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) {
+  /* Keep nested lists indented, but not wildly so. */
+  margin-left: 1.25em;
+  padding-left: 0.3em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) {
+  margin-left: 1.15em;
+  padding-left: 0.25em;
+}
+
+/* RevealJS: indent guides (IDE-style gutters) for nested lists.
+   Draw the guide slightly *left* of the nested list so it lines up under the
+   parent bullet (rather than under the child bullets). */
+.reveal .slides section :is(ul, ol) :is(ul, ol) {
+  position: relative;
+  padding-left: 0.7em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: -1.05em;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgba(49, 69, 107, 0.18);
+  border-radius: 2px;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) {
+  position: relative;
+  padding-left: 0.65em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgba(49, 69, 107, 0.12);
+  border-radius: 2px;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) {
+  position: relative;
+  padding-left: 0.6em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgba(49, 69, 107, 0.09);
+  border-radius: 2px;
+}
+
+/* Quarto code blocks: shrink-wrap the wrapper so the block fits its content
+   instead of stretching across the whole slide. */
+.reveal .slides .code-copy-outer-scaffold {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.reveal .slides div.sourceCode {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.reveal .slides pre.sourceCode {
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Don't add indent guides inside boxed callouts (too visually busy). */
+.reveal .slides .box :is(ul, ol) :is(ul, ol) {
+  /* Disable guides inside boxes. */
+  position: static;
+  padding-left: 0.35em;
+}
+
+.reveal .slides .box :is(ul, ol) :is(ul, ol)::before {
+  content: none;
+}
+
+.reveal .slides section :is(ul, ol) > li {
+  font-weight: 500;
+  font-size: 1.06em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) > li {
+  font-weight: 500;
+  font-size: 0.96em;
+}
+
+.reveal .slides section :is(ul, ol) :is(ul, ol) :is(ul, ol) > li {
+  font-weight: 450;
+  font-size: 0.92em;
+}
+
+/* "Box" macro output (see assets/filters/unit.lua) */
+.reveal .slides section {
+  display: flex;
+  flex-direction: column;
+}
+
+.reveal .slides .box {
+  --box-bg: rgba(221, 227, 234, 0.35);
+  --box-header-color: rgba(49, 69, 107, 0.92);
+  --box-content-color: inherit;
+  background: var(--box-bg);
+  color: var(--box-content-color);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem 0.85rem 0.9rem;
+}
+
+.reveal .slides .box.citation {
+  --box-bg: rgba(221, 227, 234, 0.24);
+  --box-header-color: rgba(49, 69, 107, 0.9);
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  margin-top: auto;
+  padding: 0.45rem 0.7rem 0.5rem 0.7rem;
+  border: 1px solid rgba(49, 69, 107, 0.16);
+  box-shadow: none;
+  font-size: 0.62em;
+  line-height: 1.15;
+}
+
+.reveal .slides .box.citation .box-header {
+  margin-bottom: 0.25rem;
+  font-size: 1.02em;
+}
+
+.reveal .slides .box.citation :is(ul, ol) {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.reveal .slides .box.citation :is(ul, ol) > li {
+  font-size: 0.92em;
+  font-weight: 500;
+}
+
+.reveal .slides .box.citation a {
+  word-break: break-word;
+}
+
+.reveal .slides .box .box-header {
+  margin: 0 0 0.45rem 0;
+  font-weight: 800;
+  font-size: 1.15em;
+  color: var(--box-header-color);
+}
+
+.reveal .slides .box .box-header > p {
+  margin: 0;
+}
+
+.reveal .slides .box a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+/* Box grid wrapper: responsive grid for multiple boxes */
+.reveal .slides .boxgrid {
+  --boxgrid-cols: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--boxgrid-cols), minmax(0, 1fr));
+  gap: 1.1rem;
+  align-items: start;
+}
+
+/* Common case: 2 columns and odd number of boxes -> center the last one */
+.reveal .slides .boxgrid[style*="--boxgrid-cols:2"] > .box:last-child:nth-child(odd),
+.reveal .slides .boxgrid[style*="--boxgrid-cols: 2"] > .box:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(70%, 52rem);
+}
+
+/* Inside units, keep lists consistent (don’t apply global depth-based sizing). */
+.reveal .slides .box :is(ul, ol) > li {
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.reveal .slides .box :is(ul, ol) :is(ul, ol) > li {
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+/* RevealJS: "big picture" slides (centered, larger text)
+   Usage:
+   - Put attributes on the slide break: `--- {.bigpicture}`
+   - Or wrap slide contents in a div: `::: {.bigpicture}` */
+.reveal .slides section.bigpicture,
+.reveal .slides section .bigpicture {
+  text-align: center;
+}
+
+.reveal .slides section.bigpicture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.reveal .slides section.bigpicture > :is(p, ul, ol, blockquote, pre) {
+  font-size: 2em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.reveal .slides section.bigpicture > h2 {
+  font-size: 2.2em;
+  line-height: 1.05;
+  margin-bottom: 0.4rem;
+}
+
+.reveal .slides section.bigpicture > :is(ul, ol) {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+/* Container variant: `::: {.bigpicture}` inside a slide.
+   Note: to vertically center *everything*, include the heading inside
+   the container OR use `--- {.bigpicture}` on the slide itself. */
+.reveal .slides section .bigpicture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  height: 100%;
+}
+
+.reveal .slides section .bigpicture > :is(p, ul, ol, blockquote, pre) {
+  font-size: 2em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.reveal .slides section .bigpicture > :is(h1, h2, h3) {
+  font-size: 2.2em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.reveal .slides section .bigpicture > :is(ul, ol) {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+.reveal.has-logo .slide-number {
+  top: auto !important;
+  bottom: 10px !important;
+}
+
+/* Quarto Graphviz (`dot`) outputs inline SVG with `max-width: none`,
+   which can overflow RevealJS columns. Constrain to the container. */
+.reveal .cell-output-display svg {
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* In RevealJS columns, scale diagrams to fill the column width. */
+.reveal .columns .cell-output-display svg {
+  width: 100% !important;
+}

@@ -6,16 +6,11 @@
 <script src="00-introduction_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="00-introduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="00-introduction_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="00-introduction_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="00-introduction_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="00-introduction_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/run-python-blocks.js" type="module"></script>
-<link href="00-introduction_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/shinylive.css" rel="stylesheet">
-<link href="00-introduction_files/libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
+<link href="00-introduction_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
-  <title>Introduction</title>
+  <title>Introduction to Operating Systems</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -36,72 +31,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-      }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-    div.sourceCode
-      { color: #24292e;  }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #24292e; } /* Normal */
-    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
-    code span.an { color: #6a737d; } /* Annotation */
-    code span.at { color: #d73a49; } /* Attribute */
-    code span.bn { color: #005cc5; } /* BaseN */
-    code span.bu { color: #d73a49; } /* BuiltIn */
-    code span.cf { color: #d73a49; } /* ControlFlow */
-    code span.ch { color: #032f62; } /* Char */
-    code span.cn { color: #005cc5; } /* Constant */
-    code span.co { color: #6a737d; } /* Comment */
-    code span.cv { color: #6a737d; } /* CommentVar */
-    code span.do { color: #6a737d; } /* Documentation */
-    code span.dt { color: #d73a49; } /* DataType */
-    code span.dv { color: #005cc5; } /* DecVal */
-    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
-    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
-    code span.fl { color: #005cc5; } /* Float */
-    code span.fu { color: #6f42c1; } /* Function */
-    code span.im { color: #032f62; } /* Import */
-    code span.in { color: #6a737d; } /* Information */
-    code span.kw { color: #d73a49; } /* Keyword */
-    code span.op { color: #24292e; } /* Operator */
-    code span.ot { color: #6f42c1; } /* Other */
-    code span.pp { color: #d73a49; } /* Preprocessor */
-    code span.re { color: #6a737d; } /* RegionMarker */
-    code span.sc { color: #005cc5; } /* SpecialChar */
-    code span.ss { color: #032f62; } /* SpecialString */
-    code span.st { color: #032f62; } /* String */
-    code span.va { color: #e36209; } /* Variable */
-    code span.vs { color: #032f62; } /* VerbatimString */
-    code span.wa { color: #ff5555; } /* Warning */
   </style>
   <link rel="stylesheet" href="00-introduction_files/libs/revealjs/dist/theme/quarto-80ad2ef083af7eb84721a391cfdbfeab.css">
   <link href="00-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -202,9 +131,8 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-25 21:30" class="quarto-title-block center">
-  <h1 class="title">Introduction</h1>
-  <p class="subtitle">Advanced Machine Learning</p>
+<section id="title-slide" data-last-updated="2026-08-23 19:53" class="quarto-title-block center">
+  <h1 class="title">Introduction to Operating Systems</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -215,36 +143,47 @@ Sam Ogden
 </div>
 
 </section>
+<section id="draft" class="title-slide slide level1 draft-slide center">
+<h1>DRAFT</h1>
+<p>This slide deck is still under active development. Expect changes before it is finalized.</p>
+</section>
+
 <section id="class-overview" class="slide level2 section">
 <h2>Class Overview</h2>
 </section>
-<section id="what-is-advance-machine-learning" class="slide level2">
-<h2>What is Advance Machine Learning?</h2>
-<ul>
-<li>This course is meant to take us from linear regression models up to the concepts of Large Language Models
-<ul>
-<li>And a number of other places, too!</li>
-</ul></li>
-</ul>
-<!--
-todo: Add in some pictures here representing linear regression and LLMs
- -->
+<section id="what-are-operating-systems" class="slide level2">
+<h2>What are Operating Systems</h2>
+<p><br></p>
+<div class="center box">
+<p><strong><em>Systems</em></strong> is how we think about how multiple programs work together</p>
+</div>
+<p><br></p>
+<div class="center">
+<p>This course focuses on those that run on a single machine, but is applicable in many different places!</p>
+</div>
 </section>
 <section id="course-learning-outcomes" class="slide level2">
 <h2>Course Learning Outcomes</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="center box">
 <ul>
-<li>Be able to understand what machine learning is, reason about it, and apply it</li>
-<li>Define key algorithms, structures and techniques such as:
+<li>By the end of this class I want you to know how to reason about trade-offs made in system design</li>
+<li>You should be able to think about the pros and cons made in different kinds of systems:
 <ul>
-<li><code>SGD</code></li>
-<li><code>Ensemble Methods</code></li>
-<li><code>Dimensionality Reduction</code></li>
-<li><code>MLPs</code></li>
-<li><code>CNNs</code></li>
-<li><code>LLMs</code></li>
+<li>Process Management</li>
+<li>Memory Management</li>
+<li>Concurrency and Parallelism</li>
+<li>I/O and Hardware Interactions</li>
+<li>Programming Language Design</li>
+<li>Security for OSes</li>
 </ul></li>
-<li>Use <code>PyTorch</code> to build, train, and deploy deep learning models</li>
+<li>As well as being conversant in the C programming language</li>
 </ul>
+</div>
+</div><div class="column" style="width:35%;">
+<p><img data-src="assets/00-introduction/meme.jpeg"></p>
+</div></div>
 </section>
 <section id="teaching-staff" class="slide level2 section">
 <h2>Teaching Staff</h2>
@@ -287,6 +226,29 @@ todo: Add in some pictures here representing linear regression and LLMs
 </div>
 </div>
 </section>
+<section id="course-tas" class="slide level2">
+<h2>Course TAs</h2>
+<div class="columns center">
+<div class="column" style="width:40%;">
+<div class="smart-figure">
+<div class="smart-figure-image">
+<img data-src="assets/00-introduction/ryan.jpg" alt="Ryan Hopper (TA Fall 2026)">
+</div>
+<div class="smart-figure-caption">
+Ryan Hopper (TA Fall 2026)
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="smart-figure">
+<div class="smart-figure-image">
+<img data-src="assets/00-introduction/edwin.jpg" alt="Edwin Kofler (TA Fall 2026)">
+</div>
+<div class="smart-figure-caption">
+Edwin Kofler (TA Fall 2026)
+</div>
+</div>
+</div></div>
+</section>
 <section id="asking-questions" class="slide level2">
 <h2>Asking Questions</h2>
 <div class="center">
@@ -299,23 +261,6 @@ todo: Add in some pictures here representing linear regression and LLMs
 <h2>Questions: Nerd Sniping</h2>
 
 <img data-src="assets/00-introduction/slide03_img01.png" class="r-stretch"></section>
-<section id="course-tas" class="slide level2">
-<h2>Course TAs</h2>
-<div class="columns">
-<div class="column">
-<div class="smart-figure">
-<div class="smart-figure-image">
-<img data-src="assets/00-introduction/Achsah.png" alt="Achsah Jojo (TA Fall 2026)">
-</div>
-<div class="smart-figure-caption">
-Achsah Jojo (TA Fall 2026)
-</div>
-</div>
-</div><div class="column" style="width:40%;">
-<!-- ![Office Hours Poll](office-hours-poll.png) -->
-<p>(Later on there will be a poll for times)</p>
-</div></div>
-</section>
 <section id="cat-tax" class="slide level2">
 <h2>Cat Tax</h2>
 <div class="columns">
@@ -337,27 +282,26 @@ Achsah Jojo (TA Fall 2026)
 <section id="course-information" class="slide level2 section">
 <h2>Course Information</h2>
 </section>
-<section id="course-textbook-dive-into-deep-learning" class="slide level2">
-<h2>Course Textbook: <a href="https://d2l.ai/">Dive into Deep Learning</a></h2>
+<section id="textbook-ostep" class="slide level2">
+<h2>Textbook: OSTEP</h2>
 <div class="columns">
 <div class="column">
+<p><strong><em><a href="https://pages.cs.wisc.edu/~remzi/OSTEP">Operating Systems: Three Easy Pieces</a></em></strong></p>
+<ul>
+<li>aka <strong><em>OSTEP</em></strong></li>
+<li>Great book (with one caveat)</li>
+<li>Pretty readable for a textbook</li>
+<li>Completely free!</li>
+</ul>
+</div><div class="column" style="width:30%;">
 <div class="smart-figure">
 <div class="smart-figure-image">
-<img data-src="assets/00-introduction/d2l.jpg" alt="Dive into Deep Learning">
+<img data-src="assets/00-introduction/slide09_img01.jpeg" alt="Operating Systems: Three Easy Pieces">
 </div>
 <div class="smart-figure-caption">
-Dive into Deep Learning
+Operating Systems: Three Easy Pieces
 </div>
 </div>
-</div><div class="column">
-<p><a href="https://d2l.ai/">Available online for free</a></p>
-<ul>
-<li>Also as a <a href="https://d2l.ai/d2l-en.pdf">PDF</a></li>
-<li>We’ll be using the PyTorch version of the book</li>
-</ul>
-<p>It’s goal is to walk from Linear Regression to Modern large-scale Deep Learning models</p>
-<p><br></p>
-<p>Lots of code examples, practice problems and material available for it</p>
 </div></div>
 </section>
 <section id="course-schedule-might-change-a-bit" class="slide level2">
@@ -377,7 +321,7 @@ Dive into Deep Learning
 </section>
 <section id="course-policies" class="slide level2 section">
 <h2>Course Policies</h2>
-<p><a href="https://csumb-scd-instructors.github.io/syllabi/cst463-syllabus.html">Link to the Syllabus</a></p>
+<p><a href="https://csumb-scd-instructors.github.io/syllabi/cst334-syllabus.html">Link to the Syllabus</a></p>
 </section>
 <section id="grading" class="slide level2">
 <h2>Grading</h2>
@@ -391,19 +335,15 @@ Dive into Deep Learning
 <tbody>
 <tr class="odd">
 <td>Homework</td>
-<td>36%</td>
+<td>40%</td>
 </tr>
 <tr class="even">
 <td>Exams</td>
-<td>36%</td>
+<td>40%</td>
 </tr>
 <tr class="odd">
-<td>Final Project</td>
-<td>16%</td>
-</tr>
-<tr class="even">
 <td>Participation</td>
-<td>12%</td>
+<td>20%</td>
 </tr>
 </tbody>
 </table>
@@ -468,53 +408,57 @@ Dive into Deep Learning
 <section id="assignment-details" class="slide level2 section">
 <h2>Assignment Details</h2>
 </section>
-<section id="homework-30" class="slide level2">
-<h2>Homework (30%)</h2>
-<div class="columns">
-<div class="column" style="width: 30%; background-color: #f0f8ff;">
-<h3 id="phase-1">Phase 1</h3>
-<p><strong>Coding</strong></p>
-<p>Write code to understand functionality</p>
-<ul>
-<li>Automatically graded via unit tests</li>
-</ul>
-</div><div class="column" style="width:30%;">
-<h3 id="phase-2">Phase 2</h3>
-<p><strong>Exploration &amp; Analysis</strong></p>
-<p>Use the code to explore behavior</p>
-<p>Write a report on parameters and findings</p>
-<ul>
-<li>Graded by peer evaluation based on a rubric</li>
-</ul>
-</div><div class="column" style="width: 30%; background-color: #f0f8ff;">
-<h3 id="phase-3">Phase 3</h3>
-<p><strong>Peer Evaluation</strong></p>
-<p>Evaluate your peers’s work to help both of you improve communication in reports</p>
-</div></div>
-<p><br></p>
+<section id="programming-assignments" class="slide level2">
+<h2>Programming Assignments</h2>
 <div class="center">
-<p>Each phase will be 1 week, but phases 1 &amp; 3 will be overlapped</p>
+<p>OS is not a programming class – it’s a concept class</p>
+<p>PAs are meant to give context to what we are learning</p>
 </div>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Assignments are in the github repository</li>
+<li>You should only change <code>student_code.c</code> and <code>student_code.h</code>
+<ul>
+<li>All other files submitted are discarded</li>
+</ul></li>
+<li>6-7 assignments throughout the class
+<ul>
+<li>each assignment is 2 weeks long</li>
+</ul></li>
+</ul>
+</div><div class="column">
+<ul>
+<li>They are in the C programming language
+<ul>
+<li>C is meant to be very simple – often confusingly so</li>
+<li>Very similar to Java and C++</li>
+<li>Drawing out memory contents can often help a lot!</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="programming-assignment-critical-info" class="slide level2">
+<h2>Programming Assignment: Critical Info</h2>
+<ul>
+<li>The most important thing to do is to <strong>make sure your code compiles</strong>
+<ul>
+<li>The starter code will compile</li>
+<li>If your code doesn’t compile then you can’t get any points at all</li>
+</ul></li>
+<li>The autograder runs <strong>2x a day</strong> (at noon and midnight)
+<ul>
+<li>It will determine your grade, or tell you if something went wrong</li>
+</ul></li>
+</ul>
 </section>
 <section id="exams-30" class="slide level2">
 <h2>Exams (30%)</h2>
 <ul>
-<li>2-3 equally weighted exams</li>
+<li>4 equally weighted exams</li>
 <li>closed book, but 1 handwritten page of notes</li>
 <li>Material builds, so effectively culumulative</li>
-<li>Practice Quizzes will likely be provided beforehand</li>
-</ul>
-</section>
-<section id="final-project-20" class="slide level2">
-<h2>Final Project (20%)</h2>
-<div class="center">
-<p><strong>The goal is to play around with a topic you find interesting that’s within the scope of the class</strong></p>
-</div>
-<ul>
-<li>Research Project (10%):
-<ul>
-<li>Group project that will have checkpoints through the semester</li>
-</ul></li>
+<li>Practice Quizzes will be provided beforehand</li>
 </ul>
 </section>
 <section id="participation-20" class="slide level2">
@@ -637,7 +581,7 @@ Dive into Deep Learning
 <ul>
 <li>(boredom is your friend)</li>
 </ul></li>
-<li>Read a dumb book</li>
+<li>Read a book for fun</li>
 </ul>
 </div><div class="column">
 <p><strong>Things to not do</strong></p>
@@ -674,192 +618,186 @@ Dive into Deep Learning
 
 <!-- NOW ONTO CLASS-SPECIFIC STUFF -->
 </section>
-<section id="advanced-machine-learning" class="slide level2 section">
-<h2>Advanced Machine Learning</h2>
+<section id="operating-systems" class="slide level2 section">
+<h2>Operating Systems</h2>
 </section>
-<section id="what-is-machine-learning" class="slide level2">
-<h2>What is Machine Learning</h2>
-<div class="fragment">
-<p><img data-src="assets/00-introduction/machine-learning-go-brr.jpg"></p>
+<section id="whats-an-operating-system" class="slide level2">
+<h2>What’s an Operating System?</h2>
+
+<img data-src="assets/00-introduction/slide34_img01.png" class="r-stretch"><div class="citation">
+<p>Tanenbaum</p>
 </div>
 </section>
-<section id="how-to-think-about-machine-learning" class="slide level2">
-<h2>How to think about machine learning</h2>
+<section id="os-is-a-systems-course" class="slide level2">
+<h2>OS is a “systems” course</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>In a CS systems course, we think about:</li>
+<li>physical resources shared by multiple people or applications</li>
+<li>What are the resources of a computer system?
+<ul>
+<li>CPU</li>
+<li>Disk</li>
+<li>Memory (RAM)</li>
+<li>I/O</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<!-- ![](slide35_img01.png) -->
+<p><img data-src="assets/00-introduction/slide35_img02.png"> <img data-src="assets/00-introduction/slide35_img04.png"></p>
+<p><img data-src="assets/00-introduction/slide35_img03.png"></p>
+</div></div>
+</section>
+<section id="os-is-a-systems-course-1" class="slide level2">
+<h2>OS is a “systems” course</h2>
+<ul>
+<li>How is this different from other programming classes?
+<ul>
+<li>We need to consider <strong>how programs interact</strong></li>
+<li>We our porgram is <strong>no longer running in isolation</strong>
+<ul>
+<li>In fact, we know it isn’t!</li>
+</ul></li>
+<li>We have <strong>concrete limits</strong> to resources!</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-core-ideas-of-os" class="slide level2 section-header">
+<h2>The Core Ideas of OS</h2>
+</section>
+<section id="problem-statement" class="slide level2">
+<h2>Problem Statement</h2>
+<div class="box">
+<p><strong><em>Core Question:</em></strong></p>
+<p>How to provide resources to users in an easy-to-use, reliable, fair, efficient, and secure way?</p>
+</div>
+<p><br></p>
+<ul>
+<li>Operating Systems is an amazing subject because this problem is everywhere:
+<ul>
+<li>restaurants</li>
+<li>gyms</li>
+<li>colleges</li>
+<li>roads</li>
+<li>…</li>
+</ul></li>
+</ul>
+</section>
+<section id="solution-approach-for-systems" class="slide level2">
+<h2>Solution Approach for Systems</h2>
+<p>The approach for systems problems:</p>
+<ol type="1">
+<li>Begin with the minimal solution that solves the problem</li>
+<li>Identify bottlenecks and add complexity only where necessary</li>
+<li>Repeat step 2 until requirements are satisfied</li>
+</ol>
+</section>
+<section id="the-core-idea-of-systems-and-os" class="slide level2">
+<h2>The Core Idea of Systems (and OS)</h2>
+<p><br></p>
 <div class="box center">
-<p>Machine Learning works on feeding <strong>data</strong> into a <strong>model</strong> that we think fits the data</p>
+<p>Operating systems are designed to work and to be simple.</p>
 </div>
-<p>Critical things:</p>
+<p><br></p>
+<p>The most important thing to remember is we want to find the simplest solution that works well enough</p>
+</section>
+<section id="an-imperfect-example-cake" class="slide level2">
+<h2>An [imperfect] Example: cake</h2>
 <ul>
-<li>We propose a <em>model shape</em>
+<li>Resource: A cake
 <ul>
-<li>This is our hypothesis</li>
+<li>For now, let’s assume it’s a round cake</li>
 </ul></li>
-<li>The data is a <em>constant</em>
+<li>Users: 7 users total</li>
+<li>Challenge:
 <ul>
-<li>We use it to determine the best model parameters</li>
+<li>How do we divide up the cake?</li>
 </ul></li>
-<li>We want to measure how well we are fitting our parameters</li>
 </ul>
 </section>
-<section id="modeling-data" class="slide level2">
-<h2>Modeling Data</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>#| '!! shinylive warning !!': |</span>
-<span id="cb1-2"><a href=""></a>#|   shinylive does not work in self-contained HTML documents.</span>
-<span id="cb1-3"><a href=""></a>#|   Please set `embed-resources: false` in your metadata.</span>
-<span id="cb1-4"><a href=""></a>#| standalone: true</span>
-<span id="cb1-5"><a href=""></a>#| components: [viewer]</span>
-<span id="cb1-6"><a href=""></a>#| viewerHeight: 550</span>
-<span id="cb1-7"><a href=""></a></span>
-<span id="cb1-8"><a href=""></a>from shiny import App, render, ui</span>
-<span id="cb1-9"><a href=""></a>import matplotlib.pyplot as plt</span>
-<span id="cb1-10"><a href=""></a>import numpy as np</span>
-<span id="cb1-11"><a href=""></a></span>
-<span id="cb1-12"><a href=""></a># Generate the observed dataset once using hidden parameters.</span>
-<span id="cb1-13"><a href=""></a>rng = np.random.default_rng(42)</span>
-<span id="cb1-14"><a href=""></a></span>
-<span id="cb1-15"><a href=""></a>true_slope = 3.2</span>
-<span id="cb1-16"><a href=""></a>true_intercept = 5.0</span>
-<span id="cb1-17"><a href=""></a>error_sd = 7.0</span>
-<span id="cb1-18"><a href=""></a></span>
-<span id="cb1-19"><a href=""></a>x = rng.uniform(0, 10, 50)</span>
-<span id="cb1-20"><a href=""></a>epsilon = rng.normal(0, error_sd, 50)</span>
-<span id="cb1-21"><a href=""></a>y_observed = true_slope * x + true_intercept + epsilon</span>
-<span id="cb1-22"><a href=""></a></span>
-<span id="cb1-23"><a href=""></a>app_ui = ui.page_fluid(</span>
-<span id="cb1-24"><a href=""></a>  ui.layout_columns(</span>
-<span id="cb1-25"><a href=""></a>    ui.card(</span>
-<span id="cb1-26"><a href=""></a>      ui.card_header("Tune the model"),</span>
-<span id="cb1-27"><a href=""></a>      ui.input_slider(</span>
-<span id="cb1-28"><a href=""></a>        "slope",</span>
-<span id="cb1-29"><a href=""></a>        "Slope (a)",</span>
-<span id="cb1-30"><a href=""></a>        min=-5,</span>
-<span id="cb1-31"><a href=""></a>        max=8,</span>
-<span id="cb1-32"><a href=""></a>        value=0,</span>
-<span id="cb1-33"><a href=""></a>        step=0.1</span>
-<span id="cb1-34"><a href=""></a>      ),</span>
-<span id="cb1-35"><a href=""></a>      ui.input_slider(</span>
-<span id="cb1-36"><a href=""></a>        "intercept",</span>
-<span id="cb1-37"><a href=""></a>        "Intercept (b)",</span>
-<span id="cb1-38"><a href=""></a>        min=-20,</span>
-<span id="cb1-39"><a href=""></a>        max=30,</span>
-<span id="cb1-40"><a href=""></a>        value=0,</span>
-<span id="cb1-41"><a href=""></a>        step=0.5</span>
-<span id="cb1-42"><a href=""></a>      ),</span>
-<span id="cb1-43"><a href=""></a>      ui.hr(),</span>
-<span id="cb1-44"><a href=""></a>      ui.output_text("model_equation"),</span>
-<span id="cb1-45"><a href=""></a>      ui.output_text("mse_score")</span>
-<span id="cb1-46"><a href=""></a>    ),</span>
-<span id="cb1-47"><a href=""></a>    ui.card(</span>
-<span id="cb1-48"><a href=""></a>      ui.output_plot("linear_plot")</span>
-<span id="cb1-49"><a href=""></a>    ),</span>
-<span id="cb1-50"><a href=""></a>    col_widths=(4, 8)</span>
-<span id="cb1-51"><a href=""></a>  )</span>
-<span id="cb1-52"><a href=""></a>)</span>
-<span id="cb1-53"><a href=""></a></span>
-<span id="cb1-54"><a href=""></a>def server(input, output, session):</span>
-<span id="cb1-55"><a href=""></a>  @output</span>
-<span id="cb1-56"><a href=""></a>  @render.text</span>
-<span id="cb1-57"><a href=""></a>  def model_equation():</span>
-<span id="cb1-58"><a href=""></a>    a = input.slope()</span>
-<span id="cb1-59"><a href=""></a>    b = input.intercept()</span>
-<span id="cb1-60"><a href=""></a>    return f"Model: ŷ = {a:.1f}x + {b:.1f}"</span>
-<span id="cb1-61"><a href=""></a></span>
-<span id="cb1-62"><a href=""></a>  @output</span>
-<span id="cb1-63"><a href=""></a>  @render.text</span>
-<span id="cb1-64"><a href=""></a>  def mse_score():</span>
-<span id="cb1-65"><a href=""></a>    a = input.slope()</span>
-<span id="cb1-66"><a href=""></a>    b = input.intercept()</span>
-<span id="cb1-67"><a href=""></a></span>
-<span id="cb1-68"><a href=""></a>    y_predicted = a * x + b</span>
-<span id="cb1-69"><a href=""></a>    mse = np.mean((y_observed - y_predicted) ** 2)</span>
-<span id="cb1-70"><a href=""></a></span>
-<span id="cb1-71"><a href=""></a>    return f"Mean squared error: {mse:.1f}"</span>
-<span id="cb1-72"><a href=""></a></span>
-<span id="cb1-73"><a href=""></a>  @output</span>
-<span id="cb1-74"><a href=""></a>  @render.plot</span>
-<span id="cb1-75"><a href=""></a>  def linear_plot():</span>
-<span id="cb1-76"><a href=""></a>    a = input.slope()</span>
-<span id="cb1-77"><a href=""></a>    b = input.intercept()</span>
-<span id="cb1-78"><a href=""></a></span>
-<span id="cb1-79"><a href=""></a>    y_predicted = a * x + b</span>
-<span id="cb1-80"><a href=""></a></span>
-<span id="cb1-81"><a href=""></a>    x_line = np.linspace(0, 10, 200)</span>
-<span id="cb1-82"><a href=""></a>    y_line = a * x_line + b</span>
-<span id="cb1-83"><a href=""></a></span>
-<span id="cb1-84"><a href=""></a>    fig, ax = plt.subplots(figsize=(8, 5))</span>
-<span id="cb1-85"><a href=""></a></span>
-<span id="cb1-86"><a href=""></a>    # Residuals: distance from each observation to the model.</span>
-<span id="cb1-87"><a href=""></a>    ax.vlines(</span>
-<span id="cb1-88"><a href=""></a>      x,</span>
-<span id="cb1-89"><a href=""></a>      y_predicted,</span>
-<span id="cb1-90"><a href=""></a>      y_observed,</span>
-<span id="cb1-91"><a href=""></a>      color="gray",</span>
-<span id="cb1-92"><a href=""></a>      alpha=0.25,</span>
-<span id="cb1-93"><a href=""></a>      linewidth=1</span>
-<span id="cb1-94"><a href=""></a>    )</span>
-<span id="cb1-95"><a href=""></a></span>
-<span id="cb1-96"><a href=""></a>    # Fixed observed data.</span>
-<span id="cb1-97"><a href=""></a>    ax.scatter(</span>
-<span id="cb1-98"><a href=""></a>      x,</span>
-<span id="cb1-99"><a href=""></a>      y_observed,</span>
-<span id="cb1-100"><a href=""></a>      s=55,</span>
-<span id="cb1-101"><a href=""></a>      alpha=0.8,</span>
-<span id="cb1-102"><a href=""></a>      color="steelblue",</span>
-<span id="cb1-103"><a href=""></a>      label="Observed data",</span>
-<span id="cb1-104"><a href=""></a>      zorder=3</span>
-<span id="cb1-105"><a href=""></a>    )</span>
-<span id="cb1-106"><a href=""></a></span>
-<span id="cb1-107"><a href=""></a>    # Candidate model controlled by the sliders.</span>
-<span id="cb1-108"><a href=""></a>    ax.plot(</span>
-<span id="cb1-109"><a href=""></a>      x_line,</span>
-<span id="cb1-110"><a href=""></a>      y_line,</span>
-<span id="cb1-111"><a href=""></a>      linewidth=3,</span>
-<span id="cb1-112"><a href=""></a>      color="firebrick",</span>
-<span id="cb1-113"><a href=""></a>      label=fr"Model: $\hat{{y}}={a:.1f}x+{b:.1f}$"</span>
-<span id="cb1-114"><a href=""></a>    )</span>
-<span id="cb1-115"><a href=""></a></span>
-<span id="cb1-116"><a href=""></a>    ax.set(</span>
-<span id="cb1-117"><a href=""></a>      xlim=(0, 10),</span>
-<span id="cb1-118"><a href=""></a>      ylim=(-10, 45),</span>
-<span id="cb1-119"><a href=""></a>      xlabel="x",</span>
-<span id="cb1-120"><a href=""></a>      ylabel="y",</span>
-<span id="cb1-121"><a href=""></a>      title="Fit the model to the observations"</span>
-<span id="cb1-122"><a href=""></a>    )</span>
-<span id="cb1-123"><a href=""></a></span>
-<span id="cb1-124"><a href=""></a>    ax.grid(alpha=0.2)</span>
-<span id="cb1-125"><a href=""></a>    ax.legend(loc="upper left")</span>
-<span id="cb1-126"><a href=""></a></span>
-<span id="cb1-127"><a href=""></a>    return fig</span>
-<span id="cb1-128"><a href=""></a></span>
-<span id="cb1-129"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="things-we-need-to-think-about" class="slide level2">
-<h2>Things we need to think about</h2>
+<section id="core-ideas-of-os" class="slide level2">
+<h2>Core ideas of OS</h2>
 <ul>
-<li>What model shape makes sense for our data?</li>
-</ul>
-<p><br></p>
+<li>Our discussions often have two parts
 <ul>
-<li>How do we quantify how well we’re doing?</li>
-</ul>
-<p><br></p>
+<li><strong>Mechanism</strong>: What low-level support is needed to make this happen
 <ul>
-<li>Do we need as much complexity as we have?</li>
-</ul>
-<p><br></p>
+<li>e.g.&nbsp;a knife for the cake example</li>
+</ul></li>
+<li><strong>Policy</strong>: How do we use the mechanism to achieve particular goals?
 <ul>
-<li>How can we run this reasonably?</li>
+<li>e.g.&nbsp;ensure everybody has an equal sized piece of cake</li>
+</ul></li>
+</ul></li>
 </ul>
 </section>
-<section id="welcome-to-advanced-machine-learning" class="slide level2">
-<h2>Welcome to Advanced Machine Learning!</h2>
-<p>Lab time!</p>
+<section id="example-processor-as-a-shared-resource" class="slide level2">
+<h2>Example: Processor as a shared resource</h2>
+<ul>
+<li>Virtual resource: each app <em>thinks</em> it has its own CPU</li>
+<li>Questions
+<ul>
+<li>Which app should get to use the physical CPU?</li>
+<li>If OS lets an app have the CPU, how does it get control back?</li>
+</ul></li>
+</ul>
+
+<img data-src="assets/00-introduction/slide43_img01.jpeg" class="r-stretch"></section>
+<section id="example-guiding-questions" class="slide level2">
+<h2>Example Guiding questions</h2>
+<ul>
+<li>What are the virtual resources or services offered to users? Are they easy to use?</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>How to ensure fair sharing of resources between users?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>How to protect users from each other, and protect the system from users?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>What workloads do we use to measure performance?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>What metrics do we use to measure performance?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>How efficiently are resources managed?</li>
+</ul>
+</div>
+</section>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li>Welcome to OS!</li>
+<li>Three main chunks of assignments
+<ul>
+<li>Programming Assignments are graded 2x a day</li>
+</ul></li>
+<li>Take time with this class
+<ul>
+<li>If you leave everything to Sunday night you’re gonna have a bad time</li>
+</ul></li>
+<li>When we approach problems, let’s think about how we can do thing <em>simply</em>
+<ul>
+<li>And <em>good enough</em> is enough</li>
+</ul></li>
+</ul>
 
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>CST463 · Advanced Machine Learning</p>
+<p>CST334 - Introduction to Operating Systems</p>
 </div>
 </div></div>
 
