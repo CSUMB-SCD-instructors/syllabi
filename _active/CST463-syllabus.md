@@ -3,7 +3,7 @@ layout: default
 course_code: CST463
 course_name: Advanced Machine Learning
 title: CST463 - Advanced Machine Learning
-last_updated: '2026-08-24'
+last_updated: '2026-08-26'
 ---
 
 # CST463 (Advanced Machine Learning) Syllabus
@@ -144,8 +144,9 @@ Note: there is no final exam for this class, but we may have a project presentat
 
 In-class participation has three components:
 
-1. (5%) Learning Logs: reflect on the material you learned each week and use as notes for studying
-2. (5%) Attendance: Show up to class on time every day
+1. (4%) Attendance: Show up to class on time every day
+2. (4%) Labs: We are going to be doing a number of in-class activities, and other skill-building exercises.
+3. (4%) Weekly Study Notes: reflect on the material you learned each week and use as notes for studying
 
 #### In-class quizzes
 
