@@ -9,5 +9,5 @@ Printable slide handouts for CST463.
 
 | Deck | PDF |
 | --- | --- |
-| Data Manipulation & Preprocessing | [Open](Data-Manipulation-Preprocessing.pdf) |
 | Introduction | [Open](Introduction.pdf) |
+| Data Manipulation & Preprocessing | [Open](Data-Manipulation-Preprocessing.pdf) |
