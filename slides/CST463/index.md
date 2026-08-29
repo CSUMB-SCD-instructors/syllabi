@@ -13,3 +13,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | --- | --- | --- | --- |
 | Introduction | final | [Open](00-introduction.html) | [PDF](pdfs/Introduction.pdf) |
 | Data Manipulation & Preprocessing | final | [Open](01-data_manipulation.html) | [PDF](pdfs/Data-Manipulation-Preprocessing.pdf) |
+| Linear Algebra & Calculus for Deep Learning | beta | [Open](02-linear_algebra_calculus.html) | [PDF](pdfs/Linear-Algebra-Calculus-for-Deep-Learning.pdf) |
