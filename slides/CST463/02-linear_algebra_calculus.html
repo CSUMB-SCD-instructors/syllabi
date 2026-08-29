@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-29 14:51" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-29 15:28" class="quarto-title-block center">
   <h1 class="title">Linear Algebra &amp; Calculus for Deep Learning</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -260,7 +260,7 @@ Sam Ogden
 <li>This is the same <code>Ax + b</code> you’ve already seen — just one input, one output</li>
 </ul>
 </div><div class="column" style="width:55%;">
-<div id="400b7444" class="cell" data-execution_count="1">
+<div id="aaf7932c" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -499,7 +499,7 @@ Sam Ogden
 </section>
 <section id="a-feature-vector" class="slide level2">
 <h2>A feature vector</h2>
-<div id="5d34b2b5" class="cell" data-execution_count="2">
+<div id="49614910" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href=""></a></span>
 <span id="cb2-3"><a href=""></a>house <span class="op">=</span> torch.tensor([<span class="fl">1800.0</span>, <span class="dv">3</span>, <span class="dv">12</span>])  <span class="co"># sqft, bedrooms, age</span></span>
@@ -523,7 +523,7 @@ Sam Ogden
 </section>
 <section id="a-multi-dimensional-measurement" class="slide level2">
 <h2>A multi-dimensional measurement</h2>
-<div id="fe7d20f8" class="cell" data-execution_count="3">
+<div id="61e09d0c" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>image <span class="op">=</span> torch.zeros(<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>)  <span class="co"># channels, height, width</span></span>
 <span id="cb4-2"><a href=""></a><span class="bu">print</span>(image.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -540,7 +540,7 @@ Sam Ogden
 </section>
 <section id="tensors-one-word-for-all-of-these" class="slide level2">
 <h2>Tensors: one word for all of these</h2>
-<div id="b6608059" class="cell" data-execution_count="4">
+<div id="02306707" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -571,7 +571,7 @@ Sam Ogden
 <li><strong>L2 norm</strong> — straight-line length: <span class="math display">\|\mathbf{x}\|_2 = \sqrt{\textstyle\sum_i x_i^2}</span></li>
 <li><strong>L1 norm</strong> — total distance if you could only move along axes: <span class="math display">\|\mathbf{x}\|_1 = \textstyle\sum_i |x_i|</span></li>
 </ul>
-<div id="4f8fffbb" class="cell" data-execution_count="5">
+<div id="3ea6fbc0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>x <span class="op">=</span> torch.tensor([<span class="fl">3.0</span>, <span class="fl">4.0</span>])</span>
 <span id="cb6-2"><a href=""></a><span class="bu">print</span>(torch.linalg.norm(x, <span class="bu">ord</span><span class="op">=</span><span class="dv">2</span>))</span>
 <span id="cb6-3"><a href=""></a><span class="bu">print</span>(torch.linalg.norm(x, <span class="bu">ord</span><span class="op">=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -602,7 +602,7 @@ tensor(7.)</code></pre>
 <li><strong>Algebraic:</strong> sum of elementwise products <span class="math display">\mathbf{a} \cdot \mathbf{b} = \textstyle\sum_i a_i b_i</span></li>
 <li><strong>Geometric:</strong> a measure of <em>alignment</em> — large when two vectors point the same way, near zero when they’re perpendicular, negative when they point opposite ways</li>
 </ul>
-<div id="98618ace" class="cell" data-execution_count="6">
+<div id="0dd927b0" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>a <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">0.0</span>])</span>
 <span id="cb8-2"><a href=""></a>b <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">0.0</span>])</span>
 <span id="cb8-3"><a href=""></a>c <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
@@ -635,7 +635,7 @@ tensor(0.)</code></pre>
 <ul>
 <li>Multiplying a matrix by a vector is just <em>many dot products done at once</em>, one per row</li>
 </ul>
-<div id="dfc2117c" class="cell" data-execution_count="7">
+<div id="59a253b4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>A <span class="op">=</span> torch.tensor([[<span class="fl">1.0</span>, <span class="fl">0.0</span>],</span>
 <span id="cb10-2"><a href=""></a>                   [<span class="fl">0.0</span>, <span class="fl">1.0</span>],</span>
 <span id="cb10-3"><a href=""></a>                   [<span class="fl">1.0</span>, <span class="fl">1.0</span>]])</span>
@@ -664,9 +664,152 @@ tensor(5.)</code></pre>
 </section>
 <section id="calculus-derivatives-partials-gradients" class="slide level2 section">
 <h2>Calculus: derivatives, partials, gradients</h2>
+</section>
+<section id="derivatives-a-fast-recap" class="slide level2">
+<h2>Derivatives: a fast recap</h2>
+<ul>
+<li>The derivative of <span class="math inline">f</span> at a point is its <strong>slope</strong> there — how fast <span class="math inline">f</span> changes as <span class="math inline">x</span> changes
+<ul>
+<li>Notation: <span class="math inline">f'(x)</span>, or <span class="math inline">\frac{df}{dx}</span> – this latter one is much more explicit</li>
+<li><span class="math inline">\frac{df}{dx}</span> can be understood as “ratio for delta-f to delta-x” where “delta” is how we say “change in”</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p>We only need a handlefule of rules:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Power Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx} x^n = nx^{(n-1)}</span></td>
+</tr>
+<tr class="even">
+<td>Constant Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx} c = 0</span></td>
+</tr>
+<tr class="odd">
+<td>Constant Multiple Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx}\big(c \cdot f(x)\big) = c \cdot f'(x)</span></td>
+</tr>
+<tr class="even">
+<td>Chain Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx} f(g(x)) = f'(g(x)) \cdot g'(x)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-chain-rule-composing-two-functions" class="slide level2">
+<h2>The <strong>Chain Rule</strong>: Composing two functions</h2>
+<ul>
+<li><span class="math inline">g(x) = 2x</span></li>
+<li><span class="math inline">f(g) = g^2</span></li>
+<li>Compose them: <span class="math inline">f(g(x)) = (2x)^2 = 4x^2</span></li>
+</ul>
+<div id="d57aada3" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="kw">def</span> g(x):</span>
+<span id="cb12-2"><a href=""></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> x</span>
+<span id="cb12-3"><a href=""></a></span>
+<span id="cb12-4"><a href=""></a></span>
+<span id="cb12-5"><a href=""></a><span class="kw">def</span> f(g_val):</span>
+<span id="cb12-6"><a href=""></a>    <span class="cf">return</span> g_val <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb12-7"><a href=""></a></span>
+<span id="cb12-8"><a href=""></a></span>
+<span id="cb12-9"><a href=""></a>x <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb12-10"><a href=""></a><span class="bu">print</span>(f(g(x)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>36.0</code></pre>
+</div>
+</div>
+</section>
+<section id="two-ways-to-get-the-same-derivative" class="slide level2">
+<h2>Two ways to get the same derivative</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><strong>Direct:</strong> differentiate the composed function outright <span class="math display">\frac{d}{dx}\big(4x^2\big) = 8x</span></li>
+</ul>
+</div><div class="column" style="width:60%;">
+<ul>
+<li><strong>Chain rule:</strong> differentiate each piece separately, then multiply <span class="math display">\frac{df}{dx} = \frac{df}{dg} \cdot \frac{dg}{dx} = (2g) \cdot (2) = 4g = 8x</span></li>
+</ul>
+</div></div>
+<div id="e86e96f1" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>x <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb14-2"><a href=""></a>g_val <span class="op">=</span> g(x)</span>
+<span id="cb14-3"><a href=""></a></span>
+<span id="cb14-4"><a href=""></a>df_dg <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> g_val     <span class="co"># derivative of f w.r.t. f1, evaluated at g_val</span></span>
+<span id="cb14-5"><a href=""></a>dg_dx <span class="op">=</span> <span class="fl">2.0</span>          <span class="co"># derivative of g w.r.t. x1</span></span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="bu">print</span>(df_dg <span class="op">*</span> dg_dx)</span>
+<span id="cb14-8"><a href=""></a><span class="bu">print</span>(<span class="dv">8</span> <span class="op">*</span> x)  <span class="co"># direct derivative, for comparison</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>24.0
+24.0</code></pre>
+</div>
+</div>
+<ul>
+<li>Same answer, built from two <em>simple</em> pieces instead of one messier one</li>
+<li>This is <em>the</em> idea autograd is built on: break a big function into small pieces, differentiate each piece, multiply them together</li>
+</ul>
+</section>
+<section id="partial-derivatives-one-variable-at-a-time" class="slide level2">
+<h2>Partial derivatives: one variable at a time</h2>
+<ul>
+<li><p>Our function now takes more than one input: <span class="math display">f(x_1, x_2) = x_1^2 + 2x_2^2</span></p></li>
+<li><p>Notation: <span class="math inline">\frac{\partial f}{\partial x_1}</span>, <span class="math inline">\frac{\partial f}{\partial x_2}</span></p></li>
+</ul>
+<div class="fragment">
+<p>A <strong>partial derivative</strong> <span class="math inline">\frac{\partial f}{\partial x_2}</span> asks:</p>
+<div class="box center">
+<p>“How does <span class="math inline">f</span> change if I move <em>just</em> <span class="math inline">x_2</span>, holding <span class="math inline">x_1</span> fixed?”</p>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<ul>
+<li><span class="math inline">\frac{\partial f}{\partial x_1} = 2x_1</span> — treat <span class="math inline">x_2</span> as a constant, differentiate like normal</li>
+<li><span class="math inline">\frac{\partial f}{\partial x_2} = 4x_2</span> — same move, other variable</li>
+</ul>
+</div>
+</section>
+<section id="what-partial-derivatives-look-like" class="slide level2">
+<h2>What partial derivatives look like</h2>
+<div id="a2c8bffc" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-linear_algebra_calculus_files/figure-revealjs/cell-11-output-1.png" width="530" height="565"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Each arrow is the gradient at that point — it points where <span class="math inline">f</span> increases <em>fastest</em> from there</li>
+<li>Arrows point away from the valley floor (the minimum, at the origin) and get longer farther away from it</li>
+</ul>
+</section>
+<section id="the-gradient-a-vector-of-partial-derivatives" class="slide level2">
+<h2>The gradient: a vector of partial derivatives</h2>
+<ul>
+<li>Stack the partials into a vector: <span class="math display">\nabla f = \left[\frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}\right] = [2x_1, 4x_2]</span></li>
+</ul>
+<div id="de1fd029" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="kw">def</span> grad_f(x1, x2):</span>
+<span id="cb16-2"><a href=""></a>    <span class="cf">return</span> torch.tensor([<span class="dv">2</span> <span class="op">*</span> x1, <span class="dv">4</span> <span class="op">*</span> x2])</span>
+<span id="cb16-3"><a href=""></a></span>
+<span id="cb16-4"><a href=""></a><span class="bu">print</span>(grad_f(<span class="fl">1.0</span>, <span class="fl">1.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([2., 6.])</code></pre>
+</div>
+</div>
+<ul>
+<li>This vector points toward steepest <em>increase</em> — to go downhill, step in the <em>opposite</em> direction, <span class="math inline">-\nabla f</span></li>
+<li>Remember <code>choose_next_value()</code>? This is exactly the “smart” direction it was missing</li>
+</ul>
 <!-- TODO next pass:
-
-## Chain rule {.section}
 
 ## Autograd, briefly {.section}
 
