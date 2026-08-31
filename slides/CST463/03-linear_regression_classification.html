@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 21:30" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-30 22:16" class="quarto-title-block center">
   <h1 class="title">Linear Regression &amp; Linear Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -286,7 +286,7 @@ ones actually written so far):
 ## Gradient Descent: use all the data {.section}                 [drafted]
 ## Stochastic Gradient Descent: use one point {.section}          [drafted]
 ## Mini-batch SGD: a middle ground {.section}                     [drafted]
-## Comparing the four {.section}                                 [not yet]
+## Comparing the four {.section}                                 [drafted]
 ## Linear classification: same idea, different loss {.section}   [not yet]
 ## Wrap {.section}                                                [not yet]
 
@@ -1341,8 +1341,90 @@ plot: computation spent, not just step count.
 <ul>
 <li>Small <code>k</code>: cheap steps, lots of them, but a bouncy path — SGD’s territory</li>
 <li>Large <code>k</code>: confident steps, but each one costs more — gradient descent’s territory</li>
+</ul>
+<p><br></p>
+<ul>
 <li>In practice, <code>k</code> gets chosen to balance noise against how much data fits comfortably in memory at once — commonly powers of 2, like 32, 64, 128</li>
 <li>This dial is what real training loops actually use — “SGD” in PyTorch almost always means <em>mini-batch</em> SGD under the hood</li>
+</ul>
+</section>
+<section id="comparing-the-four" class="slide level2 section">
+<h2>Comparing the four</h2>
+</section>
+<section id="same-computation-budget-four-different-walks" class="slide level2">
+<h2>Same computation budget, four different walks</h2>
+<ul>
+<li>All four methods below get the <em>exact same</em> computation budget: 2,000 point-evaluations
+<ul>
+<li>They all still have the 40 point dataset so this is 50 <strong>epochs</strong>
+<ul>
+<li>An <strong>epoch</strong> is one full pass through the dataset</li>
+</ul></li>
+</ul></li>
+<li>Notice the difference in how the evaluation budget gets spent</li>
+</ul>
+<div id="16652b1c" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="03-linear_regression_classification_files/figure-revealjs/cell-2-output-1.png" width="901" height="518"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-the-plot-is-telling-us" class="slide level2">
+<h2>What the plot is telling us</h2>
+<ul>
+<li><strong>Gradient descent</strong> (black) descends smoothly and predictably — but for this budget, it only gets 50 steps (50 epochs, one step per epoch)</li>
+<li><strong>SGD</strong> (red) gets 2,000 steps for the same budget — noisy, but it’s still the fastest to a low loss here</li>
+<li><strong>Mini-batch</strong> (blue) splits the difference — smoother than SGD, far more steps than GD</li>
+<li><strong>Random search</strong> (gray) never gets a sense of direction — with nothing pulling it back, the loss can end up <em>anywhere</em>, and typically drifts <em>worse</em> over time</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The dashed green line is the <strong>least-squares</strong> solution <em>on this exact noisy sample</em> — computed with the normal equation from a few slides back, not the “true” <code>(w, b)</code> we generated the data from. Because of the noise, those aren’t the same thing, and least squares always wins on its own sample.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-mini-batch-sizes" class="slide level2">
+<h2>Comparing Mini-batch Sizes</h2>
+<div class="box center">
+<p>Let’s vary minibatch size with 40 datapoints and a budget of 4000 evaluations</p>
+</div>
+<div id="958873e5" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="03-linear_regression_classification_files/figure-revealjs/cell-3-output-1.png" width="901" height="518"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-takeaway" class="slide level2">
+<h2>The takeaway</h2>
+<div class="box center">
+<p>More steps with a noisy gradient often beats fewer steps with an exact one</p>
+</div>
+<ul>
+<li>This is <em>why</em> SGD and mini-batch dominate in practice, especially on huge datasets — a single full-batch gradient descent step on a billion-row dataset costs a billion point-evaluations before <code>(w, b)</code> has moved even once</li>
+<li>Gradient descent isn’t wrong — it’s just not what anyone actually runs at scale
+<ul>
+<li>For some concrete numbers:
+<ul>
+<li>ImageNet Dataset is ~138GB</li>
+<li>Reddit Dataset is ~2.841TB</li>
+</ul></li>
+</ul></li>
 </ul>
 
 </section>
