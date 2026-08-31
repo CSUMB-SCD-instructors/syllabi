@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 20:32" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-30 20:36" class="quarto-title-block center">
   <h1 class="title">Linear Regression &amp; Linear Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -298,6 +298,12 @@ implementation of the thing they're supposed to build.
 
 Classification section may end up heavier than a single beat, revisited
 once we get there.
+
+Visualization convention across GD / SGD / mini-batch widgets: draw the
+error (residual) lines from each point actually used in that step's
+gradient to the current fitted line -- all 40 for GD (done), just the 1
+sampled point for SGD, and the sampled subset for mini-batch. Makes the
+"how much data does this step look at" difference visible, not just stated.
 -->
 <section id="learning-objectives" class="slide level2">
 <h2>Learning objectives</h2>
@@ -782,30 +788,48 @@ once we get there.
 <span id="cb2-134"><a href=""></a></span>
 <span id="cb2-135"><a href=""></a>        if not s["diverged"]:</span>
 <span id="cb2-136"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
-<span id="cb2-137"><a href=""></a>            ax.plot(</span>
-<span id="cb2-138"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
-<span id="cb2-139"><a href=""></a>                label=f"Current (step {s['step']})"</span>
-<span id="cb2-140"><a href=""></a>            )</span>
-<span id="cb2-141"><a href=""></a></span>
-<span id="cb2-142"><a href=""></a>        ax.set_xlim(0, 10)</span>
-<span id="cb2-143"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
-<span id="cb2-144"><a href=""></a>        ax.set_xlabel("x")</span>
-<span id="cb2-145"><a href=""></a>        ax.set_ylabel("y")</span>
-<span id="cb2-146"><a href=""></a>        ax.legend(loc="upper left")</span>
-<span id="cb2-147"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
-<span id="cb2-148"><a href=""></a></span>
-<span id="cb2-149"><a href=""></a>        return fig</span>
-<span id="cb2-150"><a href=""></a></span>
-<span id="cb2-151"><a href=""></a></span>
-<span id="cb2-152"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-137"><a href=""></a>            y_pred_now = s["w"] * x + s["b"]</span>
+<span id="cb2-138"><a href=""></a>            ax.vlines(</span>
+<span id="cb2-139"><a href=""></a>                x, np.minimum(y_observed, y_pred_now), np.maximum(y_observed, y_pred_now),</span>
+<span id="cb2-140"><a href=""></a>                color="darkorange", alpha=0.6, linewidth=1,</span>
+<span id="cb2-141"><a href=""></a>                label="Error used this step (all 40 points)"</span>
+<span id="cb2-142"><a href=""></a>            )</span>
+<span id="cb2-143"><a href=""></a>            ax.plot(</span>
+<span id="cb2-144"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb2-145"><a href=""></a>                label=f"Current (step {s['step']})"</span>
+<span id="cb2-146"><a href=""></a>            )</span>
+<span id="cb2-147"><a href=""></a></span>
+<span id="cb2-148"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb2-149"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb2-150"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb2-151"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb2-152"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb2-153"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
+<span id="cb2-154"><a href=""></a></span>
+<span id="cb2-155"><a href=""></a>        return fig</span>
+<span id="cb2-156"><a href=""></a></span>
+<span id="cb2-157"><a href=""></a></span>
+<span id="cb2-158"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="thats-a-very-different-walk" class="slide level2">
 <h2>That’s a very different walk</h2>
 <ul>
 <li>Every early step moves confidently downhill — no wasted red steps, unlike random search</li>
 <li>…unless <code>η</code> was too large, in which case <em>every</em> step turns red and the loss explodes — that’s <code>η</code> doing exactly what we warned about</li>
-<li>The catch: every single step required looking at <strong>all 40</strong> points. Scale that up to a real dataset, and each step gets expensive fast</li>
 </ul>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>The catch: every single step required looking at <strong>all 40</strong> points. Scale that up to a real dataset, and each step gets expensive fast</p>
+</div>
+</div>
+</div>
 
 </section>
     </div>
