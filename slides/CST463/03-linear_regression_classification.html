@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 22:16" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-30 22:25" class="quarto-title-block center">
   <h1 class="title">Linear Regression &amp; Linear Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -632,8 +632,8 @@ plot: computation spent, not just step count.
 </tbody>
 </table>
 </section>
-<section id="given-this-measure-of-how-back-we-are-what-do-we-do" class="slide level2 section">
-<h2>Given this measure of how back we are, what do we do?</h2>
+<section id="given-this-measure-of-how-bad-we-are-what-do-we-do" class="slide level2 section">
+<h2>Given this measure of how bad we are, what do we do?</h2>
 </section>
 <section id="the-gradient-of-the-loss" class="slide level2">
 <h2>The gradient of the loss</h2>
@@ -1139,7 +1139,7 @@ plot: computation spent, not just step count.
 </div>
 </div>
 <ul>
-<li><code>k = 1</code> _is SGD</li>
+<li><code>k = 1</code> <em>is</em> SGD</li>
 <li><code>k = N</code> <em>is</em> full-batch gradient descent</li>
 </ul>
 </section>
@@ -1363,7 +1363,7 @@ plot: computation spent, not just step count.
 </ul></li>
 <li>Notice the difference in how the evaluation budget gets spent</li>
 </ul>
-<div id="16652b1c" class="cell" data-execution_count="1">
+<div id="cff6252c" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1400,7 +1400,7 @@ plot: computation spent, not just step count.
 <div class="box center">
 <p>Let’s vary minibatch size with 40 datapoints and a budget of 4000 evaluations</p>
 </div>
-<div id="958873e5" class="cell" data-execution_count="2">
+<div id="190308be" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1410,6 +1410,14 @@ plot: computation spent, not just step count.
 </div>
 </div>
 </section>
+<section id="what-turning-the-dial-actually-buys-you" class="slide level2">
+<h2>What turning the dial actually buys you</h2>
+<ul>
+<li>Small <code>k</code> (light blue) is noisiest, but its many cheap steps still get it to a low loss fastest, early on</li>
+<li>Large <code>k</code> (dark blue) is the smoothest, but under a fixed budget it gets far fewer steps — and visibly lags behind here</li>
+<li>There’s no universally “best” <code>k</code> — it’s a real trade-off, tuned per problem, per budget, per hardware</li>
+</ul>
+</section>
 <section id="the-takeaway" class="slide level2">
 <h2>The takeaway</h2>
 <div class="box center">
@@ -1417,13 +1425,11 @@ plot: computation spent, not just step count.
 </div>
 <ul>
 <li>This is <em>why</em> SGD and mini-batch dominate in practice, especially on huge datasets — a single full-batch gradient descent step on a billion-row dataset costs a billion point-evaluations before <code>(w, b)</code> has moved even once</li>
-<li>Gradient descent isn’t wrong — it’s just not what anyone actually runs at scale
+<li>Gradient descent isn’t wrong — it’s just not what anyone actually runs at scale</li>
+<li>For some concrete numbers on “huge dataset”:
 <ul>
-<li>For some concrete numbers:
-<ul>
-<li>ImageNet Dataset is ~138GB</li>
-<li>Reddit Dataset is ~2.841TB</li>
-</ul></li>
+<li>ImageNet is ~138GB</li>
+<li>The Reddit dataset (used for graph learning benchmarks) is ~2.841TB</li>
 </ul></li>
 </ul>
 
