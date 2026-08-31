@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 17:18" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-30 20:32" class="quarto-title-block center">
   <h1 class="title">Linear Regression &amp; Linear Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -283,7 +283,7 @@ ones actually written so far):
 ## Learning objectives                                          [drafted]
 ## The problem, again {.section}                                [drafted]
 ## Random search, again {.section}                               [drafted]
-## Gradient Descent: use all the data {.section}                 [not yet]
+## Gradient Descent: use all the data {.section}                 [drafted]
 ## Stochastic Gradient Descent: use one point {.section}          [not yet]
 ## Mini-batch SGD: a middle ground {.section}                     [not yet]
 ## Comparing the four {.section}                                 [not yet]
@@ -316,7 +316,7 @@ once we get there.
 <ul>
 <li>A dataset of examples: pairs <span class="math inline">(\mathbf{x}, y)</span></li>
 <li>A model with parameters we can tune: <span class="math display">\hat{y} = \mathbf{w} \cdot \mathbf{x} + b</span></li>
-<li>A way to score any choice of <span class="math inline">(\mathbf{w}, b)</span>: mean squared error</li>
+<li>A way to score any choice of <span class="math inline">(\mathbf{w}, b)</span></li>
 <li>All three pieces came from last lecture</li>
 </ul>
 </section>
@@ -334,6 +334,20 @@ once we get there.
 <div class="box center">
 <p>That process — adapting parameters using data and a loss — is what <strong>training</strong> a model means.</p>
 </div>
+</div>
+</section>
+<section id="how-do-we-quantify-how-well-were-doing" class="slide level2 section">
+<h2>How do we quantify how well we’re doing?</h2>
+</section>
+<section id="loss-functions" class="slide level2">
+<h2>Loss functions</h2>
+<ul>
+<li>We need a single number that says “how bad is this model, right now?”</li>
+<li>That number is called a <strong>loss</strong> — smaller is better</li>
+<li>For regression, we already have one: mean squared error <span class="math display">L(w,b) = \frac{1}{N}\sum_{i=1}^N \big(\hat y_i - y_i\big)^2, \qquad \hat y_i = \mathbf{w} \cdot \mathbf{x_i} + b</span></li>
+</ul>
+<div class="fragment">
+<p>Every method we build today — random search, gradient descent, SGD, mini-batch — is really just a different answer to: <strong>how do we use the loss to pick the next <code>(w, b)</code>?</strong></p>
 </div>
 </section>
 <section id="why-not-just-solve-it-directly" class="slide level2">
@@ -379,10 +393,6 @@ once we get there.
 </section>
 <section id="random-search-live" class="slide level2">
 <h2>Random search, live</h2>
-<ul>
-<li>We’re scoring every guess against all <strong>40</strong> data points here — each “better or worse” call means running the whole dataset through the model</li>
-<li>Real datasets can run to terabytes; 40 rows is tiny by comparison — and that per-guess cost scales linearly with however much data we have</li>
-</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>#| '!! shinylive warning !!': |</span>
 <span id="cb1-2"><a href=""></a>#|   shinylive does not work in self-contained HTML documents.</span>
 <span id="cb1-3"><a href=""></a>#|   Please set `embed-resources: false` in your metadata.</span>
@@ -397,7 +407,7 @@ once we get there.
 <span id="cb1-12"><a href=""></a>rng = np.random.default_rng(7)</span>
 <span id="cb1-13"><a href=""></a></span>
 <span id="cb1-14"><a href=""></a>true_slope = 2.5</span>
-<span id="cb1-15"><a href=""></a>true_intercept = -3.0</span>
+<span id="cb1-15"><a href=""></a>true_intercept = -15.0  # bigger than lecture 02's version so b's movement is visible, not just w's</span>
 <span id="cb1-16"><a href=""></a>error_sd = 9.0  # noisier than lecture 02's version</span>
 <span id="cb1-17"><a href=""></a></span>
 <span id="cb1-18"><a href=""></a>x = rng.uniform(0, 10, 40)</span>
@@ -519,6 +529,19 @@ once we get there.
 <span id="cb1-134"><a href=""></a></span>
 <span id="cb1-135"><a href=""></a></span>
 <span id="cb1-136"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>We’re scoring every guess against all <strong>40</strong> data points here — each “better or worse” call means running the whole dataset through the model</p>
+</div>
+</div>
+</div>
 </section>
 <section id="still-no-sense-of-direction" class="slide level2">
 <h2>Still no sense of direction</h2>
@@ -531,6 +554,258 @@ once we get there.
 <div class="box center">
 <p>Remember, each time we say “better or worse” we need to do calculations!</p>
 </div>
+</section>
+<section id="gradient-descent" class="slide level2 section">
+<h2>Gradient Descent</h2>
+<p>Train using all the data</p>
+</section>
+<section id="the-idea-before-the-math" class="slide level2">
+<h2>The idea, before the math</h2>
+<div class="box center">
+<p>Each step, decrease the “badness” of the model as fast as possible</p>
+</div>
+<ul>
+<li>“Badness” is just our loss — so the goal is to <strong>minimize the loss</strong></li>
+<li>Random search nudged <code>(w, b)</code> and <em>hoped</em> that helped</li>
+<li>Gradient descent instead asks: of every direction we could move <code>(w, b)</code>, which one decreases the loss <em>fastest right now</em> — and moves exactly that way</li>
+</ul>
+</section>
+<section id="the-loss-written-out" class="slide level2">
+<h2>The loss, written out</h2>
+<ul>
+<li>Same MSE loss as before, now written as a function of the <em>whole</em> dataset: <span class="math display">L(w,b) = \frac{1}{N}\sum_{i=1}^N \big(\hat y_i - y_i\big)^2, \qquad \hat y_i = w x_i + b</span></li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 35%">
+<col style="width: 47%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">x_i, y_i</span></td>
+<td>one training example</td>
+<td>constant — fixed by the dataset</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">N</span></td>
+<td>number of training examples</td>
+<td>constant</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">w, b</span></td>
+<td>model parameters</td>
+<td><strong>trainable</strong> — what we’re actually adjusting</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\hat y_i</span></td>
+<td>prediction</td>
+<td>derived — changes whenever <span class="math inline">w, b</span> do</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">L</span></td>
+<td>the loss</td>
+<td>derived — the number we’re trying to shrink</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="given-this-measure-of-how-back-we-are-what-do-we-do" class="slide level2 section">
+<h2>Given this measure of how back we are, what do we do?</h2>
+</section>
+<section id="the-gradient-of-the-loss" class="slide level2">
+<h2>The gradient of the loss</h2>
+<ul>
+<li>Take the partial derivative of <span class="math inline">L</span> with respect to each <em>trainable</em> parameter (<span class="math inline">w</span> and <span class="math inline">b</span>): <span class="math display">\frac{\partial L}{\partial w} = \frac{2}{N}\sum_{i=1}^N (\hat y_i - y_i)\,x_i \qquad\qquad \frac{\partial L}{\partial b} = \frac{2}{N}\sum_{i=1}^N (\hat y_i - y_i)</span></li>
+<li>Stack them into a gradient vector, same idea as <span class="math inline">\nabla f</span> from last lecture: <span class="math display">\nabla L = \left[\frac{\partial L}{\partial w}, \frac{\partial L}{\partial b}\right]</span></li>
+<li>This points toward <em>steepest loss</em> — so we step in the <strong>opposite</strong> direction</li>
+</ul>
+</section>
+<section id="the-gradient-descent-algorithm" class="slide level2">
+<h2>The gradient descent algorithm</h2>
+<ol type="1">
+<li>Compute the prediction <span class="math inline">\hat y_i</span> for every one of the <span class="math inline">N</span> points, using the current <span class="math inline">(w, b)</span></li>
+<li>Compute the gradient <span class="math inline">\nabla L</span> from those predictions — average the per-point contributions</li>
+<li>Update: <span class="math inline">w \leftarrow w - \eta \dfrac{\partial L}{\partial w}</span>, and <span class="math inline">b \leftarrow b - \eta \dfrac{\partial L}{\partial b}</span></li>
+<li>Repeat until the loss stops improving (or some other criteria – future work)</li>
+</ol>
+<p><br></p>
+<p><code>η</code> (“eta”) is the <strong>learning rate</strong> — how big a step to take in the gradient’s direction</p>
+</section>
+<section id="aside-what-could-go-wrong-with-η" class="slide level2">
+<h2>Aside: What could go wrong with <code>η</code>?</h2>
+<ul>
+<li>Too small, and training crawls — technically correct, painfully slow</li>
+<li>Too large, and a step can overshoot the bottom of the bowl entirely, making the loss <em>worse</em> — try pushing it too far in the widget below and see for yourself</li>
+<li>Choosing <code>η</code> well is its own skill; we’ll come back to it later in the course</li>
+</ul>
+</section>
+<section id="gradient-descent-live" class="slide level2">
+<h2>Gradient descent, live</h2>
+<ul>
+<li>Same 40 points, same noise as before — but now every step uses the <strong>exact</strong> gradient from all of them, not a guess</li>
+<li>Blue = the step improved the loss, red = it made things worse — watch what happens as you raise <code>η</code></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href=""></a>#| '!! shinylive warning !!': |</span>
+<span id="cb2-2"><a href=""></a>#|   shinylive does not work in self-contained HTML documents.</span>
+<span id="cb2-3"><a href=""></a>#|   Please set `embed-resources: false` in your metadata.</span>
+<span id="cb2-4"><a href=""></a>#| standalone: true</span>
+<span id="cb2-5"><a href=""></a>#| components: [viewer]</span>
+<span id="cb2-6"><a href=""></a>#| viewerHeight: 650</span>
+<span id="cb2-7"><a href=""></a></span>
+<span id="cb2-8"><a href=""></a>from shiny import App, render, ui, reactive</span>
+<span id="cb2-9"><a href=""></a>import matplotlib.pyplot as plt</span>
+<span id="cb2-10"><a href=""></a>import numpy as np</span>
+<span id="cb2-11"><a href=""></a></span>
+<span id="cb2-12"><a href=""></a>rng = np.random.default_rng(7)</span>
+<span id="cb2-13"><a href=""></a></span>
+<span id="cb2-14"><a href=""></a>true_slope = 2.5</span>
+<span id="cb2-15"><a href=""></a>true_intercept = -15.0  # bigger than lecture 02's version so b's movement is visible, not just w's</span>
+<span id="cb2-16"><a href=""></a>error_sd = 9.0</span>
+<span id="cb2-17"><a href=""></a></span>
+<span id="cb2-18"><a href=""></a>x = rng.uniform(0, 10, 40)</span>
+<span id="cb2-19"><a href=""></a>epsilon = rng.normal(0, error_sd, 40)</span>
+<span id="cb2-20"><a href=""></a>y_observed = true_slope * x + true_intercept + epsilon</span>
+<span id="cb2-21"><a href=""></a></span>
+<span id="cb2-22"><a href=""></a></span>
+<span id="cb2-23"><a href=""></a>def mse(w, b):</span>
+<span id="cb2-24"><a href=""></a>    y_pred = w * x + b</span>
+<span id="cb2-25"><a href=""></a>    return float(np.mean((y_observed - y_pred) ** 2))</span>
+<span id="cb2-26"><a href=""></a></span>
+<span id="cb2-27"><a href=""></a></span>
+<span id="cb2-28"><a href=""></a>def gradient(w, b):</span>
+<span id="cb2-29"><a href=""></a>    y_pred = w * x + b</span>
+<span id="cb2-30"><a href=""></a>    error = y_pred - y_observed</span>
+<span id="cb2-31"><a href=""></a>    dw = 2 * np.mean(error * x)</span>
+<span id="cb2-32"><a href=""></a>    db = 2 * np.mean(error)</span>
+<span id="cb2-33"><a href=""></a>    return dw, db</span>
+<span id="cb2-34"><a href=""></a></span>
+<span id="cb2-35"><a href=""></a></span>
+<span id="cb2-36"><a href=""></a>TRAIL_LEN = 40</span>
+<span id="cb2-37"><a href=""></a>DIVERGED_LIMIT = 1e4</span>
+<span id="cb2-38"><a href=""></a></span>
+<span id="cb2-39"><a href=""></a>app_ui = ui.page_fluid(</span>
+<span id="cb2-40"><a href=""></a>    ui.layout_columns(</span>
+<span id="cb2-41"><a href=""></a>        ui.card(</span>
+<span id="cb2-42"><a href=""></a>            ui.card_header("Gradient descent: use all 40 points"),</span>
+<span id="cb2-43"><a href=""></a>            ui.input_slider("lr", "Learning rate (η)", min=0.001, max=0.05, value=0.01, step=0.001),</span>
+<span id="cb2-44"><a href=""></a>            ui.input_action_button("step_once", "Take a GD step", class_="btn-primary"),</span>
+<span id="cb2-45"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
+<span id="cb2-46"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
+<span id="cb2-47"><a href=""></a>            ui.hr(),</span>
+<span id="cb2-48"><a href=""></a>            ui.output_text("state_text"),</span>
+<span id="cb2-49"><a href=""></a>        ),</span>
+<span id="cb2-50"><a href=""></a>        ui.card(</span>
+<span id="cb2-51"><a href=""></a>            ui.output_plot("walk_plot")</span>
+<span id="cb2-52"><a href=""></a>        ),</span>
+<span id="cb2-53"><a href=""></a>        col_widths=(4, 8),</span>
+<span id="cb2-54"><a href=""></a>    )</span>
+<span id="cb2-55"><a href=""></a>)</span>
+<span id="cb2-56"><a href=""></a></span>
+<span id="cb2-57"><a href=""></a></span>
+<span id="cb2-58"><a href=""></a>def server(input, output, session):</span>
+<span id="cb2-59"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False})</span>
+<span id="cb2-60"><a href=""></a>    history = reactive.Value([])</span>
+<span id="cb2-61"><a href=""></a></span>
+<span id="cb2-62"><a href=""></a>    def do_step():</span>
+<span id="cb2-63"><a href=""></a>        s = state.get()</span>
+<span id="cb2-64"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb2-65"><a href=""></a>            return</span>
+<span id="cb2-66"><a href=""></a></span>
+<span id="cb2-67"><a href=""></a>        dw, db = gradient(s["w"], s["b"])</span>
+<span id="cb2-68"><a href=""></a>        lr = input.lr()</span>
+<span id="cb2-69"><a href=""></a>        w_new = s["w"] - lr * dw</span>
+<span id="cb2-70"><a href=""></a>        b_new = s["b"] - lr * db</span>
+<span id="cb2-71"><a href=""></a>        step = s["step"] + 1</span>
+<span id="cb2-72"><a href=""></a></span>
+<span id="cb2-73"><a href=""></a>        if not (np.isfinite(w_new) and np.isfinite(b_new)) or abs(w_new) &gt; DIVERGED_LIMIT or abs(b_new) &gt; DIVERGED_LIMIT:</span>
+<span id="cb2-74"><a href=""></a>            state.set({**s, "step": step, "diverged": True})</span>
+<span id="cb2-75"><a href=""></a>            return</span>
+<span id="cb2-76"><a href=""></a></span>
+<span id="cb2-77"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
+<span id="cb2-78"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
+<span id="cb2-79"><a href=""></a></span>
+<span id="cb2-80"><a href=""></a>        hist = history.get() + [</span>
+<span id="cb2-81"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
+<span id="cb2-82"><a href=""></a>        ]</span>
+<span id="cb2-83"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
+<span id="cb2-84"><a href=""></a></span>
+<span id="cb2-85"><a href=""></a>        state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "diverged": False})</span>
+<span id="cb2-86"><a href=""></a></span>
+<span id="cb2-87"><a href=""></a>    @reactive.effect</span>
+<span id="cb2-88"><a href=""></a>    @reactive.event(input.step_once)</span>
+<span id="cb2-89"><a href=""></a>    def _():</span>
+<span id="cb2-90"><a href=""></a>        do_step()</span>
+<span id="cb2-91"><a href=""></a></span>
+<span id="cb2-92"><a href=""></a>    @reactive.effect</span>
+<span id="cb2-93"><a href=""></a>    @reactive.event(input.step_ten)</span>
+<span id="cb2-94"><a href=""></a>    def _():</span>
+<span id="cb2-95"><a href=""></a>        for _ in range(10):</span>
+<span id="cb2-96"><a href=""></a>            do_step()</span>
+<span id="cb2-97"><a href=""></a></span>
+<span id="cb2-98"><a href=""></a>    @reactive.effect</span>
+<span id="cb2-99"><a href=""></a>    @reactive.event(input.reset)</span>
+<span id="cb2-100"><a href=""></a>    def _():</span>
+<span id="cb2-101"><a href=""></a>        history.set([])</span>
+<span id="cb2-102"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False})</span>
+<span id="cb2-103"><a href=""></a></span>
+<span id="cb2-104"><a href=""></a>    @output</span>
+<span id="cb2-105"><a href=""></a>    @render.text</span>
+<span id="cb2-106"><a href=""></a>    def state_text():</span>
+<span id="cb2-107"><a href=""></a>        s = state.get()</span>
+<span id="cb2-108"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb2-109"><a href=""></a>            return f"Step {s['step']}  |  Diverged! η is too large — hit Reset and try a smaller value."</span>
+<span id="cb2-110"><a href=""></a>        return f"Step {s['step']}  |  w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
+<span id="cb2-111"><a href=""></a></span>
+<span id="cb2-112"><a href=""></a>    @output</span>
+<span id="cb2-113"><a href=""></a>    @render.plot</span>
+<span id="cb2-114"><a href=""></a>    def walk_plot():</span>
+<span id="cb2-115"><a href=""></a>        s = state.get()</span>
+<span id="cb2-116"><a href=""></a>        hist = history.get()</span>
+<span id="cb2-117"><a href=""></a></span>
+<span id="cb2-118"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
+<span id="cb2-119"><a href=""></a></span>
+<span id="cb2-120"><a href=""></a>        ax.scatter(</span>
+<span id="cb2-121"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
+<span id="cb2-122"><a href=""></a>            label="Observed data"</span>
+<span id="cb2-123"><a href=""></a>        )</span>
+<span id="cb2-124"><a href=""></a></span>
+<span id="cb2-125"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb2-126"><a href=""></a></span>
+<span id="cb2-127"><a href=""></a>        n = len(hist)</span>
+<span id="cb2-128"><a href=""></a>        for i, h in enumerate(hist):</span>
+<span id="cb2-129"><a href=""></a>            age = n - i</span>
+<span id="cb2-130"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
+<span id="cb2-131"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
+<span id="cb2-132"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
+<span id="cb2-133"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
+<span id="cb2-134"><a href=""></a></span>
+<span id="cb2-135"><a href=""></a>        if not s["diverged"]:</span>
+<span id="cb2-136"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
+<span id="cb2-137"><a href=""></a>            ax.plot(</span>
+<span id="cb2-138"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb2-139"><a href=""></a>                label=f"Current (step {s['step']})"</span>
+<span id="cb2-140"><a href=""></a>            )</span>
+<span id="cb2-141"><a href=""></a></span>
+<span id="cb2-142"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb2-143"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb2-144"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb2-145"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb2-146"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb2-147"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
+<span id="cb2-148"><a href=""></a></span>
+<span id="cb2-149"><a href=""></a>        return fig</span>
+<span id="cb2-150"><a href=""></a></span>
+<span id="cb2-151"><a href=""></a></span>
+<span id="cb2-152"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="thats-a-very-different-walk" class="slide level2">
+<h2>That’s a very different walk</h2>
+<ul>
+<li>Every early step moves confidently downhill — no wasted red steps, unlike random search</li>
+<li>…unless <code>η</code> was too large, in which case <em>every</em> step turns red and the loss explodes — that’s <code>η</code> doing exactly what we warned about</li>
+<li>The catch: every single step required looking at <strong>all 40</strong> points. Scale that up to a real dataset, and each step gets expensive fast</li>
+</ul>
 
 </section>
     </div>
