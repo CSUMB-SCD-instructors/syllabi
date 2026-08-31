@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 20:46" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-30 21:30" class="quarto-title-block center">
   <h1 class="title">Linear Regression &amp; Linear Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -285,7 +285,7 @@ ones actually written so far):
 ## Random search, again {.section}                               [drafted]
 ## Gradient Descent: use all the data {.section}                 [drafted]
 ## Stochastic Gradient Descent: use one point {.section}          [drafted]
-## Mini-batch SGD: a middle ground {.section}                     [not yet]
+## Mini-batch SGD: a middle ground {.section}                     [drafted]
 ## Comparing the four {.section}                                 [not yet]
 ## Linear classification: same idea, different loss {.section}   [not yet]
 ## Wrap {.section}                                                [not yet]
@@ -304,6 +304,12 @@ error (residual) lines from each point actually used in that step's
 gradient to the current fitted line -- all 40 for GD (done), just the 1
 sampled point for SGD, and the sampled subset for mini-batch. Makes the
 "how much data does this step look at" difference visible, not just stated.
+
+Also tracking a cumulative "points_seen" counter in each widget's state
+(shown in state_text and the plot title) -- points touched per step is 40
+for random search and GD, 1 for SGD, and will be the batch size k for
+mini-batch. This is the fair x-axis for the final "Comparing the four"
+plot: computation spent, not just step count.
 -->
 <section id="learning-objectives" class="slide level2">
 <h2>Learning objectives</h2>
@@ -440,7 +446,7 @@ sampled point for SGD, and the sampled subset for mini-batch. Makes the
 <span id="cb1-39"><a href=""></a>            ui.hr(),</span>
 <span id="cb1-40"><a href=""></a>            ui.input_checkbox("greedy", "Only keep steps that improve", value=False),</span>
 <span id="cb1-41"><a href=""></a>            ui.hr(),</span>
-<span id="cb1-42"><a href=""></a>            ui.output_text("state_text"),</span>
+<span id="cb1-42"><a href=""></a>            ui.output_text_verbatim("state_text"),</span>
 <span id="cb1-43"><a href=""></a>        ),</span>
 <span id="cb1-44"><a href=""></a>        ui.card(</span>
 <span id="cb1-45"><a href=""></a>            ui.output_plot("walk_plot")</span>
@@ -450,91 +456,101 @@ sampled point for SGD, and the sampled subset for mini-batch. Makes the
 <span id="cb1-49"><a href=""></a>)</span>
 <span id="cb1-50"><a href=""></a></span>
 <span id="cb1-51"><a href=""></a></span>
-<span id="cb1-52"><a href=""></a>def server(input, output, session):</span>
-<span id="cb1-53"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0})</span>
-<span id="cb1-54"><a href=""></a>    history = reactive.Value([])</span>
-<span id="cb1-55"><a href=""></a></span>
-<span id="cb1-56"><a href=""></a>    def do_step():</span>
-<span id="cb1-57"><a href=""></a>        s = state.get()</span>
-<span id="cb1-58"><a href=""></a>        w_new = s["w"] + rng.normal(0, STEP_SD_W)</span>
-<span id="cb1-59"><a href=""></a>        b_new = s["b"] + rng.normal(0, STEP_SD_B)</span>
-<span id="cb1-60"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
-<span id="cb1-61"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
-<span id="cb1-62"><a href=""></a>        step = s["step"] + 1</span>
-<span id="cb1-63"><a href=""></a></span>
-<span id="cb1-64"><a href=""></a>        hist = history.get() + [</span>
-<span id="cb1-65"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
-<span id="cb1-66"><a href=""></a>        ]</span>
-<span id="cb1-67"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
-<span id="cb1-68"><a href=""></a></span>
-<span id="cb1-69"><a href=""></a>        if improved or not input.greedy():</span>
-<span id="cb1-70"><a href=""></a>            state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step})</span>
-<span id="cb1-71"><a href=""></a>        else:</span>
-<span id="cb1-72"><a href=""></a>            state.set({**s, "step": step})</span>
-<span id="cb1-73"><a href=""></a></span>
-<span id="cb1-74"><a href=""></a>    @reactive.effect</span>
-<span id="cb1-75"><a href=""></a>    @reactive.event(input.step_once)</span>
-<span id="cb1-76"><a href=""></a>    def _():</span>
-<span id="cb1-77"><a href=""></a>        do_step()</span>
-<span id="cb1-78"><a href=""></a></span>
-<span id="cb1-79"><a href=""></a>    @reactive.effect</span>
-<span id="cb1-80"><a href=""></a>    @reactive.event(input.step_ten)</span>
-<span id="cb1-81"><a href=""></a>    def _():</span>
-<span id="cb1-82"><a href=""></a>        for _ in range(10):</span>
-<span id="cb1-83"><a href=""></a>            do_step()</span>
-<span id="cb1-84"><a href=""></a></span>
-<span id="cb1-85"><a href=""></a>    @reactive.effect</span>
-<span id="cb1-86"><a href=""></a>    @reactive.event(input.reset)</span>
-<span id="cb1-87"><a href=""></a>    def _():</span>
-<span id="cb1-88"><a href=""></a>        history.set([])</span>
-<span id="cb1-89"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0})</span>
-<span id="cb1-90"><a href=""></a></span>
-<span id="cb1-91"><a href=""></a>    @output</span>
-<span id="cb1-92"><a href=""></a>    @render.text</span>
-<span id="cb1-93"><a href=""></a>    def state_text():</span>
-<span id="cb1-94"><a href=""></a>        s = state.get()</span>
-<span id="cb1-95"><a href=""></a>        return f"Step {s['step']}  |  w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
-<span id="cb1-96"><a href=""></a></span>
-<span id="cb1-97"><a href=""></a>    @output</span>
-<span id="cb1-98"><a href=""></a>    @render.plot</span>
-<span id="cb1-99"><a href=""></a>    def walk_plot():</span>
-<span id="cb1-100"><a href=""></a>        s = state.get()</span>
-<span id="cb1-101"><a href=""></a>        hist = history.get()</span>
-<span id="cb1-102"><a href=""></a></span>
-<span id="cb1-103"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
-<span id="cb1-104"><a href=""></a></span>
-<span id="cb1-105"><a href=""></a>        ax.scatter(</span>
-<span id="cb1-106"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
-<span id="cb1-107"><a href=""></a>            label="Observed data"</span>
-<span id="cb1-108"><a href=""></a>        )</span>
+<span id="cb1-52"><a href=""></a>POINTS_PER_STEP = len(x)  # a "better or worse" call touches all 40 points</span>
+<span id="cb1-53"><a href=""></a></span>
+<span id="cb1-54"><a href=""></a></span>
+<span id="cb1-55"><a href=""></a>def server(input, output, session):</span>
+<span id="cb1-56"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "points_seen": 0})</span>
+<span id="cb1-57"><a href=""></a>    history = reactive.Value([])</span>
+<span id="cb1-58"><a href=""></a></span>
+<span id="cb1-59"><a href=""></a>    def do_step():</span>
+<span id="cb1-60"><a href=""></a>        s = state.get()</span>
+<span id="cb1-61"><a href=""></a>        w_new = s["w"] + rng.normal(0, STEP_SD_W)</span>
+<span id="cb1-62"><a href=""></a>        b_new = s["b"] + rng.normal(0, STEP_SD_B)</span>
+<span id="cb1-63"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
+<span id="cb1-64"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
+<span id="cb1-65"><a href=""></a>        step = s["step"] + 1</span>
+<span id="cb1-66"><a href=""></a>        points_seen = s["points_seen"] + POINTS_PER_STEP</span>
+<span id="cb1-67"><a href=""></a></span>
+<span id="cb1-68"><a href=""></a>        hist = history.get() + [</span>
+<span id="cb1-69"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
+<span id="cb1-70"><a href=""></a>        ]</span>
+<span id="cb1-71"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
+<span id="cb1-72"><a href=""></a></span>
+<span id="cb1-73"><a href=""></a>        if improved or not input.greedy():</span>
+<span id="cb1-74"><a href=""></a>            state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "points_seen": points_seen})</span>
+<span id="cb1-75"><a href=""></a>        else:</span>
+<span id="cb1-76"><a href=""></a>            state.set({**s, "step": step, "points_seen": points_seen})</span>
+<span id="cb1-77"><a href=""></a></span>
+<span id="cb1-78"><a href=""></a>    @reactive.effect</span>
+<span id="cb1-79"><a href=""></a>    @reactive.event(input.step_once)</span>
+<span id="cb1-80"><a href=""></a>    def _():</span>
+<span id="cb1-81"><a href=""></a>        do_step()</span>
+<span id="cb1-82"><a href=""></a></span>
+<span id="cb1-83"><a href=""></a>    @reactive.effect</span>
+<span id="cb1-84"><a href=""></a>    @reactive.event(input.step_ten)</span>
+<span id="cb1-85"><a href=""></a>    def _():</span>
+<span id="cb1-86"><a href=""></a>        for _ in range(10):</span>
+<span id="cb1-87"><a href=""></a>            do_step()</span>
+<span id="cb1-88"><a href=""></a></span>
+<span id="cb1-89"><a href=""></a>    @reactive.effect</span>
+<span id="cb1-90"><a href=""></a>    @reactive.event(input.reset)</span>
+<span id="cb1-91"><a href=""></a>    def _():</span>
+<span id="cb1-92"><a href=""></a>        history.set([])</span>
+<span id="cb1-93"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "points_seen": 0})</span>
+<span id="cb1-94"><a href=""></a></span>
+<span id="cb1-95"><a href=""></a>    @output</span>
+<span id="cb1-96"><a href=""></a>    @render.text</span>
+<span id="cb1-97"><a href=""></a>    def state_text():</span>
+<span id="cb1-98"><a href=""></a>        s = state.get()</span>
+<span id="cb1-99"><a href=""></a>        return (</span>
+<span id="cb1-100"><a href=""></a>            f"Step {s['step']}  |  points touched so far: {s['points_seen']}\n\n"</span>
+<span id="cb1-101"><a href=""></a>            f"w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
+<span id="cb1-102"><a href=""></a>        )</span>
+<span id="cb1-103"><a href=""></a></span>
+<span id="cb1-104"><a href=""></a>    @output</span>
+<span id="cb1-105"><a href=""></a>    @render.plot</span>
+<span id="cb1-106"><a href=""></a>    def walk_plot():</span>
+<span id="cb1-107"><a href=""></a>        s = state.get()</span>
+<span id="cb1-108"><a href=""></a>        hist = history.get()</span>
 <span id="cb1-109"><a href=""></a></span>
-<span id="cb1-110"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb1-110"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
 <span id="cb1-111"><a href=""></a></span>
-<span id="cb1-112"><a href=""></a>        n = len(hist)</span>
-<span id="cb1-113"><a href=""></a>        for i, h in enumerate(hist):</span>
-<span id="cb1-114"><a href=""></a>            age = n - i</span>
-<span id="cb1-115"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
-<span id="cb1-116"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
-<span id="cb1-117"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
-<span id="cb1-118"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
-<span id="cb1-119"><a href=""></a></span>
-<span id="cb1-120"><a href=""></a>        y_current = s["w"] * x_line + s["b"]</span>
-<span id="cb1-121"><a href=""></a>        ax.plot(</span>
-<span id="cb1-122"><a href=""></a>            x_line, y_current, color="black", linewidth=3,</span>
-<span id="cb1-123"><a href=""></a>            label=f"Current (step {s['step']})"</span>
-<span id="cb1-124"><a href=""></a>        )</span>
-<span id="cb1-125"><a href=""></a></span>
-<span id="cb1-126"><a href=""></a>        ax.set_xlim(0, 10)</span>
-<span id="cb1-127"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
-<span id="cb1-128"><a href=""></a>        ax.set_xlabel("x")</span>
-<span id="cb1-129"><a href=""></a>        ax.set_ylabel("y")</span>
-<span id="cb1-130"><a href=""></a>        ax.legend(loc="upper left")</span>
-<span id="cb1-131"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
+<span id="cb1-112"><a href=""></a>        ax.scatter(</span>
+<span id="cb1-113"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
+<span id="cb1-114"><a href=""></a>            label="Observed data"</span>
+<span id="cb1-115"><a href=""></a>        )</span>
+<span id="cb1-116"><a href=""></a></span>
+<span id="cb1-117"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb1-118"><a href=""></a></span>
+<span id="cb1-119"><a href=""></a>        n = len(hist)</span>
+<span id="cb1-120"><a href=""></a>        for i, h in enumerate(hist):</span>
+<span id="cb1-121"><a href=""></a>            age = n - i</span>
+<span id="cb1-122"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
+<span id="cb1-123"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
+<span id="cb1-124"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
+<span id="cb1-125"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
+<span id="cb1-126"><a href=""></a></span>
+<span id="cb1-127"><a href=""></a>        y_current = s["w"] * x_line + s["b"]</span>
+<span id="cb1-128"><a href=""></a>        ax.plot(</span>
+<span id="cb1-129"><a href=""></a>            x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb1-130"><a href=""></a>            label=f"Current (step {s['step']})"</span>
+<span id="cb1-131"><a href=""></a>        )</span>
 <span id="cb1-132"><a href=""></a></span>
-<span id="cb1-133"><a href=""></a>        return fig</span>
-<span id="cb1-134"><a href=""></a></span>
-<span id="cb1-135"><a href=""></a></span>
-<span id="cb1-136"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-133"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb1-134"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb1-135"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb1-136"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb1-137"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb1-138"><a href=""></a>        ax.set_title(</span>
+<span id="cb1-139"><a href=""></a>            f"Step {s['step']}  |  {s['points_seen']} point-evaluations so far\n"</span>
+<span id="cb1-140"><a href=""></a>            "Blue = improved, red = made it worse"</span>
+<span id="cb1-141"><a href=""></a>        )</span>
+<span id="cb1-142"><a href=""></a></span>
+<span id="cb1-143"><a href=""></a>        return fig</span>
+<span id="cb1-144"><a href=""></a></span>
+<span id="cb1-145"><a href=""></a></span>
+<span id="cb1-146"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -689,127 +705,135 @@ sampled point for SGD, and the sampled subset for mini-batch. Makes the
 <span id="cb2-35"><a href=""></a></span>
 <span id="cb2-36"><a href=""></a>TRAIL_LEN = 40</span>
 <span id="cb2-37"><a href=""></a>DIVERGED_LIMIT = 1e4</span>
-<span id="cb2-38"><a href=""></a></span>
-<span id="cb2-39"><a href=""></a>app_ui = ui.page_fluid(</span>
-<span id="cb2-40"><a href=""></a>    ui.layout_columns(</span>
-<span id="cb2-41"><a href=""></a>        ui.card(</span>
-<span id="cb2-42"><a href=""></a>            ui.card_header("Gradient descent: use all 40 points"),</span>
-<span id="cb2-43"><a href=""></a>            ui.input_slider("lr", "Learning rate (η)", min=0.001, max=0.05, value=0.01, step=0.001),</span>
-<span id="cb2-44"><a href=""></a>            ui.input_action_button("step_once", "Take a GD step", class_="btn-primary"),</span>
-<span id="cb2-45"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
-<span id="cb2-46"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
-<span id="cb2-47"><a href=""></a>            ui.hr(),</span>
-<span id="cb2-48"><a href=""></a>            ui.output_text("state_text"),</span>
-<span id="cb2-49"><a href=""></a>        ),</span>
-<span id="cb2-50"><a href=""></a>        ui.card(</span>
-<span id="cb2-51"><a href=""></a>            ui.output_plot("walk_plot")</span>
-<span id="cb2-52"><a href=""></a>        ),</span>
-<span id="cb2-53"><a href=""></a>        col_widths=(4, 8),</span>
-<span id="cb2-54"><a href=""></a>    )</span>
-<span id="cb2-55"><a href=""></a>)</span>
-<span id="cb2-56"><a href=""></a></span>
+<span id="cb2-38"><a href=""></a>POINTS_PER_STEP = len(x)  # every gradient uses all 40 points</span>
+<span id="cb2-39"><a href=""></a></span>
+<span id="cb2-40"><a href=""></a>app_ui = ui.page_fluid(</span>
+<span id="cb2-41"><a href=""></a>    ui.layout_columns(</span>
+<span id="cb2-42"><a href=""></a>        ui.card(</span>
+<span id="cb2-43"><a href=""></a>            ui.card_header("Gradient descent: use all 40 points"),</span>
+<span id="cb2-44"><a href=""></a>            ui.input_slider("lr", "Learning rate (η)", min=0.001, max=0.05, value=0.01, step=0.001),</span>
+<span id="cb2-45"><a href=""></a>            ui.input_action_button("step_once", "Take a GD step", class_="btn-primary"),</span>
+<span id="cb2-46"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
+<span id="cb2-47"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
+<span id="cb2-48"><a href=""></a>            ui.hr(),</span>
+<span id="cb2-49"><a href=""></a>            ui.output_text_verbatim("state_text"),</span>
+<span id="cb2-50"><a href=""></a>        ),</span>
+<span id="cb2-51"><a href=""></a>        ui.card(</span>
+<span id="cb2-52"><a href=""></a>            ui.output_plot("walk_plot")</span>
+<span id="cb2-53"><a href=""></a>        ),</span>
+<span id="cb2-54"><a href=""></a>        col_widths=(4, 8),</span>
+<span id="cb2-55"><a href=""></a>    )</span>
+<span id="cb2-56"><a href=""></a>)</span>
 <span id="cb2-57"><a href=""></a></span>
-<span id="cb2-58"><a href=""></a>def server(input, output, session):</span>
-<span id="cb2-59"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False})</span>
-<span id="cb2-60"><a href=""></a>    history = reactive.Value([])</span>
-<span id="cb2-61"><a href=""></a></span>
-<span id="cb2-62"><a href=""></a>    def do_step():</span>
-<span id="cb2-63"><a href=""></a>        s = state.get()</span>
-<span id="cb2-64"><a href=""></a>        if s["diverged"]:</span>
-<span id="cb2-65"><a href=""></a>            return</span>
-<span id="cb2-66"><a href=""></a></span>
-<span id="cb2-67"><a href=""></a>        dw, db = gradient(s["w"], s["b"])</span>
-<span id="cb2-68"><a href=""></a>        lr = input.lr()</span>
-<span id="cb2-69"><a href=""></a>        w_new = s["w"] - lr * dw</span>
-<span id="cb2-70"><a href=""></a>        b_new = s["b"] - lr * db</span>
-<span id="cb2-71"><a href=""></a>        step = s["step"] + 1</span>
-<span id="cb2-72"><a href=""></a></span>
-<span id="cb2-73"><a href=""></a>        if not (np.isfinite(w_new) and np.isfinite(b_new)) or abs(w_new) &gt; DIVERGED_LIMIT or abs(b_new) &gt; DIVERGED_LIMIT:</span>
-<span id="cb2-74"><a href=""></a>            state.set({**s, "step": step, "diverged": True})</span>
-<span id="cb2-75"><a href=""></a>            return</span>
-<span id="cb2-76"><a href=""></a></span>
-<span id="cb2-77"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
-<span id="cb2-78"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
-<span id="cb2-79"><a href=""></a></span>
-<span id="cb2-80"><a href=""></a>        hist = history.get() + [</span>
-<span id="cb2-81"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
-<span id="cb2-82"><a href=""></a>        ]</span>
-<span id="cb2-83"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
-<span id="cb2-84"><a href=""></a></span>
-<span id="cb2-85"><a href=""></a>        state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "diverged": False})</span>
+<span id="cb2-58"><a href=""></a></span>
+<span id="cb2-59"><a href=""></a>def server(input, output, session):</span>
+<span id="cb2-60"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "points_seen": 0})</span>
+<span id="cb2-61"><a href=""></a>    history = reactive.Value([])</span>
+<span id="cb2-62"><a href=""></a></span>
+<span id="cb2-63"><a href=""></a>    def do_step():</span>
+<span id="cb2-64"><a href=""></a>        s = state.get()</span>
+<span id="cb2-65"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb2-66"><a href=""></a>            return</span>
+<span id="cb2-67"><a href=""></a></span>
+<span id="cb2-68"><a href=""></a>        dw, db = gradient(s["w"], s["b"])</span>
+<span id="cb2-69"><a href=""></a>        lr = input.lr()</span>
+<span id="cb2-70"><a href=""></a>        w_new = s["w"] - lr * dw</span>
+<span id="cb2-71"><a href=""></a>        b_new = s["b"] - lr * db</span>
+<span id="cb2-72"><a href=""></a>        step = s["step"] + 1</span>
+<span id="cb2-73"><a href=""></a>        points_seen = s["points_seen"] + POINTS_PER_STEP</span>
+<span id="cb2-74"><a href=""></a></span>
+<span id="cb2-75"><a href=""></a>        if not (np.isfinite(w_new) and np.isfinite(b_new)) or abs(w_new) &gt; DIVERGED_LIMIT or abs(b_new) &gt; DIVERGED_LIMIT:</span>
+<span id="cb2-76"><a href=""></a>            state.set({**s, "step": step, "diverged": True, "points_seen": points_seen})</span>
+<span id="cb2-77"><a href=""></a>            return</span>
+<span id="cb2-78"><a href=""></a></span>
+<span id="cb2-79"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
+<span id="cb2-80"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
+<span id="cb2-81"><a href=""></a></span>
+<span id="cb2-82"><a href=""></a>        hist = history.get() + [</span>
+<span id="cb2-83"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
+<span id="cb2-84"><a href=""></a>        ]</span>
+<span id="cb2-85"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
 <span id="cb2-86"><a href=""></a></span>
-<span id="cb2-87"><a href=""></a>    @reactive.effect</span>
-<span id="cb2-88"><a href=""></a>    @reactive.event(input.step_once)</span>
-<span id="cb2-89"><a href=""></a>    def _():</span>
-<span id="cb2-90"><a href=""></a>        do_step()</span>
-<span id="cb2-91"><a href=""></a></span>
-<span id="cb2-92"><a href=""></a>    @reactive.effect</span>
-<span id="cb2-93"><a href=""></a>    @reactive.event(input.step_ten)</span>
-<span id="cb2-94"><a href=""></a>    def _():</span>
-<span id="cb2-95"><a href=""></a>        for _ in range(10):</span>
-<span id="cb2-96"><a href=""></a>            do_step()</span>
-<span id="cb2-97"><a href=""></a></span>
-<span id="cb2-98"><a href=""></a>    @reactive.effect</span>
-<span id="cb2-99"><a href=""></a>    @reactive.event(input.reset)</span>
-<span id="cb2-100"><a href=""></a>    def _():</span>
-<span id="cb2-101"><a href=""></a>        history.set([])</span>
-<span id="cb2-102"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False})</span>
-<span id="cb2-103"><a href=""></a></span>
-<span id="cb2-104"><a href=""></a>    @output</span>
-<span id="cb2-105"><a href=""></a>    @render.text</span>
-<span id="cb2-106"><a href=""></a>    def state_text():</span>
-<span id="cb2-107"><a href=""></a>        s = state.get()</span>
-<span id="cb2-108"><a href=""></a>        if s["diverged"]:</span>
-<span id="cb2-109"><a href=""></a>            return f"Step {s['step']}  |  Diverged! η is too large — hit Reset and try a smaller value."</span>
-<span id="cb2-110"><a href=""></a>        return f"Step {s['step']}  |  w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
-<span id="cb2-111"><a href=""></a></span>
-<span id="cb2-112"><a href=""></a>    @output</span>
-<span id="cb2-113"><a href=""></a>    @render.plot</span>
-<span id="cb2-114"><a href=""></a>    def walk_plot():</span>
-<span id="cb2-115"><a href=""></a>        s = state.get()</span>
-<span id="cb2-116"><a href=""></a>        hist = history.get()</span>
-<span id="cb2-117"><a href=""></a></span>
-<span id="cb2-118"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
-<span id="cb2-119"><a href=""></a></span>
-<span id="cb2-120"><a href=""></a>        ax.scatter(</span>
-<span id="cb2-121"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
-<span id="cb2-122"><a href=""></a>            label="Observed data"</span>
-<span id="cb2-123"><a href=""></a>        )</span>
+<span id="cb2-87"><a href=""></a>        state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "diverged": False, "points_seen": points_seen})</span>
+<span id="cb2-88"><a href=""></a></span>
+<span id="cb2-89"><a href=""></a>    @reactive.effect</span>
+<span id="cb2-90"><a href=""></a>    @reactive.event(input.step_once)</span>
+<span id="cb2-91"><a href=""></a>    def _():</span>
+<span id="cb2-92"><a href=""></a>        do_step()</span>
+<span id="cb2-93"><a href=""></a></span>
+<span id="cb2-94"><a href=""></a>    @reactive.effect</span>
+<span id="cb2-95"><a href=""></a>    @reactive.event(input.step_ten)</span>
+<span id="cb2-96"><a href=""></a>    def _():</span>
+<span id="cb2-97"><a href=""></a>        for _ in range(10):</span>
+<span id="cb2-98"><a href=""></a>            do_step()</span>
+<span id="cb2-99"><a href=""></a></span>
+<span id="cb2-100"><a href=""></a>    @reactive.effect</span>
+<span id="cb2-101"><a href=""></a>    @reactive.event(input.reset)</span>
+<span id="cb2-102"><a href=""></a>    def _():</span>
+<span id="cb2-103"><a href=""></a>        history.set([])</span>
+<span id="cb2-104"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "points_seen": 0})</span>
+<span id="cb2-105"><a href=""></a></span>
+<span id="cb2-106"><a href=""></a>    @output</span>
+<span id="cb2-107"><a href=""></a>    @render.text</span>
+<span id="cb2-108"><a href=""></a>    def state_text():</span>
+<span id="cb2-109"><a href=""></a>        s = state.get()</span>
+<span id="cb2-110"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb2-111"><a href=""></a>            return f"Step {s['step']}  |  points touched so far: {s['points_seen']}  |  Diverged! η is too large — hit Reset and try a smaller value."</span>
+<span id="cb2-112"><a href=""></a>        return (</span>
+<span id="cb2-113"><a href=""></a>            f"Step {s['step']}  |  points touched so far: {s['points_seen']}\n\n"</span>
+<span id="cb2-114"><a href=""></a>            f"w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
+<span id="cb2-115"><a href=""></a>        )</span>
+<span id="cb2-116"><a href=""></a></span>
+<span id="cb2-117"><a href=""></a>    @output</span>
+<span id="cb2-118"><a href=""></a>    @render.plot</span>
+<span id="cb2-119"><a href=""></a>    def walk_plot():</span>
+<span id="cb2-120"><a href=""></a>        s = state.get()</span>
+<span id="cb2-121"><a href=""></a>        hist = history.get()</span>
+<span id="cb2-122"><a href=""></a></span>
+<span id="cb2-123"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
 <span id="cb2-124"><a href=""></a></span>
-<span id="cb2-125"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
-<span id="cb2-126"><a href=""></a></span>
-<span id="cb2-127"><a href=""></a>        n = len(hist)</span>
-<span id="cb2-128"><a href=""></a>        for i, h in enumerate(hist):</span>
-<span id="cb2-129"><a href=""></a>            age = n - i</span>
-<span id="cb2-130"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
-<span id="cb2-131"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
-<span id="cb2-132"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
-<span id="cb2-133"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
-<span id="cb2-134"><a href=""></a></span>
-<span id="cb2-135"><a href=""></a>        if not s["diverged"]:</span>
-<span id="cb2-136"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
-<span id="cb2-137"><a href=""></a>            y_pred_now = s["w"] * x + s["b"]</span>
-<span id="cb2-138"><a href=""></a>            ax.vlines(</span>
-<span id="cb2-139"><a href=""></a>                x, np.minimum(y_observed, y_pred_now), np.maximum(y_observed, y_pred_now),</span>
-<span id="cb2-140"><a href=""></a>                color="darkorange", alpha=0.6, linewidth=1,</span>
-<span id="cb2-141"><a href=""></a>                label="Error used this step (all 40 points)"</span>
-<span id="cb2-142"><a href=""></a>            )</span>
-<span id="cb2-143"><a href=""></a>            ax.plot(</span>
-<span id="cb2-144"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
-<span id="cb2-145"><a href=""></a>                label=f"Current (step {s['step']})"</span>
-<span id="cb2-146"><a href=""></a>            )</span>
-<span id="cb2-147"><a href=""></a></span>
-<span id="cb2-148"><a href=""></a>        ax.set_xlim(0, 10)</span>
-<span id="cb2-149"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
-<span id="cb2-150"><a href=""></a>        ax.set_xlabel("x")</span>
-<span id="cb2-151"><a href=""></a>        ax.set_ylabel("y")</span>
-<span id="cb2-152"><a href=""></a>        ax.legend(loc="upper left")</span>
-<span id="cb2-153"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
-<span id="cb2-154"><a href=""></a></span>
-<span id="cb2-155"><a href=""></a>        return fig</span>
-<span id="cb2-156"><a href=""></a></span>
-<span id="cb2-157"><a href=""></a></span>
-<span id="cb2-158"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-125"><a href=""></a>        ax.scatter(</span>
+<span id="cb2-126"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
+<span id="cb2-127"><a href=""></a>            label="Observed data"</span>
+<span id="cb2-128"><a href=""></a>        )</span>
+<span id="cb2-129"><a href=""></a></span>
+<span id="cb2-130"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb2-131"><a href=""></a></span>
+<span id="cb2-132"><a href=""></a>        n = len(hist)</span>
+<span id="cb2-133"><a href=""></a>        for i, h in enumerate(hist):</span>
+<span id="cb2-134"><a href=""></a>            age = n - i</span>
+<span id="cb2-135"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
+<span id="cb2-136"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
+<span id="cb2-137"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
+<span id="cb2-138"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
+<span id="cb2-139"><a href=""></a></span>
+<span id="cb2-140"><a href=""></a>        if not s["diverged"]:</span>
+<span id="cb2-141"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
+<span id="cb2-142"><a href=""></a>            y_pred_now = s["w"] * x + s["b"]</span>
+<span id="cb2-143"><a href=""></a>            ax.vlines(</span>
+<span id="cb2-144"><a href=""></a>                x, np.minimum(y_observed, y_pred_now), np.maximum(y_observed, y_pred_now),</span>
+<span id="cb2-145"><a href=""></a>                color="darkorange", alpha=0.6, linewidth=1,</span>
+<span id="cb2-146"><a href=""></a>                label="Error used this step (all 40 points)"</span>
+<span id="cb2-147"><a href=""></a>            )</span>
+<span id="cb2-148"><a href=""></a>            ax.plot(</span>
+<span id="cb2-149"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb2-150"><a href=""></a>                label=f"Current (step {s['step']})"</span>
+<span id="cb2-151"><a href=""></a>            )</span>
+<span id="cb2-152"><a href=""></a></span>
+<span id="cb2-153"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb2-154"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb2-155"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb2-156"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb2-157"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb2-158"><a href=""></a>        ax.set_title(</span>
+<span id="cb2-159"><a href=""></a>            f"Step {s['step']}  |  {s['points_seen']} point-evaluations so far\n"</span>
+<span id="cb2-160"><a href=""></a>            "Blue = improved, red = made it worse"</span>
+<span id="cb2-161"><a href=""></a>        )</span>
+<span id="cb2-162"><a href=""></a></span>
+<span id="cb2-163"><a href=""></a>        return fig</span>
+<span id="cb2-164"><a href=""></a></span>
+<span id="cb2-165"><a href=""></a></span>
+<span id="cb2-166"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="thats-a-very-different-walk" class="slide level2">
 <h2>That’s a very different walk</h2>
@@ -917,148 +941,408 @@ sampled point for SGD, and the sampled subset for mini-batch. Makes the
 <span id="cb3-30"><a href=""></a></span>
 <span id="cb3-31"><a href=""></a>TRAIL_LEN = 40</span>
 <span id="cb3-32"><a href=""></a>DIVERGED_LIMIT = 1e4</span>
-<span id="cb3-33"><a href=""></a></span>
-<span id="cb3-34"><a href=""></a>app_ui = ui.page_fluid(</span>
-<span id="cb3-35"><a href=""></a>    ui.layout_columns(</span>
-<span id="cb3-36"><a href=""></a>        ui.card(</span>
-<span id="cb3-37"><a href=""></a>            ui.card_header("SGD: one random point per step"),</span>
-<span id="cb3-38"><a href=""></a>            ui.input_slider("lr", "Learning rate (η)", min=0.001, max=0.02, value=0.01, step=0.001),</span>
-<span id="cb3-39"><a href=""></a>            ui.input_action_button("step_once", "Take an SGD step", class_="btn-primary"),</span>
-<span id="cb3-40"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
-<span id="cb3-41"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
-<span id="cb3-42"><a href=""></a>            ui.hr(),</span>
-<span id="cb3-43"><a href=""></a>            ui.output_text("state_text"),</span>
-<span id="cb3-44"><a href=""></a>        ),</span>
-<span id="cb3-45"><a href=""></a>        ui.card(</span>
-<span id="cb3-46"><a href=""></a>            ui.output_plot("walk_plot")</span>
-<span id="cb3-47"><a href=""></a>        ),</span>
-<span id="cb3-48"><a href=""></a>        col_widths=(4, 8),</span>
-<span id="cb3-49"><a href=""></a>    )</span>
-<span id="cb3-50"><a href=""></a>)</span>
-<span id="cb3-51"><a href=""></a></span>
+<span id="cb3-33"><a href=""></a>POINTS_PER_STEP = 1  # SGD only touches one point per step</span>
+<span id="cb3-34"><a href=""></a></span>
+<span id="cb3-35"><a href=""></a>app_ui = ui.page_fluid(</span>
+<span id="cb3-36"><a href=""></a>    ui.layout_columns(</span>
+<span id="cb3-37"><a href=""></a>        ui.card(</span>
+<span id="cb3-38"><a href=""></a>            ui.card_header("SGD: one random point per step"),</span>
+<span id="cb3-39"><a href=""></a>            ui.input_slider("lr", "Learning rate (η)", min=0.001, max=0.02, value=0.01, step=0.001),</span>
+<span id="cb3-40"><a href=""></a>            ui.input_action_button("step_once", "Take an SGD step", class_="btn-primary"),</span>
+<span id="cb3-41"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
+<span id="cb3-42"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
+<span id="cb3-43"><a href=""></a>            ui.hr(),</span>
+<span id="cb3-44"><a href=""></a>            ui.output_text_verbatim("state_text"),</span>
+<span id="cb3-45"><a href=""></a>        ),</span>
+<span id="cb3-46"><a href=""></a>        ui.card(</span>
+<span id="cb3-47"><a href=""></a>            ui.output_plot("walk_plot")</span>
+<span id="cb3-48"><a href=""></a>        ),</span>
+<span id="cb3-49"><a href=""></a>        col_widths=(4, 8),</span>
+<span id="cb3-50"><a href=""></a>    )</span>
+<span id="cb3-51"><a href=""></a>)</span>
 <span id="cb3-52"><a href=""></a></span>
-<span id="cb3-53"><a href=""></a>def server(input, output, session):</span>
-<span id="cb3-54"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "idx": None})</span>
-<span id="cb3-55"><a href=""></a>    history = reactive.Value([])</span>
-<span id="cb3-56"><a href=""></a></span>
-<span id="cb3-57"><a href=""></a>    def do_step():</span>
-<span id="cb3-58"><a href=""></a>        s = state.get()</span>
-<span id="cb3-59"><a href=""></a>        if s["diverged"]:</span>
-<span id="cb3-60"><a href=""></a>            return</span>
-<span id="cb3-61"><a href=""></a></span>
-<span id="cb3-62"><a href=""></a>        idx = int(step_rng.integers(0, N))</span>
-<span id="cb3-63"><a href=""></a>        xi, yi = x[idx], y_observed[idx]</span>
-<span id="cb3-64"><a href=""></a>        pred_i = s["w"] * xi + s["b"]</span>
-<span id="cb3-65"><a href=""></a>        error_i = pred_i - yi</span>
-<span id="cb3-66"><a href=""></a>        dw = 2 * error_i * xi</span>
-<span id="cb3-67"><a href=""></a>        db = 2 * error_i</span>
-<span id="cb3-68"><a href=""></a></span>
-<span id="cb3-69"><a href=""></a>        lr = input.lr()</span>
-<span id="cb3-70"><a href=""></a>        w_new = s["w"] - lr * dw</span>
-<span id="cb3-71"><a href=""></a>        b_new = s["b"] - lr * db</span>
-<span id="cb3-72"><a href=""></a>        step = s["step"] + 1</span>
-<span id="cb3-73"><a href=""></a></span>
-<span id="cb3-74"><a href=""></a>        if not (np.isfinite(w_new) and np.isfinite(b_new)) or abs(w_new) &gt; DIVERGED_LIMIT or abs(b_new) &gt; DIVERGED_LIMIT:</span>
-<span id="cb3-75"><a href=""></a>            state.set({**s, "step": step, "diverged": True, "idx": idx})</span>
-<span id="cb3-76"><a href=""></a>            return</span>
-<span id="cb3-77"><a href=""></a></span>
-<span id="cb3-78"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
-<span id="cb3-79"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
-<span id="cb3-80"><a href=""></a></span>
-<span id="cb3-81"><a href=""></a>        hist = history.get() + [</span>
-<span id="cb3-82"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
-<span id="cb3-83"><a href=""></a>        ]</span>
-<span id="cb3-84"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
-<span id="cb3-85"><a href=""></a></span>
-<span id="cb3-86"><a href=""></a>        state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "diverged": False, "idx": idx})</span>
+<span id="cb3-53"><a href=""></a></span>
+<span id="cb3-54"><a href=""></a>def server(input, output, session):</span>
+<span id="cb3-55"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "idx": None, "points_seen": 0})</span>
+<span id="cb3-56"><a href=""></a>    history = reactive.Value([])</span>
+<span id="cb3-57"><a href=""></a></span>
+<span id="cb3-58"><a href=""></a>    def do_step():</span>
+<span id="cb3-59"><a href=""></a>        s = state.get()</span>
+<span id="cb3-60"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb3-61"><a href=""></a>            return</span>
+<span id="cb3-62"><a href=""></a></span>
+<span id="cb3-63"><a href=""></a>        idx = int(step_rng.integers(0, N))</span>
+<span id="cb3-64"><a href=""></a>        xi, yi = x[idx], y_observed[idx]</span>
+<span id="cb3-65"><a href=""></a>        pred_i = s["w"] * xi + s["b"]</span>
+<span id="cb3-66"><a href=""></a>        error_i = pred_i - yi</span>
+<span id="cb3-67"><a href=""></a>        dw = 2 * error_i * xi</span>
+<span id="cb3-68"><a href=""></a>        db = 2 * error_i</span>
+<span id="cb3-69"><a href=""></a></span>
+<span id="cb3-70"><a href=""></a>        lr = input.lr()</span>
+<span id="cb3-71"><a href=""></a>        w_new = s["w"] - lr * dw</span>
+<span id="cb3-72"><a href=""></a>        b_new = s["b"] - lr * db</span>
+<span id="cb3-73"><a href=""></a>        step = s["step"] + 1</span>
+<span id="cb3-74"><a href=""></a>        points_seen = s["points_seen"] + POINTS_PER_STEP</span>
+<span id="cb3-75"><a href=""></a></span>
+<span id="cb3-76"><a href=""></a>        if not (np.isfinite(w_new) and np.isfinite(b_new)) or abs(w_new) &gt; DIVERGED_LIMIT or abs(b_new) &gt; DIVERGED_LIMIT:</span>
+<span id="cb3-77"><a href=""></a>            state.set({**s, "step": step, "diverged": True, "idx": idx, "points_seen": points_seen})</span>
+<span id="cb3-78"><a href=""></a>            return</span>
+<span id="cb3-79"><a href=""></a></span>
+<span id="cb3-80"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
+<span id="cb3-81"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
+<span id="cb3-82"><a href=""></a></span>
+<span id="cb3-83"><a href=""></a>        hist = history.get() + [</span>
+<span id="cb3-84"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
+<span id="cb3-85"><a href=""></a>        ]</span>
+<span id="cb3-86"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
 <span id="cb3-87"><a href=""></a></span>
-<span id="cb3-88"><a href=""></a>    @reactive.effect</span>
-<span id="cb3-89"><a href=""></a>    @reactive.event(input.step_once)</span>
-<span id="cb3-90"><a href=""></a>    def _():</span>
-<span id="cb3-91"><a href=""></a>        do_step()</span>
-<span id="cb3-92"><a href=""></a></span>
-<span id="cb3-93"><a href=""></a>    @reactive.effect</span>
-<span id="cb3-94"><a href=""></a>    @reactive.event(input.step_ten)</span>
-<span id="cb3-95"><a href=""></a>    def _():</span>
-<span id="cb3-96"><a href=""></a>        for _ in range(10):</span>
-<span id="cb3-97"><a href=""></a>            do_step()</span>
-<span id="cb3-98"><a href=""></a></span>
-<span id="cb3-99"><a href=""></a>    @reactive.effect</span>
-<span id="cb3-100"><a href=""></a>    @reactive.event(input.reset)</span>
-<span id="cb3-101"><a href=""></a>    def _():</span>
-<span id="cb3-102"><a href=""></a>        history.set([])</span>
-<span id="cb3-103"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "idx": None})</span>
-<span id="cb3-104"><a href=""></a></span>
-<span id="cb3-105"><a href=""></a>    @output</span>
-<span id="cb3-106"><a href=""></a>    @render.text</span>
-<span id="cb3-107"><a href=""></a>    def state_text():</span>
-<span id="cb3-108"><a href=""></a>        s = state.get()</span>
-<span id="cb3-109"><a href=""></a>        if s["diverged"]:</span>
-<span id="cb3-110"><a href=""></a>            return f"Step {s['step']}  |  Diverged! η is too large — hit Reset and try a smaller value."</span>
-<span id="cb3-111"><a href=""></a>        return f"Step {s['step']}  |  w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
-<span id="cb3-112"><a href=""></a></span>
-<span id="cb3-113"><a href=""></a>    @output</span>
-<span id="cb3-114"><a href=""></a>    @render.plot</span>
-<span id="cb3-115"><a href=""></a>    def walk_plot():</span>
-<span id="cb3-116"><a href=""></a>        s = state.get()</span>
-<span id="cb3-117"><a href=""></a>        hist = history.get()</span>
-<span id="cb3-118"><a href=""></a></span>
-<span id="cb3-119"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
-<span id="cb3-120"><a href=""></a></span>
-<span id="cb3-121"><a href=""></a>        ax.scatter(</span>
-<span id="cb3-122"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
-<span id="cb3-123"><a href=""></a>            label="Observed data"</span>
-<span id="cb3-124"><a href=""></a>        )</span>
+<span id="cb3-88"><a href=""></a>        state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "diverged": False, "idx": idx, "points_seen": points_seen})</span>
+<span id="cb3-89"><a href=""></a></span>
+<span id="cb3-90"><a href=""></a>    @reactive.effect</span>
+<span id="cb3-91"><a href=""></a>    @reactive.event(input.step_once)</span>
+<span id="cb3-92"><a href=""></a>    def _():</span>
+<span id="cb3-93"><a href=""></a>        do_step()</span>
+<span id="cb3-94"><a href=""></a></span>
+<span id="cb3-95"><a href=""></a>    @reactive.effect</span>
+<span id="cb3-96"><a href=""></a>    @reactive.event(input.step_ten)</span>
+<span id="cb3-97"><a href=""></a>    def _():</span>
+<span id="cb3-98"><a href=""></a>        for _ in range(10):</span>
+<span id="cb3-99"><a href=""></a>            do_step()</span>
+<span id="cb3-100"><a href=""></a></span>
+<span id="cb3-101"><a href=""></a>    @reactive.effect</span>
+<span id="cb3-102"><a href=""></a>    @reactive.event(input.reset)</span>
+<span id="cb3-103"><a href=""></a>    def _():</span>
+<span id="cb3-104"><a href=""></a>        history.set([])</span>
+<span id="cb3-105"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "idx": None, "points_seen": 0})</span>
+<span id="cb3-106"><a href=""></a></span>
+<span id="cb3-107"><a href=""></a>    @output</span>
+<span id="cb3-108"><a href=""></a>    @render.text</span>
+<span id="cb3-109"><a href=""></a>    def state_text():</span>
+<span id="cb3-110"><a href=""></a>        s = state.get()</span>
+<span id="cb3-111"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb3-112"><a href=""></a>            return f"Step {s['step']}  |  points touched so far: {s['points_seen']}  |  Diverged! η is too large — hit Reset and try a smaller value."</span>
+<span id="cb3-113"><a href=""></a>        return (</span>
+<span id="cb3-114"><a href=""></a>            f"Step {s['step']}  |  points touched so far: {s['points_seen']}\n\n"</span>
+<span id="cb3-115"><a href=""></a>            f"w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
+<span id="cb3-116"><a href=""></a>        )</span>
+<span id="cb3-117"><a href=""></a></span>
+<span id="cb3-118"><a href=""></a>    @output</span>
+<span id="cb3-119"><a href=""></a>    @render.plot</span>
+<span id="cb3-120"><a href=""></a>    def walk_plot():</span>
+<span id="cb3-121"><a href=""></a>        s = state.get()</span>
+<span id="cb3-122"><a href=""></a>        hist = history.get()</span>
+<span id="cb3-123"><a href=""></a></span>
+<span id="cb3-124"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
 <span id="cb3-125"><a href=""></a></span>
-<span id="cb3-126"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
-<span id="cb3-127"><a href=""></a></span>
-<span id="cb3-128"><a href=""></a>        n = len(hist)</span>
-<span id="cb3-129"><a href=""></a>        for i, h in enumerate(hist):</span>
-<span id="cb3-130"><a href=""></a>            age = n - i</span>
-<span id="cb3-131"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
-<span id="cb3-132"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
-<span id="cb3-133"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
-<span id="cb3-134"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
-<span id="cb3-135"><a href=""></a></span>
-<span id="cb3-136"><a href=""></a>        if not s["diverged"]:</span>
-<span id="cb3-137"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
-<span id="cb3-138"><a href=""></a></span>
-<span id="cb3-139"><a href=""></a>            if s["idx"] is not None:</span>
-<span id="cb3-140"><a href=""></a>                idx = s["idx"]</span>
-<span id="cb3-141"><a href=""></a>                xi, yi = x[idx], y_observed[idx]</span>
-<span id="cb3-142"><a href=""></a>                pred_i = s["w"] * xi + s["b"]</span>
-<span id="cb3-143"><a href=""></a>                ax.plot(</span>
-<span id="cb3-144"><a href=""></a>                    [xi, xi], [yi, pred_i], color="darkorange", linewidth=2, zorder=4,</span>
-<span id="cb3-145"><a href=""></a>                    label="Point used this step"</span>
-<span id="cb3-146"><a href=""></a>                )</span>
-<span id="cb3-147"><a href=""></a>                ax.scatter(</span>
-<span id="cb3-148"><a href=""></a>                    [xi], [yi], s=110, facecolors="none", edgecolors="darkorange",</span>
-<span id="cb3-149"><a href=""></a>                    linewidths=2, zorder=5</span>
-<span id="cb3-150"><a href=""></a>                )</span>
-<span id="cb3-151"><a href=""></a></span>
-<span id="cb3-152"><a href=""></a>            ax.plot(</span>
-<span id="cb3-153"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
-<span id="cb3-154"><a href=""></a>                label=f"Current (step {s['step']})"</span>
-<span id="cb3-155"><a href=""></a>            )</span>
+<span id="cb3-126"><a href=""></a>        ax.scatter(</span>
+<span id="cb3-127"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
+<span id="cb3-128"><a href=""></a>            label="Observed data"</span>
+<span id="cb3-129"><a href=""></a>        )</span>
+<span id="cb3-130"><a href=""></a></span>
+<span id="cb3-131"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb3-132"><a href=""></a></span>
+<span id="cb3-133"><a href=""></a>        n = len(hist)</span>
+<span id="cb3-134"><a href=""></a>        for i, h in enumerate(hist):</span>
+<span id="cb3-135"><a href=""></a>            age = n - i</span>
+<span id="cb3-136"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
+<span id="cb3-137"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
+<span id="cb3-138"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
+<span id="cb3-139"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
+<span id="cb3-140"><a href=""></a></span>
+<span id="cb3-141"><a href=""></a>        if not s["diverged"]:</span>
+<span id="cb3-142"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
+<span id="cb3-143"><a href=""></a></span>
+<span id="cb3-144"><a href=""></a>            if s["idx"] is not None:</span>
+<span id="cb3-145"><a href=""></a>                idx = s["idx"]</span>
+<span id="cb3-146"><a href=""></a>                xi, yi = x[idx], y_observed[idx]</span>
+<span id="cb3-147"><a href=""></a>                pred_i = s["w"] * xi + s["b"]</span>
+<span id="cb3-148"><a href=""></a>                ax.plot(</span>
+<span id="cb3-149"><a href=""></a>                    [xi, xi], [yi, pred_i], color="darkorange", linewidth=2, zorder=4,</span>
+<span id="cb3-150"><a href=""></a>                    label="Point used this step"</span>
+<span id="cb3-151"><a href=""></a>                )</span>
+<span id="cb3-152"><a href=""></a>                ax.scatter(</span>
+<span id="cb3-153"><a href=""></a>                    [xi], [yi], s=110, facecolors="none", edgecolors="darkorange",</span>
+<span id="cb3-154"><a href=""></a>                    linewidths=2, zorder=5</span>
+<span id="cb3-155"><a href=""></a>                )</span>
 <span id="cb3-156"><a href=""></a></span>
-<span id="cb3-157"><a href=""></a>        ax.set_xlim(0, 10)</span>
-<span id="cb3-158"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
-<span id="cb3-159"><a href=""></a>        ax.set_xlabel("x")</span>
-<span id="cb3-160"><a href=""></a>        ax.set_ylabel("y")</span>
-<span id="cb3-161"><a href=""></a>        ax.legend(loc="upper left")</span>
-<span id="cb3-162"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
-<span id="cb3-163"><a href=""></a></span>
-<span id="cb3-164"><a href=""></a>        return fig</span>
-<span id="cb3-165"><a href=""></a></span>
-<span id="cb3-166"><a href=""></a></span>
-<span id="cb3-167"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-157"><a href=""></a>            ax.plot(</span>
+<span id="cb3-158"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb3-159"><a href=""></a>                label=f"Current (step {s['step']})"</span>
+<span id="cb3-160"><a href=""></a>            )</span>
+<span id="cb3-161"><a href=""></a></span>
+<span id="cb3-162"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb3-163"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb3-164"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb3-165"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb3-166"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb3-167"><a href=""></a>        ax.set_title(</span>
+<span id="cb3-168"><a href=""></a>            f"Step {s['step']}  |  {s['points_seen']} point-evaluations so far\n"</span>
+<span id="cb3-169"><a href=""></a>            "Blue = improved, red = made it worse"</span>
+<span id="cb3-170"><a href=""></a>        )</span>
+<span id="cb3-171"><a href=""></a></span>
+<span id="cb3-172"><a href=""></a>        return fig</span>
+<span id="cb3-173"><a href=""></a></span>
+<span id="cb3-174"><a href=""></a></span>
+<span id="cb3-175"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="thats-a-different-kind-of-walk-entirely" class="slide level2">
 <h2>That’s a different kind of walk entirely</h2>
 <ul>
 <li>No two steps move the same way — direction depends entirely on which point got picked</li>
 <li>It’s noisy, but it isn’t going nowhere — over enough steps, it still drifts toward the loss’s minimum, on average</li>
-<li>The catch: we traded “confident but expensive” for “cheap but jumpy” — that trade is exactly what mini-batch will let us tune</li>
+</ul>
+<p><br></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>The catch: we traded “confident but expensive” for “cheap but jumpy”.</p>
+<p>What’s the middle ground?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="mini-batch-gradient-descent" class="slide level2 section">
+<h2>Mini-batch Gradient Descent</h2>
+<p>Train using a handful of points at a time</p>
+</section>
+<section id="the-idea" class="slide level2">
+<h2>The idea</h2>
+<ul>
+<li>SGD went too far one way — one point is barely a hint of the true gradient</li>
+<li>Full gradient descent went too far the other way — every step costs the whole dataset</li>
+<li><strong>Mini-batch gradient descent</strong>: average the gradient over a small, randomly-sampled <strong>batch</strong> of <code>k</code> points — pick anywhere on the dial between the two</li>
+</ul>
+</section>
+<section id="the-mini-batch-update" class="slide level2">
+<h2>The mini-batch update</h2>
+<ul>
+<li>Same gradient formula as full-batch, just averaged over <code>k</code> points instead of all <code>N</code>: <span class="math display">\frac{\partial L}{\partial w} \approx \frac{2}{k}\sum_{i \,\in\, \text{batch}} (\hat y_i - y_i)\,x_i \qquad\qquad \frac{\partial L}{\partial b} \approx \frac{2}{k}\sum_{i \,\in\, \text{batch}} (\hat y_i - y_i)</span></li>
+</ul>
+<p><br></p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>SGD and Gradient Descent are <strong>special cases</strong> of mini-batch Gradient Descent</p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>k = 1</code> _is SGD</li>
+<li><code>k = N</code> <em>is</em> full-batch gradient descent</li>
+</ul>
+</section>
+<section id="the-mini-batch-gradient-descent-algorithm" class="slide level2">
+<h2>The mini-batch gradient descent algorithm</h2>
+<ol type="1">
+<li>Sample a random batch of <code>k</code> points (without replacement) from the dataset</li>
+<li>Compute the gradient of the loss using just that batch</li>
+<li>Update <span class="math inline">(w, b)</span> the same way as before: step opposite the gradient, scaled by <code>η</code></li>
+<li>Repeat — a different random batch every time</li>
+</ol>
+</section>
+<section id="mini-batch-live" class="slide level2">
+<h2>Mini-batch, live</h2>
+<ul>
+<li>Same 40 points, same noise as every widget today — now you pick the batch size <code>k</code> yourself</li>
+<li>The <code>k</code> sampled points light up in orange each step — watch the walk get smoother as <code>k</code> grows</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href=""></a>#| '!! shinylive warning !!': |</span>
+<span id="cb4-2"><a href=""></a>#|   shinylive does not work in self-contained HTML documents.</span>
+<span id="cb4-3"><a href=""></a>#|   Please set `embed-resources: false` in your metadata.</span>
+<span id="cb4-4"><a href=""></a>#| standalone: true</span>
+<span id="cb4-5"><a href=""></a>#| components: [viewer]</span>
+<span id="cb4-6"><a href=""></a>#| viewerHeight: 650</span>
+<span id="cb4-7"><a href=""></a></span>
+<span id="cb4-8"><a href=""></a>from shiny import App, render, ui, reactive</span>
+<span id="cb4-9"><a href=""></a>import matplotlib.pyplot as plt</span>
+<span id="cb4-10"><a href=""></a>import numpy as np</span>
+<span id="cb4-11"><a href=""></a></span>
+<span id="cb4-12"><a href=""></a>rng = np.random.default_rng(7)</span>
+<span id="cb4-13"><a href=""></a></span>
+<span id="cb4-14"><a href=""></a>true_slope = 2.5</span>
+<span id="cb4-15"><a href=""></a>true_intercept = -15.0</span>
+<span id="cb4-16"><a href=""></a>error_sd = 9.0</span>
+<span id="cb4-17"><a href=""></a></span>
+<span id="cb4-18"><a href=""></a>x = rng.uniform(0, 10, 40)</span>
+<span id="cb4-19"><a href=""></a>epsilon = rng.normal(0, error_sd, 40)</span>
+<span id="cb4-20"><a href=""></a>y_observed = true_slope * x + true_intercept + epsilon</span>
+<span id="cb4-21"><a href=""></a>N = len(x)</span>
+<span id="cb4-22"><a href=""></a></span>
+<span id="cb4-23"><a href=""></a>step_rng = np.random.default_rng(11)  # separate stream: which batch gets sampled each step</span>
+<span id="cb4-24"><a href=""></a></span>
+<span id="cb4-25"><a href=""></a></span>
+<span id="cb4-26"><a href=""></a>def mse(w, b):</span>
+<span id="cb4-27"><a href=""></a>    y_pred = w * x + b</span>
+<span id="cb4-28"><a href=""></a>    return float(np.mean((y_observed - y_pred) ** 2))</span>
+<span id="cb4-29"><a href=""></a></span>
+<span id="cb4-30"><a href=""></a></span>
+<span id="cb4-31"><a href=""></a>TRAIL_LEN = 40</span>
+<span id="cb4-32"><a href=""></a>DIVERGED_LIMIT = 1e4</span>
+<span id="cb4-33"><a href=""></a></span>
+<span id="cb4-34"><a href=""></a>app_ui = ui.page_fluid(</span>
+<span id="cb4-35"><a href=""></a>    ui.layout_columns(</span>
+<span id="cb4-36"><a href=""></a>        ui.card(</span>
+<span id="cb4-37"><a href=""></a>            ui.card_header("Mini-batch: k random points per step"),</span>
+<span id="cb4-38"><a href=""></a>            ui.input_slider("batch_size", "Batch size (k)", min=1, max=40, value=8, step=1),</span>
+<span id="cb4-39"><a href=""></a>            ui.input_slider("lr", "Learning rate (η)", min=0.001, max=0.02, value=0.01, step=0.001),</span>
+<span id="cb4-40"><a href=""></a>            ui.input_action_button("step_once", "Take a mini-batch step", class_="btn-primary"),</span>
+<span id="cb4-41"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
+<span id="cb4-42"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
+<span id="cb4-43"><a href=""></a>            ui.hr(),</span>
+<span id="cb4-44"><a href=""></a>            ui.output_text_verbatim("state_text"),</span>
+<span id="cb4-45"><a href=""></a>        ),</span>
+<span id="cb4-46"><a href=""></a>        ui.card(</span>
+<span id="cb4-47"><a href=""></a>            ui.output_plot("walk_plot")</span>
+<span id="cb4-48"><a href=""></a>        ),</span>
+<span id="cb4-49"><a href=""></a>        col_widths=(4, 8),</span>
+<span id="cb4-50"><a href=""></a>    )</span>
+<span id="cb4-51"><a href=""></a>)</span>
+<span id="cb4-52"><a href=""></a></span>
+<span id="cb4-53"><a href=""></a></span>
+<span id="cb4-54"><a href=""></a>def server(input, output, session):</span>
+<span id="cb4-55"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "idx": None, "points_seen": 0})</span>
+<span id="cb4-56"><a href=""></a>    history = reactive.Value([])</span>
+<span id="cb4-57"><a href=""></a></span>
+<span id="cb4-58"><a href=""></a>    def do_step():</span>
+<span id="cb4-59"><a href=""></a>        s = state.get()</span>
+<span id="cb4-60"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb4-61"><a href=""></a>            return</span>
+<span id="cb4-62"><a href=""></a></span>
+<span id="cb4-63"><a href=""></a>        k = input.batch_size()</span>
+<span id="cb4-64"><a href=""></a>        idx = step_rng.choice(N, size=k, replace=False)</span>
+<span id="cb4-65"><a href=""></a>        xb, yb = x[idx], y_observed[idx]</span>
+<span id="cb4-66"><a href=""></a>        pred_b = s["w"] * xb + s["b"]</span>
+<span id="cb4-67"><a href=""></a>        error_b = pred_b - yb</span>
+<span id="cb4-68"><a href=""></a>        dw = 2 * np.mean(error_b * xb)</span>
+<span id="cb4-69"><a href=""></a>        db = 2 * np.mean(error_b)</span>
+<span id="cb4-70"><a href=""></a></span>
+<span id="cb4-71"><a href=""></a>        lr = input.lr()</span>
+<span id="cb4-72"><a href=""></a>        w_new = s["w"] - lr * dw</span>
+<span id="cb4-73"><a href=""></a>        b_new = s["b"] - lr * db</span>
+<span id="cb4-74"><a href=""></a>        step = s["step"] + 1</span>
+<span id="cb4-75"><a href=""></a>        points_seen = s["points_seen"] + k</span>
+<span id="cb4-76"><a href=""></a></span>
+<span id="cb4-77"><a href=""></a>        if not (np.isfinite(w_new) and np.isfinite(b_new)) or abs(w_new) &gt; DIVERGED_LIMIT or abs(b_new) &gt; DIVERGED_LIMIT:</span>
+<span id="cb4-78"><a href=""></a>            state.set({**s, "step": step, "diverged": True, "idx": idx, "points_seen": points_seen})</span>
+<span id="cb4-79"><a href=""></a>            return</span>
+<span id="cb4-80"><a href=""></a></span>
+<span id="cb4-81"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
+<span id="cb4-82"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
+<span id="cb4-83"><a href=""></a></span>
+<span id="cb4-84"><a href=""></a>        hist = history.get() + [</span>
+<span id="cb4-85"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
+<span id="cb4-86"><a href=""></a>        ]</span>
+<span id="cb4-87"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
+<span id="cb4-88"><a href=""></a></span>
+<span id="cb4-89"><a href=""></a>        state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step, "diverged": False, "idx": idx, "points_seen": points_seen})</span>
+<span id="cb4-90"><a href=""></a></span>
+<span id="cb4-91"><a href=""></a>    @reactive.effect</span>
+<span id="cb4-92"><a href=""></a>    @reactive.event(input.step_once)</span>
+<span id="cb4-93"><a href=""></a>    def _():</span>
+<span id="cb4-94"><a href=""></a>        do_step()</span>
+<span id="cb4-95"><a href=""></a></span>
+<span id="cb4-96"><a href=""></a>    @reactive.effect</span>
+<span id="cb4-97"><a href=""></a>    @reactive.event(input.step_ten)</span>
+<span id="cb4-98"><a href=""></a>    def _():</span>
+<span id="cb4-99"><a href=""></a>        for _ in range(10):</span>
+<span id="cb4-100"><a href=""></a>            do_step()</span>
+<span id="cb4-101"><a href=""></a></span>
+<span id="cb4-102"><a href=""></a>    @reactive.effect</span>
+<span id="cb4-103"><a href=""></a>    @reactive.event(input.reset)</span>
+<span id="cb4-104"><a href=""></a>    def _():</span>
+<span id="cb4-105"><a href=""></a>        history.set([])</span>
+<span id="cb4-106"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0, "diverged": False, "idx": None, "points_seen": 0})</span>
+<span id="cb4-107"><a href=""></a></span>
+<span id="cb4-108"><a href=""></a>    @output</span>
+<span id="cb4-109"><a href=""></a>    @render.text</span>
+<span id="cb4-110"><a href=""></a>    def state_text():</span>
+<span id="cb4-111"><a href=""></a>        s = state.get()</span>
+<span id="cb4-112"><a href=""></a>        if s["diverged"]:</span>
+<span id="cb4-113"><a href=""></a>            return f"Step {s['step']}  |  points touched so far: {s['points_seen']}  |  Diverged! η is too large — hit Reset and try a smaller value."</span>
+<span id="cb4-114"><a href=""></a>        return (</span>
+<span id="cb4-115"><a href=""></a>            f"Step {s['step']}  |  points touched so far: {s['points_seen']}\n"</span>
+<span id="cb4-116"><a href=""></a>            f"w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
+<span id="cb4-117"><a href=""></a>        )</span>
+<span id="cb4-118"><a href=""></a></span>
+<span id="cb4-119"><a href=""></a>    @output</span>
+<span id="cb4-120"><a href=""></a>    @render.plot</span>
+<span id="cb4-121"><a href=""></a>    def walk_plot():</span>
+<span id="cb4-122"><a href=""></a>        s = state.get()</span>
+<span id="cb4-123"><a href=""></a>        hist = history.get()</span>
+<span id="cb4-124"><a href=""></a></span>
+<span id="cb4-125"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
+<span id="cb4-126"><a href=""></a></span>
+<span id="cb4-127"><a href=""></a>        ax.scatter(</span>
+<span id="cb4-128"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
+<span id="cb4-129"><a href=""></a>            label="Observed data"</span>
+<span id="cb4-130"><a href=""></a>        )</span>
+<span id="cb4-131"><a href=""></a></span>
+<span id="cb4-132"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb4-133"><a href=""></a></span>
+<span id="cb4-134"><a href=""></a>        n = len(hist)</span>
+<span id="cb4-135"><a href=""></a>        for i, h in enumerate(hist):</span>
+<span id="cb4-136"><a href=""></a>            age = n - i</span>
+<span id="cb4-137"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
+<span id="cb4-138"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
+<span id="cb4-139"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
+<span id="cb4-140"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
+<span id="cb4-141"><a href=""></a></span>
+<span id="cb4-142"><a href=""></a>        if not s["diverged"]:</span>
+<span id="cb4-143"><a href=""></a>            y_current = s["w"] * x_line + s["b"]</span>
+<span id="cb4-144"><a href=""></a></span>
+<span id="cb4-145"><a href=""></a>            if s["idx"] is not None:</span>
+<span id="cb4-146"><a href=""></a>                idx = s["idx"]</span>
+<span id="cb4-147"><a href=""></a>                xb, yb = x[idx], y_observed[idx]</span>
+<span id="cb4-148"><a href=""></a>                pred_b = s["w"] * xb + s["b"]</span>
+<span id="cb4-149"><a href=""></a>                ax.vlines(</span>
+<span id="cb4-150"><a href=""></a>                    xb, np.minimum(yb, pred_b), np.maximum(yb, pred_b),</span>
+<span id="cb4-151"><a href=""></a>                    color="darkorange", alpha=0.7, linewidth=2, zorder=4,</span>
+<span id="cb4-152"><a href=""></a>                    label="Batch used this step"</span>
+<span id="cb4-153"><a href=""></a>                )</span>
+<span id="cb4-154"><a href=""></a>                ax.scatter(</span>
+<span id="cb4-155"><a href=""></a>                    xb, yb, s=110, facecolors="none", edgecolors="darkorange",</span>
+<span id="cb4-156"><a href=""></a>                    linewidths=2, zorder=5</span>
+<span id="cb4-157"><a href=""></a>                )</span>
+<span id="cb4-158"><a href=""></a></span>
+<span id="cb4-159"><a href=""></a>            ax.plot(</span>
+<span id="cb4-160"><a href=""></a>                x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb4-161"><a href=""></a>                label=f"Current (step {s['step']})"</span>
+<span id="cb4-162"><a href=""></a>            )</span>
+<span id="cb4-163"><a href=""></a></span>
+<span id="cb4-164"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb4-165"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb4-166"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb4-167"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb4-168"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb4-169"><a href=""></a>        ax.set_title(</span>
+<span id="cb4-170"><a href=""></a>            f"Step {s['step']}  |  {s['points_seen']} point-evaluations so far\n"</span>
+<span id="cb4-171"><a href=""></a>            "Blue = improved, red = made it worse"</span>
+<span id="cb4-172"><a href=""></a>        )</span>
+<span id="cb4-173"><a href=""></a></span>
+<span id="cb4-174"><a href=""></a>        return fig</span>
+<span id="cb4-175"><a href=""></a></span>
+<span id="cb4-176"><a href=""></a></span>
+<span id="cb4-177"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-did-we-learn-by-turning-the-dial" class="slide level2">
+<h2>What did we learn by turning the dial?</h2>
+<ul>
+<li>Small <code>k</code>: cheap steps, lots of them, but a bouncy path — SGD’s territory</li>
+<li>Large <code>k</code>: confident steps, but each one costs more — gradient descent’s territory</li>
+<li>In practice, <code>k</code> gets chosen to balance noise against how much data fits comfortably in memory at once — commonly powers of 2, like 32, 64, 128</li>
+<li>This dial is what real training loops actually use — “SGD” in PyTorch almost always means <em>mini-batch</em> SGD under the hood</li>
 </ul>
 
 </section>
