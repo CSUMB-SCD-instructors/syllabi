@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="03-linear_regression_classification_files/libs/clipboard/clipboard.min.js"></script>
-<script src="03-linear_regression_classification_files/libs/quarto-html/tabby.min.js"></script>
-<script src="03-linear_regression_classification_files/libs/quarto-html/popper.min.js"></script>
-<script src="03-linear_regression_classification_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="03-linear_regression_classification_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="03-linear_regression_classification_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="03-linear_regression_classification_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="03-linear_regression_via_gradient_descent_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03-linear_regression_via_gradient_descent_files/libs/quarto-html/tabby.min.js"></script>
+<script src="03-linear_regression_via_gradient_descent_files/libs/quarto-html/popper.min.js"></script>
+<script src="03-linear_regression_via_gradient_descent_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="03-linear_regression_via_gradient_descent_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03-linear_regression_via_gradient_descent_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="03-linear_regression_via_gradient_descent_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <meta name="shinylive:serviceworker_dir" content=".">
-<script src="03-linear_regression_classification_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="03-linear_regression_classification_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/run-python-blocks.js" type="module"></script>
-<link href="03-linear_regression_classification_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/shinylive.css" rel="stylesheet">
-<link href="03-linear_regression_classification_files/libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
+<script src="03-linear_regression_via_gradient_descent_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="03-linear_regression_via_gradient_descent_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/run-python-blocks.js" type="module"></script>
+<link href="03-linear_regression_via_gradient_descent_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/shinylive.css" rel="stylesheet">
+<link href="03-linear_regression_via_gradient_descent_files/libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sam Ogden">
-  <title>Linear Regression &amp; Linear Classification</title>
+  <title>Linear Regression via Gradient Descent</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="03-linear_regression_classification_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="03-linear_regression_classification_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -103,7 +103,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-linear_regression_classification_files/libs/revealjs/dist/theme/quarto-0d29471adf13b7aaf835684239cbc6da.css">
+  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/theme/quarto-0d29471adf13b7aaf835684239cbc6da.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -120,12 +120,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-  <link href="03-linear_regression_classification_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="03-linear_regression_classification_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -218,8 +218,8 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 22:25" class="quarto-title-block center">
-  <h1 class="title">Linear Regression &amp; Linear Classification</h1>
+<section id="title-slide" data-last-updated="2026-08-30 22:39" class="quarto-title-block center">
+  <h1 class="title">Linear Regression via Gradient Descent</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
 <div class="quarto-title-authors">
@@ -1363,11 +1363,11 @@ plot: computation spent, not just step count.
 </ul></li>
 <li>Notice the difference in how the evaluation budget gets spent</li>
 </ul>
-<div id="cff6252c" class="cell" data-execution_count="1">
+<div id="e1c10443" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-linear_regression_classification_files/figure-revealjs/cell-2-output-1.png" width="901" height="518"></p>
+<p><img data-src="03-linear_regression_via_gradient_descent_files/figure-revealjs/cell-2-output-1.png" width="901" height="518"></p>
 </figure>
 </div>
 </div>
@@ -1400,11 +1400,11 @@ plot: computation spent, not just step count.
 <div class="box center">
 <p>Let’s vary minibatch size with 40 datapoints and a budget of 4000 evaluations</p>
 </div>
-<div id="190308be" class="cell" data-execution_count="2">
+<div id="cee4433e" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-linear_regression_classification_files/figure-revealjs/cell-3-output-1.png" width="901" height="518"></p>
+<p><img data-src="03-linear_regression_via_gradient_descent_files/figure-revealjs/cell-3-output-1.png" width="901" height="518"></p>
 </figure>
 </div>
 </div>
@@ -1442,19 +1442,19 @@ plot: computation spent, not just step count.
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="03-linear_regression_classification_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="03-linear_regression_via_gradient_descent_files/libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

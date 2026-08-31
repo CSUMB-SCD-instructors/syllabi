@@ -14,4 +14,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Introduction | final | [Open](00-introduction.html) | [PDF](pdfs/Introduction.pdf) |
 | Data Manipulation & Preprocessing | final | [Open](01-data_manipulation.html) | [PDF](pdfs/Data-Manipulation-Preprocessing.pdf) |
 | Linear Algebra & Calculus for Deep Learning | beta | [Open](02-linear_algebra_calculus.html) | [PDF](pdfs/Linear-Algebra-Calculus-for-Deep-Learning.pdf) |
-| Linear Regression & Linear Classification | beta | [Open](03-linear_regression_classification.html) | [PDF](pdfs/Linear-Regression-Linear-Classification.pdf) |
+| Linear Regression via Gradient Descent | beta | [Open](03-linear_regression_via_gradient_descent.html) | [PDF](pdfs/Linear-Regression-via-Gradient-Descent.pdf) |
