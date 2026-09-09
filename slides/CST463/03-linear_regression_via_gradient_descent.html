@@ -103,7 +103,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/theme/quarto-0d29471adf13b7aaf835684239cbc6da.css">
+  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/theme/quarto-63a2bbcd1a5f4d5892c99fa645fe4e14.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-30 22:39" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-08-31 09:48" class="quarto-title-block center">
   <h1 class="title">Linear Regression via Gradient Descent</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -253,26 +253,31 @@ one picks up from):
 - Estimators (mean/std) and standardization, and the closing framing that
   a model is itself just an estimator for a whole function.
 
-Separately, and older: students already know linear regression and
-classification (incl. logistic/softmax) from a previous course -- this is
-NOT their first exposure to either model. The job of this lecture is not
-to introduce them, it's to change *how* students think about fitting them.
+Separately, and older: students already know linear regression from a
+previous course -- this is NOT their first exposure to the model. The job
+of this lecture is not to introduce it, it's to change *how* students
+think about fitting it.
+
+Scope note: this deck was originally titled "Linear Regression & Linear
+Classification" and meant to cover both. In practice it grew into a full
+treatment of random search / GD / SGD / mini-batch on regression alone --
+classification got cut rather than rushed. Renamed to
+"Linear Regression via Gradient Descent" to match what's actually here.
+Classification (logistic/softmax, cross-entropy as the same
+loss-plus-gradient machinery) is now open territory for wherever it fits
+next in the schedule, not a section of this file.
 
 Goals for this lecture:
 
-- Reframe both linear regression and classification through the lens of
-  "we are training a model" -- iterative parameter fitting via a loss
-  function and gradient-based updates -- rather than a one-shot solve.
+- Reframe linear regression through the lens of "we are training a model"
+  -- iterative parameter fitting via a loss function and gradient-based
+  updates -- rather than a one-shot solve.
 - Explicitly surface and answer the pushback question students will have:
-  "why don't we just solve it directly?" (normal equation for regression,
-  etc.) Give a real answer: it doesn't scale to large data, there's no
-  closed form once the model stops being linear, and gradient-based
-  fitting is the one mechanism that works for every model later in this
-  course. This lecture is the seed that everything after it grows from.
-- Connect regression's squared-error loss and classification's
-  cross-entropy loss as two instances of the same "loss + gradient"
-  machinery already built in lecture 02 -- same shape of problem, just a
-  different scoring function.
+  "why don't we just solve it directly?" (the normal equation) Give a real
+  answer: it doesn't scale to large data, there's no closed form once the
+  model stops being linear, and gradient-based fitting is the one
+  mechanism that works for every model later in this course. This lecture
+  is the seed that everything after it grows from.
 - Set up the vocabulary (parameters, predictions, loss) that the SGD
   lecture will operationalize into an actual training loop.
 -->
@@ -287,7 +292,7 @@ ones actually written so far):
 ## Stochastic Gradient Descent: use one point {.section}          [drafted]
 ## Mini-batch SGD: a middle ground {.section}                     [drafted]
 ## Comparing the four {.section}                                 [drafted]
-## Linear classification: same idea, different loss {.section}   [not yet]
+## Comparing Mini-batch Sizes {.section}                          [drafted]
 ## Wrap {.section}                                                [not yet]
 
 Constraint for the GD / SGD / mini-batch sections: no explicit Python code
@@ -295,9 +300,6 @@ for the update rule itself -- give the algorithm in prose/pseudocode only,
 so students implement it themselves. The interactive widgets still need
 real code to run, but the point is not to hand students a copy-pasteable
 implementation of the thing they're supposed to build.
-
-Classification section may end up heavier than a single beat, revisited
-once we get there.
 
 Visualization convention across GD / SGD / mini-batch widgets: draw the
 error (residual) lines from each point actually used in that step's
@@ -317,7 +319,6 @@ plot: computation spent, not just step count.
 <li>Reframe fitting a linear model as <strong>training</strong>: iteratively adapting parameters using a loss, not solving for them in one shot</li>
 <li>Explain why we use an iterative approach here even though linear regression has a closed-form solution</li>
 <li>Compare full-batch gradient descent, stochastic gradient descent, and mini-batch gradient descent, and describe the trade-offs between them</li>
-<li>Connect linear classification’s loss to the same “loss + gradient” machinery as linear regression</li>
 </ul>
 </section>
 <section id="the-problem-again" class="slide level2 section">
@@ -1363,7 +1364,7 @@ plot: computation spent, not just step count.
 </ul></li>
 <li>Notice the difference in how the evaluation budget gets spent</li>
 </ul>
-<div id="e1c10443" class="cell" data-execution_count="1">
+<div id="94ed915a" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1400,7 +1401,7 @@ plot: computation spent, not just step count.
 <div class="box center">
 <p>Let’s vary minibatch size with 40 datapoints and a budget of 4000 evaluations</p>
 </div>
-<div id="cee4433e" class="cell" data-execution_count="2">
+<div id="e5234915" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
