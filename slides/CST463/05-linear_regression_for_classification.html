@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-09 09:50" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-09 10:01" class="quarto-title-block center">
   <h1 class="title">Linear Regression for Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -246,8 +246,8 @@ Outline / progress tracker (update the tag as each section gets drafted):
 ## Classification {.section}                                       [drafted]
 ## Why not just reuse linear regression directly? {.section}       [drafted]
 
-## One-hot encoding {.section}                                     [skeleton]
-## A linear model, per class {.section}                            [skeleton]
+## One-hot encoding {.section}                                     [drafted]
+## A "linear" model, per class {.section}                            [drafted]
 ## From scores to probabilities: softmax {.section}                [skeleton]
 ## Measuring how wrong we are: cross-entropy {.section}            [skeleton]
 ## Why not just use MSE here? {.section}                           [skeleton]
@@ -383,7 +383,8 @@ yet, just parking here):
 <section id="the-big-idea-1" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Each category is binary — it is, or it isn’t.</p>
+<p>Each <em>individual</em> category is binary — it is, or it isn’t.</p>
+<p>We just need to find the most likely</p>
 </div>
 </section>
 <section id="lets-just-try-it-anyway" class="slide level2">
@@ -423,16 +424,131 @@ yet, just parking here):
 <section id="the-big-idea-2" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Placeholder: give every category its own slot, and just mark which one is true.</p>
+<p>Give every category its own slot, and just mark which one is true.</p>
 </div>
 </section>
+<section id="our-fruit-one-hot" class="slide level2">
+<h2>Our fruit, one-hot</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>fruit</th>
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>apple</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td>banana</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td>orange</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Compare to the integer coding from a few slides ago — apple, banana, and orange no longer have any numeric relationship to each other at all</p>
+</div>
+</div>
+</div>
+</section>
+<section id="written-out" class="slide level2">
+<h2>Written out</h2>
+<ul>
+<li><span class="math inline">K</span> categories → a vector of length <span class="math inline">K</span>, one slot per category</li>
+<li>Slot <span class="math inline">j</span> is 1 if the example belongs to category <span class="math inline">j</span>, 0 otherwise: <span class="math display">y_j = \begin{cases} 1 &amp; \text{example is class } j \\ 0 &amp; \text{otherwise} \end{cases}</span></li>
+<li>Stack the slots into one label vector <span class="math inline">\mathbf{y} \in \{0,1\}^K</span></li>
+</ul>
+</section>
+<section id="exactly-one-1" class="slide level2">
+<h2>Exactly one 1</h2>
+<ul>
+<li>Every one-hot vector has exactly one 1 — that’s the “hot” one — and the rest are 0</li>
+<li>The <em>position</em> of the 1 carries all the information; nothing else in the vector does</li>
+<li>No leftover magnitude, no leftover order — just “is it this one, or not”</li>
+</ul>
+</section>
 <section id="a-linear-model-per-class" class="slide level2 section">
-<h2>A linear model, per class</h2>
+<h2>A “linear” model, per class</h2>
+<p>Linear scores — for now</p>
 </section>
 <section id="the-big-idea-3" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Placeholder: score every class the same dot-product way as before — just once per class instead of once total.</p>
+<p>Score every class with a dot product — but a score isn’t a prediction yet.</p>
+</div>
+</section>
+<section id="one-score-per-class-recap-from-lecture-04" class="slide level2">
+<h2>One score per class (recap from lecture 04)</h2>
+<ul>
+<li>One shared model, not <span class="math inline">K</span> separate ones — <span class="math inline">\mathbf{W}</span> has one row per class, <span class="math inline">\mathbf{b}</span> one entry per class: <span class="math display">\mathbf{o} = \mathbf{W}\mathbf{x} + \mathbf{b}, \qquad o_j = \mathbf{w_j} \cdot \mathbf{x} + b_j</span></li>
+<li>Same forward pass as multi-output regression from last lecture — the <span class="math inline">K</span> outputs are now “<span class="math inline">K</span> classes” instead of “<span class="math inline">K</span> numbers”</li>
+</ul>
+</section>
+<section id="these-scores-are-called-logits" class="slide level2">
+<h2>These scores are called logits</h2>
+<ul>
+<li><span class="math inline">o_j</span> is a <strong>logit</strong> — the model’s raw, unnormalized opinion about class <span class="math inline">j</span></li>
+<li>Bigger <span class="math inline">o_j</span> means the model favors class <span class="math inline">j</span> more, <em>relative to the others</em></li>
+<li>A logit is <strong>not</strong> a probability: it can be negative, it has no upper bound, and the <span class="math inline">o_j</span>’s don’t sum to anything meaningful</li>
+</ul>
+</section>
+<section id="worked-example-our-fruit" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Suppose, for one particular (weight, color) example, our current model computes:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">−0.3</td>
+<td style="text-align: center;">2.1</td>
+<td style="text-align: center;">0.6</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Banana has the highest logit, so <em>right now</em> the model favors banana</li>
+<li>But “2.1” doesn’t mean “84% sure” — or anything else in particular</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>We need to turn these logits into something that behaves like a probability — that’s next</p>
+</div>
+</div>
 </div>
 </section>
 <section id="from-scores-to-probabilities-softmax" class="slide level2 section">
