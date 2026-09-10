@@ -3,7 +3,7 @@ layout: default
 course_code: CST334
 course_name: Introduction to Operating Systems
 title: CST334 - Introduction to Operating Systems
-last_updated: '2026-09-07'
+last_updated: '2026-09-10'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -14,12 +14,11 @@ The goal of this course is to introduce you to the design and usage of operating
 By the end of it, the goal is for you to be able to think about how to design core parts of the operating system, as well as be able to explain why design decisions were made along the way, and know how to navigate and develop software in a systems-oriented manner.
 
 - **Grading:**
-To pass this course you must (1) earn an overall grade of at least 60%, **and** (2) score at least 40% in **each** of the three assignment groups.
-
-They are [Programming Assignments](#programming-assignments) (40%), [Exams](#exams) (40%), and [Participation](#participation) (20%).
-
 Final grades are calculated by rounding to the nearest whole number and converted to letter grades using the standard range.
-*Details can be found in [grading](#grading).*
+To pass this course you must (1) earn an overall grade of at least 60%, **and** (2) score at least 40% in **each** of the three assignment groups.They are
+  - [Programming Assignments](#programming-assignments) (40%)
+  - [Exams](#exams) (40%)
+  - [Participation](#participation) (20%)*Details can be found in [grading](#grading).*
 
 - **Late work:**
 Late submissions are accepted only for Programming assignments and Labs, and have a 10% deduction per calendar day late.
