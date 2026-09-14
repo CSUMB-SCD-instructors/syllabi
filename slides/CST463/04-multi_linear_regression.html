@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-14 08:50" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-14 09:05" class="quarto-title-block center">
   <h1 class="title">Ensembles and Multi-Output Regression</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -510,13 +510,13 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </ul></li>
 </ul>
 <p><br></p>
-<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Warning</strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
 <p><strong>Boosting</strong> trains each model <em>sequentially</em> — every new model is trained to correct the error of the previous one. That’s not independent training at all, and it’s still unambiguously called an ensemble method. Real terminology has blurry edges like this.</p>
@@ -586,10 +586,35 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </section>
 <section id="contrast-with-the-ensemble" class="slide level2">
 <h2>Contrast with the ensemble</h2>
+<div class="columns">
+<div class="column">
+<p><strong>The ensemble (last section)</strong></p>
 <ul>
-<li>Like the ensemble, these models are effectively independent</li>
-<li><strong><em>Unlike</em></strong> the ensemble, they have the same underlying structure as each other</li>
+<li><span class="math inline">A</span>, <span class="math inline">B</span>, <span class="math inline">C</span> — three predictors, same target: house price</li>
+<li>No shared parameters between them</li>
+<li>Combined into <strong>one</strong> final price</li>
 </ul>
+</div><div class="column">
+<p><strong>Here</strong></p>
+<ul>
+<li>High-model, low-model — two predictors, <em>different</em> targets</li>
+<li>No shared parameters between them, either</li>
+<li>Kept as <strong>two</strong> separate answers, never combined</li>
+</ul>
+</div></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Same skeleton both times — independent models, no shared parameters. The only thing that changed is what question each model is answering.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="two-models-is-two-of-everything" class="slide level2">
 <h2>Two models is two of everything</h2>
