@@ -13,4 +13,5 @@ Printable slide handouts for CST463.
 | Data Manipulation & Preprocessing | [Open](Data-Manipulation-Preprocessing.pdf) |
 | Linear Algebra & Calculus for Deep Learning | [Open](Linear-Algebra-Calculus-for-Deep-Learning.pdf) |
 | Linear Regression via Gradient Descent | [Open](Linear-Regression-via-Gradient-Descent.pdf) |
+| Ensembles and Multi-Output Regression | [Open](Ensembles-and-Multi-Output-Regression.pdf) |
 | Linear Regression for Classification | [Open](Linear-Regression-for-Classification.pdf) |
