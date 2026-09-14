@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-09 10:01" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-13 17:28" class="quarto-title-block center">
   <h1 class="title">Linear Regression for Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -211,6 +211,11 @@ Goals for this lecture:
   note that with K=2 classes, softmax collapses to the sigmoid/logistic
   form some students may have already seen -- a cheap payoff, not a
   restructure of the flow.
+  Deliberately NOT introducing temperature here (scaling logits before
+  softmax) -- it's a sampling/calibration knob that matters once we're
+  talking generation (softmax over a vocabulary), not for this first
+  pass at classification. Revisit when the course reaches text
+  generation.
 - Introduce cross-entropy as the loss that actually rewards putting
   probability mass on the correct class, and explain why MSE on
   softmax output is a worse choice (saturated gradients, doesn't match
@@ -248,7 +253,7 @@ Outline / progress tracker (update the tag as each section gets drafted):
 
 ## One-hot encoding {.section}                                     [drafted]
 ## A "linear" model, per class {.section}                            [drafted]
-## From scores to probabilities: softmax {.section}                [skeleton]
+## From scores to probabilities: softmax {.section}                [drafted]
 ## Measuring how wrong we are: cross-entropy {.section}            [skeleton]
 ## Why not just use MSE here? {.section}                           [skeleton]
 ## Differentiating the loss {.section}                             [skeleton]
@@ -516,7 +521,7 @@ yet, just parking here):
 </section>
 <section id="worked-example-our-fruit" class="slide level2">
 <h2>Worked example: our fruit</h2>
-<p>Suppose, for one particular (weight, color) example, our current model computes:</p>
+<p>Suppose, for one particular (weight, color) example, evaluating <span class="math inline">o_j = \mathbf{w_j} \cdot \mathbf{x} + b_j</span> for each class gives:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -535,33 +540,136 @@ yet, just parking here):
 </table>
 <ul>
 <li>Banana has the highest logit, so <em>right now</em> the model favors banana</li>
-<li>But “2.1” doesn’t mean “84% sure” — or anything else in particular</li>
 </ul>
-<div class="callout callout-tip callout-titled callout-style-default">
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>We need to turn these logits into something that behaves like a probability — that’s next</p>
+<p><strong>So the answer is just “banana,” done?</strong> That’s not actually what we do — why not?</p>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="from-scores-to-probabilities-softmax" class="slide level2 section">
-<h2>From scores to probabilities: softmax</h2>
+<section id="softmax" class="slide level2 section">
+<h2>Softmax</h2>
+<p>From scores to probabilities</p>
 </section>
 <section id="the-big-idea-4" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Placeholder: turn raw scores into something that behaves like a probability, without changing which class wins.</p>
+<p>We make each prediction <em>act</em> like a probability – without changing which class wins.</p>
 </div>
 </section>
-<section id="measuring-how-wrong-we-are-cross-entropy" class="slide level2 section">
-<h2>Measuring how wrong we are: cross-entropy</h2>
+<section id="the-softmax-function" class="slide level2">
+<h2>The softmax function</h2>
+<p><span class="math display">\hat y_j = \text{softmax}(\mathbf{o})_j = \frac{e^{o_j}}{\sum_{k=1}^K e^{o_k}}</span></p>
+<ul>
+<li>Takes in all <span class="math inline">K</span> logits at once, returns one probability per class</li>
+<li><span class="math inline">\hat{\mathbf{y}}</span> is now our model’s actual prediction — a full probability distribution over the classes</li>
+</ul>
+</section>
+<section id="breakdown-numerator-and-denominator" class="slide level2">
+<h2>Breakdown: numerator and denominator</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Numerator</strong></p>
+<p><span class="math display">e^{o_j}</span></p>
+<ul>
+<li>Exponentiate <em>this</em> class’s logit</li>
+<li>Always positive</li>
+<li>Same ranking as <span class="math inline">o_j</span></li>
+</ul>
+</div><div class="column">
+<p><strong>Denominator</strong></p>
+<p><span class="math display">\sum_{k=1}^K e^{o_k}</span></p>
+<ul>
+<li>The <em>same kind of term</em></li>
+<li>Summed over every class</li>
+<li>Includes <span class="math inline">j</span> itself</li>
+</ul>
+</div></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Divide one by the other: squeezes every class’s share into <span class="math inline">[0,1]</span>, and all <span class="math inline">K</span> shares add up to exactly 1</p>
+</div>
+</div>
+</div>
+</section>
+<section id="so-what-does-this-actually-do" class="slide level2">
+<h2>So what does this actually do?</h2>
+<ul>
+<li>It’s not just squashing into <span class="math inline">[0,1]</span> — exponentiating also <strong>magnifies</strong> the gaps between logits</li>
+<li>Our banana/orange logits differed by only <span class="math inline">1.5</span>; their probabilities differ by a factor of <span class="math inline">e^{1.5} \approx 4.5</span></li>
+<li>A modest lead in logits turns into a much larger lead in confidence</li>
+</ul>
+</section>
+<section id="worked-example-our-fruit-1" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Recall our logits: apple <span class="math inline">=-0.3</span>, banana <span class="math inline">=2.1</span>, orange <span class="math inline">=0.6</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">e^{o_j}</span></td>
+<td style="text-align: center;">0.74</td>
+<td style="text-align: center;">8.17</td>
+<td style="text-align: center;">1.82</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\hat y_j</span></td>
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">0.76</td>
+<td style="text-align: center;">0.17</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Same winner as before (banana) — softmax never changes who wins</li>
+<li>But now we also know <em>how confident</em>: about 76%, not just “highest”</li>
+</ul>
+</section>
+<section id="the-special-case-two-classes" class="slide level2">
+<h2>The special case: two classes</h2>
+<ul>
+<li>With only <span class="math inline">K=2</span> classes, softmax simplifies to: <span class="math display">\hat y_1 = \frac{1}{1 + e^{-(o_1 - o_2)}}</span></li>
+<li>That’s the <strong>sigmoid</strong> function, applied to the <em>difference</em> between the two logits</li>
+<li>This special case has its own name — <strong>logistic regression</strong> — softmax is its generalization to more than two classes</li>
+</ul>
+</section>
+<section id="what-softmax-buys-us" class="slide level2">
+<h2>What softmax buys us</h2>
+<ul>
+<li><strong>A real probability distribution</strong>: non-negative, sums to 1, ranks classes the same way the logits did</li>
+<li><strong>A smooth function</strong>: softmax is differentiable, unlike <code>argmax</code>
+<ul>
+<li>That matters a lot! To train with gradient descent, we need a loss we can actually take a gradient of</li>
+</ul></li>
+</ul>
+</section>
+<section id="cross-entropy" class="slide level2 section">
+<h2>Cross Entropy</h2>
+<p>Loss function for multi-classification</p>
 </section>
 <section id="the-big-idea-5" class="slide level2">
 <h2>The Big Idea</h2>
