@@ -32,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/theme/quarto-63a2bbcd1a5f4d5892c99fa645fe4e14.css">
+  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/theme/quarto-0ff94f9d5b87291cbd6749f12884ca21.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-13 17:28" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-13 21:29" class="quarto-title-block center">
   <h1 class="title">Linear Regression for Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -254,9 +254,11 @@ Outline / progress tracker (update the tag as each section gets drafted):
 ## One-hot encoding {.section}                                     [drafted]
 ## A "linear" model, per class {.section}                            [drafted]
 ## From scores to probabilities: softmax {.section}                [drafted]
-## Measuring how wrong we are: cross-entropy {.section}            [skeleton]
-## Why not just use MSE here? {.section}                           [skeleton]
-## Differentiating the loss {.section}                             [skeleton]
+## Measuring how wrong we are: cross-entropy {.section}            [drafted]
+  (folds in "why not MSE" as its own problem-statement slide, plus a
+  closing MSE-vs-cross-entropy comparison slide -- not a separate
+  {.section} anymore, since that's exactly where students would ask it)
+## Differentiating the loss {.section}                             [drafted]
 ## Putting it together: training a classifier {.section}           [skeleton]
 ## Wrap {.section}                                                 [skeleton]
 
@@ -314,6 +316,13 @@ yet, just parking here):
 <div class="big-question">
 <p>Predicting <em>which</em>, not <em>how much</em></p>
 </div>
+</section>
+<section id="todays-shape" class="slide level2">
+<h2>Today’s shape</h2>
+<ul>
+<li>Give the model an output that actually looks like the answer — a category, not a number</li>
+<li>Pick a loss that fits that kind of output, and train it exactly the way we always do</li>
+</ul>
 </section>
 <section id="what-we-have-vs.-whats-different" class="slide level2">
 <h2>What we have vs.&nbsp;what’s different</h2>
@@ -671,34 +680,224 @@ yet, just parking here):
 <h2>Cross Entropy</h2>
 <p>Loss function for multi-classification</p>
 </section>
+<section id="why-not-just-reuse-mse" class="slide level2">
+<h2>Why not just reuse MSE?</h2>
+<p><br> <br></p>
+<div class="box center">
+<p>MSE only knows “off by how much”; it can’t tell <em>unsure</em> apart from <em>confidently wrong</em></p>
+<p><br></p>
+<p>Being <em>confidently</em> wrong should cost a lot more than being unsure</p>
+</div>
+</section>
 <section id="the-big-idea-5" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Placeholder: penalize the model for how little probability it gave the correct answer.</p>
+<p>Penalize the model by how little probability it gave the correct answer.</p>
 </div>
 </section>
-<section id="why-not-just-use-mse-here" class="slide level2 section">
-<h2>Why not just use MSE here?</h2>
+<section id="cross-entropy-loss" class="slide level2">
+<h2>Cross-entropy loss</h2>
+<p><span class="math display">L(\mathbf{y}, \hat{\mathbf{y}}) = -\sum_{j=1}^K y_j \log \hat y_j</span></p>
+<ul>
+<li><span class="math inline">\mathbf{y}</span>: the one-hot true label</li>
+<li><span class="math inline">\hat{\mathbf{y}}</span>: the softmax output — our predicted probabilities</li>
+<li>One number, same as MSE was — small if we’re right, big if we’re wrong</li>
+</ul>
 </section>
-<section id="the-big-idea-6" class="slide level2">
-<h2>The Big Idea</h2>
-<div class="big-idea">
-<p>Placeholder: the loss should punish confident wrongness harder than MSE does.</p>
+<section id="key-idea-only-one-term-survives" class="slide level2">
+<h2>Key Idea: only one term survives</h2>
+<ul>
+<li><span class="math inline">y_j</span> is 0 for every class except the true one, call it <span class="math inline">t</span></li>
+<li>Every term in the sum vanishes except <span class="math inline">j = t</span></li>
+<li>The whole sum collapses to just: <span class="math display">L = -\log \hat y_t</span></li>
+<li>Cross-entropy only ever looks at the probability the model gave the <em>correct</em> class</li>
+</ul>
+</section>
+<section id="breakdown-why-the-negative-log" class="slide level2">
+<h2>Breakdown: why the negative log?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\hat y_t</span> (true class probability)</th>
+<th style="text-align: center;"><span class="math inline">-\log \hat y_t</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.99</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.76</td>
+<td style="text-align: center;">0.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">2.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">4.61</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Confident <em>and</em> correct (<span class="math inline">\hat y_t</span> near 1) → loss near 0</li>
+<li>Confident <em>and</em> wrong (<span class="math inline">\hat y_t</span> near 0) → loss blows up</li>
+<li>Being unsure costs a little; being confidently wrong costs a lot</li>
+</ul>
+</section>
+<section id="log-loss-visualized" class="slide level2">
+<h2>Log-loss, visualized</h2>
+<p>One classification act — one example, one true class — costs <span class="math inline">-\log \hat y_t</span>:</p>
+<div id="c6a67312" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-2-output-1.png" width="850" height="469"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The curve is steep near 0, flat near 1 — the same asymmetry as the table, just visible now</li>
+<li>The five orange points are exactly the five rows from the table</li>
+</ul>
+</section>
+<section id="worked-example-our-fruit-2" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Recall our softmax output: apple <span class="math inline">=0.07</span>, banana <span class="math inline">=0.76</span>, orange <span class="math inline">=0.17</span> — and the true label is banana</p>
+<ul>
+<li><span class="math display">L = -\log(0.76) \approx 0.27</span></li>
+<li>Had the model instead favored apple, with only <span class="math inline">0.07</span> on banana: <span class="math display">L = -\log(0.07) \approx 2.66</span></li>
+<li>Same “wrong or right” call either way — cross-entropy is what tells them apart</li>
+</ul>
+</section>
+<section id="mse-vs.-cross-entropy" class="slide level2">
+<h2>MSE vs.&nbsp;cross-entropy</h2>
+<div id="0d8ba7f0" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-3-output-1.png" width="855" height="469"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>MSE tops out at 1 no matter how wrong we are — confidently wrong barely costs more than unsure</li>
+<li>Cross-entropy keeps climbing — punishment grows with how wrong we are</li>
+<li>MSE also cares about the probability leftover on the <em>wrong</em> classes — cross-entropy doesn’t (only the true-class term survives)</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>There’s a second problem, too — MSE’s gradient here is much flatter, so training would crawl. More on that next.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="differentiating-the-loss" class="slide level2 section">
 <h2>Differentiating the loss</h2>
+<p>Surprisingly easy calculus</p>
 </section>
-<section id="the-big-idea-7" class="slide level2">
+<section id="the-big-idea-6" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Placeholder: this scary-looking loss has a gradient just as simple as linear regression’s.</p>
+<p>This scary-looking loss has a gradient just as simple as linear regression’s.</p>
 </div>
+</section>
+<section id="rewrite-the-loss-and-softmax-first" class="slide level2">
+<h2>Rewrite the loss and softmax first</h2>
+<p>Recall <span class="math inline">L = -\log (\hat y_t)</span>, where <span class="math inline">\hat y_t = \dfrac{e^{o_t}}{\sum_k e^{o_k}}</span> — substituting one into the other <strong>fuses log-loss and softmax into a single expression</strong>, before we differentiate anything:</p>
+<p><span class="math display">-\log\frac{e^{o_t}}{\sum_{k=1}^K e^{o_k}} \;=\; -\log(e^{o_t}) + \log\sum_{k=1}^K e^{o_k} \;=\; -o_t + \log\sum_{k=1}^K e^{o_k}</span></p>
+<ul>
+<li>Step 1: <span class="math inline">\log(a/b) = \log a - \log b</span></li>
+<li>Step 2: <span class="math inline">\log(e^{o_t}) = o_t</span> — true because <span class="math inline">\log</span> here means the <strong>natural log</strong> (<span class="math inline">\ln</span>), not <span class="math inline">\log_{10}</span></li>
+<li>Still just algebra — no derivative yet. We’re rewriting <span class="math inline">L</span> into a form that’s easy to differentiate next</li>
+</ul>
+</section>
+<section id="take-the-derivative" class="slide level2">
+<h2>Take the derivative</h2>
+<ul>
+<li>Differentiate term by term with respect to <span class="math inline">o_j</span>: <span class="math display">\frac{\partial L}{\partial o_j} = -y_j + \frac{e^{o_j}}{\sum_{k=1}^K e^{o_k}}</span></li>
+<li>The <span class="math inline">-o_t</span> term only depends on <span class="math inline">o_j</span> when <span class="math inline">j = t</span> — its derivative is <span class="math inline">-1</span> then, <span class="math inline">0</span> otherwise, which is exactly <span class="math inline">-y_j</span></li>
+<li>The second term is just softmax again, <span class="math inline">\hat y_j</span> leaving us with: <span class="math display">\frac{\partial L}{\partial o_j} = \hat y_j - y_j</span></li>
+</ul>
+</section>
+<section id="breakdown-the-same-shape-as-before" class="slide level2">
+<h2>Breakdown: the same shape as before</h2>
+<ul>
+<li>Lecture 03’s regression gradient: <span class="math inline">\dfrac{\partial L}{\partial w} = (\hat y_i - y_i)\,x_i</span> — “prediction minus truth, times input”</li>
+<li>Same shape here, just once per class: <span class="math display">\frac{\partial L}{\partial \mathbf{w_j}} = (\hat y_j - y_j)\,\mathbf{x}, \qquad \frac{\partial L}{\partial b_j} = \hat y_j - y_j</span></li>
+</ul>
+<p><br></p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>All that softmax and log-loss machinery, and the gradient still just says “how wrong were we”</p>
+</div>
+</div>
+</div>
+</section>
+<section id="worked-example-our-fruit-3" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Recall <span class="math inline">\hat{(\mathbf{y})} = [0.07,\ 0.76,\ 0.17]</span> (apple, banana, orange), true label banana:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\hat y_j</span></td>
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">0.76</td>
+<td style="text-align: center;">0.17</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">y_j</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\hat y_j - y_j</span></td>
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">−0.24</td>
+<td style="text-align: center;">0.17</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Banana’s gradient is negative — push its logit <em>up</em></li>
+<li>Apple’s and orange’s are positive — push them <em>down</em>, gently</li>
+</ul>
 </section>
 <section id="putting-it-together-training-a-classifier" class="slide level2 section">
 <h2>Putting it together: training a classifier</h2>
 </section>
-<section id="the-big-idea-8" class="slide level2">
+<section id="the-big-idea-7" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>Placeholder: nothing about the training loop changed — only the loss and what “prediction” means.</p>
@@ -706,6 +905,42 @@ yet, just parking here):
 </section>
 <section id="wrap" class="slide level2 section">
 <h2>Wrap</h2>
+</section>
+<section id="the-recipe" class="slide level2">
+<h2>The recipe</h2>
+<table class="caption-top">
+<tbody>
+<tr class="odd">
+<td><strong>Task</strong></td>
+<td>classify each example into one of <span class="math inline">K</span> categories</td>
+</tr>
+<tr class="even">
+<td><strong>Example</strong></td>
+<td>apple / banana / orange, from weight + color</td>
+</tr>
+<tr class="odd">
+<td><strong>Model output</strong></td>
+<td>logits → softmax → a probability vector</td>
+</tr>
+<tr class="even">
+<td><strong>Loss</strong></td>
+<td>cross-entropy</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>This recipe — categorical output, softmax, cross-entropy — is the template for classification problems in general, not just this one</p>
+</div>
+</div>
+</div>
 
 </section>
     </div>
