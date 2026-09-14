@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-13 21:29" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-13 23:20" class="quarto-title-block center">
   <h1 class="title">Linear Regression for Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -259,8 +259,9 @@ Outline / progress tracker (update the tag as each section gets drafted):
   closing MSE-vs-cross-entropy comparison slide -- not a separate
   {.section} anymore, since that's exactly where students would ask it)
 ## Differentiating the loss {.section}                             [drafted]
-## Putting it together: training a classifier {.section}           [skeleton]
-## Wrap {.section}                                                 [skeleton]
+## Putting it together: training a classifier {.section}           [drafted]
+## Summary {.section}                                               [drafted]
+  (renamed from "Wrap")
 
 "skeleton" = the {.section} divider and its "The Big Idea" slide exist
 with a one-line placeholder idea, so the shape of the whole lecture is
@@ -331,7 +332,7 @@ yet, just parking here):
 <p><strong>What we already have</strong></p>
 <ul>
 <li>A dataset, a model, a loss</li>
-<li>A way to train it — all from last lecture</li>
+<li>A way to train it — all covered previously</li>
 <li>All of it assumed the answer is a single number</li>
 </ul>
 </div><div class="column">
@@ -398,7 +399,6 @@ yet, just parking here):
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>Each <em>individual</em> category is binary — it is, or it isn’t.</p>
-<p>We just need to find the most likely</p>
 </div>
 </section>
 <section id="lets-just-try-it-anyway" class="slide level2">
@@ -513,11 +513,11 @@ yet, just parking here):
 <p>Score every class with a dot product — but a score isn’t a prediction yet.</p>
 </div>
 </section>
-<section id="one-score-per-class-recap-from-lecture-04" class="slide level2">
-<h2>One score per class (recap from lecture 04)</h2>
+<section id="one-score-per-class-recap" class="slide level2">
+<h2>One score per class (recap)</h2>
 <ul>
 <li>One shared model, not <span class="math inline">K</span> separate ones — <span class="math inline">\mathbf{W}</span> has one row per class, <span class="math inline">\mathbf{b}</span> one entry per class: <span class="math display">\mathbf{o} = \mathbf{W}\mathbf{x} + \mathbf{b}, \qquad o_j = \mathbf{w_j} \cdot \mathbf{x} + b_j</span></li>
-<li>Same forward pass as multi-output regression from last lecture — the <span class="math inline">K</span> outputs are now “<span class="math inline">K</span> classes” instead of “<span class="math inline">K</span> numbers”</li>
+<li>Same forward pass as multi-output regression, covered previously — the <span class="math inline">K</span> outputs are now “<span class="math inline">K</span> classes” instead of “<span class="math inline">K</span> numbers”</li>
 </ul>
 </section>
 <section id="these-scores-are-called-logits" class="slide level2">
@@ -677,7 +677,7 @@ yet, just parking here):
 </ul>
 </section>
 <section id="cross-entropy" class="slide level2 section">
-<h2>Cross Entropy</h2>
+<h2>Cross entropy</h2>
 <p>Loss function for multi-classification</p>
 </section>
 <section id="why-not-just-reuse-mse" class="slide level2">
@@ -704,8 +704,8 @@ yet, just parking here):
 <li>One number, same as MSE was — small if we’re right, big if we’re wrong</li>
 </ul>
 </section>
-<section id="key-idea-only-one-term-survives" class="slide level2">
-<h2>Key Idea: only one term survives</h2>
+<section id="breakdown-only-one-term-survives" class="slide level2">
+<h2>Breakdown: only one term survives</h2>
 <ul>
 <li><span class="math inline">y_j</span> is 0 for every class except the true one, call it <span class="math inline">t</span></li>
 <li>Every term in the sum vanishes except <span class="math inline">j = t</span></li>
@@ -754,7 +754,7 @@ yet, just parking here):
 <section id="log-loss-visualized" class="slide level2">
 <h2>Log-loss, visualized</h2>
 <p>One classification act — one example, one true class — costs <span class="math inline">-\log \hat y_t</span>:</p>
-<div id="c6a67312" class="cell" data-execution_count="1">
+<div id="c08b717e" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -779,7 +779,7 @@ yet, just parking here):
 </section>
 <section id="mse-vs.-cross-entropy" class="slide level2">
 <h2>MSE vs.&nbsp;cross-entropy</h2>
-<div id="0d8ba7f0" class="cell" data-execution_count="2">
+<div id="d5c2f1ea" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -838,7 +838,7 @@ yet, just parking here):
 <section id="breakdown-the-same-shape-as-before" class="slide level2">
 <h2>Breakdown: the same shape as before</h2>
 <ul>
-<li>Lecture 03’s regression gradient: <span class="math inline">\dfrac{\partial L}{\partial w} = (\hat y_i - y_i)\,x_i</span> — “prediction minus truth, times input”</li>
+<li>Regression’s gradient, covered previously: <span class="math inline">\dfrac{\partial L}{\partial w} = (\hat y_i - y_i)\,x_i</span> — “prediction minus truth, times input”</li>
 <li>Same shape here, just once per class: <span class="math display">\frac{\partial L}{\partial \mathbf{w_j}} = (\hat y_j - y_j)\,\mathbf{x}, \qquad \frac{\partial L}{\partial b_j} = \hat y_j - y_j</span></li>
 </ul>
 <p><br></p>
@@ -858,7 +858,7 @@ yet, just parking here):
 </section>
 <section id="worked-example-our-fruit-3" class="slide level2">
 <h2>Worked example: our fruit</h2>
-<p>Recall <span class="math inline">\hat{(\mathbf{y})} = [0.07,\ 0.76,\ 0.17]</span> (apple, banana, orange), true label banana:</p>
+<p>Recall <span class="math inline">\hat{\mathbf{y}} = [0.07,\ 0.76,\ 0.17]</span> (apple, banana, orange), true label banana:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -896,15 +896,53 @@ yet, just parking here):
 </section>
 <section id="putting-it-together-training-a-classifier" class="slide level2 section">
 <h2>Putting it together: training a classifier</h2>
+<p>Same loop, new loss</p>
 </section>
 <section id="the-big-idea-7" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Placeholder: nothing about the training loop changed — only the loss and what “prediction” means.</p>
+<p>Nothing about the training loop changes — only the loss, and what “prediction” means.</p>
 </div>
 </section>
-<section id="wrap" class="slide level2 section">
-<h2>Wrap</h2>
+<section id="the-loop-unchanged" class="slide level2">
+<h2>The loop, unchanged</h2>
+<ol type="1">
+<li>Sample a mini-batch of examples</li>
+<li>Compute the loss’s gradient from that batch</li>
+<li>Step <span class="math inline">(\mathbf{W}, \mathbf{b})</span> opposite the gradient, scaled by <span class="math inline">\eta</span></li>
+<li>Repeat</li>
+</ol>
+<p>This is <em>exactly</em> the mini-batch SGD algorithm covered previously — nothing about it is new</p>
+</section>
+<section id="what-changed-what-didnt" class="slide level2">
+<h2>What changed / what didn’t</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Same as before</strong></p>
+<ul>
+<li>The training loop itself — sample, gradient, step, repeat</li>
+<li>The learning rate <span class="math inline">\eta</span></li>
+<li><span class="math inline">(\mathbf{W}, \mathbf{b})</span> as the trainable parameters</li>
+</ul>
+</div><div class="column">
+<p><strong>New this lecture</strong></p>
+<ul>
+<li>Prediction: a probability vector, via softmax</li>
+<li>Loss: cross-entropy, not MSE</li>
+<li>Gradient: <span class="math inline">\hat y_j - y_j</span> — same shape as before, just <span class="math inline">\hat y</span> is now <em>computed</em> differently (via softmax, not a plain dot product)</li>
+</ul>
+</div></div>
+</section>
+<section id="no-new-algorithm" class="slide level2">
+<h2>No new algorithm</h2>
+<p><br> <br></p>
+<div class="box center">
+<p>We just use gradient descent again.</p>
+<p>Classification isn’t a new way to train a model — it’s the same training loop as always, with a new loss bolted on.</p>
+</div>
+</section>
+<section id="summary" class="slide level2 section">
+<h2>Summary</h2>
 </section>
 <section id="the-recipe" class="slide level2">
 <h2>The recipe</h2>
