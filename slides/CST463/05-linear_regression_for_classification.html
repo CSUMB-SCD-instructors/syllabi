@@ -32,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/theme/quarto-0ff94f9d5b87291cbd6749f12884ca21.css">
+  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/theme/quarto-437400cd99a5500e8a843730567bf40c.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-13 23:20" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-15 22:21" class="quarto-title-block center">
   <h1 class="title">Linear Regression for Classification</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -242,6 +242,25 @@ slides. Pattern per concept:
 Also recurring feedback: slides have been too dense. Cap bullets per
 slide harder than lecture 03 did -- if a slide needs a table AND several
 bullets AND a callout, it's two slides.
+
+Tightening pass (this revision): target is ~70 min lecture, followed by a
+lab where students walk one example through a full forward pass (logits ->
+softmax -> cross-entropy) and backward pass (the gradient) BY HAND. Original
+draft ran long (~54 slides) mostly because "Putting it together: training a
+classifier" was re-deriving lecture 04's closing beat almost verbatim
+("SGD is the exact same," "nothing about the training loop changes") --
+that section is now cut down to just its Big Idea + the "what
+changed/what didn't" columns slide, since that's the only genuinely new
+synthesis point. Also cut: the "A linear model, per class" section's
+separate Big Idea (it's pure recap of lecture 04, not a new problem, so
+per this deck's own rule it shouldn't get one); the worked-example
+gradient-arithmetic slide in "Differentiating the loss" (that arithmetic
+is now the lab's job, not the lecture's -- lecture keeps the derived
+formula + sign intuition only); the "MSE vs. cross-entropy" plot slide
+(also fixes a dangling promise -- it forward-referenced an MSE-gradient
+discussion that the deck never actually delivered). Several thin
+recap-only slides were merged pairwise (one-hot's "written out" +
+"exactly one 1"; the two "why not reuse regression" problem slides).
 -->
 <!--
 Outline / progress tracker (update the tag as each section gets drafted):
@@ -317,13 +336,6 @@ yet, just parking here):
 <div class="big-question">
 <p>Predicting <em>which</em>, not <em>how much</em></p>
 </div>
-</section>
-<section id="todays-shape" class="slide level2">
-<h2>Today’s shape</h2>
-<ul>
-<li>Give the model an output that actually looks like the answer — a category, not a number</li>
-<li>Pick a loss that fits that kind of output, and train it exactly the way we always do</li>
-</ul>
 </section>
 <section id="what-we-have-vs.-whats-different" class="slide level2">
 <h2>What we have vs.&nbsp;what’s different</h2>
@@ -409,20 +421,11 @@ yet, just parking here):
 <li>Predict a class by rounding <span class="math inline">\hat y</span> to the nearest code</li>
 </ul>
 </section>
-<section id="problem-1-we-invented-an-ordering" class="slide level2">
-<h2>Problem 1: we invented an ordering</h2>
+<section id="two-problems-with-this" class="slide level2">
+<h2>Two problems with this</h2>
 <ul>
-<li>This encoding says banana (1) sits <em>between</em> apple (0) and orange (2)</li>
-<li>It says orange <em>minus</em> apple equals two <em>whole</em> bananas</li>
-<li>Relabel the fruits in a different order and the model’s behavior changes</li>
-</ul>
-</section>
-<section id="problem-2-the-output-doesnt-match-the-question" class="slide level2">
-<h2>Problem 2: the output doesn’t match the question</h2>
-<ul>
-<li><span class="math inline">\hat y</span> can be anything — <code>-1.3</code>, <code>4.7</code>, whatever the line gives</li>
-<li>Rounding to the nearest code is a patch, not a fix</li>
-<li>A <code>1.99</code> and a <code>1.01</code> both round to “banana,” but they don’t feel equally confident</li>
+<li><strong>We invented an ordering</strong> — this encoding says banana (1) sits <em>between</em> apple (0) and orange (2); relabel the fruits differently and the model’s behavior changes</li>
+<li><strong>The output doesn’t match the question</strong> — <span class="math inline">\hat y</span> can be anything (<code>-1.3</code>, <code>4.7</code>, …); rounding to the nearest code is a patch, not a fix, and a <code>1.99</code> vs.&nbsp;a <code>1.01</code> both round to “banana” without feeling equally confident</li>
 </ul>
 </section>
 <section id="what-we-actually-need" class="slide level2">
@@ -492,41 +495,33 @@ yet, just parking here):
 <ul>
 <li><span class="math inline">K</span> categories → a vector of length <span class="math inline">K</span>, one slot per category</li>
 <li>Slot <span class="math inline">j</span> is 1 if the example belongs to category <span class="math inline">j</span>, 0 otherwise: <span class="math display">y_j = \begin{cases} 1 &amp; \text{example is class } j \\ 0 &amp; \text{otherwise} \end{cases}</span></li>
-<li>Stack the slots into one label vector <span class="math inline">\mathbf{y} \in \{0,1\}^K</span></li>
-</ul>
-</section>
-<section id="exactly-one-1" class="slide level2">
-<h2>Exactly one 1</h2>
-<ul>
-<li>Every one-hot vector has exactly one 1 — that’s the “hot” one — and the rest are 0</li>
-<li>The <em>position</em> of the 1 carries all the information; nothing else in the vector does</li>
-<li>No leftover magnitude, no leftover order — just “is it this one, or not”</li>
+<li>Exactly one slot is 1 — that’s the “hot” one — and its <em>position</em> carries all the information; nothing else in the vector does</li>
 </ul>
 </section>
 <section id="a-linear-model-per-class" class="slide level2 section">
 <h2>A “linear” model, per class</h2>
 <p>Linear scores — for now</p>
 </section>
-<section id="the-big-idea-3" class="slide level2">
-<h2>The Big Idea</h2>
-<div class="big-idea">
-<p>Score every class with a dot product — but a score isn’t a prediction yet.</p>
-</div>
-</section>
 <section id="one-score-per-class-recap" class="slide level2">
 <h2>One score per class (recap)</h2>
 <ul>
 <li>One shared model, not <span class="math inline">K</span> separate ones — <span class="math inline">\mathbf{W}</span> has one row per class, <span class="math inline">\mathbf{b}</span> one entry per class: <span class="math display">\mathbf{o} = \mathbf{W}\mathbf{x} + \mathbf{b}, \qquad o_j = \mathbf{w_j} \cdot \mathbf{x} + b_j</span></li>
-<li>Same forward pass as multi-output regression, covered previously — the <span class="math inline">K</span> outputs are now “<span class="math inline">K</span> classes” instead of “<span class="math inline">K</span> numbers”</li>
+<li><span class="math inline">\mathbf{o}</span> is just this layer’s raw <strong>o</strong>utput (hence the letter) — same forward pass as multi-output regression, covered previously</li>
+<li>Each <span class="math inline">o_j</span> is called a <strong>logit</strong>: the model’s raw, unnormalized opinion about class <span class="math inline">j</span> — it can be negative, has no upper bound, and the <span class="math inline">o_j</span>’s don’t sum to anything meaningful</li>
 </ul>
-</section>
-<section id="these-scores-are-called-logits" class="slide level2">
-<h2>These scores are called logits</h2>
-<ul>
-<li><span class="math inline">o_j</span> is a <strong>logit</strong> — the model’s raw, unnormalized opinion about class <span class="math inline">j</span></li>
-<li>Bigger <span class="math inline">o_j</span> means the model favors class <span class="math inline">j</span> more, <em>relative to the others</em></li>
-<li>A logit is <strong>not</strong> a probability: it can be negative, it has no upper bound, and the <span class="math inline">o_j</span>’s don’t sum to anything meaningful</li>
-</ul>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\mathbf{o}</span> is not our prediction yet — one more function still needs to act on it</p>
+</div>
+</div>
+</div>
 </section>
 <section id="worked-example-our-fruit" class="slide level2">
 <h2>Worked example: our fruit</h2>
@@ -566,11 +561,19 @@ yet, just parking here):
 </div>
 </div>
 </section>
+<section id="the-picture-so-far" class="slide level2">
+<h2>The picture so far</h2>
+
+<img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-2-output-1.svg" class="r-stretch"><ul>
+<li><span class="math inline">x \to</span> linear layer <span class="math inline">\to \mathbf{o}</span> is the whole story so far</li>
+<li>Something still needs to turn <span class="math inline">\mathbf{o}</span> into an actual prediction — that’s next</li>
+</ul>
+</section>
 <section id="softmax" class="slide level2 section">
 <h2>Softmax</h2>
 <p>From scores to probabilities</p>
 </section>
-<section id="the-big-idea-4" class="slide level2">
+<section id="the-big-idea-3" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>We make each prediction <em>act</em> like a probability – without changing which class wins.</p>
@@ -582,6 +585,14 @@ yet, just parking here):
 <ul>
 <li>Takes in all <span class="math inline">K</span> logits at once, returns one probability per class</li>
 <li><span class="math inline">\hat{\mathbf{y}}</span> is now our model’s actual prediction — a full probability distribution over the classes</li>
+</ul>
+</section>
+<section id="the-full-picture" class="slide level2">
+<h2>The full picture</h2>
+
+<img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-3-output-1.svg" class="r-stretch"><ul>
+<li>Two functions, applied one after the other: a <strong>linear</strong> layer, then <strong>softmax</strong></li>
+<li><span class="math inline">\mathbf{o}</span> was never the answer — it’s an intermediate value that softmax turns into <span class="math inline">\hat{\mathbf{y}}</span></li>
 </ul>
 </section>
 <section id="breakdown-numerator-and-denominator" class="slide level2">
@@ -676,20 +687,18 @@ yet, just parking here):
 </ul></li>
 </ul>
 </section>
-<section id="cross-entropy" class="slide level2 section">
-<h2>Cross entropy</h2>
+<section id="loss-cross-entropy" class="slide level2 section">
+<h2>Loss: Cross entropy</h2>
 <p>Loss function for multi-classification</p>
 </section>
 <section id="why-not-just-reuse-mse" class="slide level2">
 <h2>Why not just reuse MSE?</h2>
-<p><br> <br></p>
-<div class="box center">
-<p>MSE only knows “off by how much”; it can’t tell <em>unsure</em> apart from <em>confidently wrong</em></p>
-<p><br></p>
-<p>Being <em>confidently</em> wrong should cost a lot more than being unsure</p>
-</div>
+<ul>
+<li><p>MSE only knows “off by how much”; it can’t tell <em>unsure</em> apart from <em>confidently wrong</em></p></li>
+<li><p>Being <em>confidently</em> wrong should cost a lot more than being unsure</p></li>
+</ul>
 </section>
-<section id="the-big-idea-5" class="slide level2">
+<section id="the-big-idea-4" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>Penalize the model by how little probability it gave the correct answer.</p>
@@ -704,8 +713,8 @@ yet, just parking here):
 <li>One number, same as MSE was — small if we’re right, big if we’re wrong</li>
 </ul>
 </section>
-<section id="breakdown-only-one-term-survives" class="slide level2">
-<h2>Breakdown: only one term survives</h2>
+<section id="only-one-term-survives" class="slide level2">
+<h2>Only one term survives</h2>
 <ul>
 <li><span class="math inline">y_j</span> is 0 for every class except the true one, call it <span class="math inline">t</span></li>
 <li>Every term in the sum vanishes except <span class="math inline">j = t</span></li>
@@ -754,11 +763,11 @@ yet, just parking here):
 <section id="log-loss-visualized" class="slide level2">
 <h2>Log-loss, visualized</h2>
 <p>One classification act — one example, one true class — costs <span class="math inline">-\log \hat y_t</span>:</p>
-<div id="c08b717e" class="cell" data-execution_count="1">
+<div id="a76a07ad" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-2-output-1.png" width="850" height="469"></p>
+<p><img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-4-output-1.png" width="850" height="469"></p>
 </figure>
 </div>
 </div>
@@ -777,41 +786,11 @@ yet, just parking here):
 <li>Same “wrong or right” call either way — cross-entropy is what tells them apart</li>
 </ul>
 </section>
-<section id="mse-vs.-cross-entropy" class="slide level2">
-<h2>MSE vs.&nbsp;cross-entropy</h2>
-<div id="d5c2f1ea" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-3-output-1.png" width="855" height="469"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>MSE tops out at 1 no matter how wrong we are — confidently wrong barely costs more than unsure</li>
-<li>Cross-entropy keeps climbing — punishment grows with how wrong we are</li>
-<li>MSE also cares about the probability leftover on the <em>wrong</em> classes — cross-entropy doesn’t (only the true-class term survives)</li>
-</ul>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>There’s a second problem, too — MSE’s gradient here is much flatter, so training would crawl. More on that next.</p>
-</div>
-</div>
-</div>
-</section>
 <section id="differentiating-the-loss" class="slide level2 section">
 <h2>Differentiating the loss</h2>
 <p>Surprisingly easy calculus</p>
 </section>
-<section id="the-big-idea-6" class="slide level2">
+<section id="the-big-idea-5" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>This scary-looking loss has a gradient just as simple as linear regression’s.</p>
@@ -851,68 +830,20 @@ yet, just parking here):
 <p><strong>Important</strong></p>
 </div>
 <div class="callout-content">
-<p>All that softmax and log-loss machinery, and the gradient still just says “how wrong were we”</p>
+<p>All that softmax and log-loss machinery, and the gradient still just says “how wrong were we” — negative for the true class (push its logit up), positive for every other class (push them down)</p>
 </div>
 </div>
 </div>
-</section>
-<section id="worked-example-our-fruit-3" class="slide level2">
-<h2>Worked example: our fruit</h2>
-<p>Recall <span class="math inline">\hat{\mathbf{y}} = [0.07,\ 0.76,\ 0.17]</span> (apple, banana, orange), true label banana:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th></th>
-<th style="text-align: center;">apple</th>
-<th style="text-align: center;">banana</th>
-<th style="text-align: center;">orange</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\hat y_j</span></td>
-<td style="text-align: center;">0.07</td>
-<td style="text-align: center;">0.76</td>
-<td style="text-align: center;">0.17</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">y_j</span></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\hat y_j - y_j</span></td>
-<td style="text-align: center;">0.07</td>
-<td style="text-align: center;">−0.24</td>
-<td style="text-align: center;">0.17</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Banana’s gradient is negative — push its logit <em>up</em></li>
-<li>Apple’s and orange’s are positive — push them <em>down</em>, gently</li>
-</ul>
 </section>
 <section id="putting-it-together-training-a-classifier" class="slide level2 section">
 <h2>Putting it together: training a classifier</h2>
 <p>Same loop, new loss</p>
 </section>
-<section id="the-big-idea-7" class="slide level2">
+<section id="the-big-idea-6" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>Nothing about the training loop changes — only the loss, and what “prediction” means.</p>
 </div>
-</section>
-<section id="the-loop-unchanged" class="slide level2">
-<h2>The loop, unchanged</h2>
-<ol type="1">
-<li>Sample a mini-batch of examples</li>
-<li>Compute the loss’s gradient from that batch</li>
-<li>Step <span class="math inline">(\mathbf{W}, \mathbf{b})</span> opposite the gradient, scaled by <span class="math inline">\eta</span></li>
-<li>Repeat</li>
-</ol>
-<p>This is <em>exactly</em> the mini-batch SGD algorithm covered previously — nothing about it is new</p>
 </section>
 <section id="what-changed-what-didnt" class="slide level2">
 <h2>What changed / what didn’t</h2>
@@ -932,14 +863,6 @@ yet, just parking here):
 <li>Gradient: <span class="math inline">\hat y_j - y_j</span> — same shape as before, just <span class="math inline">\hat y</span> is now <em>computed</em> differently (via softmax, not a plain dot product)</li>
 </ul>
 </div></div>
-</section>
-<section id="no-new-algorithm" class="slide level2">
-<h2>No new algorithm</h2>
-<p><br> <br></p>
-<div class="box center">
-<p>We just use gradient descent again.</p>
-<p>Classification isn’t a new way to train a model — it’s the same training loop as always, with a new loss bolted on.</p>
-</div>
 </section>
 <section id="summary" class="slide level2 section">
 <h2>Summary</h2>
@@ -976,6 +899,19 @@ yet, just parking here):
 </div>
 <div class="callout-content">
 <p>This recipe — categorical output, softmax, cross-entropy — is the template for classification problems in general, not just this one</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>In lab: walk one example through a full forward pass (logits → softmax → cross-entropy) and backward pass (the gradient) <strong>by hand</strong>, with actual numbers</p>
 </div>
 </div>
 </div>
