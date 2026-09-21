@@ -31,6 +31,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
   </style>
   <link rel="stylesheet" href="06-multilayer_perceptrons_forward_files/libs/revealjs/dist/theme/quarto-437400cd99a5500e8a843730567bf40c.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
@@ -147,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-18 12:15" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-20 17:23" class="quarto-title-block center">
   <h1 class="title">Multilayer Perceptrons, Part 1</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -199,7 +265,7 @@ lectures, but reshaped --
 
   - This lecture (06): why a stack of linear layers alone buys nothing,
     hidden layers + activation functions, and the forward pass only.
-    Ends on a cliffhanger (how do we get a gradient to W^(1), which never
+    Ends on a cliffhanger (how do we get a gradient to W_1, which never
     touches the loss directly?) rather than starting backprop.
   - Next lecture (07): backpropagation through a hidden layer -- the actual
     new material -- worked on the *same* numeric example this lecture
@@ -212,15 +278,15 @@ regularization / dropout (d2l 5.5-5.6), and the Kaggle case study (5.7).
 Don't reach for any of that material here even if it would be a natural
 tangent -- it gets its own lecture(s) later.
 
-Notation: this is d2l's own notation, not an in-house choice -- confirmed
-against d2l's softmax-regression chapter (logits as $o$, $W$/$b$, $\hat y$
-via softmax) and its MLP chapter ($\mathbf{H}$ for the hidden
-representation, $W^{(1)}/b^{(1)}$ and $W^{(2)}/b^{(2)}$ for the two layers'
-parameters). This course has consistently used lowercase single-example
-vectors rather than d2l's uppercase batch-matrix form (lowercase $x, o,
-\hat y$ in lectures 04-05 vs. d2l's $\mathbf X, \mathbf O, \hat{\mathbf
-Y}$) -- kept that same convention here: $h=\sigma(W^{(1)}x+b^{(1)})$ for
-the hidden layer, $o=W^{(2)}h+b^{(2)}$ for the output layer.
+Notation: logits $o$, $W$/$b$, and $\hat y$ follow d2l's softmax-regression
+chapter, and the lowercase single-example convention (vs. d2l's uppercase
+batch matrices) carries over from lectures 04-05. One deliberate departure
+from d2l: d2l labels layers with parenthesized superscripts ($W^{(1)}$,
+$W^{(2)}$, $\mathbf{H}$ for the hidden representation); this course uses
+plain subscripts $W_1, b_1, W_2, b_2$ instead, because that reads more
+naturally when layers are introduced as "layer 1 feeds layer 2". Row/entry
+indices of a matrix are then written with a second subscript ($W_{1,2}$ =
+row 2 of $W_1$) where needed.
 
 Goals for this lecture:
 
@@ -237,13 +303,13 @@ Goals for this lecture:
   forward pass by hand, exactly as lecture 05 did for the single-layer case.
 - Land on a genuine open question, not yet answered: the loss only touches
   the *output* layer's parameters directly -- how does a gradient reach
-  the hidden layer's W^(1), b^(1)? That's next lecture, not this one.
+  the hidden layer's W_1, b_1? That's next lecture, not this one.
 
 Carried-through worked example, decided for this pass: same fruit
 classification task as lectures 04-05 and lab 04 (apple / banana / orange,
 from weight and color_score), extended with a 2-unit hidden layer using
 ReLU. Deliberately reuses the apple/banana rows of lab 04's original W as
-$W^{(1)}$ ($[1,1]$ and $[-1,2]$), so $h_{\text{pre}} = [1.4, -0.8]$ comes
+$W_1$ ($[1,1]$ and $[-1,2]$), so $h_{\text{pre}} = [1.4, -0.8]$ comes
 out to the *exact* same numbers students already computed as logits in lab
 04 step 1 -- a free "hey, you've already done this arithmetic" callback,
 and it also conveniently gives one negative pre-activation, so ReLU
@@ -253,10 +319,10 @@ numbers, verified via a standalone script (not hand-calculated) before
 being written into slides:
 
   x = [1.2, 0.2]
-  W^(1) = [[1, 1], [-1, 2]],  b^(1) = [0, 0]
+  W_1 = [[1, 1], [-1, 2]],  b_1 = [0, 0]
   h_pre = [1.4, -0.8]  ->  h = ReLU(h_pre) = [1.4, 0]
 
-  W^(2) = [[0.5, 1], [-0.3, 2], [0.2, -1]]  (apple, banana, orange rows), b^(2) = [0,0,0]
+  W_2 = [[0.5, 1], [-0.3, 2], [0.2, -1]]  (apple, banana, orange rows), b_2 = [0,0,0]
   o = [0.7, -0.42, 0.28]
   yhat = [0.5042, 0.1645, 0.3313]
   true class = banana -> L = -log(0.1645) = 1.8048
@@ -296,110 +362,184 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </section>
 <section id="a-problem-no-linear-boundary-can-solve" class="slide level2">
 <h2>A problem no linear boundary can solve</h2>
-<div id="37eb34c3" class="cell" data-execution_count="1">
+<div id="4463f8df" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-2-output-1.png" width="418" height="422"></p>
+<p><img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="928" height="461"></p>
 </figure>
 </div>
 </div>
 </div>
 <ul>
-<li>No single straight line separates class A from class B — every line either mixes classes, or leaves one point misclassified</li>
-<li>This isn’t about picking better <span class="math inline">W</span> and <span class="math inline">b</span>; <strong>no</strong> linear model, no matter how well trained, can solve this</li>
+<li>Any straight line predicts one class on each side — every line we try gets at least one point wrong</li>
+<li>This isn’t about picking better <span class="math inline">W</span> and <span class="math inline">b</span>: <strong>no</strong> linear model, however well trained, can solve this</li>
 </ul>
 </section>
 <section id="try-stacking-two-linear-layers-anyway" class="slide level2">
 <h2>Try stacking two linear layers anyway</h2>
+
+<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-3-output-1.svg" class="r-stretch"><p><span class="math display">h = W_1x + b_1, \qquad o = W_2h + b_2</span></p>
 <ul>
-<li>Idea: chain two linear layers together, hoping the extra layer adds power <span class="math display">o = W^{(2)}\big(W^{(1)}x + b^{(1)}\big) + b^{(2)}</span></li>
-<li>Multiply this out: <span class="math display">o = \underbrace{W^{(2)}W^{(1)}}_{W'}\,x + \underbrace{W^{(2)}b^{(1)} + b^{(2)}}_{b'} \;=\; W'x + b'</span></li>
-<li>That’s still just <strong>one</strong> linear model, with different names for its parameters</li>
+<li>The first layer’s output <span class="math inline">h</span> becomes the second layer’s input</li>
+<li>Does the extra layer add power? Let’s follow some real numbers through it</li>
 </ul>
 </section>
-<section id="the-big-idea" class="slide level2">
-<h2>The Big Idea</h2>
-<div class="big-idea">
-<p>Stacking linear layers alone is still just one linear layer in disguise.</p>
-</div>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Important</strong></p>
-</div>
-<div class="callout-content">
-<p>Whatever a single linear layer <em>can’t</em> do, no number of stacked linear layers can do either — something has to break the pattern</p>
-</div>
-</div>
-</div>
-</section>
-<section id="hidden-layers-and-activation-functions" class="slide level2 section">
-<h2>Hidden layers and activation functions</h2>
-</section>
-<section id="whats-missing" class="slide level2">
-<h2>What’s missing</h2>
+<section id="a-smaller-model-with-numbers" class="slide level2">
+<h2>A smaller model, with numbers</h2>
+
+<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-4-output-1.svg" class="r-stretch"><p><span class="math display">W_1 = \begin{bmatrix} 1 &amp; 1 \\ -1 &amp; 2 \end{bmatrix}, \qquad W_2 = \begin{bmatrix} 1 &amp; 1 \\ 0 &amp; 2 \end{bmatrix}, \qquad x = \begin{bmatrix} 1.2 \\ 0.2 \end{bmatrix}</span></p>
 <ul>
-<li>The problem wasn’t “not enough layers” — it was that every layer so far is linear, and linear-of-linear is still linear</li>
-<li>Fix: insert a <strong>nonlinear</strong> function between the two linear layers, so they can’t collapse back into one</li>
+<li>Same two layers as above, now with actual values</li>
+<li>Biases set to <span class="math inline">0</span> to keep the arithmetic short — they collapse the same way, as the general case will show</li>
 </ul>
 </section>
-<section id="the-big-idea-1" class="slide level2">
-<h2>The Big Idea</h2>
-<div class="big-idea">
-<p>Break up the linear layers with a nonlinear function, so stacking them actually adds power.</p>
-</div>
+<section id="follow-one-input-through" class="slide level2">
+<h2>Follow one input through</h2>
+<p><span class="math display">h = W_1x = \begin{bmatrix} 1 &amp; 1 \\ -1 &amp; 2 \end{bmatrix}\begin{bmatrix} 1.2 \\ 0.2 \end{bmatrix} = \begin{bmatrix} 1.4 \\ -0.8 \end{bmatrix}</span></p>
+<p><span class="math display">o = W_2h = \begin{bmatrix} 1 &amp; 1 \\ 0 &amp; 2 \end{bmatrix}\begin{bmatrix} 1.4 \\ -0.8 \end{bmatrix} = \begin{bmatrix} 0.6 \\ -1.6 \end{bmatrix}</span></p>
+<ul>
+<li>Two steps: <span class="math inline">x</span> becomes <span class="math inline">h</span>, then <span class="math inline">h</span> becomes <span class="math inline">o</span></li>
+</ul>
 </section>
-<section id="meet-three-activation-functions" class="slide level2">
-<h2>Meet three activation functions</h2>
-<div id="486cd2e4" class="cell" data-execution_count="2">
+<section id="substitute-one-into-the-other" class="slide level2">
+<h2>Substitute one into the other</h2>
+<p>Since <span class="math inline">h = W_1x</span>, replace <span class="math inline">h</span> in the second equation: <span class="math inline">o = W_2(W_1x) = (W_2W_1)\,x</span></p>
+<p><span class="math display">W_2W_1 = \begin{bmatrix} 1 &amp; 1 \\ 0 &amp; 2 \end{bmatrix}\begin{bmatrix} 1 &amp; 1 \\ -1 &amp; 2 \end{bmatrix} = \begin{bmatrix} 0 &amp; 3 \\ -2 &amp; 4 \end{bmatrix}, \qquad \begin{bmatrix} 0 &amp; 3 \\ -2 &amp; 4 \end{bmatrix}\begin{bmatrix} 1.2 \\ 0.2 \end{bmatrix} = \begin{bmatrix} 0.6 \\ -1.6 \end{bmatrix}</span></p>
+<ul>
+<li>One matrix, applied once, gives exactly the <span class="math inline">o</span> that two steps did</li>
+</ul>
+</section>
+<section id="plotted-the-same-destination" class="slide level2">
+<h2>Plotted: the same destination</h2>
+<div id="589e4c73" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-3-output-1.png" width="856" height="470"></p>
+<p><img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-5-output-1.png" class="quarto-figure quarto-figure-center" width="928" height="428"></p>
 </figure>
 </div>
 </div>
 </div>
 <ul>
-<li>All three are <strong>nonlinear</strong> — that’s the one property that actually matters here</li>
-<li>Each shapes its input differently, which is what makes them useful for different situations</li>
+<li>Blue: two steps through the middle. Orange dashed: one step with <span class="math inline">W_2W_1</span></li>
+<li>Both land on the same point — one linear layer did the work of two</li>
 </ul>
 </section>
-<section id="breakdown-three-flavors-of-nonlinear" class="slide level2">
-<h2>Breakdown: three flavors of nonlinear</h2>
-<div class="columns">
-<div class="column">
-<p><strong>ReLU</strong></p>
+<section id="what-stacking-gave-us" class="slide level2">
+<h2>What stacking gave us</h2>
+<p>In general, the same substitution gives:</p>
+<p><span class="math display">o = W_2(W_1x + b_1) + b_2 = \underbrace{(W_2W_1)}_{W'}\,x + \underbrace{(W_2b_1 + b_2)}_{b'} = W'x + b'</span></p>
 <ul>
-<li><span class="math inline">\max(0, z)</span></li>
-<li>Zero for negative input, identity for positive</li>
-<li>Cheap, doesn’t saturate for large <span class="math inline">z</span> — the modern default</li>
+<li>Two stacked linear layers are exactly one linear layer with different parameters, however wide or deep</li>
+<li>So whatever a single linear layer can’t do — like the problem a few slides back — no stack of them can do either</li>
 </ul>
-</div><div class="column">
-<p><strong>sigmoid / tanh</strong></p>
+</section>
+<section id="hidden-layers-and-activation-functions" class="slide level2 section">
+<h2>Hidden layers and activation functions</h2>
+</section>
+<section id="the-big-problem" class="slide level2">
+<h2>The Big Problem</h2>
+<div class="big-question">
+<p>Linear-of-linear is still just linear — we need more <strong>expressivity</strong></p>
+</div>
+<!-- *Expressivity*: the range of functions a model is able to represent -->
+</section>
+<section id="the-big-idea" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Non-linear functions make linear functions independent operationgs <!-- Break up the linear layers with a nonlinear function, so stacking them actually adds power. --></p>
+</div>
+</section>
+<section id="relu-sigmoid-tanh" class="slide level2">
+<h2><code>ReLU</code>, <code>sigmoid</code> &amp; <code>tanh</code></h2>
+<div id="df388a44" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" width="1024" height="428"></p>
+</figure>
+</div>
+</div>
+</div>
 <ul>
-<li>Squash everything into a bounded range (<span class="math inline">[0,1]</span> or <span class="math inline">[-1,1]</span>)</li>
-<li>Already familiar — sigmoid is softmax’s <span class="math inline">K=2</span> special case, covered previously</li>
-<li>Very small derivative for large <span class="math inline">|z|</span> — the gradient there gets very small</li>
+<li>Each one <strong>bends</strong> — its graph isn’t a straight line, which is what a linear layer can never do</li>
+<li>That bend is what stops stacked layers from collapsing into one: the second layer sees a reshaped <span class="math inline">h</span>, not a straight-line function of <span class="math inline">x</span></li>
 </ul>
-</div></div>
-<br>
-<hr>
-<p><br></p>
+</section>
+<section id="breakdown-three-activation-functions" class="slide level2">
+<h2>Breakdown: three activation functions</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">output range</th>
+<th>good</th>
+<th>watch out</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ReLU</strong></td>
+<td style="text-align: center;"><span class="math inline">[0, \infty)</span></td>
+<td>cheap; grows for <span class="math inline">z&gt;0</span></td>
+<td>zero for <span class="math inline">z&lt;0</span></td>
+</tr>
+<tr class="even">
+<td><strong>sigmoid</strong></td>
+<td style="text-align: center;"><span class="math inline">(0, 1)</span></td>
+<td>probability-like</td>
+<td>saturates</td>
+</tr>
+<tr class="odd">
+<td><strong>tanh</strong></td>
+<td style="text-align: center;"><span class="math inline">(-1, 1)</span></td>
+<td>centered at <span class="math inline">0</span></td>
+<td>saturates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Saturate</strong>: flatten out for large <span class="math inline">|z|</span>, so the output barely changes as <span class="math inline">z</span> changes — the slope is close to <span class="math inline">0</span></p>
+</section>
+<section id="choosing-one-for-now" class="slide level2">
+<h2>Choosing one for now</h2>
 <ul>
-<li>This lecture uses <strong>ReLU</strong> for its worked example — simplest to compute by hand, and its derivative (covered next lecture) is either 0 or 1</li>
+<li>A flat curve means a tiny gradient, which means a very weak learning signal — more on why that matters in a later lecture</li>
+<li>tanh is just a stretched, shifted sigmoid (<span class="math inline">\tanh z = 2\,\text{sigmoid}(2z) - 1</span>): same S-shape and same saturation, but centered at <span class="math inline">0</span></li>
+<li>This lecture uses <strong>ReLU</strong> — simplest to compute by hand, and its slope (next lecture) is either <span class="math inline">0</span> or <span class="math inline">1</span></li>
+</ul>
+</section>
+<section id="putting-an-activation-between-the-layers" class="slide level2">
+<h2>Putting an activation between the layers</h2>
+
+<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-7-output-1.svg" class="r-stretch"><p><span class="math display">h = \sigma(W_1x + b_1), \qquad o = W_2h + b_2</span></p>
+<ul>
+<li><span class="math inline">\sigma</span> stands for <em>any</em> activation function — ReLU, sigmoid, tanh — not only the sigmoid</li>
+<li>It’s a function applied to values, not a layer with weights of its own — hence a circle, not a box</li>
+<li>Layer 2 no longer sees a straight-line function of <span class="math inline">x</span>, but a reshaped version</li>
 </ul>
 </section>
 <section id="the-hidden-layer" class="slide level2">
 <h2>The hidden layer</h2>
+
+<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-8-output-1.svg" class="r-stretch"><ul>
+<li>A <strong>hidden layer</strong> is a layer whose output feeds another layer instead of being the model’s answer</li>
+<li><span class="math inline">W_1</span> is the first layer of the model, yet hidden — the outside world sees only <span class="math inline">x</span> going in and <span class="math inline">o</span> coming out</li>
+</ul>
+</section>
+<section id="same-model-more-in-the-middle" class="slide level2">
+<h2>Same model, more in the middle</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">class</span> Model(nn.Module):</span>
+<span id="cb1-2"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb1-3"><a href=""></a>        h <span class="op">=</span> activation(<span class="va">self</span>.layer1(x))</span>
+<span id="cb1-4"><a href=""></a>        <span class="co"># ... more model here -- we just need to pass values forward</span></span>
+<span id="cb1-5"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.layer2(h)</span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a>loss <span class="op">=</span> loss_fn(model(x), y)   <span class="co"># forward pass</span></span>
+<span id="cb1-8"><a href=""></a>loss.backward()               <span class="co"># backward pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Insert an activation function <span class="math inline">\sigma</span> right after the first linear layer, <strong>before</strong> it feeds into the second: <span class="math display">h = \sigma\big(W^{(1)}x + b^{(1)}\big)</span></li>
-<li><span class="math inline">h</span> is a <strong>hidden layer</strong> — it’s not the input, and it’s not the model’s final output; it’s an intermediate representation the model builds for itself</li>
-<li>Same mechanics as any linear layer so far — one row of <span class="math inline">W^{(1)}</span>, one entry of <span class="math inline">b^{(1)}</span>, per hidden unit — just with <span class="math inline">\sigma</span> applied afterward</li>
+<li>The idea of the model hasn’t changed: a <strong>forward pass</strong> turns <span class="math inline">x</span> into a prediction and a loss, and a <strong>backward pass</strong> turns that loss into gradients for training</li>
+<li>Hidden layers add depth, not a new kind of training — the backward pass through that extra step is what’s coming next lecture</li>
 </ul>
 </section>
 <section id="the-full-forward-pass" class="slide level2 section">
@@ -408,23 +548,15 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <section id="assembling-the-whole-pipeline" class="slide level2">
 <h2>Assembling the whole pipeline</h2>
 <ul>
-<li>Hidden layer, same as just derived: <span class="math display">h = \sigma\big(W^{(1)}x + b^{(1)}\big)</span></li>
-<li>Output layer — same shape as lecture 05’s classifier, just fed <span class="math inline">h</span> instead of <span class="math inline">x</span>: <span class="math display">o = W^{(2)}h + b^{(2)}</span></li>
+<li>Hidden layer: <span class="math display">h = \sigma\big(W_1x + b_1\big)</span></li>
+<li>Output layer — same shape as lecture 05’s classifier, just fed <span class="math inline">h</span> instead of <span class="math inline">x</span>: <span class="math display">o = W_2h + b_2</span></li>
 <li>Softmax, exactly as before: <span class="math display">\hat y = \text{softmax}(o)</span></li>
 </ul>
 </section>
-<section id="the-picture-so-far" class="slide level2">
-<h2>The picture so far</h2>
+<section id="the-full-picture" class="slide level2">
+<h2>The full picture</h2>
 
-<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-4-output-1.svg" class="r-stretch"><ul>
-<li><strong>This is missing one piece</strong> — the activation function between the two linear layers hasn’t been drawn in yet</li>
-<li>Notice the shape: linear, then linear, then softmax — three functions chained, same “apply one function, then the next” idea as lecture 05, just one link longer</li>
-</ul>
-</section>
-<section id="the-full-picture-with-the-activation-function" class="slide level2">
-<h2>The full picture, with the activation function</h2>
-
-<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-5-output-1.svg" class="r-stretch"><div class="callout callout-note callout-titled callout-style-default">
+<img data-src="06-multilayer_perceptrons_forward_files/figure-revealjs/cell-9-output-1.svg" class="r-stretch"><div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
@@ -433,7 +565,7 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Four functions, applied one after another — linear, ReLU, linear, softmax. This whole chain is what “forward pass” means for a network with a hidden layer</p>
+<p>Hidden layer, output layer, softmax — applied one after another. This whole chain is what “forward pass” means for a network with a hidden layer</p>
 </div>
 </div>
 </div>
@@ -448,13 +580,13 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <p>We’re partway through training — here’s where the parameters currently stand:</p>
 <div class="columns">
 <div class="column">
-<p><strong>Hidden layer</strong> (<span class="math inline">W^{(1)}, b^{(1)}</span>)</p>
+<p><strong>Hidden layer</strong> (<span class="math inline">W_1, b_1</span>)</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>unit</th>
-<th>row of <span class="math inline">W^{(1)}</span></th>
-<th style="text-align: right;"><span class="math inline">b^{(1)}</span></th>
+<th>row of <span class="math inline">W_1</span></th>
+<th style="text-align: right;"><span class="math inline">b_1</span></th>
 </tr>
 </thead>
 <tbody>
@@ -471,13 +603,13 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </tbody>
 </table>
 </div><div class="column">
-<p><strong>Output layer</strong> (<span class="math inline">W^{(2)}, b^{(2)}</span>)</p>
+<p><strong>Output layer</strong> (<span class="math inline">W_2, b_2</span>)</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>class</th>
-<th>row of <span class="math inline">W^{(2)}</span></th>
-<th style="text-align: right;"><span class="math inline">b^{(2)}</span></th>
+<th>row of <span class="math inline">W_2</span></th>
+<th style="text-align: right;"><span class="math inline">b_2</span></th>
 </tr>
 </thead>
 <tbody>
@@ -502,7 +634,8 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </section>
 <section id="step-1-the-hidden-layers-pre-activation" class="slide level2">
 <h2>Step 1: the hidden layer’s pre-activation</h2>
-<p><span class="math display">h_{\text{pre}} = W^{(1)}x + b^{(1)}</span></p>
+<p>Call the value before the activation <span class="math inline">h_{\text{pre}}</span>, so that <span class="math inline">h = \sigma(h_{\text{pre}})</span>:</p>
+<p><span class="math display">h_{\text{pre}} = W_1x + b_1</span></p>
 <p><span class="math display">h_{\text{pre},1} = (1)(1.2) + (1)(0.2) = 1.4, \qquad h_{\text{pre},2} = (-1)(1.2) + (2)(0.2) = -0.8</span></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -539,11 +672,11 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </section>
 <section id="step-3-the-output-layer" class="slide level2">
 <h2>Step 3: the output layer</h2>
-<p><span class="math display">o = W^{(2)}h + b^{(2)}</span></p>
+<p><span class="math display">o = W_2h + b_2</span></p>
 <p><span class="math display">o_{\text{apple}} = (0.5)(1.4) + (1)(0) = 0.7, \qquad o_{\text{banana}} = (-0.3)(1.4) + (2)(0) = -0.42, \qquad o_{\text{orange}} = (0.2)(1.4) + (-1)(0) = 0.28</span></p>
 <p><span class="math display">o = [0.7,\ -0.42,\ 0.28]</span></p>
 <ul>
-<li>Because <span class="math inline">h_2 = 0</span>, only unit 1 of the hidden layer actually influenced these logits — column 2 of <span class="math inline">W^{(2)}</span> contributed nothing this time</li>
+<li>Because <span class="math inline">h_2 = 0</span>, only unit 1 of the hidden layer actually influenced these logits — column 2 of <span class="math inline">W_2</span> contributed nothing this time</li>
 </ul>
 </section>
 <section id="step-4-softmax-and-the-loss" class="slide level2">
@@ -568,11 +701,11 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <tbody>
 <tr class="odd">
 <td><strong>Model</strong></td>
-<td>input → linear → ReLU → linear → softmax</td>
+<td>input → hidden layer (linear + ReLU) → output layer (linear) → softmax</td>
 </tr>
 <tr class="even">
 <td><strong>New idea</strong></td>
-<td>a hidden layer, <span class="math inline">h = \sigma(W^{(1)}x+b^{(1)})</span>, made possible by a nonlinearity</td>
+<td>a hidden layer, <span class="math inline">h = \sigma(W_1x+b_1)</span>, made possible by a nonlinearity</td>
 </tr>
 <tr class="odd">
 <td><strong>Still the same</strong></td>
@@ -589,7 +722,7 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>The open question:</strong> training needs <span class="math inline">\nabla W^{(1)}, \nabla b^{(1)}</span> — but the loss only touches <span class="math inline">W^{(1)}</span> <em>indirectly</em>, through <span class="math inline">h</span>, <span class="math inline">o</span>, and <span class="math inline">\hat y</span>. The chain rule from lecture 05 got a gradient to one layer. Does it still work with two?</p>
+<p><strong>The open question:</strong> training needs <span class="math inline">\nabla W_1, \nabla b_1</span> — but the loss only touches <span class="math inline">W_1</span> <em>indirectly</em>, through <span class="math inline">h</span>, <span class="math inline">o</span>, and <span class="math inline">\hat y</span>. The chain rule from lecture 05 got a gradient to one layer. Does it still work with two?</p>
 </div>
 </div>
 </div>

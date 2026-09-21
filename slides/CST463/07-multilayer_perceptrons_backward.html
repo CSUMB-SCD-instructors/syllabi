@@ -147,7 +147,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-18 12:15" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-20 17:23" class="quarto-title-block center">
   <h1 class="title">Multilayer Perceptrons, Part 2</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -176,10 +176,10 @@ from 06):
 - From 06 (this deck's direct predecessor): why a lone stack of linear
   layers collapses to one linear layer; hidden layers and activation
   functions (ReLU, sigmoid, tanh) as the fix; the full MLP forward pass
-  $h=\sigma(W^{(1)}x+b^{(1)})$, $o=W^{(2)}h+b^{(2)}$, $\hat y =
+  $h=\sigma(W_1x+b_1)$, $o=W_2h+b_2$, $\hat y =
   \text{softmax}(o)$; and one worked numeric forward pass on the fruit
-  example, ending on an open question: the loss never touches $W^{(1)},
-  b^{(1)}$ directly, so how does a gradient get there?
+  example, ending on an open question: the loss never touches $W_1,
+  b_1$ directly, so how does a gradient get there?
 
 Students have NOT yet seen: a gradient propagated through more than one
 weight matrix, or any general statement of what "backpropagation" is. This
@@ -194,22 +194,22 @@ for the full two-lecture rationale). Explicitly OUT OF SCOPE here, same as
 06: numerical stability/initialization (d2l 5.4), generalization/dropout
 (5.5-5.6), the Kaggle case study (5.7) -- deferred to later lectures.
 
-Notation: continues lecture 06's -- $x$ input, $W^{(1)}/b^{(1)}$ hidden
+Notation: continues lecture 06's -- $x$ input, $W_1/b_1$ hidden
 layer, $h$ hidden representation, $\sigma$ activation (ReLU here),
-$W^{(2)}/b^{(2)}$ output layer, $o$ logits, $\hat y$ softmax output, $y$
+$W_2/b_2$ output layer, $o$ logits, $\hat y$ softmax output, $y$
 one-hot true label, $\eta$ learning rate, $\nabla$ for gradients -- all
 matching d2l's own notation (see lecture 06's comment for the citation).
 
 Goals for this lecture:
 
-- Show that the output-layer gradient ($\nabla W^{(2)}, \nabla b^{(2)}$) is
+- Show that the output-layer gradient ($\nabla W_2, \nabla b_2$) is
   *exactly* lecture 05's derivation again -- a callback, not new work --
   to keep the actual new material from getting buried under a full
   re-derivation of something already known.
 - Derive the genuinely new piece: how a gradient reaches the hidden layer.
-  The error signal has to flow backward through $W^{(2)}$ (as a matrix
+  The error signal has to flow backward through $W_2$ (as a matrix
   multiply) and then through the activation function's own derivative
-  ($\sigma'$) before it reaches $W^{(1)}, b^{(1)}$.
+  ($\sigma'$) before it reaches $W_1, b_1$.
 - Walk the *same* numeric example from lecture 06 through the full
   backward pass, mirroring lab 04's step structure exactly (forward,
   backward piece by piece, update, verify) so the follow-on lab (05) reads
@@ -222,8 +222,8 @@ Continues the exact same worked example from lecture 06, same numbers
 (verified via a standalone script, not hand-calculated):
 
   x = [1.2, 0.2], true class = banana, y = [0, 1, 0]
-  W^(1) = [[1, 1], [-1, 2]], b^(1) = [0, 0]
-  W^(2) = [[0.5, 1], [-0.3, 2], [0.2, -1]] (apple/banana/orange rows), b^(2) = [0,0,0]
+  W_1 = [[1, 1], [-1, 2]], b_1 = [0, 0]
+  W_2 = [[0.5, 1], [-0.3, 2], [0.2, -1]] (apple/banana/orange rows), b_2 = [0,0,0]
 
   Forward pass (from lecture 06): h_pre = [1.4, -0.8], h = [1.4, 0],
   o = [0.7, -0.42, 0.28], yhat = [0.5042, 0.1645, 0.3313], L = 1.8048
@@ -249,7 +249,7 @@ Continues the exact same worked example from lecture 06, same numbers
   Loss: 1.8048 -> 0.6486, and banana now WINS (0.5228, highest) -- a
   cleaner payoff than lab 04's single-layer example, where apple was still
   winning after one step. Worth calling out explicitly on the verify
-  slide. Also worth calling out: unit 2's row of W^(1) didn't move at all
+  slide. Also worth calling out: unit 2's row of W_1 didn't move at all
   -- a dead ReLU unit gets zero gradient and learns nothing from this
   example, a direct, concrete instance of the "dead unit" phenomenon
   (full vanishing/exploding-gradient treatment is deferred to a later
@@ -291,7 +291,7 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">h_{\text{pre}} = W^{(1)}x+b^{(1)}</span></td>
+<td><span class="math inline">h_{\text{pre}} = W_1x+b_1</span></td>
 <td><span class="math inline">[1.4,\ -0.8]</span></td>
 </tr>
 <tr class="even">
@@ -299,7 +299,7 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <td><span class="math inline">[1.4,\ 0]</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">o = W^{(2)}h+b^{(2)}</span></td>
+<td><span class="math inline">o = W_2h+b_2</span></td>
 <td><span class="math inline">[0.7,\ -0.42,\ 0.28]</span></td>
 </tr>
 <tr class="even">
@@ -316,24 +316,18 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <section id="the-big-question" class="slide level2">
 <h2>The Big Question</h2>
 <div class="big-question">
-<p>The loss only touches <span class="math inline">W^{(1)}</span> and <span class="math inline">b^{(1)}</span> <em>indirectly</em> — how does a gradient reach them?</p>
+<p>The loss only touches <span class="math inline">W_1</span> and <span class="math inline">b_1</span> <em>indirectly</em> — how does a gradient reach them?</p>
 </div>
 </section>
 <section id="gradients-for-the-output-layer-a-callback" class="slide level2 section">
 <h2>Gradients for the output layer, a callback</h2>
 <p>Nothing new here — you already did this</p>
 </section>
-<section id="the-big-idea" class="slide level2">
-<h2>The Big Idea</h2>
-<div class="big-idea">
-<p><span class="math inline">W^{(2)}, b^{(2)}</span> are graded exactly like lecture 05’s classifier — because that’s exactly what they are.</p>
-</div>
-</section>
-<section id="same-formula-new-superscript" class="slide level2">
-<h2>Same formula, new superscript</h2>
+<section id="same-formula-new-inputs" class="slide level2">
+<h2>Same formula, new inputs</h2>
 <ul>
 <li>From lecture 05, extended through the chain rule to a linear layer’s own weights: <span class="math display">\frac{\partial L}{\partial o} = \hat y - y</span></li>
-<li><span class="math inline">o = W^{(2)}h + b^{(2)}</span> has the <em>exact same shape</em> as lecture 05’s <span class="math inline">o = Wx+b</span> — just <span class="math inline">h</span> standing in where <span class="math inline">x</span> used to be: <span class="math display">\nabla W^{(2)} = (\hat y - y)\,h^\top, \qquad \nabla b^{(2)} = \hat y - y</span></li>
+<li><span class="math inline">o = W_2h + b_2</span> has the <em>exact same shape</em> as lecture 05’s <span class="math inline">o = Wx+b</span> — just <span class="math inline">h</span> standing in where <span class="math inline">x</span> used to be: <span class="math display">\nabla W_2 = (\hat y - y)\,h^\top, \qquad \nabla b_2 = \hat y - y</span></li>
 <li>No new derivation required — this is free progress from work already done</li>
 </ul>
 </section>
@@ -344,22 +338,22 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <section id="the-problem-stated-plainly" class="slide level2">
 <h2>The problem, stated plainly</h2>
 <ul>
-<li><span class="math inline">W^{(1)}</span> and <span class="math inline">b^{(1)}</span> never appear in the loss formula directly — they only affect <span class="math inline">L</span> by first changing <span class="math inline">h</span>, which changes <span class="math inline">o</span>, which changes <span class="math inline">\hat y</span></li>
-<li>The chain rule from lecture 05 had exactly <strong>one</strong> link between the parameter and the loss; here there are <strong>three</strong>: <span class="math inline">W^{(1)} \to h \to o \to \hat y \to L</span></li>
+<li><span class="math inline">W_1</span> and <span class="math inline">b_1</span> never appear in the loss formula directly — they only affect <span class="math inline">L</span> by first changing <span class="math inline">h</span>, which changes <span class="math inline">o</span>, which changes <span class="math inline">\hat y</span></li>
+<li>The chain rule from lecture 05 had exactly <strong>one</strong> link between the parameter and the loss; here there are <strong>three</strong>: <span class="math inline">W_1 \to h \to o \to \hat y \to L</span></li>
 </ul>
 </section>
-<section id="the-big-idea-1" class="slide level2">
+<section id="the-big-idea" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
 <p>The chain rule still works — you just follow one more link backward through the network.</p>
 </div>
 </section>
-<section id="link-1-from-the-loss-back-through-w2" class="slide level2">
-<h2>Link 1: from the loss, back through <span class="math inline">W^{(2)}</span></h2>
+<section id="link-1-from-the-loss-back-through-w_2" class="slide level2">
+<h2>Link 1: from the loss, back through <span class="math inline">W_2</span></h2>
 <ul>
 <li>We already have <span class="math inline">\partial L/\partial o = \hat y - y</span></li>
-<li><span class="math inline">o = W^{(2)}h + b^{(2)}</span> is linear in <span class="math inline">h</span>, so the chain rule passes the gradient straight back through <span class="math inline">W^{(2)}</span>: <span class="math display">\frac{\partial L}{\partial h} = (W^{(2)})^\top (\hat y - y)</span></li>
-<li>Read <span class="math inline">(W^{(2)})^\top</span> as <strong>running the output layer backward</strong> — instead of turning <span class="math inline">h</span> into <span class="math inline">o</span>, it turns an error in <span class="math inline">o</span> into an error in <span class="math inline">h</span></li>
+<li><span class="math inline">o = W_2h + b_2</span> is linear in <span class="math inline">h</span>, so the chain rule passes the gradient straight back through <span class="math inline">W_2</span>: <span class="math display">\frac{\partial L}{\partial h} = (W_2)^\top (\hat y - y)</span></li>
+<li>Read <span class="math inline">(W_2)^\top</span> as <strong>running the output layer backward</strong> — instead of turning <span class="math inline">h</span> into <span class="math inline">o</span>, it turns an error in <span class="math inline">o</span> into an error in <span class="math inline">h</span></li>
 </ul>
 </section>
 <section id="link-2-back-through-the-activation-function" class="slide level2">
@@ -388,10 +382,10 @@ Outline / progress tracker (update the tag as each section gets drafted):
 </div>
 </div>
 </section>
-<section id="link-3-back-through-w1" class="slide level2">
-<h2>Link 3: back through <span class="math inline">W^{(1)}</span></h2>
+<section id="link-3-back-through-w_1" class="slide level2">
+<h2>Link 3: back through <span class="math inline">W_1</span></h2>
 <ul>
-<li>Same move as lecture 05’s very first gradient, just with <span class="math inline">h_{\text{pre}}</span>’s error standing in for <span class="math inline">o</span>’s: <span class="math display">\nabla W^{(1)} = \frac{\partial L}{\partial h_{\text{pre}}}\,x^\top, \qquad \nabla b^{(1)} = \frac{\partial L}{\partial h_{\text{pre}}}</span></li>
+<li>Same move as lecture 05’s very first gradient, just with <span class="math inline">h_{\text{pre}}</span>’s error standing in for <span class="math inline">o</span>’s: <span class="math display">\nabla W_1 = \frac{\partial L}{\partial h_{\text{pre}}}\,x^\top, \qquad \nabla b_1 = \frac{\partial L}{\partial h_{\text{pre}}}</span></li>
 </ul>
 </section>
 <section id="breakdown-the-same-shape-three-times-over" class="slide level2">
@@ -413,12 +407,12 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <tbody>
 <tr class="odd">
 <td>output</td>
-<td><span class="math inline">\nabla W^{(2)} = (\hat y-y)\,h^\top</span></td>
+<td><span class="math inline">\nabla W_2 = (\hat y-y)\,h^\top</span></td>
 <td><span class="math inline">h</span></td>
 </tr>
 <tr class="even">
 <td>hidden</td>
-<td><span class="math inline">\nabla W^{(1)} = \dfrac{\partial L}{\partial h_{\text{pre}}}\,x^\top</span></td>
+<td><span class="math inline">\nabla W_1 = \dfrac{\partial L}{\partial h_{\text{pre}}}\,x^\top</span></td>
 <td><span class="math inline">x</span></td>
 </tr>
 </tbody>
@@ -451,18 +445,18 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <li>Same shape as lab 04 — negative for the true class (banana), positive for the others</li>
 </ul>
 </section>
-<section id="step-2-gradient-for-w2-b2" class="slide level2">
-<h2>Step 2: gradient for <span class="math inline">W^{(2)}, b^{(2)}</span></h2>
-<p>Each row of <span class="math inline">\nabla W^{(2)}</span> is that class’s Step 1 value, scaled by <span class="math inline">h=[1.4,\ 0]</span> — same “one dot product per row” pattern as lab 04’s update step:</p>
-<p><span class="math display">\nabla W^{(2)}_{\text{apple}} = 0.5042 \times [1.4,\ 0] = [0.7059,\ 0], \qquad \nabla W^{(2)}_{\text{banana}} = -0.8355 \times [1.4,\ 0] = [-1.1697,\ 0], \qquad \nabla W^{(2)}_{\text{orange}} = 0.3313 \times [1.4,\ 0] = [0.4638,\ 0]</span></p>
-<p><span class="math display">\nabla b^{(2)} = [0.5042,\ -0.8355,\ 0.3313]</span></p>
+<section id="step-2-gradient-for-w_2-b_2" class="slide level2">
+<h2>Step 2: gradient for <span class="math inline">W_2, b_2</span></h2>
+<p>Each row of <span class="math inline">\nabla W_2</span> is that class’s Step 1 value, scaled by <span class="math inline">h=[1.4,\ 0]</span> — same “one dot product per row” pattern as lab 04’s update step:</p>
+<p><span class="math display">\nabla W_{2,\text{apple}} = 0.5042 \times [1.4,\ 0] = [0.7059,\ 0], \qquad \nabla W_{2,\text{banana}} = -0.8355 \times [1.4,\ 0] = [-1.1697,\ 0], \qquad \nabla W_{2,\text{orange}} = 0.3313 \times [1.4,\ 0] = [0.4638,\ 0]</span></p>
+<p><span class="math display">\nabla b_2 = [0.5042,\ -0.8355,\ 0.3313]</span></p>
 <ul>
 <li>Every row’s second entry is <span class="math inline">0</span> — because <span class="math inline">h_2=0</span>, unit 2 contributed nothing forward, so it gets no credit or blame backward either</li>
 </ul>
 </section>
 <section id="step-3-gradient-at-the-hidden-layer-partial-lpartial-h" class="slide level2">
 <h2>Step 3: gradient at the hidden layer, <span class="math inline">\partial L/\partial h</span></h2>
-<p><span class="math display">\frac{\partial L}{\partial h} = (W^{(2)})^\top(\hat y-y)</span></p>
+<p><span class="math display">\frac{\partial L}{\partial h} = (W_2)^\top(\hat y-y)</span></p>
 <p><span class="math display">\frac{\partial L}{\partial h_1} = (0.5)(0.5042)+(-0.3)(-0.8355)+(0.2)(0.3313) = 0.5690</span> <span class="math display">\frac{\partial L}{\partial h_2} = (1)(0.5042)+(2)(-0.8355)+(-1)(0.3313) = -1.4981</span></p>
 <p><span class="math display">\frac{\partial L}{\partial h} = [0.5690,\ -1.4981]</span></p>
 <ul>
@@ -482,16 +476,16 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>Unit 2’s error signal got <strong>erased</strong> by ReLU’s derivative — that large <span class="math inline">-1.4981</span> from Step 3 never reaches <span class="math inline">W^{(1)}</span>’s second row at all</p>
+<p>Unit 2’s error signal got <strong>erased</strong> by ReLU’s derivative — that large <span class="math inline">-1.4981</span> from Step 3 never reaches <span class="math inline">W_1</span>’s second row at all</p>
 </div>
 </div>
 </div>
 </section>
-<section id="step-5-gradient-for-w1-b1" class="slide level2">
-<h2>Step 5: gradient for <span class="math inline">W^{(1)}, b^{(1)}</span></h2>
-<p><span class="math display">\nabla W^{(1)} = \frac{\partial L}{\partial h_{\text{pre}}}\,x^\top</span></p>
-<p><span class="math display">\nabla W^{(1)}_1 = 0.5690 \times [1.2,\ 0.2] = [0.6828,\ 0.1138], \qquad \nabla W^{(1)}_2 = 0 \times [1.2,\ 0.2] = [0,\ 0]</span></p>
-<p><span class="math display">\nabla b^{(1)} = [0.5690,\ 0]</span></p>
+<section id="step-5-gradient-for-w_1-b_1" class="slide level2">
+<h2>Step 5: gradient for <span class="math inline">W_1, b_1</span></h2>
+<p><span class="math display">\nabla W_1 = \frac{\partial L}{\partial h_{\text{pre}}}\,x^\top</span></p>
+<p><span class="math display">\nabla W_{1,1} = 0.5690 \times [1.2,\ 0.2] = [0.6828,\ 0.1138], \qquad \nabla W_{1,2} = 0 \times [1.2,\ 0.2] = [0,\ 0]</span></p>
+<p><span class="math display">\nabla b_1 = [0.5690,\ 0]</span></p>
 <ul>
 <li>Unit 1’s row gets a real update; unit 2’s row gets <strong>exactly zero</strong> — this example teaches unit 2 nothing</li>
 </ul>
@@ -505,12 +499,12 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <div class="columns">
 <div class="column">
 <p><strong>Hidden layer</strong></p>
-<p><span class="math display">W^{(1)}_{\text{new}} = \begin{array}{l}[0.6586,\ 0.9431]\\ [-1,\ 2]\end{array}</span></p>
-<p><span class="math display">b^{(1)}_{\text{new}} = [-0.2845,\ 0]</span></p>
+<p><span class="math display">W_{1,\text{new}} = \begin{array}{l}[0.6586,\ 0.9431]\\ [-1,\ 2]\end{array}</span></p>
+<p><span class="math display">b_{1,\text{new}} = [-0.2845,\ 0]</span></p>
 </div><div class="column">
 <p><strong>Output layer</strong></p>
-<p><span class="math display">W^{(2)}_{\text{new}} = \begin{array}{l}[0.1471,\ 1]\\ [0.2848,\ 2]\\ [-0.0319,\ -1]\end{array}</span></p>
-<p><span class="math display">b^{(2)}_{\text{new}} = [-0.2521,\ 0.4177,\ -0.1656]</span></p>
+<p><span class="math display">W_{2,\text{new}} = \begin{array}{l}[0.1471,\ 1]\\ [0.2848,\ 2]\\ [-0.0319,\ -1]\end{array}</span></p>
+<p><span class="math display">b_{2,\text{new}} = [-0.2521,\ 0.4177,\ -0.1656]</span></p>
 </div></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -521,7 +515,7 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p><span class="math inline">W^{(1)}</span>’s second row is unchanged — <span class="math inline">[-1,\ 2]</span> before and after. A zero gradient means zero update, no matter what <span class="math inline">\eta</span> is</p>
+<p><span class="math inline">W_1</span>’s second row is unchanged — <span class="math inline">[-1,\ 2]</span> before and after. A zero gradient means zero update, no matter what <span class="math inline">\eta</span> is</p>
 </div>
 </div>
 </div>
@@ -559,11 +553,11 @@ Outline / progress tracker (update the tag as each section gets drafted):
 <tbody>
 <tr class="odd">
 <td><strong>Forward</strong></td>
-<td><span class="math inline">x \to W^{(1)}x+b^{(1)} \to \text{ReLU} \to h \to W^{(2)}h+b^{(2)} \to \text{softmax} \to \hat y \to L</span></td>
+<td><span class="math inline">x \to W_1x+b_1 \to \text{ReLU} \to h \to W_2h+b_2 \to \text{softmax} \to \hat y \to L</span></td>
 </tr>
 <tr class="even">
 <td><strong>Backward</strong></td>
-<td><span class="math inline">\dfrac{\partial L}{\partial o} \to \dfrac{\partial L}{\partial h} \to \dfrac{\partial L}{\partial h_{\text{pre}}} \to \nabla W^{(1)}, \nabla b^{(1)}</span></td>
+<td><span class="math inline">\dfrac{\partial L}{\partial o} \to \dfrac{\partial L}{\partial h} \to \dfrac{\partial L}{\partial h_{\text{pre}}} \to \nabla W_1, \nabla b_1</span></td>
 </tr>
 <tr class="odd">
 <td><strong>Update</strong></td>
