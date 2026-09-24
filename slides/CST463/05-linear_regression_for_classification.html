@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="05-linear_regression_for_classification_files/libs/clipboard/clipboard.min.js"></script>
+<script src="05-linear_regression_for_classification_files/libs/quarto-html/tabby.min.js"></script>
+<script src="05-linear_regression_for_classification_files/libs/quarto-html/popper.min.js"></script>
+<script src="05-linear_regression_for_classification_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="05-linear_regression_for_classification_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="05-linear_regression_for_classification_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="05-linear_regression_for_classification_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
+
+  <meta name="author" content="Sam Ogden">
+  <title>Linear Regression for Classification</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="05-linear_regression_for_classification_files/libs/revealjs/dist/theme/quarto-714f1515ce518ade9c0c6f6b6ce33b8c.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="05-linear_regression_for_classification_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="05-linear_regression_for_classification_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-last-updated="2026-09-15 22:21" class="quarto-title-block center">
+  <h1 class="title">Linear Regression for Classification</h1>
+  <p class="subtitle">Advanced Machine Learning</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Sam Ogden 
+</div>
+</div>
+</div>
+
+</section>
+<section id="draft" class="title-slide slide level1 draft-slide center">
+<h1>DRAFT</h1>
+<p>This slide deck is still under active development. Expect changes before it is finalized.</p>
+</section>
+
+<!--
+Assumed prior knowledge, from lectures 03-04 (the decks this one picks up
+from):
+
+- From 03: training = iteratively adapting parameters using a loss, not
+  solving in one shot; loss functions as "one number that says how bad
+  we're doing right now"; gradient descent / SGD / mini-batch as three
+  points on the same dial; vocabulary (parameters, predictions, learning
+  rate, epoch).
+- From 04 (bridge lecture, multi-linear regression): a model can produce
+  more than one output number at once -- W becomes a matrix, b becomes a
+  vector, one row of W per output. That's what makes "A linear model, per
+  class" below a callback instead of a cold introduction of matrix-valued
+  output.
+
+Students have NOT yet seen: one-hot encoding, softmax, or cross-entropy.
+That part is still genuinely new content, not a reframing of something
+they already know.
+
+Companion reading: https://d2l.ai/chapter_linear-classification/index.html
+Follow d2l's use of concrete worked examples (small number of classes,
+actual numbers plugged through softmax/cross-entropy by hand) rather than
+purely symbolic treatment -- that's the part of their treatment worth
+keeping. A connected notebook (mirrors the d2l chapter, run live
+throughout lecture) is planned but out of scope for this pass -- this pass
+is slide outline only.
+
+Goals for this lecture:
+
+- Motivate *why* linear regression's machinery doesn't just transfer to
+  classification untouched: unbounded real-valued output vs. "which of K
+  categories," and no natural ordering/distance between categories.
+- Introduce one-hot encoding as the fix for representing a categorical
+  label numerically.
+- Apply the multi-output linear model from lecture 04 here: one score per
+  class (W a matrix, b a vector) -- same dot-product idea as before, just
+  repeated per class. This section should now read as a quick callback,
+  not a fresh introduction of matrix-valued output.
+- Introduce softmax as the fix for turning arbitrary real scores into
+  something that behaves like a probability distribution. Going straight
+  to the general K-class case (not building up from binary logistic
+  regression first) -- matches d2l's own structure, and avoids deriving
+  everything twice. As a one-line aside once softmax is on the board:
+  note that with K=2 classes, softmax collapses to the sigmoid/logistic
+  form some students may have already seen -- a cheap payoff, not a
+  restructure of the flow.
+  Deliberately NOT introducing temperature here (scaling logits before
+  softmax) -- it's a sampling/calibration knob that matters once we're
+  talking generation (softmax over a vocabulary), not for this first
+  pass at classification. Revisit when the course reaches text
+  generation.
+- Introduce cross-entropy as the loss that actually rewards putting
+  probability mass on the correct class, and explain why MSE on
+  softmax output is a worse choice (saturated gradients, doesn't match
+  what we actually care about).
+- Show that the gradient of softmax + cross-entropy w.r.t. the raw scores
+  collapses to (y_hat - y) -- the *same shape* as linear regression's
+  gradient -- so nothing about the SGD/mini-batch training loop from
+  lecture 03 needs to change, only the loss and what "prediction" means.
+- Land on: classification is not a new training algorithm, it's a new
+  loss function bolted onto the same machine.
+
+Depth-separation constraint (recurring student/TA feedback on past decks):
+keep technical notation and plain-language "what/why" framing on SEPARATE
+slides. Pattern per concept:
+
+  1. "Big Idea" slide {.big-idea} -- H2 literally reads "Big Idea," body
+     is one plain-language sentence/box, no notation, no jargon.
+  2. Full technical slide -- the complete formula, all at once, minimal
+     surrounding prose.
+  3. One or more breakdown slides -- take the formula from (2) apart
+     term by term (bold/isolate one piece per slide), explaining what
+     each piece is and why it's shaped that way.
+
+Also recurring feedback: slides have been too dense. Cap bullets per
+slide harder than lecture 03 did -- if a slide needs a table AND several
+bullets AND a callout, it's two slides.
+
+Tightening pass (this revision): target is ~70 min lecture, followed by a
+lab where students walk one example through a full forward pass (logits ->
+softmax -> cross-entropy) and backward pass (the gradient) BY HAND. Original
+draft ran long (~54 slides) mostly because "Putting it together: training a
+classifier" was re-deriving lecture 04's closing beat almost verbatim
+("SGD is the exact same," "nothing about the training loop changes") --
+that section is now cut down to just its Big Idea + the "what
+changed/what didn't" columns slide, since that's the only genuinely new
+synthesis point. Also cut: the "A linear model, per class" section's
+separate Big Idea (it's pure recap of lecture 04, not a new problem, so
+per this deck's own rule it shouldn't get one); the worked-example
+gradient-arithmetic slide in "Differentiating the loss" (that arithmetic
+is now the lab's job, not the lecture's -- lecture keeps the derived
+formula + sign intuition only); the "MSE vs. cross-entropy" plot slide
+(also fixes a dangling promise -- it forward-referenced an MSE-gradient
+discussion that the deck never actually delivered). Several thin
+recap-only slides were merged pairwise (one-hot's "written out" +
+"exactly one 1"; the two "why not reuse regression" problem slides).
+-->
+<!--
+Outline / progress tracker (update the tag as each section gets drafted):
+
+## Learning objectives                                             [drafted]
+
+## Classification {.section}                                       [drafted]
+## Why not just reuse linear regression directly? {.section}       [drafted]
+
+## One-hot encoding {.section}                                     [drafted]
+## A "linear" model, per class {.section}                            [drafted]
+## From scores to probabilities: softmax {.section}                [drafted]
+## Measuring how wrong we are: cross-entropy {.section}            [drafted]
+  (folds in "why not MSE" as its own problem-statement slide, plus a
+  closing MSE-vs-cross-entropy comparison slide -- not a separate
+  {.section} anymore, since that's exactly where students would ask it)
+## Differentiating the loss {.section}                             [drafted]
+## Putting it together: training a classifier {.section}           [drafted]
+## Summary {.section}                                               [drafted]
+  (renamed from "Wrap")
+
+"skeleton" = the {.section} divider and its "The Big Idea" slide exist
+with a one-line placeholder idea, so the shape of the whole lecture is
+visible, but no problem-statement/technical/breakdown slides underneath
+them yet.
+
+Big Idea slide format (revised -- these are NOT their own centered
+section-style slide anymore):
+
+  ## The Big Idea
+
+  :::{.big-idea}
+  One plain-language sentence -- the resolving insight, not a restatement
+  of the problem.
+  :::
+
+Title sits top-left like any normal content slide; the .big-idea div is
+what gets boxed and centered. A Big Idea slide answers "if you had to
+summarize this section in one sentence, what would you say" -- it should
+land AFTER a plain-language problem-statement slide (no notation) that
+sets up what's actually being resolved, whenever the section poses a real
+problem rather than just introducing a topic.
+
+Carried-through worked example, decided for this pass: classifying a
+piece of fruit as apple / banana / orange from two features, weight (g)
+and color_score (a 0-1 scale, green=0 to red=1). Small, visualizable in
+2D, and generalizes cleanly to K=3 classes for every worked-numbers slide
+from here to the end of the lecture (one-hot, softmax, cross-entropy).
+Numbers are illustrative, not real fruit data -- fine for a toy example.
+
+Visualization ideas to develop alongside the notebook (not slide content
+yet, just parking here):
+  - decision boundary plot for the fruit dataset, updating as training
+    progresses (mirrors the GD/SGD walk widgets from lecture 03, but
+    showing a boundary instead of a fitted line)
+  - a small bar chart of the softmax output vector for one example,
+    updating live as the model trains, to make "the model's confidence"
+    visible and concrete
+-->
+<section id="learning-objectives" class="slide level2">
+<h2>Learning objectives</h2>
+<ul>
+<li>Give categories their own model output, via one-hot labels and softmax</li>
+<li>Define cross-entropy loss for that output</li>
+<li>Show its gradient looks just like linear regression’s</li>
+</ul>
+</section>
+<section id="classification" class="slide level2 section">
+<h2>Classification</h2>
+</section>
+<section id="the-big-question" class="slide level2">
+<h2>The Big Question</h2>
+<div class="big-question">
+<p>Predicting <em>which</em>, not <em>how much</em></p>
+</div>
+</section>
+<section id="what-we-have-vs.-whats-different" class="slide level2">
+<h2>What we have vs.&nbsp;what’s different</h2>
+<div class="columns">
+<div class="column">
+<p><strong>What we already have</strong></p>
+<ul>
+<li>A dataset, a model, a loss</li>
+<li>A way to train it — all covered previously</li>
+<li>All of it assumed the answer is a single number</li>
+</ul>
+</div><div class="column">
+<p><strong>What’s different now</strong></p>
+<ul>
+<li>The answer is a <strong>category</strong>
+<ul>
+<li><code>spam</code> or <code>not spam</code></li>
+<li><code>cat</code> or <code>dog</code></li>
+<li>which digit</li>
+</ul></li>
+<li>No natural “how far off” between categories, the way there is between numbers</li>
+</ul>
+</div></div>
+</section>
+<section id="the-big-idea" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Some questions don’t have a numeric answer — they have a category as the answer.</p>
+</div>
+</section>
+<section id="a-concrete-example-well-carry-through" class="slide level2">
+<h2>A concrete example we’ll carry through</h2>
+<p>We’ll sort pieces of fruit into <strong>apple</strong>, <strong>banana</strong>, or <strong>orange</strong>, from two features:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">weight (g)</th>
+<th style="text-align: right;">color score (0=green, 1=red)</th>
+<th>fruit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">0.9</td>
+<td>apple</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">0.2</td>
+<td>banana</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">0.7</td>
+<td>orange</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-not-just-reuse-linear-regression-directly" class="slide level2 section">
+<h2>Why not just reuse linear regression directly?</h2>
+</section>
+<section id="categories-arent-numbers" class="slide level2">
+<h2>Categories aren’t numbers</h2>
+<ul>
+<li>We’re used to fitting a line to numbers</li>
+<li>Apple, banana, orange aren’t numbers — there’s no natural “less than” or “far apart” between them</li>
+<li>Coding them as 0, 1, 2 invents structure that isn’t really there</li>
+</ul>
+</section>
+<section id="the-big-idea-1" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Each <em>individual</em> category is binary — it is, or it isn’t.</p>
+</div>
+</section>
+<section id="lets-just-try-it-anyway" class="slide level2">
+<h2>Let’s just try it anyway</h2>
+<ul>
+<li>Code the labels as integers: apple = 0, banana = 1, orange = 2</li>
+<li>Fit the usual linear model against those codes: <span class="math display">\hat y = \mathbf{w} \cdot \mathbf{x} + b</span></li>
+<li>Predict a class by rounding <span class="math inline">\hat y</span> to the nearest code</li>
+</ul>
+</section>
+<section id="two-problems-with-this" class="slide level2">
+<h2>Two problems with this</h2>
+<ul>
+<li><strong>We invented an ordering</strong> — this encoding says banana (1) sits <em>between</em> apple (0) and orange (2); relabel the fruits differently and the model’s behavior changes</li>
+<li><strong>The output doesn’t match the question</strong> — <span class="math inline">\hat y</span> can be anything (<code>-1.3</code>, <code>4.7</code>, …); rounding to the nearest code is a patch, not a fix, and a <code>1.99</code> vs.&nbsp;a <code>1.01</code> both round to “banana” without feeling equally confident</li>
+</ul>
+</section>
+<section id="what-we-actually-need" class="slide level2">
+<h2>What we actually need</h2>
+<ul>
+<li>A way to write “which category” without implying order or distance → <strong>one-hot encoding</strong></li>
+<li>A model output that’s bounded and behaves like a confidence → <strong>softmax</strong></li>
+</ul>
+</section>
+<section id="one-hot-encoding" class="slide level2 section">
+<h2>One-hot encoding</h2>
+</section>
+<section id="the-big-idea-2" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Give every category its own slot, and just mark which one is true.</p>
+</div>
+</section>
+<section id="our-fruit-one-hot" class="slide level2">
+<h2>Our fruit, one-hot</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>fruit</th>
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>apple</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td>banana</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td>orange</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Compare to the integer coding from a few slides ago — apple, banana, and orange no longer have any numeric relationship to each other at all</p>
+</div>
+</div>
+</div>
+</section>
+<section id="written-out" class="slide level2">
+<h2>Written out</h2>
+<ul>
+<li><span class="math inline">K</span> categories → a vector of length <span class="math inline">K</span>, one slot per category</li>
+<li>Slot <span class="math inline">j</span> is 1 if the example belongs to category <span class="math inline">j</span>, 0 otherwise: <span class="math display">y_j = \begin{cases} 1 &amp; \text{example is class } j \\ 0 &amp; \text{otherwise} \end{cases}</span></li>
+<li>Exactly one slot is 1 — that’s the “hot” one — and its <em>position</em> carries all the information; nothing else in the vector does</li>
+</ul>
+</section>
+<section id="a-linear-model-per-class" class="slide level2 section">
+<h2>A “linear” model, per class</h2>
+<p>Linear scores — for now</p>
+</section>
+<section id="one-score-per-class-recap" class="slide level2">
+<h2>One score per class (recap)</h2>
+<ul>
+<li>One shared model, not <span class="math inline">K</span> separate ones — <span class="math inline">\mathbf{W}</span> has one row per class, <span class="math inline">\mathbf{b}</span> one entry per class: <span class="math display">\mathbf{o} = \mathbf{W}\mathbf{x} + \mathbf{b}, \qquad o_j = \mathbf{w_j} \cdot \mathbf{x} + b_j</span></li>
+<li><span class="math inline">\mathbf{o}</span> is just this layer’s raw <strong>o</strong>utput (hence the letter) — same forward pass as multi-output regression, covered previously</li>
+<li>Each <span class="math inline">o_j</span> is called a <strong>logit</strong>: the model’s raw, unnormalized opinion about class <span class="math inline">j</span> — it can be negative, has no upper bound, and the <span class="math inline">o_j</span>’s don’t sum to anything meaningful</li>
+</ul>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\mathbf{o}</span> is not our prediction yet — one more function still needs to act on it</p>
+</div>
+</div>
+</div>
+</section>
+<section id="worked-example-our-fruit" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Suppose, for one particular (weight, color) example, evaluating <span class="math inline">o_j = \mathbf{w_j} \cdot \mathbf{x} + b_j</span> for each class gives:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">−0.3</td>
+<td style="text-align: center;">2.1</td>
+<td style="text-align: center;">0.6</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Banana has the highest logit, so <em>right now</em> the model favors banana</li>
+</ul>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>So the answer is just “banana,” done?</strong> That’s not actually what we do — why not?</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-picture-so-far" class="slide level2">
+<h2>The picture so far</h2>
+
+<img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-2-output-1.svg" class="r-stretch"><ul>
+<li><span class="math inline">x \to</span> linear layer <span class="math inline">\to \mathbf{o}</span> is the whole story so far</li>
+<li>Something still needs to turn <span class="math inline">\mathbf{o}</span> into an actual prediction — that’s next</li>
+</ul>
+</section>
+<section id="softmax" class="slide level2 section">
+<h2>Softmax</h2>
+<p>From scores to probabilities</p>
+</section>
+<section id="the-big-idea-3" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>We make each prediction <em>act</em> like a probability – without changing which class wins.</p>
+</div>
+</section>
+<section id="the-softmax-function" class="slide level2">
+<h2>The softmax function</h2>
+<p><span class="math display">\hat y_j = \text{softmax}(\mathbf{o})_j = \frac{e^{o_j}}{\sum_{k=1}^K e^{o_k}}</span></p>
+<ul>
+<li>Takes in all <span class="math inline">K</span> logits at once, returns one probability per class</li>
+<li><span class="math inline">\hat{\mathbf{y}}</span> is now our model’s actual prediction — a full probability distribution over the classes</li>
+</ul>
+</section>
+<section id="the-full-picture" class="slide level2">
+<h2>The full picture</h2>
+
+<img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-3-output-1.svg" class="r-stretch"><ul>
+<li>Two functions, applied one after the other: a <strong>linear</strong> layer, then <strong>softmax</strong></li>
+<li><span class="math inline">\mathbf{o}</span> was never the answer — it’s an intermediate value that softmax turns into <span class="math inline">\hat{\mathbf{y}}</span></li>
+</ul>
+</section>
+<section id="breakdown-numerator-and-denominator" class="slide level2">
+<h2>Breakdown: numerator and denominator</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Numerator</strong></p>
+<p><span class="math display">e^{o_j}</span></p>
+<ul>
+<li>Exponentiate <em>this</em> class’s logit</li>
+<li>Always positive</li>
+<li>Same ranking as <span class="math inline">o_j</span></li>
+</ul>
+</div><div class="column">
+<p><strong>Denominator</strong></p>
+<p><span class="math display">\sum_{k=1}^K e^{o_k}</span></p>
+<ul>
+<li>The <em>same kind of term</em></li>
+<li>Summed over every class</li>
+<li>Includes <span class="math inline">j</span> itself</li>
+</ul>
+</div></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Divide one by the other: squeezes every class’s share into <span class="math inline">[0,1]</span>, and all <span class="math inline">K</span> shares add up to exactly 1</p>
+</div>
+</div>
+</div>
+</section>
+<section id="so-what-does-this-actually-do" class="slide level2">
+<h2>So what does this actually do?</h2>
+<ul>
+<li>It’s not just squashing into <span class="math inline">[0,1]</span> — exponentiating also <strong>magnifies</strong> the gaps between logits</li>
+<li>Our banana/orange logits differed by only <span class="math inline">1.5</span>; their probabilities differ by a factor of <span class="math inline">e^{1.5} \approx 4.5</span></li>
+<li>A modest lead in logits turns into a much larger lead in confidence</li>
+</ul>
+</section>
+<section id="worked-example-our-fruit-1" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Recall our logits: apple <span class="math inline">=-0.3</span>, banana <span class="math inline">=2.1</span>, orange <span class="math inline">=0.6</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">apple</th>
+<th style="text-align: center;">banana</th>
+<th style="text-align: center;">orange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">e^{o_j}</span></td>
+<td style="text-align: center;">0.74</td>
+<td style="text-align: center;">8.17</td>
+<td style="text-align: center;">1.82</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\hat y_j</span></td>
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">0.76</td>
+<td style="text-align: center;">0.17</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Same winner as before (banana) — softmax never changes who wins</li>
+<li>But now we also know <em>how confident</em>: about 76%, not just “highest”</li>
+</ul>
+</section>
+<section id="the-special-case-two-classes" class="slide level2">
+<h2>The special case: two classes</h2>
+<ul>
+<li>With only <span class="math inline">K=2</span> classes, softmax simplifies to: <span class="math display">\hat y_1 = \frac{1}{1 + e^{-(o_1 - o_2)}}</span></li>
+<li>That’s the <strong>sigmoid</strong> function, applied to the <em>difference</em> between the two logits</li>
+<li>This special case has its own name — <strong>logistic regression</strong> — softmax is its generalization to more than two classes</li>
+</ul>
+</section>
+<section id="what-softmax-buys-us" class="slide level2">
+<h2>What softmax buys us</h2>
+<ul>
+<li><strong>A real probability distribution</strong>: non-negative, sums to 1, ranks classes the same way the logits did</li>
+<li><strong>A smooth function</strong>: softmax is differentiable, unlike <code>argmax</code>
+<ul>
+<li>That matters a lot! To train with gradient descent, we need a loss we can actually take a gradient of</li>
+</ul></li>
+</ul>
+</section>
+<section id="loss-cross-entropy" class="slide level2 section">
+<h2>Loss: Cross entropy</h2>
+<p>Loss function for multi-classification</p>
+</section>
+<section id="why-not-just-reuse-mse" class="slide level2">
+<h2>Why not just reuse MSE?</h2>
+<ul>
+<li><p>MSE only knows “off by how much”; it can’t tell <em>unsure</em> apart from <em>confidently wrong</em></p></li>
+<li><p>Being <em>confidently</em> wrong should cost a lot more than being unsure</p></li>
+</ul>
+</section>
+<section id="the-big-idea-4" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Penalize the model by how little probability it gave the correct answer.</p>
+</div>
+</section>
+<section id="cross-entropy-loss" class="slide level2">
+<h2>Cross-entropy loss</h2>
+<p><span class="math display">L(\mathbf{y}, \hat{\mathbf{y}}) = -\sum_{j=1}^K y_j \log \hat y_j</span></p>
+<ul>
+<li><span class="math inline">\mathbf{y}</span>: the one-hot true label</li>
+<li><span class="math inline">\hat{\mathbf{y}}</span>: the softmax output — our predicted probabilities</li>
+<li>One number, same as MSE was — small if we’re right, big if we’re wrong</li>
+</ul>
+</section>
+<section id="only-one-term-survives" class="slide level2">
+<h2>Only one term survives</h2>
+<ul>
+<li><span class="math inline">y_j</span> is 0 for every class except the true one, call it <span class="math inline">t</span></li>
+<li>Every term in the sum vanishes except <span class="math inline">j = t</span></li>
+<li>The whole sum collapses to just: <span class="math display">L = -\log \hat y_t</span></li>
+<li>Cross-entropy only ever looks at the probability the model gave the <em>correct</em> class</li>
+</ul>
+</section>
+<section id="breakdown-why-the-negative-log" class="slide level2">
+<h2>Breakdown: why the negative log?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\hat y_t</span> (true class probability)</th>
+<th style="text-align: center;"><span class="math inline">-\log \hat y_t</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.99</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.76</td>
+<td style="text-align: center;">0.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">2.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">4.61</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Confident <em>and</em> correct (<span class="math inline">\hat y_t</span> near 1) → loss near 0</li>
+<li>Confident <em>and</em> wrong (<span class="math inline">\hat y_t</span> near 0) → loss blows up</li>
+<li>Being unsure costs a little; being confidently wrong costs a lot</li>
+</ul>
+</section>
+<section id="log-loss-visualized" class="slide level2">
+<h2>Log-loss, visualized</h2>
+<p>One classification act — one example, one true class — costs <span class="math inline">-\log \hat y_t</span>:</p>
+<div id="c57f321a" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-linear_regression_for_classification_files/figure-revealjs/cell-4-output-1.png" width="850" height="469"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The curve is steep near 0, flat near 1 — the same asymmetry as the table, just visible now</li>
+<li>The five orange points are exactly the five rows from the table</li>
+</ul>
+</section>
+<section id="worked-example-our-fruit-2" class="slide level2">
+<h2>Worked example: our fruit</h2>
+<p>Recall our softmax output: apple <span class="math inline">=0.07</span>, banana <span class="math inline">=0.76</span>, orange <span class="math inline">=0.17</span> — and the true label is banana</p>
+<ul>
+<li><span class="math display">L = -\log(0.76) \approx 0.27</span></li>
+<li>Had the model instead favored apple, with only <span class="math inline">0.07</span> on banana: <span class="math display">L = -\log(0.07) \approx 2.66</span></li>
+<li>Same “wrong or right” call either way — cross-entropy is what tells them apart</li>
+</ul>
+</section>
+<section id="differentiating-the-loss" class="slide level2 section">
+<h2>Differentiating the loss</h2>
+<p>Surprisingly easy calculus</p>
+</section>
+<section id="the-big-idea-5" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>This scary-looking loss has a gradient just as simple as linear regression’s.</p>
+</div>
+</section>
+<section id="rewrite-the-loss-and-softmax-first" class="slide level2">
+<h2>Rewrite the loss and softmax first</h2>
+<p>Recall <span class="math inline">L = -\log (\hat y_t)</span>, where <span class="math inline">\hat y_t = \dfrac{e^{o_t}}{\sum_k e^{o_k}}</span> — substituting one into the other <strong>fuses log-loss and softmax into a single expression</strong>, before we differentiate anything:</p>
+<p><span class="math display">-\log\frac{e^{o_t}}{\sum_{k=1}^K e^{o_k}} \;=\; -\log(e^{o_t}) + \log\sum_{k=1}^K e^{o_k} \;=\; -o_t + \log\sum_{k=1}^K e^{o_k}</span></p>
+<ul>
+<li>Step 1: <span class="math inline">\log(a/b) = \log a - \log b</span></li>
+<li>Step 2: <span class="math inline">\log(e^{o_t}) = o_t</span> — true because <span class="math inline">\log</span> here means the <strong>natural log</strong> (<span class="math inline">\ln</span>), not <span class="math inline">\log_{10}</span></li>
+<li>Still just algebra — no derivative yet. We’re rewriting <span class="math inline">L</span> into a form that’s easy to differentiate next</li>
+</ul>
+</section>
+<section id="take-the-derivative" class="slide level2">
+<h2>Take the derivative</h2>
+<ul>
+<li>Differentiate term by term with respect to <span class="math inline">o_j</span>: <span class="math display">\frac{\partial L}{\partial o_j} = -y_j + \frac{e^{o_j}}{\sum_{k=1}^K e^{o_k}}</span></li>
+<li>The <span class="math inline">-o_t</span> term only depends on <span class="math inline">o_j</span> when <span class="math inline">j = t</span> — its derivative is <span class="math inline">-1</span> then, <span class="math inline">0</span> otherwise, which is exactly <span class="math inline">-y_j</span></li>
+<li>The second term is just softmax again, <span class="math inline">\hat y_j</span> leaving us with: <span class="math display">\frac{\partial L}{\partial o_j} = \hat y_j - y_j</span></li>
+</ul>
+</section>
+<section id="breakdown-the-same-shape-as-before" class="slide level2">
+<h2>Breakdown: the same shape as before</h2>
+<ul>
+<li>Regression’s gradient, covered previously: <span class="math inline">\dfrac{\partial L}{\partial w} = (\hat y_i - y_i)\,x_i</span> — “prediction minus truth, times input”</li>
+<li>Same shape here, just once per class: <span class="math display">\frac{\partial L}{\partial \mathbf{w_j}} = (\hat y_j - y_j)\,\mathbf{x}, \qquad \frac{\partial L}{\partial b_j} = \hat y_j - y_j</span></li>
+</ul>
+<p><br></p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>All that softmax and log-loss machinery, and the gradient still just says “how wrong were we” — negative for the true class (push its logit up), positive for every other class (push them down)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="putting-it-together-training-a-classifier" class="slide level2 section">
+<h2>Putting it together: training a classifier</h2>
+<p>Same loop, new loss</p>
+</section>
+<section id="the-big-idea-6" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Nothing about the training loop changes — only the loss, and what “prediction” means.</p>
+</div>
+</section>
+<section id="what-changed-what-didnt" class="slide level2">
+<h2>What changed / what didn’t</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Same as before</strong></p>
+<ul>
+<li>The training loop itself — sample, gradient, step, repeat</li>
+<li>The learning rate <span class="math inline">\eta</span></li>
+<li><span class="math inline">(\mathbf{W}, \mathbf{b})</span> as the trainable parameters</li>
+</ul>
+</div><div class="column">
+<p><strong>New this lecture</strong></p>
+<ul>
+<li>Prediction: a probability vector, via softmax</li>
+<li>Loss: cross-entropy, not MSE</li>
+<li>Gradient: <span class="math inline">\hat y_j - y_j</span> — same shape as before, just <span class="math inline">\hat y</span> is now <em>computed</em> differently (via softmax, not a plain dot product)</li>
+</ul>
+</div></div>
+</section>
+<section id="summary" class="slide level2 section">
+<h2>Summary</h2>
+</section>
+<section id="the-recipe" class="slide level2">
+<h2>The recipe</h2>
+<table class="caption-top">
+<tbody>
+<tr class="odd">
+<td><strong>Task</strong></td>
+<td>classify each example into one of <span class="math inline">K</span> categories</td>
+</tr>
+<tr class="even">
+<td><strong>Example</strong></td>
+<td>apple / banana / orange, from weight + color</td>
+</tr>
+<tr class="odd">
+<td><strong>Model output</strong></td>
+<td>logits → softmax → a probability vector</td>
+</tr>
+<tr class="even">
+<td><strong>Loss</strong></td>
+<td>cross-entropy</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>This recipe — categorical output, softmax, cross-entropy — is the template for classification problems in general, not just this one</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>In lab: walk one example through a full forward pass (logits → softmax → cross-entropy) and backward pass (the gradient) <strong>by hand</strong>, with actual numbers</p>
+</div>
+</div>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>CST463 · Advanced Machine Learning</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="05-linear_regression_for_classification_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3,"chalkWidth":3},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 6.0e-2,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

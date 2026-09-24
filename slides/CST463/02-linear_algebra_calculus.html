@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="02-linear_algebra_calculus_files/libs/clipboard/clipboard.min.js"></script>
+<script src="02-linear_algebra_calculus_files/libs/quarto-html/tabby.min.js"></script>
+<script src="02-linear_algebra_calculus_files/libs/quarto-html/popper.min.js"></script>
+<script src="02-linear_algebra_calculus_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="02-linear_algebra_calculus_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="02-linear_algebra_calculus_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="02-linear_algebra_calculus_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="02-linear_algebra_calculus_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="02-linear_algebra_calculus_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/run-python-blocks.js" type="module"></script>
+<link href="02-linear_algebra_calculus_files/libs/quarto-contrib/shinylive-0.10.14/shinylive/shinylive.css" rel="stylesheet">
+<link href="02-linear_algebra_calculus_files/libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
+
+  <meta name="author" content="Sam Ogden">
+  <title>Linear Algebra &amp; Calculus for Deep Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="02-linear_algebra_calculus_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="02-linear_algebra_calculus_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="02-linear_algebra_calculus_files/libs/revealjs/dist/theme/quarto-714f1515ce518ade9c0c6f6b6ce33b8c.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="02-linear_algebra_calculus_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="02-linear_algebra_calculus_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script>
+  window.PlotlyConfig = {MathJaxConfig: 'local'};
+  if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+  </script>
+  <script type="module">import "https://cdn.plot.ly/plotly-4.0.0.min"</script>
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-last-updated="2026-08-31 09:48" class="quarto-title-block center">
+  <h1 class="title">Linear Algebra &amp; Calculus for Deep Learning</h1>
+  <p class="subtitle">Advanced Machine Learning</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Sam Ogden 
+</div>
+</div>
+</div>
+
+</section>
+<section id="draft" class="title-slide slide level1 draft-slide center">
+<h1>DRAFT</h1>
+<p>This slide deck is still under active development. Expect changes before it is finalized.</p>
+</section>
+
+<section id="learning-objectives" class="slide level2">
+<h2>Learning objectives</h2>
+<ul>
+<li>Build a concrete, geometric sense of what a “dimension” is — a feature vector vs.&nbsp;a multi-dimensional measurement</li>
+<li>Compute partial derivatives and assemble them into a gradient</li>
+<li>See the chain rule compose two functions — the same idea autograd automates, coming next lecture</li>
+<li>Use estimators (mean, std) to standardize features, and know what “estimator” means</li>
+</ul>
+</section>
+<section id="why-are-we-doing-this" class="slide level2 section">
+<h2>Why are we doing this?</h2>
+<p>Optimizing Models</p>
+</section>
+<section id="what-is-a-model" class="slide level2">
+<h2>What is a model?</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<ul>
+<li>A model is a function with <strong>parameters</strong> we can tune</li>
+<li>The simplest useful one is linear: <span class="math display">\hat{y} = wx + b</span></li>
+<li><code>w</code> — slope: how much <code>ŷ</code> changes per unit of <code>x</code></li>
+<li><code>b</code> — intercept: where the line sits when <code>x = 0</code></li>
+<li>This is the same <code>Ax + b</code> you’ve already seen — just one input, one output</li>
+</ul>
+</div><div class="column" style="width:55%;">
+<div id="ee7911e6" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-linear_algebra_calculus_files/figure-revealjs/cell-2-output-1.png" width="568" height="470"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<!-- 
+## Quick aside: this generalizes to vectors
+
+- The example above used scalars — one `x`, one `w` — to keep things concrete
+- In general, a model takes a whole feature vector \vector(x) and a matching weight vector \vector(w):
+  $$\hat{y} = \vector(w) \cdot \vector(x) + b$$
+- Same idea, same shape (`Ax + b`) — just more numbers doing the same job
+- We'll build up exactly what \vector(w) and \vector(x) mean, and what that `·` is doing, in a few slides
+ -->
+</section>
+<section id="how-do-we-improve-a-model" class="slide level2">
+<h2>How do we improve a model?</h2>
+<ul>
+<li>We have a way to score any choice of <code>(w, b)</code>: mean squared error</li>
+<li>So… how do we pick a <em>better</em> <code>(w, b)</code>?</li>
+</ul>
+<div class="fragment">
+<p><strong>Simplest possible idea:</strong> nudge them randomly, and see what happens.</p>
+</div>
+</section>
+<section id="random-search-live" class="slide level2">
+<h2>Random search, live</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>#| '!! shinylive warning !!': |</span>
+<span id="cb1-2"><a href=""></a>#|   shinylive does not work in self-contained HTML documents.</span>
+<span id="cb1-3"><a href=""></a>#|   Please set `embed-resources: false` in your metadata.</span>
+<span id="cb1-4"><a href=""></a>#| standalone: true</span>
+<span id="cb1-5"><a href=""></a>#| components: [viewer]</span>
+<span id="cb1-6"><a href=""></a>#| viewerHeight: 600</span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a>from shiny import App, render, ui, reactive</span>
+<span id="cb1-9"><a href=""></a>import matplotlib.pyplot as plt</span>
+<span id="cb1-10"><a href=""></a>import numpy as np</span>
+<span id="cb1-11"><a href=""></a></span>
+<span id="cb1-12"><a href=""></a>rng = np.random.default_rng(7)</span>
+<span id="cb1-13"><a href=""></a></span>
+<span id="cb1-14"><a href=""></a>true_slope = 2.5</span>
+<span id="cb1-15"><a href=""></a>true_intercept = -3.0</span>
+<span id="cb1-16"><a href=""></a>error_sd = 5.0</span>
+<span id="cb1-17"><a href=""></a></span>
+<span id="cb1-18"><a href=""></a>x = rng.uniform(0, 10, 40)</span>
+<span id="cb1-19"><a href=""></a>epsilon = rng.normal(0, error_sd, 40)</span>
+<span id="cb1-20"><a href=""></a>y_observed = true_slope * x + true_intercept + epsilon</span>
+<span id="cb1-21"><a href=""></a></span>
+<span id="cb1-22"><a href=""></a></span>
+<span id="cb1-23"><a href=""></a>def mse(w, b):</span>
+<span id="cb1-24"><a href=""></a>    y_pred = w * x + b</span>
+<span id="cb1-25"><a href=""></a>    return float(np.mean((y_observed - y_pred) ** 2))</span>
+<span id="cb1-26"><a href=""></a></span>
+<span id="cb1-27"><a href=""></a></span>
+<span id="cb1-28"><a href=""></a>STEP_SD_W = 0.4</span>
+<span id="cb1-29"><a href=""></a>STEP_SD_B = 1.5</span>
+<span id="cb1-30"><a href=""></a>TRAIL_LEN = 40</span>
+<span id="cb1-31"><a href=""></a></span>
+<span id="cb1-32"><a href=""></a>app_ui = ui.page_fluid(</span>
+<span id="cb1-33"><a href=""></a>    ui.layout_columns(</span>
+<span id="cb1-34"><a href=""></a>        ui.card(</span>
+<span id="cb1-35"><a href=""></a>            ui.card_header("choose_next_value(): random"),</span>
+<span id="cb1-36"><a href=""></a>            ui.input_action_button("step_once", "Random update", class_="btn-primary"),</span>
+<span id="cb1-37"><a href=""></a>            ui.input_action_button("step_ten", "Skip ahead 10x", class_="btn-secondary"),</span>
+<span id="cb1-38"><a href=""></a>            ui.input_action_button("reset", "Reset", class_="btn-outline-danger"),</span>
+<span id="cb1-39"><a href=""></a>            ui.hr(),</span>
+<span id="cb1-40"><a href=""></a>            ui.input_checkbox("greedy", "Only keep steps that improve", value=False),</span>
+<span id="cb1-41"><a href=""></a>            ui.hr(),</span>
+<span id="cb1-42"><a href=""></a>            ui.output_text("state_text"),</span>
+<span id="cb1-43"><a href=""></a>        ),</span>
+<span id="cb1-44"><a href=""></a>        ui.card(</span>
+<span id="cb1-45"><a href=""></a>            ui.output_plot("walk_plot")</span>
+<span id="cb1-46"><a href=""></a>        ),</span>
+<span id="cb1-47"><a href=""></a>        col_widths=(4, 8),</span>
+<span id="cb1-48"><a href=""></a>    )</span>
+<span id="cb1-49"><a href=""></a>)</span>
+<span id="cb1-50"><a href=""></a></span>
+<span id="cb1-51"><a href=""></a></span>
+<span id="cb1-52"><a href=""></a>def server(input, output, session):</span>
+<span id="cb1-53"><a href=""></a>    state = reactive.Value({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0})</span>
+<span id="cb1-54"><a href=""></a>    history = reactive.Value([])</span>
+<span id="cb1-55"><a href=""></a></span>
+<span id="cb1-56"><a href=""></a>    def do_step():</span>
+<span id="cb1-57"><a href=""></a>        s = state.get()</span>
+<span id="cb1-58"><a href=""></a>        w_new = s["w"] + rng.normal(0, STEP_SD_W)</span>
+<span id="cb1-59"><a href=""></a>        b_new = s["b"] + rng.normal(0, STEP_SD_B)</span>
+<span id="cb1-60"><a href=""></a>        mse_new = mse(w_new, b_new)</span>
+<span id="cb1-61"><a href=""></a>        improved = mse_new &lt; s["mse"]</span>
+<span id="cb1-62"><a href=""></a>        step = s["step"] + 1</span>
+<span id="cb1-63"><a href=""></a></span>
+<span id="cb1-64"><a href=""></a>        hist = history.get() + [</span>
+<span id="cb1-65"><a href=""></a>            {"w": w_new, "b": b_new, "mse": mse_new, "improved": improved, "step": step}</span>
+<span id="cb1-66"><a href=""></a>        ]</span>
+<span id="cb1-67"><a href=""></a>        history.set(hist[-TRAIL_LEN:])</span>
+<span id="cb1-68"><a href=""></a></span>
+<span id="cb1-69"><a href=""></a>        if improved or not input.greedy():</span>
+<span id="cb1-70"><a href=""></a>            state.set({"w": w_new, "b": b_new, "mse": mse_new, "step": step})</span>
+<span id="cb1-71"><a href=""></a>        else:</span>
+<span id="cb1-72"><a href=""></a>            state.set({**s, "step": step})</span>
+<span id="cb1-73"><a href=""></a></span>
+<span id="cb1-74"><a href=""></a>    @reactive.effect</span>
+<span id="cb1-75"><a href=""></a>    @reactive.event(input.step_once)</span>
+<span id="cb1-76"><a href=""></a>    def _():</span>
+<span id="cb1-77"><a href=""></a>        do_step()</span>
+<span id="cb1-78"><a href=""></a></span>
+<span id="cb1-79"><a href=""></a>    @reactive.effect</span>
+<span id="cb1-80"><a href=""></a>    @reactive.event(input.step_ten)</span>
+<span id="cb1-81"><a href=""></a>    def _():</span>
+<span id="cb1-82"><a href=""></a>        for _ in range(10):</span>
+<span id="cb1-83"><a href=""></a>            do_step()</span>
+<span id="cb1-84"><a href=""></a></span>
+<span id="cb1-85"><a href=""></a>    @reactive.effect</span>
+<span id="cb1-86"><a href=""></a>    @reactive.event(input.reset)</span>
+<span id="cb1-87"><a href=""></a>    def _():</span>
+<span id="cb1-88"><a href=""></a>        history.set([])</span>
+<span id="cb1-89"><a href=""></a>        state.set({"w": 0.0, "b": 0.0, "mse": mse(0.0, 0.0), "step": 0})</span>
+<span id="cb1-90"><a href=""></a></span>
+<span id="cb1-91"><a href=""></a>    @output</span>
+<span id="cb1-92"><a href=""></a>    @render.text</span>
+<span id="cb1-93"><a href=""></a>    def state_text():</span>
+<span id="cb1-94"><a href=""></a>        s = state.get()</span>
+<span id="cb1-95"><a href=""></a>        return f"Step {s['step']}  |  w = {s['w']:.2f}, b = {s['b']:.2f}  |  MSE = {s['mse']:.1f}"</span>
+<span id="cb1-96"><a href=""></a></span>
+<span id="cb1-97"><a href=""></a>    @output</span>
+<span id="cb1-98"><a href=""></a>    @render.plot</span>
+<span id="cb1-99"><a href=""></a>    def walk_plot():</span>
+<span id="cb1-100"><a href=""></a>        s = state.get()</span>
+<span id="cb1-101"><a href=""></a>        hist = history.get()</span>
+<span id="cb1-102"><a href=""></a></span>
+<span id="cb1-103"><a href=""></a>        fig, ax = plt.subplots(figsize=(8, 5))</span>
+<span id="cb1-104"><a href=""></a></span>
+<span id="cb1-105"><a href=""></a>        ax.scatter(</span>
+<span id="cb1-106"><a href=""></a>            x, y_observed, s=45, alpha=0.7, color="steelblue", zorder=3,</span>
+<span id="cb1-107"><a href=""></a>            label="Observed data"</span>
+<span id="cb1-108"><a href=""></a>        )</span>
+<span id="cb1-109"><a href=""></a></span>
+<span id="cb1-110"><a href=""></a>        x_line = np.linspace(0, 10, 200)</span>
+<span id="cb1-111"><a href=""></a></span>
+<span id="cb1-112"><a href=""></a>        n = len(hist)</span>
+<span id="cb1-113"><a href=""></a>        for i, h in enumerate(hist):</span>
+<span id="cb1-114"><a href=""></a>            age = n - i</span>
+<span id="cb1-115"><a href=""></a>            alpha = max(0.05, 1 - (age - 1) / TRAIL_LEN)</span>
+<span id="cb1-116"><a href=""></a>            color = "tab:blue" if h["improved"] else "tab:red"</span>
+<span id="cb1-117"><a href=""></a>            y_line = h["w"] * x_line + h["b"]</span>
+<span id="cb1-118"><a href=""></a>            ax.plot(x_line, y_line, color=color, alpha=alpha * 0.8, linewidth=1.5)</span>
+<span id="cb1-119"><a href=""></a></span>
+<span id="cb1-120"><a href=""></a>        y_current = s["w"] * x_line + s["b"]</span>
+<span id="cb1-121"><a href=""></a>        ax.plot(</span>
+<span id="cb1-122"><a href=""></a>            x_line, y_current, color="black", linewidth=3,</span>
+<span id="cb1-123"><a href=""></a>            label=f"Current (step {s['step']})"</span>
+<span id="cb1-124"><a href=""></a>        )</span>
+<span id="cb1-125"><a href=""></a></span>
+<span id="cb1-126"><a href=""></a>        ax.set_xlim(0, 10)</span>
+<span id="cb1-127"><a href=""></a>        ax.set_ylim(float(y_observed.min()) - 10, float(y_observed.max()) + 10)</span>
+<span id="cb1-128"><a href=""></a>        ax.set_xlabel("x")</span>
+<span id="cb1-129"><a href=""></a>        ax.set_ylabel("y")</span>
+<span id="cb1-130"><a href=""></a>        ax.legend(loc="upper left")</span>
+<span id="cb1-131"><a href=""></a>        ax.set_title("Blue = improved, red = made it worse")</span>
+<span id="cb1-132"><a href=""></a></span>
+<span id="cb1-133"><a href=""></a>        return fig</span>
+<span id="cb1-134"><a href=""></a></span>
+<span id="cb1-135"><a href=""></a></span>
+<span id="cb1-136"><a href=""></a>app = App(app_ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="this-works-eventually" class="slide level2">
+<h2>This works… eventually</h2>
+<ul>
+<li>Blue lines improved the fit, red lines made it worse — and by default, we take the step either way</li>
+<li>Check “only keep steps that improve” — about half the attempts still get thrown away (red), but it actually converges <em>faster</em>, because it never backslides</li>
+<li>Either way: there’s no sense of <em>direction</em>, only whether we got lucky</li>
+<li>With only two parameters this is already slow. Real models have millions.</li>
+</ul>
+<div class="fragment">
+<p><br></p>
+<div class="box center">
+<p><strong>The question of the week:</strong> what if <code>choose_next_value()</code> didn’t have to guess?</p>
+</div>
+</div>
+</section>
+<section id="vectors-matrices-dimensions" class="slide level2 section">
+<h2>Vectors, matrices, dimensions</h2>
+</section>
+<section id="what-does-dimension-mean" class="slide level2">
+<h2>What does “dimension” mean?</h2>
+<ul>
+<li>Dimension means how many distinct input values we have
+<ul>
+<li>One house: <code>[sqft, bedrooms, age]</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><br></p>
+<ul>
+<li>It can also describe the shape of our data
+<ul>
+<li>A greyscale image that is 28x28 would have shape <code>(1, 28, 28)</code>, so 784 input dimensions</li>
+<li>It is also “2D” in the colloquial sense</li>
+</ul></li>
+</ul>
+<p><br></p>
+</div><div class="column" style="width:25%;">
+<p><img data-src="assets/02-linear_algebra_calculus/mnist_digit_pixels.png"></p>
+</div></div>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>We can have both of these combined! For instance, <code>[sqft, bedrooms, age, (1, 28, 28)]</code></p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p><a href="https://mint.westdri.ca/ai/pt/pt_mnist">Image source</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="a-feature-vector" class="slide level2">
+<h2>A feature vector</h2>
+<div id="c08dcc93" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> torch</span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a>house <span class="op">=</span> torch.tensor([<span class="fl">1800.0</span>, <span class="dv">3</span>, <span class="dv">12</span>])  <span class="co"># sqft, bedrooms, age</span></span>
+<span id="cb2-4"><a href=""></a><span class="bu">print</span>(house.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([3])</code></pre>
+</div>
+</div>
+<ul>
+<li>3 numbers, 3 <em>different</em> things — shape <code>(3,)</code></li>
+<li>Position matters because we’ve now chosen a convention for the data
+<ul>
+<li>In this dataset:
+<ul>
+<li>index 0 always means sqft</li>
+<li>index 1 always means bedrooms</li>
+<li>index 2 always means age</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="a-multi-dimensional-measurement" class="slide level2">
+<h2>A multi-dimensional measurement</h2>
+<div id="bde01068" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>image <span class="op">=</span> torch.zeros(<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>)  <span class="co"># channels, height, width</span></span>
+<span id="cb4-2"><a href=""></a><span class="bu">print</span>(image.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([1, 28, 28])</code></pre>
+</div>
+</div>
+<ul>
+<li>Unlike the feature vector, no axis here is a fundamentally different <em>kind</em> of thing
+<ul>
+<li>Axis 0 is “which channel,” axis 1 is “which row,” axis 2 is “which column” — all just <em>more pixels</em></li>
+</ul></li>
+<li><code>.shape</code> tells you the size of each axis, but not which axis is which — that’s a convention you have to know separately (here: channel, then height, then width)</li>
+</ul>
+</section>
+<section id="tensors-one-word-for-all-of-these" class="slide level2">
+<h2>Tensors: one word for all of these</h2>
+<div id="d2635d6f" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-linear_algebra_calculus_files/figure-revealjs/cell-5-output-1.png" width="1131" height="319"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Scalar</strong> (0 axes) — a single number, like our <code>w</code></li>
+<li><strong>Vector</strong> (1 axis) — our feature vector <code>[sqft, bedrooms, age]</code></li>
+<li><strong>Matrix</strong> (2 axes) — a <em>batch</em> of feature vectors, one row per house</li>
+<li><strong>Tensor</strong> (3+ axes) — our image: channel, height, width</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>“Tensor” isn’t new math — it’s just the general word for “however many axes you need”</li>
+<li>Once you think in tensors, you stop asking “is this a vector or a matrix?” and just ask “what does each axis mean?”</li>
+</ul>
+</div>
+</section>
+<section id="important-tensor-math" class="slide level2 section">
+<h2>Important Tensor Math</h2>
+</section>
+<section id="how-big-is-a-vector-norms" class="slide level2">
+<h2>How big is a vector? Norms</h2>
+<ul>
+<li><strong>L2 norm</strong> — straight-line length: <span class="math display">\|\mathbf{x}\|_2 = \sqrt{\textstyle\sum_i x_i^2}</span></li>
+<li><strong>L1 norm</strong> — total distance if you could only move along axes: <span class="math display">\|\mathbf{x}\|_1 = \textstyle\sum_i |x_i|</span></li>
+</ul>
+<div id="4954a9c9" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>x <span class="op">=</span> torch.tensor([<span class="fl">3.0</span>, <span class="fl">4.0</span>])</span>
+<span id="cb6-2"><a href=""></a><span class="bu">print</span>(torch.linalg.norm(x, <span class="bu">ord</span><span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb6-3"><a href=""></a><span class="bu">print</span>(torch.linalg.norm(x, <span class="bu">ord</span><span class="op">=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(5.)
+tensor(7.)</code></pre>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Does <code>‖pred - actual‖₂²</code> look familiar? The L2 norm and MSE are super related!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-norms-matter-measuring-importance" class="slide level2">
+<h2>Why norms matter: measuring importance</h2>
+<ul>
+<li>“Size” here rarely means literal length — it usually means <strong>relative importance</strong>
+<ul>
+<li>A large weight → that feature has a big influence on the prediction</li>
+<li>A large gradient → that parameter is about to change a lot</li>
+<li>A large error vector → the model is very wrong on this example</li>
+</ul></li>
+<li>We’ll spend real time controlling these sizes <em>on purpose</em>: regularization shrinks large weights, gradient clipping caps large gradients</li>
+</ul>
+</section>
+<section id="dot-product-two-ways-to-think-about-it" class="slide level2">
+<h2>Dot product: two ways to think about it</h2>
+<ul>
+<li><strong>Algebraic:</strong> sum of elementwise products <span class="math display">\mathbf{a} \cdot \mathbf{b} = \textstyle\sum_i a_i b_i</span></li>
+<li><strong>Geometric:</strong> a measure of <em>alignment</em> — large when two vectors point the same way, near zero when they’re perpendicular, negative when they point opposite ways</li>
+</ul>
+<div id="80cac390" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>a <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">0.0</span>])</span>
+<span id="cb8-2"><a href=""></a>b <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">0.0</span>])</span>
+<span id="cb8-3"><a href=""></a>c <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb8-4"><a href=""></a></span>
+<span id="cb8-5"><a href=""></a><span class="bu">print</span>(torch.dot(a, b))  <span class="co"># same direction</span></span>
+<span id="cb8-6"><a href=""></a><span class="bu">print</span>(torch.dot(a, c))  <span class="co"># perpendicular</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(1.)
+tensor(0.)</code></pre>
+</div>
+</div>
+<ul>
+<li>This dual meaning — “sum of products” <em>and</em> “similarity” — comes back constantly: cosine similarity, attention, and beyond</li>
+</ul>
+</section>
+<section id="why-dot-products-matter-measuring-agreement" class="slide level2">
+<h2>Why dot products matter: measuring agreement</h2>
+<ul>
+<li>In plain terms, a dot product asks <strong>“how much do these two things agree?”</strong>
+<ul>
+<li>Pointing the same way → strong agreement (big positive number)</li>
+<li>Perpendicular → no relationship (near zero)</li>
+<li>Pointing opposite ways → active disagreement (big negative number)</li>
+</ul></li>
+<li>This is exactly how a model <em>evaluates</em> an input: each output is a dot product between the input and a learned weight vector — “how well does this input match what I’m looking for?”</li>
+</ul>
+</section>
+<section id="matrix-vector-product-a-batch-of-dot-products" class="slide level2">
+<h2>Matrix-vector product: a batch of dot products</h2>
+<ul>
+<li>Multiplying a matrix by a vector is just <em>many dot products done at once</em>, one per row</li>
+</ul>
+<div id="0069fcbe" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>A <span class="op">=</span> torch.tensor([[<span class="fl">1.0</span>, <span class="fl">0.0</span>],</span>
+<span id="cb10-2"><a href=""></a>                   [<span class="fl">0.0</span>, <span class="fl">1.0</span>],</span>
+<span id="cb10-3"><a href=""></a>                   [<span class="fl">1.0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb10-4"><a href=""></a>x <span class="op">=</span> torch.tensor([<span class="fl">2.0</span>, <span class="fl">3.0</span>])</span>
+<span id="cb10-5"><a href=""></a></span>
+<span id="cb10-6"><a href=""></a><span class="bu">print</span>(A <span class="op">@</span> x)</span>
+<span id="cb10-7"><a href=""></a><span class="bu">print</span>(torch.dot(A[<span class="dv">2</span>], x))  <span class="co"># row 2 of A, on its own</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([2., 3., 5.])
+tensor(5.)</code></pre>
+</div>
+</div>
+<ul>
+<li>Row <code>i</code> of <code>A @ x</code> is exactly <code>A[i] · x</code> — nothing new, just done for every row together</li>
+<li>This is what a linear layer computes: one dot product per output neuron, in parallel</li>
+</ul>
+</section>
+<section id="what-this-means-a-matrix-is-a-function" class="slide level2">
+<h2>What this means: a matrix is a function</h2>
+<ul>
+<li><span class="math inline">\mathbf{A}\mathbf{x}</span> isn’t just “multiply a grid by a list” — it’s <strong>evaluating</strong> <span class="math inline">\mathbf{x}</span> using <span class="math inline">\mathbf{A}</span></li>
+<li>Read it the same way you’d read <span class="math inline">f(x)</span>: “put <span class="math inline">\mathbf{x}</span> into <span class="math inline">\mathbf{A}</span>”</li>
+<li>Every row of <span class="math inline">\mathbf{A}</span> is a dot product “looking for” something — the matrix-vector product asks that “how much do you agree?” question for every row, all at once</li>
+<li>That’s the entire forward pass of a linear layer, in one line: <span class="math display">\mathbf{A}\mathbf{x} + \mathbf{b}</span></li>
+</ul>
+</section>
+<section id="calculus-derivatives-partials-gradients" class="slide level2 section">
+<h2>Calculus: derivatives, partials, gradients</h2>
+</section>
+<section id="derivatives-a-fast-recap" class="slide level2">
+<h2>Derivatives: a fast recap</h2>
+<ul>
+<li>The derivative of <span class="math inline">f</span> at a point is its <strong>slope</strong> there — how fast <span class="math inline">f</span> changes as <span class="math inline">x</span> changes
+<ul>
+<li>Notation: <span class="math inline">f'(x)</span>, or <span class="math inline">\frac{df}{dx}</span> – this latter one is much more explicit</li>
+<li><span class="math inline">\frac{df}{dx}</span> can be understood as “ratio of delta-f to delta-x” where “delta” is how we say “change in”</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p>We only need a handlefule of rules:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Power Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx} x^n = nx^{(n-1)}</span></td>
+</tr>
+<tr class="even">
+<td>Constant Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx} c = 0</span></td>
+</tr>
+<tr class="odd">
+<td>Constant Multiple Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx}\big(c \cdot f(x)\big) = c \cdot f'(x)</span></td>
+</tr>
+<tr class="even">
+<td>Chain Rule</td>
+<td style="text-align: center;"><span class="math inline">\frac{d}{dx} f(g(x)) = f'(g(x)) \cdot g'(x)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-chain-rule-composing-two-functions" class="slide level2">
+<h2>The <strong>Chain Rule</strong>: Composing two functions</h2>
+<ul>
+<li><span class="math inline">g(x) = 2x</span></li>
+<li><span class="math inline">f(g) = g^2</span></li>
+<li>Compose them: <span class="math inline">f(g(x)) = (2x)^2 = 4x^2</span></li>
+</ul>
+<div id="ffe8e042" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="kw">def</span> g(x):</span>
+<span id="cb12-2"><a href=""></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> x</span>
+<span id="cb12-3"><a href=""></a></span>
+<span id="cb12-4"><a href=""></a></span>
+<span id="cb12-5"><a href=""></a><span class="kw">def</span> f(g_val):</span>
+<span id="cb12-6"><a href=""></a>    <span class="cf">return</span> g_val <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb12-7"><a href=""></a></span>
+<span id="cb12-8"><a href=""></a></span>
+<span id="cb12-9"><a href=""></a>x <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb12-10"><a href=""></a><span class="bu">print</span>(f(g(x)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>36.0</code></pre>
+</div>
+</div>
+</section>
+<section id="two-ways-to-get-the-same-derivative" class="slide level2">
+<h2>Two ways to get the same derivative</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><strong>Direct:</strong> differentiate the composed function outright <span class="math display">\frac{d}{dx}\big(4x^2\big) = 8x</span></li>
+</ul>
+</div><div class="column" style="width:60%;">
+<ul>
+<li><strong>Chain rule:</strong> differentiate each piece separately, then multiply <span class="math display">\frac{df}{dx} = \frac{df}{dg} \cdot \frac{dg}{dx} = (2g) \cdot (2) = 4g = 8x</span></li>
+</ul>
+</div></div>
+<div id="796b9602" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>x <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb14-2"><a href=""></a>g_val <span class="op">=</span> g(x)</span>
+<span id="cb14-3"><a href=""></a></span>
+<span id="cb14-4"><a href=""></a>df_dg <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> g_val     <span class="co"># derivative of f w.r.t. g, evaluated at g_val</span></span>
+<span id="cb14-5"><a href=""></a>dg_dx <span class="op">=</span> <span class="fl">2.0</span>          <span class="co"># derivative of g w.r.t. x</span></span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="bu">print</span>(df_dg <span class="op">*</span> dg_dx)</span>
+<span id="cb14-8"><a href=""></a><span class="bu">print</span>(<span class="dv">8</span> <span class="op">*</span> x)  <span class="co"># direct derivative, for comparison</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>24.0
+24.0</code></pre>
+</div>
+</div>
+<ul>
+<li>Same answer, built from two <em>simple</em> pieces instead of one messier one</li>
+<li>This is <em>the</em> idea autograd is built on: break a big function into small pieces, differentiate each piece, multiply them together</li>
+</ul>
+</section>
+<section id="partial-derivatives-one-variable-at-a-time" class="slide level2">
+<h2>Partial derivatives: one variable at a time</h2>
+<ul>
+<li><p>Our function now takes more than one input: <span class="math display">f(x_1, x_2) = x_1^2 + 2x_2^2</span></p></li>
+<li><p>Notation: <span class="math inline">\frac{\partial f}{\partial x_1}</span>, <span class="math inline">\frac{\partial f}{\partial x_2}</span></p></li>
+</ul>
+<div class="fragment">
+<p>A <strong>partial derivative</strong> <span class="math inline">\frac{\partial f}{\partial x_2}</span> asks:</p>
+<div class="box center">
+<p>“How does <span class="math inline">f</span> change if I move <em>just</em> <span class="math inline">x_2</span>, holding <span class="math inline">x_1</span> fixed?”</p>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<ul>
+<li><span class="math inline">\frac{\partial f}{\partial x_1} = 2x_1</span> — treat <span class="math inline">x_2</span> as a constant, differentiate like normal</li>
+<li><span class="math inline">\frac{\partial f}{\partial x_2} = 4x_2</span> — same move, other variable</li>
+</ul>
+</div>
+</section>
+<section id="the-gradient-a-vector-of-partial-derivatives" class="slide level2">
+<h2>The gradient: a vector of partial derivatives</h2>
+<ul>
+<li><p>Given the function: <span class="math display">f(x_1, x_2) = x_1^2 + 2x_2^2</span></p></li>
+<li><p>Stack the partials into a vector: <span class="math display">\nabla f = \left[\frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}\right] = [2x_1, 4x_2]</span></p></li>
+</ul>
+<div id="a1558809" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="kw">def</span> grad_f(x1, x2):</span>
+<span id="cb16-2"><a href=""></a>    <span class="cf">return</span> torch.tensor([<span class="dv">2</span> <span class="op">*</span> x1, <span class="dv">4</span> <span class="op">*</span> x2])</span>
+<span id="cb16-3"><a href=""></a></span>
+<span id="cb16-4"><a href=""></a><span class="bu">print</span>(grad_f(<span class="fl">1.0</span>, <span class="fl">1.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([2., 6.])</code></pre>
+</div>
+</div>
+<ul>
+<li>This vector points toward steepest <em>increase</em> — to go downhill, step in the <em>opposite</em> direction, <span class="math inline">-\nabla f</span></li>
+<li>Remember <code>choose_next_value()</code>? This is exactly the “smart” direction it was missing</li>
+</ul>
+</section>
+<section id="what-partial-derivatives-look-like" class="slide level2">
+<h2>What partial derivatives look like</h2>
+<div id="27511586" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div style="height:550px; width:100%;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-4.0.0.min.js" integrity="sha256-FEYfO0yRyLtZCpnW0Dw/0DHKQO7Afrq3ml4+rBB818o=" crossorigin="anonymous"></script>                <div id="b0ccc2cc-2f15-428c-a0d9-cb0d98904af1" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("b0ccc2cc-2f15-428c-a0d9-cb0d98904af1")) {                    Plotly.newPlot(                        "b0ccc2cc-2f15-428c-a0d9-cb0d98904af1",                        [{"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"contours":{"x":{"color":"gray","project":{"x":true},"show":true,"width":1},"y":{"color":"gray","project":{"y":true},"show":true,"width":1}},"opacity":0.85,"showscale":false,"x":{"dtype":"f8","bdata":"AAAAAAAACMArgoaTui8HwFcEDSd1XwbAgoaTui+PBcCuCBpO6r4EwNmKoOGk7gPABA0ndV8eA8Awj60IGk4CwFsRNJzUfQHAhpO6L4+tAMBkK4KGk7r\u002fv7ovj60IGv6\u002fETSc1H15\u002fL9oOKn78tj6v748tiJoOPm\u002fFUHDSd2X979sRdBwUvf1v8NJ3ZfHVvS\u002fGk7qvjy28r9wUvflsRXxv5CtCBpO6u6\u002fPLYiaDip67\u002fovjy2Imjov5jHVgQNJ+W\u002fRNBwUvfl4b\u002fgsRVBw0ndv0DDSd2Xx9a\u002fmNR9eWxF0L\u002fgy2MrgobDv4C6L4+tCKq\u002fwLovj60Iqj\u002fwy2MrgobDP6DUfXlsRdA\u002fSMNJ3ZfH1j\u002fosRVBw0ndP0jQcFL35eE\u002fmMdWBA0n5T\u002fsvjy2ImjoP0C2Img4qes\u002fkK0IGk7q7j9wUvflsRXxPxxO6r48tvI\u002fxEndl8dW9D9sRdBwUvf1PxhBw0ndl\u002fc\u002fwDy2Img4+T9oOKn78tj6PxQ0nNR9efw\u002fvC+PrQga\u002fj9kK4KGk7r\u002fP4iTui+PrQBAXBE0nNR9AUAwj60IGk4CQAYNJ3VfHgNA2oqg4aTuA0CuCBpO6r4EQISGk7ovjwVAWAQNJ3VfBkAsgoaTui8HQAAAAAAAAAhA"},"y":{"dtype":"f8","bdata":"AAAAAAAACMArgoaTui8HwFcEDSd1XwbAgoaTui+PBcCuCBpO6r4EwNmKoOGk7gPABA0ndV8eA8Awj60IGk4CwFsRNJzUfQHAhpO6L4+tAMBkK4KGk7r\u002fv7ovj60IGv6\u002fETSc1H15\u002fL9oOKn78tj6v748tiJoOPm\u002fFUHDSd2X979sRdBwUvf1v8NJ3ZfHVvS\u002fGk7qvjy28r9wUvflsRXxv5CtCBpO6u6\u002fPLYiaDip67\u002fovjy2Imjov5jHVgQNJ+W\u002fRNBwUvfl4b\u002fgsRVBw0ndv0DDSd2Xx9a\u002fmNR9eWxF0L\u002fgy2MrgobDv4C6L4+tCKq\u002fwLovj60Iqj\u002fwy2MrgobDP6DUfXlsRdA\u002fSMNJ3ZfH1j\u002fosRVBw0ndP0jQcFL35eE\u002fmMdWBA0n5T\u002fsvjy2ImjoP0C2Img4qes\u002fkK0IGk7q7j9wUvflsRXxPxxO6r48tvI\u002fxEndl8dW9D9sRdBwUvf1PxhBw0ndl\u002fc\u002fwDy2Img4+T9oOKn78tj6PxQ0nNR9efw\u002fvC+PrQga\u002fj9kK4KGk7r\u002fP4iTui+PrQBAXBE0nNR9AUAwj60IGk4CQAYNJ3VfHgNA2oqg4aTuA0CuCBpO6r4EQISGk7ovjwVAWAQNJ3VfBkAsgoaTui8HQAAAAAAAAAhA"},"z":{"dtype":"f8","bdata":"AAAAAAAAO0DwRTGycWY6QIBUe+su0jlAryveqzdDOUB+y1nzi7k4QOwz7sErNThA+WSbFxe2N0CmXmH0TTw3QPIgQFjQxzZA3qs3Q55YNkBp\u002f0e1t+41QJQbca4cijVAXgCzLs0qNUDIrQ02ydA0QNAjgcQQfDRAeWIN2qMsNEDBabJ2guIzQKg5cJqsnTNAL9JGRSJeM0BVMzZ34yMzQBtdPjDw7jJAgE9fcEi\u002fMkCECpk37JQyQCiO64XbbzJAa9pWWxZQMkBO79q3nDUyQNHMd5tuIDJA8nItBowQMkCz4fv39AUyQBQZ43CpADJAFBnjcKkAMkCz4fv39AUyQPJyLQaMEDJA0cx3m24gMkBO79q3nDUyQGzaVlsWUDJAKI7rhdtvMkCECpk37JQyQIBPX3BIvzJAG10+MPDuMkBVMzZ34yMzQC\u002fSRkUiXjNAqDlwmqydM0DBabJ2guIzQHpiDdqjLDRA0SOBxBB8NEDIrQ02ydA0QF8Asy7NKjVAlBtxrhyKNUBp\u002f0e1t+41QN+rN0OeWDZA8yBAWNDHNkCmXmH0TTw3QPpkmxcXtjdA7DPuwSs1OEB+y1nzi7k4QLAr3qs3QzlAgVR76y7SOUDwRTGycWY6QAAAAAAAADtA4ItiZOPMOUDQ0ZMWVTM5QGDg3U8SnzhAj7dAEBsQOEBeV7xXb4Y3QMy\u002fUCYPAjdA2fD9e\u002fqCNkCG6sNYMQk2QNKsoryzlDVAvjeap4ElNUBJi6oZm7s0QHSn0xIAVzRAPowVk7D3M0CoOXCarJ0zQLCv4yj0SDNAWe5vPof5MkCh9RTbZa8yQIjF0v6PajJAD16pqQUrMkA1v5jbxvAxQPvooJTTuzFAYNvB1CuMMUBklvubz2ExQAgaTuq+PDFAS2a5v\u002fkcMUAuez0cgAIxQLFY2v9R7TBA0v6Pam\u002fdMECTbV5c2NIwQPSkRdWMzTBA9KRF1YzNMECTbV5c2NIwQNL+j2pv3TBAsVja\u002f1HtMEAuez0cgAIxQExmub\u002f5HDFACBpO6r48MUBklvubz2ExQGDbwdQrjDFA++iglNO7MUA1v5jbxvAxQA9eqakFKzJAiMXS\u002fo9qMkCh9RTbZa8yQFrubz6H+TJAsa\u002fjKPRIM0CoOXCarJ0zQD+MFZOw9zNAdKfTEgBXNEBJi6oZm7s0QL83mqeBJTVA06yivLOUNUCG6sNYMQk2QNrw\u002fXv6gjZAzL9QJg8CN0BeV7xXb4Y3QJC3QBAbEDhAYeDdTxKfOEDQ0ZMWVTM5QOCLYmTjzDlAAKn21l2kOEDw7ieJzwo4QID9ccKMdjdAr9TUgpXnNkB+dFDK6V02QOzc5JiJ2TVA+Q2S7nRaNUCmB1jLq+A0QPLJNi8ubDRA3lQuGvz8M0BpqD6MFZMzQJTEZ4V6LjNAXqmpBSvPMkDIVgQNJ3UyQNDMd5tuIDJAeQsEsQHRMUDBEqlN4IYxQKjiZnEKQjFAL3s9HIACMUBV3CxOQcgwQBsGNQdOkzBAgPhVR6ZjMECEs48OSjkwQCg34lw5FDBA1wabZOjoL0CcMKMd9bMvQKHr3OSYiS9A5DdIutNpL0BnFeWdpVQvQCiEs48OSi9AKISzjw5KL0BnFeWdpVQvQOU3SLrTaS9Aoevc5JiJL0CdMKMd9bMvQNcGm2To6C9AKDfiXDkUMECEs48OSjkwQID4VUemYzBAGwY1B06TMEBV3CxOQcgwQC97PRyAAjFAqOJmcQpCMUDBEqlN4IYxQHoLBLEB0TFA0cx3m24gMkDIVgQNJ3UyQF+pqQUrzzJAlMRnhXouM0BpqD6MFZMzQN9ULhr8\u002fDNA88k2Ly5sNECmB1jLq+A0QPoNku50WjVA7NzkmInZNUB+dFDK6V02QLDU1IKV5zZAgf1xwox2N0Dw7ieJzwo4QACp9tZdpDhAXle8V2+GN0BOne0J4ew2QN6rN0OeWDZADYOaA6fJNUDcIhZL+z81QEqLqhmbuzRAV7xXb4Y8NEAEth1MvcIzQFB4\u002fK8\u002fTjNAPAP0mg3fMkDHVgQNJ3UyQPJyLQaMEDJAvFdvhjyxMUAmBcqNOFcxQC57PRyAAjFA17nJMROzMEAfwW7O8WgwQAaRLPIbJDBAGlMGOiPJL0BmFeWdpVQvQPJo9Q+\u002f6i5Au003kG+LLkDEw6oetzYuQAzLT7uV7C1Ak2MmZgutLUBYjS4fGHgtQF1IaOa7TS1AoJTTu\u002fYtLUAjcnCfyBgtQOTgPpExDi1A5OA+kTEOLUAjcnCfyBgtQKGU07v2LS1AXUho5rtNLUBZjS4fGHgtQJNjJmYLrS1ADMtPu5XsLUDFw6oetzYuQLxNN5Bviy5A8mj1D7\u002fqLkBmFeWdpVQvQBpTBjojyS9ABpEs8hskMEAfwW7O8WgwQNi5yTETszBAL3s9HIACMUAmBcqNOFcxQL1Xb4Y8sTFA8nItBowQMkDHVgQNJ3UyQD0D9JoN3zJAUXj8rz9OM0AEth1MvcIzQFi8V2+GPDRASouqGZu7NEDcIhZL+z81QA6DmgOnyTVA36s3Q55YNkBOne0J4ew2QF5XvFdvhjdA\u002fJaz5hdzNkDs3OSYidk1QHzrLtJGRTVAq8KRkk+2NEB6Yg3aoyw0QOjKoahDqDNA9ftO\u002fi4pM0Ci9RTbZa8yQO638z7oOjJA2kLrKbbLMUBllvubz2ExQJCyJJU0\u002fTBAWpdmFeWdMEDERMEc4UMwQJl1aVZR3i9A6vKBgXc\u002fL0B6Acy6NKsuQEihRwKJIS5AVtL0V3SiLUCilNO79i0tQC7o4y0QxCxA98wlrsBkLEAAQ5k8CBAsQEhKPtnmxStAz+IUhFyGK0CUDB09aVErQJnHVgQNJytA3BPC2UcHK0Bf8V69GfIqQCBgLa+C5ypAIGAtr4LnKkBf8V69GfIqQN0TwtlHBytAmcdWBA0nK0CVDB09aVErQM\u002fiFIRchitASEo+2ebFK0ABQ5k8CBAsQPjMJa7AZCxALujjLRDELECilNO79i0tQFbS9Fd0oi1ASaFHAokhLkB6Acy6NKsuQOvygYF3Py9AmnVpVlHeL0DERMEc4UMwQFuXZhXlnTBAkLIklTT9MEBllvubz2ExQNtC6ym2yzFA77fzPug6MkCi9RTbZa8yQPb7Tv4uKTNA6MqhqEOoM0B6Yg3aoyw0QKzCkZJPtjRAfesu0kZFNUDs3OSYidk1QPyWs+YXczZA2Gfcg1dqNUDIrQ02ydA0QFi8V2+GPDRAhpO6L4+tM0BWMzZ34yMzQMObykWDnzJA0Mx3m24gMkB+xj14paYxQMqIHNwnMjFAthMUx\u002fXCMEBBZyQ5D1kwQNcGm2To6C9Aa9AeZUkqL0A+K9RzQXYuQFAXu5DQzC1AoZTTu\u002fYtLUAxox31s5ksQP9CmTwIECxADXRGkvOQK0BZNiX2dRwrQOSJNWiPsipArm536D9TKkC35Op2h\u002f4pQP\u002frjxNmtClAhoRmvtt0KUBLrm536D8pQFBpqD6MFSlAk7UTFMf1KEAWk7D3mOAoQNcBf+kB1ihA1wF\u002f6QHWKEAWk7D3mOAoQJS1ExTH9ShAUGmoPowVKUBMrm536D8pQIaEZr7bdClA\u002f+uPE2a0KUC45Op2h\u002f4pQK9ud+g\u002fUypA5Ik1aI+yKkBZNiX2dRwrQA10RpLzkCtAAEOZPAgQLEAxox31s5ksQKKU07v2LS1AURe7kNDMLUA+K9RzQXYuQGzQHmVJKi9A2AabZOjoL0BBZyQ5D1kwQLYTFMf1wjBAyogc3CcyMUB+xj14paYxQNLMd5tuIDJAxJvKRYOfMkBWMzZ34yMzQIiTui+PrTNAWLxXb4Y8NEDIrQ02ydA0QNhn3INXajVA8sk2Ly5sNEDiD2jhn9IzQHIeshpdPjNAofUU22WvMkBwlZAiuiUyQN79JPFZoTFA6y7SRkUiMUCYKJgjfKgwQOTqdof+MzBAoOvc5JiJL0C3kv3Iy7UuQAzLT7uV7C1AoJTTu\u002fYtLUBz74jK7nksQIXbb+d90CtA1liIEqQxK0BmZ9JLYZ0qQDQHTpO1EypAQjj76KCUKUCO+tlMIyApQBpO6r48tihA4zIsP+1WKEDsqJ\u002fNNAIoQDSwRGoTuCdAu0gbFYl4J0CAciPOlUMnQIUtXZU5GSdAyHnIanT5JkBLV2VORuQmQAzGM0Cv2SZADMYzQK\u002fZJkBLV2VORuQmQMl5yGp0+SZAhS1dlTkZJ0CBciPOlUMnQLtIGxWJeCdANLBEahO4J0DtqJ\u002fNNAIoQOQyLD\u002ftVihAGk7qvjy2KECO+tlMIyApQEI4++iglClANQdOk7UTKkBmZ9JLYZ0qQNdYiBKkMStAhttv533QK0Bz74jK7nksQKKU07v2LS1ADctPu5XsLUC3kv3Iy7UuQKLr3OSYiS9A5ep2h\u002f4zMECYKJgjfKgwQOwu0kZFIjFA3v0k8VmhMUBwlZAiuiUyQKL1FNtlrzJAcx6yGl0+M0DiD2jhn9IzQPLJNi8ubDRATL3C6Jt4M0A8A\u002fSaDd8yQMwRPtTKSjJA\u002fOiglNO7MUDKiBzcJzIxQDjxsKrHrTBARiJeALMuMEDmN0i602kvQH68BYLYgC5AVdL0V3SiLUBseRU8p84sQMGxZy5xBSxAVXvrLtJGK0Ao1qA9ypIqQDrCh1pZ6SlAiz+ghX9KKUAbTuq+PLYoQOntZQaRLChA9x4TXHytJ0BD4fG\u002f\u002fjgnQM40AjIYzyZAmBlEsshvJkChj7dAEBsmQOmWXN3u0CVAcC8ziGSRJUA1WTtBcVwlQDoUdQgVMiVAfWDg3U8SJUAAPn3BIf0kQMGsS7OK8iRAwaxLs4ryJEAAPn3BIf0kQH5g4N1PEiVAOhR1CBUyJUA2WTtBcVwlQHAvM4hkkSVA6ZZc3e7QJUCij7dAEBsmQJkZRLLIbyZAzjQCMhjPJkBD4fG\u002f\u002fjgnQPceE1x8rSdA6u1lBpEsKEAbTuq+PLYoQIw\u002foIV\u002fSilAO8KHWlnpKUAo1qA9ypIqQFZ76y7SRitAwrFnLnEFLEBseRU8p84sQFfS9Fd0oi1Af7wFgtiALkDmN0i602kvQEciXgCzLjBAOfGwqsetMEDKiBzcJzIxQP3ooJTTuzFAzRE+1MpKMkA9A\u002fSaDd8yQEy9wuibeDNA5EGAsKCPMkDUh7FiEvYxQGSW+5vPYTFAlG1eXNjSMEBiDdqjLEkwQKDr3OSYiS9Au003kG+LLkAWQcNJ3ZctQK7FgBHirixAhdtv533QK0CcgpDLsPwqQPG64r16MypAhYRmvtt0KUBY3xvN08AoQGrLAupiFyhAu0gbFYl4J0BLV2VORuQmQBn34JWaWiZAJyiO64XbJUBz6mxPCGclQP49fcEh\u002fSRAyCK\u002fQdKdJEDRmDLQGUkkQBmg12z4\u002fiNAoDiuF26\u002fI0BlYrbQeoojQGod8JceYCNArWlbbVlAI0AwR\u002fhQKysjQPG1xkKUICNA8bXGQpQgI0AwR\u002fhQKysjQK5pW21ZQCNAah3wlx5gI0BmYrbQeoojQKA4rhduvyNAGaDXbPj+I0DSmDLQGUkkQMkiv0HSnSRA\u002fj19wSH9JEBz6mxPCGclQCcojuuF2yVAGvfglZpaJkBLV2VORuQmQLxIGxWJeCdAa8sC6mIXKEBY3xvN08AoQIaEZr7bdClA8rrivXozKkCcgpDLsPwqQIfbb+d90CtAr8WAEeKuLEAWQcNJ3ZctQL5NN5Bviy5Aouvc5JiJL0BiDdqjLEkwQJVtXlzY0jBAZZb7m89hMUDVh7FiEvYxQORBgLCgjzJAvFdvhjyxMUCsnaA4rhcxQDys6nFrgzBA1gabZOjoL0B0RpLzkNUuQFAXu5DQzC1AankVPKfOLEDEbKH1FNsrQFzxXr0Z8ipANAdOk7UTKkBLrm536D8pQKDmwGmydihANLBEahO4J0AHC\u002fp4CwQnQBn34JWaWiZAanT5wMC7JUD6gkP6fSclQMgiv0HSnSRA1lNsl70eJEAiFkv7P6ojQK5pW21ZQCNAd06d7QnhIkCAxBB8UYwiQMjLtRgwQiJAT2SMw6UCIkAUjpR8ss0hQBlJzkNWoyFAXJU5GZGDIUDfctb8Ym4hQKDhpO7LYyFAoOGk7stjIUDfctb8Ym4hQF2VORmRgyFAGUnOQ1ajIUAVjpR8ss0hQE9kjMOlAiJAyMu1GDBCIkCBxBB8UYwiQHhOne0J4SJArmlbbVlAI0AiFkv7P6ojQNZTbJe9HiRAySK\u002fQdKdJED6gkP6fSclQGt0+cDAuyVAGvfglZpaJkAHC\u002fp4CwQnQDawRGoTuCdAoebAabJ2KEBLrm536D8pQDYHTpO1EypAXvFevRnyKkDEbKH1FNsrQGx5FTynzixAUBe7kNDMLUB0RpLzkNUuQNgGm2To6C9APazqcWuDMECsnaA4rhcxQLxXb4Y8sTFA0\u002f6Pam\u002fdMEDDRMEc4UMwQKamFqw8Xy9ABFXcLE5BLkCilNO79i0tQH1l\u002fFg2JSxAmMdWBA0nK0DyuuK9ejMqQIo\u002foIV\u002fSilAYlWPWxtsKEB4\u002fK8\u002fTpgnQM00AjIYzyZAYv6FMnkQJkA1WTtBcVwlQEZFIl4AsyRAl8I6iSYUJEAn0YTC438jQPZwAAo49iJAA6KtXyN3IkBQZIzDpQIiQNu3nDW\u002fmCFApZzetW85IUCuElJEt+QgQPYZ9+CVmiBAfLLNiwtbIEBC3NVEGCYgQI0uHxh49x9AFMf1wu23H0AYgi+KkY0fQJtfzG1jeB9Am1\u002fMbWN4H0AYgi+KkY0fQBTH9cLttx9Aji4fGHj3H0BC3NVEGCYgQH2yzYsLWyBA9hn34JWaIECuElJEt+QgQKWc3rVvOSFA27ecNb+YIUBQZIzDpQIiQASirV8jdyJA9nAACjj2IkAn0YTC438jQJjCOokmFCRAR0UiXgCzJEA1WTtBcVwlQGP+hTJ5ECZAzjQCMhjPJkB4\u002fK8\u002fTpgnQGRVj1sbbChAjD+ghX9KKUDyuuK9ejMqQJrHVgQNJytAfmX8WDYlLECilNO79i0tQAZV3CxOQS5Ap6YWrDxfL0DDRMEc4UMwQNP+j2pv3TBAKDfiXDkUMEAw+iYeVvUuQFAXu5DQzC1ArsWAEeKuLEBMBXigipsrQCfWoD3KkipAQjj76KCUKUCcK4eiDqEoQDSwRGoTuCdADMYzQK\u002fZJkAibVQk4gUmQHelphasPCVADG8qFw1+JEDfyd8lBcojQPC1xkKUICNAQTPfbbqBIkDRQSmnd+0hQKDhpO7LYyFArRJSRLfkIED61DCoOXAgQIUoQRpTBiBAnhoGNQdOH0CwBu1RlqQeQEAVN4tTEB5ATUbk4D6RHUDYmfRSWCcdQOEPaOGf0hxAaKg+jBWTHEBsY3hTuWgcQO9AFTeLUxxA70AVN4tTHEBsY3hTuWgcQGioPowVkxxA4g9o4Z\u002fSHEDYmfRSWCcdQE1G5OA+kR1AQBU3i1MQHkCwBu1RlqQeQJ8aBjUHTh9AhShBGlMGIED61DCoOXAgQK4SUkS35CBAoOGk7stjIUDRQSmnd+0hQEIz3226gSJA8bXGQpQgI0Dfyd8lBcojQA1vKhcNfiRAeKWmFqw8JUAibVQk4gUmQA7GM0Cv2SZANrBEahO4J0CcK4eiDqEoQEQ4++iglClAKNagPcqSKkBMBXigipsrQLDFgBHirixAURe7kNDMLUAw+iYeVvUuQCg34lw5FDBAeAHMujSrLkBYjS4fGHgtQHiqwpGSTyxA1liIEqQxK0B0mH+hTB4qQFBpqD6MFSlAassC6mIXKEDEvo6j0CMnQFxDTGvVOiZANFk7QXFcJUBLAFwlpIgkQKA4rhduvyNANAIyGM8AI0AHXecmx0wiQBlJzkNWoyFAasbmbnwEIUD61DCoOXAgQJDpWN8bzR9ArEuzivLOHkBE0HBS9+UdQFt3kTYqEh1A70AVN4tTHEAALfxTGqobQJE7Ro3XFRtAnmzz4sKWGkApwANV3CwaQDI2d+Mj2BlAuc5NjpmYGUC9iYdVPW4ZQEBnJDkPWRlAQGckOQ9ZGUC9iYdVPW4ZQLnOTY6ZmBlAMzZ34yPYGUApwANV3CwaQJ5s8+LClhpAkTtGjdcVG0ABLfxTGqobQPBAFTeLUxxAW3eRNioSHUBE0HBS9+UdQK1Ls4ryzh5AkelY3xvNH0D61DCoOXAgQGvG5m58BCFAGknOQ1ajIUAHXecmx0wiQDYCMhjPACNAoTiuF26\u002fI0BLAFwlpIgkQDZZO0FxXCVAXkNMa9U6JkDEvo6j0CMnQGzLAupiFyhAUGmoPowVKUB0mH+hTB4qQNhYiBKkMStAeqrCkZJPLEBZjS4fGHgtQHgBzLo0qy5AHrc22CRDLUD+Qpk8CBAsQB5gLa+C5ypAfA7zL5TJKUAaTuq+PLYoQPYeE1x8rSdAEIFtB1OvJkBrdPnAwLslQAP5tojF0iRA2g6mXmH0I0DxtcZClCAjQEbuGDVeVyJA2recNb+YIUCuElJEt+QgQMD+OGFGOyBAIPiiGNk4H0BAFTeLUxAeQN5ULhr8\u002fBxA+baIxdL+G0CRO0aN1xUbQKjiZnEKQhpAPKzqcWuDGUBOmNGO+tkYQN6mG8i3RRhA69fIHaPGF0B2K9mPvFwXQH+hTB4ECBdABjojyXnIFkAK9VyQHZ4WQI3S+XPviBZAjdL5c++IFkAK9VyQHZ4WQAY6I8l5yBZAgKFMHgQIF0B2K9mPvFwXQOvXyB2jxhdA3qYbyLdFGEBOmNGO+tkYQD2s6nFrgxlAqOJmcQpCGkCRO0aN1xUbQPq2iMXS\u002fhtA3lQuGvz8HEBAFTeLUxAeQCP4ohjZOB9AwP44YUY7IECuElJEt+QgQNy3nDW\u002fmCFAR+4YNV5XIkDxtcZClCAjQNwOpl5h9CNABPm2iMXSJEBrdPnAwLslQBOBbQdTryZA9x4TXHytJ0AaTuq+PLYoQH8O8y+UySlAIGAtr4LnKkAAQ5k8CBAsQB63NtgkQy1AQo8EEkPwK0AiG2d2Jr0qQEI4++iglClAoObAabJ2KEA+Jrj4WmMnQBr34JWaWiZANFk7QXFcJUCOTMf63mgkQCbRhMLjfyNA\u002fuZzmH+hIkAVjpR8ss0hQGrG5m58BCFA\u002fo9qb91FIECi1T\u002f8qiMfQMatDTbJ0B1AaKg+jBWTHECHxdL+j2obQCQFyo04VxpAQGckOQ9ZGUDY6+EAFHAYQO+SAuVGnBdAg1yG5afdFkCUSG0CNzQWQCVXtzv0nxVAMohkkd8gFUC923QD+bYUQMZR6JFAYhRATeq+PLYiFEBRpfgDWvgTQNSClecr4xNA1IKV5yvjE0BRpfgDWvgTQE3qvjy2IhRAx1HokUBiFEC923QD+bYUQDKIZJHfIBVAJVe3O\u002fSfFUCVSG0CNzQWQIRchuWn3RZA75IC5UacF0DY6+EAFHAYQEFnJDkPWRlAJQXKjThXGkCHxdL+j2obQGqoPowVkxxAyK0NNsnQHUCi1T\u002f8qiMfQACQam\u002fdRSBAa8bmbnwEIUAVjpR8ss0hQADnc5h\u002foSJAKNGEwuN\u002fI0COTMf63mgkQDZZO0FxXCVAGvfglZpaJkA+Jrj4WmMnQKLmwGmydihARDj76KCUKUAjG2d2Jr0qQEKPBBJD8CtA5Ik1aI+yKkDEFZjMcn8pQOQyLD\u002ftVihAQuHxv\u002f44J0DgIOlOpyUmQLvxEezmHCVA1lNsl70eJEAwR\u002fhQKysjQMjLtRgwQiJAoOGk7stjIUC2iMXS\u002fo8gQBaCL4qRjR9APxU3i1MQHkDmyqGoQ6gcQAmjb+JhVRtAqp2gOK4XGkDKujSrKO8YQGj6KzrR2xdAg1yG5afdFkAb4UOtrPQVQDKIZJHfIBVAxlHokUBiFEDYPc+uz7gTQGhMGeiMJBNAdX3GPXilEkAA0davkTsSQAlHSj7Z5hFAkN8g6U6nEUCUmlqw8nwRQBd495PEZxFAF3j3k8RnEUCUmlqw8nwRQJDfIOlOpxFACkdKPtnmEUAA0davkTsSQHV9xj14pRJAaEwZ6IwkE0DYPc+uz7gTQMdR6JFAYhRAMohkkd8gFUAb4UOtrPQVQIRchuWn3RZAaPorOtHbF0DKujSrKO8YQK2doDiuFxpACqNv4mFVG0DmyqGoQ6gcQEIVN4tTEB5AGIIvipGNH0C2iMXS\u002fo8gQKLhpO7LYyFAysu1GDBCIkAwR\u002fhQKysjQNhTbJe9HiRAvPER7OYcJUDgIOlOpyUmQETh8b\u002f+OCdA5TIsP+1WKEDEFZjMcn8pQOSJNWiPsipAA6fJ2gmKKUDjMiw\u002f7VYoQANQwLFnLidAYf6FMnkQJkD\u002fPX3BIf0kQNsOpl5h9CNA9XAACjj2IkBQZIzDpQIiQOjoSYuqGSFAv\u002f44YUY7IECsS7OK8s4eQFa8V2+GPB1Afk9fcEi\u002fG0AlBcqNOFcaQEjdl8dWBBlA6tfIHaPGF0AK9VyQHZ4WQKc0VB\u002fGihVAwpauypyMFEBaG2ySoaMTQHLCjHbUzxJABYwQdzUREkAXePeTxGcRQKeGQc2B0xBAtLfuIm1UEEB\u002fFv4pDdUPQJEC5UacKw9AnzOSnIesDkCoqQUrz1cOQKxkP\u002fJyLQ5ArWQ\u002f8nItDkCoqQUrz1cOQJ8zkpyHrA5AkgLlRpwrD0CAFv4pDdUPQLW37iJtVBBAp4ZBzYHTEEAYePeTxGcRQAaMEHc1ERJAcsKMdtTPEkBaG2ySoaMTQMOWrsqcjBRAqDRUH8aKFUAK9VyQHZ4WQOzXyB2jxhdASt2Xx1YEGUAlBcqNOFcaQIJPX3BIvxtAWLxXb4Y8HUCsS7OK8s4eQMH+OGFGOyBA6ehJi6oZIUBQZIzDpQIiQPhwAAo49iJA3A6mXmH0I0D\u002fPX3BIf0kQGT+hTJ5ECZABVDAsWcuJ0DkMiw\u002f7VYoQAOnydoJiilAoObAabJ2KECAciPOlUMnQKCPt0AQGyZA\u002fj19wSH9JECcfXRQyukjQHhOne0J4SJAkrD3mODiIUDto4NSTu8gQIUoQRpTBiBAuXxg4N1PHkDmyqGoQ6gcQJA7Ro3XFRtAuc5NjpmYGUBghLiriTAYQINchuWn3RZAJFe3O\u002fSfFUBEdEuubncUQOKzQj0XZBNA\u002fRWd6O1lEkCVmlqw8nwRQKxBe5QlqRBAgBb+KQ3VD0Cj7stjK4IOQMMLYNalWQ1A3m26gXxbDED0FNtlr4cLQAYBwoI+3gpAFDJv2ClfCkAdqOJmcQoKQCFjHC4V4AlAImMcLhXgCUAdqOJmcQoKQBQyb9gpXwpABwHCgj7eCkD1FNtlr4cLQN9tuoF8WwxAwwtg1qVZDUCk7stjK4IOQIEW\u002fikN1Q9ArEF7lCWpEECVmlqw8nwRQP4VnejtZRJA4rNCPRdkE0BEdEuubncUQCdXtzv0nxVAhFyG5afdFkBghLiriTAYQLzOTY6ZmBlAkjtGjdcVG0DmyqGoQ6gcQL18YODdTx5AhihBGlMGIEDto4NSTu8gQJWw95jg4iFAeU6d7QnhIkCcfXRQyukjQAE+fcEh\u002fSRAoo+3QBAbJkCCciPOlUMnQKDmwGmydihAvEgbFYl4J0Cc1H15bEUmQLzxEezmHCVAGqDXbPj+I0C43877oOsiQJOw95jg4iFArhJSRLfkIEAQDLz7SeIfQEAVN4tTEB5A8EAVN4tTHEAdj1b\u002f8KsaQMf\u002f+uOEGRlA8JIC5UacF0CWSG0CNzQWQLogOzxV4RRAWxtskqGjE0B7OAAFHHsSQBh495PEZxFAM9pRP5tpEECXvR4OQAEPQMULYNalWQ1A7J5n12fcC0AQdzURhokKQDCUyYMAYQlAS\u002fYjL9diCEBhnUQTCo8HQHOJKzCZ5QZAgbrYhYRmBkCKMEwUzBEGQI7rhdtv5wVAj+uF22\u002fnBUCKMEwUzBEGQIG62IWEZgZAdIkrMJnlBkBinUQTCo8HQEz2Iy\u002fXYghAMJTJgwBhCUASdzURhokKQO6eZ9dn3AtAxQtg1qVZDUCXvR4OQAEPQDTaUT+baRBAGXj3k8RnEUB7OAAFHHsSQF4bbJKhoxNAuyA7PFXhFECWSG0CNzQWQPKSAuVGnBdAyf\u002f644QZGUAdj1b\u002f8KsaQPRAFTeLUxxARBU3i1MQHkAQDLz7SeIfQLASUkS35CBAlLD3mODiIUC43877oOsiQByg12z4\u002fiNAvfER7OYcJUCd1H15bEUmQLxIGxWJeCdAVM3Y3I2PJkA0WTtBcVwlQFR2z7PrMyRAsiSVNP0VI0BQZIzDpQIiQCw1tWDl+SBAjC4fGHj3H0BBFTeLUxAeQHEeshpdPhxAIEqQxpSBGkBOmNGO+tkYQPgIdnOORxdAIJx9dFDKFUDGUeiRQGIUQOoptsteDxNAjCTnIavREUCrQXuUJakQQJEC5UacKw9AyMaZnUkvDUD4zxQtU10LQCYeVvW4tQlATrFd9no4CEBxiSswmeUGQJGmv6ITvQVArAgaTuq+BEDCrzoyHesDQNSbIU+sQQNA4szOpJfCAkDrQkIz320CQO\u002f9e\u002fqCQwJA8P17+oJDAkDrQkIz320CQOLMzqSXwgJA1ZshT6xBA0DDrzoyHesDQK0IGk7qvgRAkaa\u002fohO9BUByiSswmeUGQE+xXfZ6OAhAJh5W9bi1CUD4zxQtU10LQMrGmZ1JLw1AkgLlRpwrD0CrQXuUJakQQI4k5yGr0RFA7Cm2y14PE0DGUeiRQGIUQCOcfXRQyhVA+gh2c45HF0BOmNGO+tkYQCRKkMaUgRpAdB6yGl0+HEBBFTeLUxAeQJEuHxh49x9ALDW1YOX5IEBQZIzDpQIiQLQklTT9FSNAVnbPs+szJEA1WTtBcVwlQFTN2NyNjyZAa3T5wMC7JUBLAFwlpIgkQGsd8JceYCNAycu1GDBCIkBnC62n2C4hQELc1UQYJiBAunxg4N1PHkBvY3hTuWgcQJ9s8+LClhpATpjRjvrZGEB85hJXYDIXQCZXtzv0nxVATuq+PLYiFED0nylaproSQBh495PEZxFAunIo6hAqEECyH3m5FgMOQO2eZ9dn3AtAJGMcLhXgCUBUbJe9Hg4IQIK62IWEZgZAqk3ghkbpBEDNJa7AZJYDQO1CQjPfbQJACKWc3rVvAUAeTL3C6JsAQGFwSL\u002fv5P8\u002fe9Kiasbm\u002fj+NvomHVT3+P5c0\u002fRWd6P0\u002flzT9FZ3o\u002fT+OvomHVT3+P3zSomrG5v4\u002fYnBIv+\u002fk\u002fz8fTL3C6JsAQAmlnN61bwFA7UJCM99tAkDOJa7AZJYDQKtN4IZG6QRAgrrYhYRmBkBUbJe9Hg4IQCZjHC4V4AlA7p5n12fcC0CyH3m5FgMOQLxyKOoQKhBAGnj3k8RnEUD0nylaproSQFHqvjy2IhRAKFe3O\u002fSfFUB85hJXYDIXQFKY0Y762RhAomzz4sKWGkBvY3hTuWgcQL98YODdTx5ARNzVRBgmIEBnC62n2C4hQMzLtRgwQiJAbB3wlx5gI0BMAFwlpIgkQGt0+cDAuyVA\u002fz19wSH9JEDfyd8lBcojQP\u002fmc5h\u002foSJAXZU5GZGDIUD71DCoOXAgQKxLs4ryzh5A4g9o4Z\u002fSHECW9n9Ue+saQMb\u002f+uOEGRlAdivZj7xcF0CjeRpYIrUVQE3qvjy2IhRAdn3GPXilEkAcMzFbaD0RQH8W\u002fikN1Q9Awgtg1qVZDUACRoi7mggLQDzFdtnr4QhAcokrMJnlBkCjkqa\u002fohMFQNHg54cIbANA+HPviMruAUAcTL3C6JsAQHjSomrG5v4\u002frpZXwXPq\u002fD\u002fa5JiJ2UL7P\u002f+8ZsP37\u002fk\u002fGR\u002fBbs7x+D8rC6iLXUj4PzWBGxql8\u002fc\u002fNYEbGqXz9z8sC6iLXUj4PxofwW7O8fg\u002fAL1mw\u002ffv+T\u002fc5JiJ2UL7P7CWV8Fz6vw\u002feNKiasbm\u002fj8eTL3C6JsAQPpz74jK7gFA0eDnhwhsA0Cjkqa\u002fohMFQHSJKzCZ5QZAPsV22evhCEACRoi7mggLQMcLYNalWQ1Aghb+KQ3VD0AcMzFbaD0RQHh9xj14pRJAT+q+PLYiFECjeRpYIrUVQHor2Y+8XBdAyv\u002f644QZGUCW9n9Ue+saQOYPaOGf0hxArkuzivLOHkD71DCoOXAgQF+VORmRgyFAAOdzmH+hIkDgyd8lBcojQP89fcEh\u002fSRAECpk3rBTJEDwtcZClCAjQBDTWrUO+CFAboEgNiDaIEAZgi+KkY0fQNAjgcQQfB1ABeg1G75\u002fG0C6zk2OmZgZQOrXyB2jxhdAmQOnydoJFkDGUeiRQGIUQHDCjHbUzxJAmVWUd5ZSEUB\u002fFv4pDdUPQMbGmZ1JLw1ACbz7SeKzCkBI9iMv12IIQIN1Ek0oPAZAujnHo9U\u002fBEDqQkIz320CQBiRg\u002ftExgBAf0gW+Q2S\u002fj\u002fG+LFsSuz7PwYz2lE\u002fm\u002fk\u002fPPeOqOye9z9oRdBwUvf1P40dnqpwpPQ\u002fp3\u002f4VUem8z+5a99y1vzyP8PhUgEeqPI\u002fw+FSAR6o8j+6a99y1vzyP6h\u002f+FVHpvM\u002fjh2eqnCk9D9qRdBwUvf1Pz73jqjsnvc\u002fBjPaUT+b+T\u002fJ+LFsSuz7P4JIFvkNkv4\u002fGJGD+0TGAEDqQkIz320CQLw5x6PVPwRAhHUSTSg8BkBI9iMv12IIQA68+0niswpAycaZnUkvDUB\u002fFv4pDdUPQJxVlHeWUhFAcsKMdtTPEkDGUeiRQGIUQJ0Dp8naCRZA7dfIHaPGF0C6zk2OmZgZQAroNRu+fxtA0iOBxBB8HUAZgi+KkY0fQHGBIDYg2iBAEtNatQ74IUDytcZClCAjQBAqZN6wUyRAoTiuF26\u002fI0CBxBB8UYwiQKHhpO7LYyFA\u002f49qb91FIEA5n8P8C2UeQPBAFTeLUxxAJQXKjThXGkDa6+EAFHAYQAr1XJAdnhZAuSA7PFXhFEDnbnwEuzkTQJHfIOlOpxFAuXIo6hAqEEDAUCYPAoQNQAYBwoI+3gpASvYjL9diCECJMEwUzBEGQMSvOjId6wNA+nPviMruAUAqfWoY1BwAQLGWV8Fz6vw\u002fAL1mw\u002ffv+T9HbQI3NEr3P4inKhwp+fQ\u002fvGvfctb88j\u002fpuSA7PFXxPw6S7nRaAvA\u002fUeiRQGII7j91wF96gLXsP4isRpcPDOw\u002fiKxGlw8M7D92wF96gLXsP1PokUBiCO4\u002fD5LudFoC8D\u002fruSA7PFXxP79r33LW\u002fPI\u002fiKcqHCn59D9KbQI3NEr3PwS9ZsP37\u002fk\u002fsZZXwXPq\u002fD8qfWoY1BwAQPxz74jK7gFAxa86Mh3rA0CJMEwUzBEGQE72Iy\u002fXYghACgHCgj7eCkDAUCYPAoQNQLxyKOoQKhBAk98g6U6nEUDnbnwEuzkTQL0gOzxV4RRADfVckB2eFkDa6+EAFHAYQCoFyo04VxpA8kAVN4tTHEA5n8P8C2UeQAGQam\u002fdRSBAouGk7stjIUCCxBB8UYwiQKE4rhduvyNArmlbbVlAI0CO9b3RPA0iQK4SUkS35CBAGIIvipGNH0BUAR6o4mYdQAujb+JhVRtAQGckOQ9ZGUD1TTys6nEXQCVXtzv0nxVA1IKV5yvjE0AB0davkTsSQKtBe5QlqRBAqKkFK89XDkD0FNtlr4cLQDzFdtnr4QhAfrrYhYRmBkC+9ABreRUEQPhz74jK7gFAXnBIv+\u002fk\u002fz+\u002fgj7eAkH8PxsfwW7O8fg\u002fakXQcFL39T+x9WvkjlHzP\u002fIvlMmDAPE\u002fTeiRQGII7j+mhBTRLbnqP\u002fA0sERqE+g\u002fJflkmxcX5j9J0TLVNcTkP1y9GfLEGuQ\u002fXL0Z8sQa5D9K0TLVNcTkPyf5ZJsXF+Y\u002f8jSwRGoT6D+phBTRLbnqP1LokUBiCO4\u002f8i+UyYMA8T+09WvkjlHzP25F0HBS9\u002fU\u002fGx\u002fBbs7x+D+\u002fgj7eAkH8P2JwSL\u002fv5P8\u002f+nPviMruAUC+9ABreRUEQIS62IWEZgZAPsV22evhCED0FNtlr4cLQK6pBSvPVw5ArUF7lCWpEEAB0davkTsSQNiClecr4xNAKFe3O\u002fSfFUD1TTys6nEXQEVnJDkPWRlADaNv4mFVG0BUAR6o4mYdQB2CL4qRjR9ArxJSRLfkIECP9b3RPA0iQK5pW21ZQCNAOb1r33LWIkAZSc5DVqMhQDlmYrbQeiBALilQbsS5HkBqqD6MFZMcQCFKkMaUgRpAVg5FHUKFGEAL9VyQHZ4WQDv+1x8nzBRA6im2y14PE0AXePeTxGcRQIPRN\u002fGwqg9A1PdG8zSwDEAhYxwuFeAJQGgTuKFROgdAqwgaTuq+BEDqQkIz320CQCXCMFEwRwBAtgzLT7uV\u002fD8YH8FuzvH4P3S7Q\u002f+ZovU\u002fwuFSAR6o8j8Kku50WgLwP5SYLbSeYus\u002f\u002fiCXYflp5z9WvRnyxBrkP6FttWUBdeE\u002frGPUeF3x3j\u002fzE3DsmUvcPxnsPSa4+No\u002fGuw9Jrj42j\u002f2E3DsmUvcP7Bj1Hhd8d4\u002fpG21ZQF14T9avRnyxBrkPwIhl2H5aec\u002flJgttJ5i6z8Mku50WgLwP8bhUgEeqPI\u002fdLtD\u002f5mi9T8YH8FuzvH4P7oMy0+7lfw\u002fJsIwUTBHAEDqQkIz320CQLAIGk7qvgRAaxO4oVE6B0AhYxwuFeAJQNr3RvM0sAxAh9E38bCqD0AXePeTxGcRQO4ptsteDxNAPv7XHyfMFEAL9VyQHZ4WQFsORR1ChRhAI0qQxpSBGkBqqD6MFZMcQDMpUG7EuR5AOmZittB6IEAaSc5DVqMhQDm9a99y1iJAQjPfbbqBIkAiv0HSnU4hQELc1UQYJiBAQBU3i1MQHkB8lCWppOkbQDM2d+Mj2BlAaPorOtHbF0Ad4UOtrPQVQE3qvjy2IhRA\u002fBWd6O1lEkAqZN6wU74QQKipBSvPVw5A+c8ULVNdC0BGO+pnM40IQI3rhdtv5wVA0ODnhwhsA0APGxBt\u002fRoBQJQ0\u002fRWd6P0\u002fAb1mw\u002ffv+T9iz1ziCkz2P75r33LW\u002fPI\u002fDZLudFoC8D+ohBTRLbnqPyj5ZJsXF+Y\u002fkoHOSHIe4j\u002fWO6Kye57dP2qc2Zn0Utg\u002f1SRDR09a1D8c1d66i7TRP0KtrPSpYdA\u002fQ62s9Klh0D8f1d66i7TRP9kkQ0dPWtQ\u002fcJzZmfRS2D\u002feO6Kye57dP5eBzkhyHuI\u002fKPlkmxcX5j+uhBTRLbnqPxCS7nRaAvA\u002fvmvfctb88j9iz1ziCkz2PwW9ZsP37\u002fk\u002flzT9FZ3o\u002fT8PGxBt\u002fRoBQNXg54cIbANAkOuF22\u002fnBUBGO+pnM40IQP\u002fPFC1TXQtArKkFK89XDkAqZN6wU74QQAAWnejtZRJAUOq+PLYiFEAd4UOtrPQVQG36KzrR2xdANTZ34yPYGUB8lCWppOkbQEUVN4tTEB5ARNzVRBgmIEAjv0HSnU4hQEIz3226gSJAycu1GDBCIkCpVxh9Ew8hQJLpWN8bzR9ATkbk4D6RHUCKxdL+j2obQEFnJDkPWRlAdivZj7xcF0ArEvECmHUVQFsbbJKhoxNACkdKPtnmEUA3lYsGPz8QQMILYNalWQ1AEzJv2ClfCkBgnUQTCo8HQKdN4IZG6QRA6kJCM99tAkAqfWoY1BwAQMn4sWxK7Ps\u002fNoEbGqXz9z+XkxE5uE\u002f0P\u002fMvlMmDAPE\u002fhKxGlw8M7D8SDX5+iMDmP5OBzkhyHuI\u002f+hNw7JlL3D+qTHUNMa3VPz+trPSpYdA\u002fUmssRAnSyD\u002fiy2MrgobDPy58\u002f56+4MA\u002fL3z\u002fnr7gwD\u002fny2MrgobDP1prLEQJ0sg\u002fRK2s9Klh0D+yTHUNMa3VPwIUcOyZS9w\u002fk4HOSHIe4j8YDX5+iMDmP4usRpcPDOw\u002f8y+UyYMA8T+XkxE5uE\u002f0PzqBGxql8\u002fc\u002fzPixbErs+z8qfWoY1BwAQO9CQjPfbQJAqk3ghkbpBEBgnUQTCo8HQBkyb9gpXwpAxgtg1qVZDUA3lYsGPz8QQA5HSj7Z5hFAXhtskqGjE0ArEvECmHUVQHsr2Y+8XBdAQ2ckOQ9ZGUCKxdL+j2obQFNG5OA+kR1AlelY3xvNH0CqVxh9Ew8hQMnLtRgwQiJAzYbv39MXIkCtElJEt+QgQJtfzG1jeB9AV7xXb4Y8HUCTO0aN1xUbQErdl8dWBBlAf6FMHgQIF0A0iGSR3yAVQGSR3yDpThNAE729zCCSEUCAFv4pDdUPQNT3RvM0sAxAJR5W9bi1CUByiSswmeUGQLk5x6PVPwRA\u002fC4pUG7EAUB40qJqxub+P+3Qf6Zomfo\u002fWlnpU8Og9j+7a99y1vzyPy0QxAZEW+8\u002fy1ziCkxm6T9ZvRnyxBrkP7Vj1Hhd8d4\u002fiXSn0xIA1z86raz0qWHQP5wbyLdFLMY\u002f4lg2JfZ1vD8AGqXz596xPzD1uLXBJqk\u002fN\u002fW4tcEmqT8KGqXz596xP\u002fJYNiX2dbw\u002fqBvIt0Usxj9Braz0qWHQP5J0p9MSANc\u002ftWPUeF3x3j9fvRnyxBrkP9Jc4gpMZuk\u002fLRDEBkRb7z+7a99y1vzyP15Z6VPDoPY\u002f8NB\u002fpmiZ+j940qJqxub+PwEvKVBuxAFAvDnHo9U\u002fBEByiSswmeUGQCseVvW4tQlA2PdG8zSwDECAFv4pDdUPQBe9vcwgkhFAZ5HfIOlOE0A0iGSR3yAVQIShTB4ECBdATN2Xx1YEGUCTO0aN1xUbQFy8V2+GPB1Anl\u002fMbWN4H0CuElJEt+QgQM2G79\u002fTFyJAUGSMw6UCIkAw8O4nic8gQJ8aBjUHTh9AW3eRNioSHUCX9n9Ue+saQE6Y0Y762RhAg1yG5afdFkA4Q55Yg\u002fYUQGhMGeiMJBNAF3j3k8RnEUCKjHG4VIAPQN5tuoF8WwxAL5TJgwBhCUB8\u002f56+4JAGQMOvOjId6wNABqWc3rVvAUCLvomHVT3+PwC9ZsP37\u002fk\u002fbUXQcFL39T\u002fOV8aPZVPyP1PokUBiCO4\u002f8TSwRGoT6D9\u002flecr48fiPwEUcOyZS9w\u002f1SRDR09a1D8Lu5DQzHfLPzR8\u002f56+4MA\u002fERql8+fesT++bE8IZx+dP3O8s5QqxX8\u002fp7yzlCrFfz\u002fmbE8IZx+dPyEapfPn3rE\u002fP3z\u002fnr7gwD8au5DQzHfLP94kQ0dPWtQ\u002fARRw7JlL3D+Flecr48fiP\u002fg0sERqE+g\u002fU+iRQGII7j\u002fOV8aPZVPyP3FF0HBS9\u002fU\u002fA71mw\u002ffv+T+LvomHVT3+PwulnN61bwFAxq86Mh3rA0B8\u002f56+4JAGQDWUyYMAYQlA4m26gXxbDECKjHG4VIAPQBt495PEZxFAa0wZ6IwkE0A4Q55Yg\u002fYUQIhchuWn3RZAUJjRjvrZGECX9n9Ue+saQGB3kTYqEh1AohoGNQdOH0Ax8O4nic8gQFBkjMOlAiJAUGSMw6UCIkAw8O4nic8gQKAaBjUHTh9AXHeRNioSHUCY9n9Ue+saQE+Y0Y762RhAhFyG5afdFkA5Q55Yg\u002fYUQGlMGeiMJBNAGHj3k8RnEUCKjHG4VIAPQN5tuoF8WwxAL5TJgwBhCUB8\u002f56+4JAGQMOvOjId6wNABqWc3rVvAUCLvomHVT3+PwC9ZsP37\u002fk\u002fbUXQcFL39T\u002fOV8aPZVPyP1TokUBiCO4\u002f8jSwRGoT6D+Alecr48fiPwIUcOyZS9w\u002f1iRDR09a1D8Ou5DQzHfLPzd8\u002f56+4MA\u002fGBql8+fesT\u002fYbE8IZx+dP9u8s5QqxX8\u002fD72zlCrFfz8AbU8IZx+dPygapfPn3rE\u002fQnz\u002fnr7gwD8du5DQzHfLP98kQ0dPWtQ\u002fAhRw7JlL3D+Glecr48fiP\u002fk0sERqE+g\u002fVOiRQGII7j\u002fOV8aPZVPyP3FF0HBS9\u002fU\u002fA71mw\u002ffv+T+LvomHVT3+PwulnN61bwFAxq86Mh3rA0B8\u002f56+4JAGQDWUyYMAYQlA4m26gXxbDECKjHG4VIAPQBx495PEZxFAbEwZ6IwkE0A5Q55Yg\u002fYUQIlchuWn3RZAUZjRjvrZGECY9n9Ue+saQGF3kTYqEh1AoxoGNQdOH0Ax8O4nic8gQFBkjMOlAiJAzYbv39MXIkCtElJEt+QgQJtfzG1jeB9AV7xXb4Y8HUCTO0aN1xUbQErdl8dWBBlAf6FMHgQIF0A0iGSR3yAVQGSR3yDpThNAE729zCCSEUCBFv4pDdUPQNX3RvM0sAxAJh5W9bi1CUBziSswmeUGQLo5x6PVPwRA\u002fS4pUG7EAUB50qJqxub+P+7Qf6Zomfo\u002fW1npU8Og9j+8a99y1vzyPzAQxAZEW+8\u002fzlziCkxm6T9cvRnyxBrkP7pj1Hhd8d4\u002fjnSn0xIA1z8\u002fraz0qWHQP6YbyLdFLMY\u002f9lg2JfZ1vD8UGqXz596xP1f1uLXBJqk\u002fXvW4tcEmqT8eGqXz596xPwZZNiX2dbw\u002fsRvIt0Usxj9Graz0qWHQP5d0p9MSANc\u002fumPUeF3x3j9ivRnyxBrkP9Vc4gpMZuk\u002fMBDEBkRb7z+8a99y1vzyP19Z6VPDoPY\u002f8dB\u002fpmiZ+j950qJqxub+PwIvKVBuxAFAvTnHo9U\u002fBEBziSswmeUGQCweVvW4tQlA2fdG8zSwDECBFv4pDdUPQBe9vcwgkhFAZ5HfIOlOE0A0iGSR3yAVQIShTB4ECBdATN2Xx1YEGUCTO0aN1xUbQFy8V2+GPB1Anl\u002fMbWN4H0CuElJEt+QgQM2G79\u002fTFyJAycu1GDBCIkCpVxh9Ew8hQJLpWN8bzR9ATkbk4D6RHUCKxdL+j2obQEFnJDkPWRlAdivZj7xcF0ArEvECmHUVQFsbbJKhoxNACkdKPtnmEUA4lYsGPz8QQMMLYNalWQ1AFDJv2ClfCkBhnUQTCo8HQKhN4IZG6QRA60JCM99tAkArfWoY1BwAQMv4sWxK7Ps\u002fOIEbGqXz9z+ZkxE5uE\u002f0P\u002fUvlMmDAPE\u002fiKxGlw8M7D8WDX5+iMDmP5eBzkhyHuI\u002fAhRw7JlL3D+yTHUNMa3VP0etrPSpYdA\u002fYmssRAnSyD\u002fyy2MrgobDPz58\u002f56+4MA\u002fP3z\u002fnr7gwD\u002f3y2MrgobDP2prLEQJ0sg\u002fTK2s9Klh0D+6THUNMa3VPwoUcOyZS9w\u002fl4HOSHIe4j8cDX5+iMDmP4+sRpcPDOw\u002f9S+UyYMA8T+ZkxE5uE\u002f0PzyBGxql8\u002fc\u002fzvixbErs+z8rfWoY1BwAQPBCQjPfbQJAq03ghkbpBEBhnUQTCo8HQBoyb9gpXwpAxwtg1qVZDUA4lYsGPz8QQA5HSj7Z5hFAXhtskqGjE0ArEvECmHUVQHsr2Y+8XBdAQ2ckOQ9ZGUCKxdL+j2obQFNG5OA+kR1AlelY3xvNH0CqVxh9Ew8hQMnLtRgwQiJAQzPfbbqBIkAjv0HSnU4hQEPc1UQYJiBAQRU3i1MQHkB9lCWppOkbQDQ2d+Mj2BlAaforOtHbF0Ae4UOtrPQVQE7qvjy2IhRA\u002fRWd6O1lEkArZN6wU74QQKmpBSvPVw5A+s8ULVNdC0BHO+pnM40IQI7rhdtv5wVA0eDnhwhsA0ARGxBt\u002fRoBQJY0\u002fRWd6P0\u002fBL1mw\u002ffv+T9kz1ziCkz2P8Br33LW\u002fPI\u002fEJLudFoC8D+thBTRLbnqPy75ZJsXF+Y\u002fmIHOSHIe4j\u002fhO6Kye57dP3ac2Zn0Utg\u002f4CRDR09a1D8n1d66i7TRP02trPSpYdA\u002fTq2s9Klh0D8q1d66i7TRP+QkQ0dPWtQ\u002fe5zZmfRS2D\u002foO6Kye57dP5yBzkhyHuI\u002fLvlkmxcX5j+zhBTRLbnqPxOS7nRaAvA\u002fwGvfctb88j9kz1ziCkz2Pwi9ZsP37\u002fk\u002fmjT9FZ3o\u002fT8RGxBt\u002fRoBQNbg54cIbANAkeuF22\u002fnBUBHO+pnM40IQADQFC1TXQtArakFK89XDkArZN6wU74QQAEWnejtZRJAUeq+PLYiFEAe4UOtrPQVQG76KzrR2xdANjZ34yPYGUB9lCWppOkbQEYVN4tTEB5ARNzVRBgmIEAkv0HSnU4hQEMz3226gSJAOb1r33LWIkAZSc5DVqMhQDlmYrbQeiBALylQbsS5HkBrqD6MFZMcQCJKkMaUgRpAVw5FHUKFGEAM9VyQHZ4WQDz+1x8nzBRA6ym2y14PE0AYePeTxGcRQIXRN\u002fGwqg9A1vdG8zSwDEAjYxwuFeAJQGoTuKFROgdArQgaTuq+BEDsQkIz320CQCfCMFEwRwBAugzLT7uV\u002fD8bH8FuzvH4P3e7Q\u002f+ZovU\u002fxuFSAR6o8j8Nku50WgLwP5yYLbSeYus\u002fBiGXYflp5z9evRnyxBrkP6httWUBdeE\u002fu2PUeF3x3j8CFHDsmUvcPyjsPSa4+No\u002fKew9Jrj42j8FFHDsmUvcP79j1Hhd8d4\u002fq221ZQF14T9ivRnyxBrkPwohl2H5aec\u002fnJgttJ5i6z8Qku50WgLwP8rhUgEeqPI\u002fd7tD\u002f5mi9T8bH8FuzvH4P74My0+7lfw\u002fKMIwUTBHAEDsQkIz320CQLIIGk7qvgRAbRO4oVE6B0AjYxwuFeAJQNz3RvM0sAxAidE38bCqD0AYePeTxGcRQO8ptsteDxNAP\u002f7XHyfMFEAM9VyQHZ4WQFwORR1ChRhAJEqQxpSBGkBrqD6MFZMcQDQpUG7EuR5AO2ZittB6IEAaSc5DVqMhQDm9a99y1iJArmlbbVlAI0CO9b3RPA0iQK4SUkS35CBAGYIvipGNH0BVAR6o4mYdQAyjb+JhVRtAQWckOQ9ZGUD2TTys6nEXQCZXtzv0nxVA1YKV5yvjE0AC0davkTsSQKxBe5QlqRBAqqkFK89XDkD3FNtlr4cLQD7Fdtnr4QhAgbrYhYRmBkDA9ABreRUEQPtz74jK7gFAYnBIv+\u002fk\u002fz\u002fEgj7eAkH8PyAfwW7O8fg\u002fbkXQcFL39T+29WvkjlHzP\u002fYvlMmDAPE\u002fVuiRQGII7j+uhBTRLbnqP\u002fk0sERqE+g\u002fLvlkmxcX5j9S0TLVNcTkP2W9GfLEGuQ\u002fZb0Z8sQa5D9T0TLVNcTkPzD5ZJsXF+Y\u002f\u002fDSwRGoT6D+yhBTRLbnqP1rokUBiCO4\u002f9i+UyYMA8T+49WvkjlHzP3JF0HBS9\u002fU\u002fIB\u002fBbs7x+D\u002fEgj7eAkH8P2ZwSL\u002fv5P8\u002f\u002fHPviMruAUDA9ABreRUEQIa62IWEZgZAQcV22evhCED3FNtlr4cLQLCpBSvPVw5ArkF7lCWpEEAC0davkTsSQNmClecr4xNAKVe3O\u002fSfFUD2TTys6nEXQEZnJDkPWRlADqNv4mFVG0BVAR6o4mYdQB6CL4qRjR9AsBJSRLfkIECP9b3RPA0iQK5pW21ZQCNAoTiuF26\u002fI0CBxBB8UYwiQKHhpO7LYyFA\u002f49qb91FIEA5n8P8C2UeQPBAFTeLUxxAJQXKjThXGkDa6+EAFHAYQAr1XJAdnhZAuSA7PFXhFEDnbnwEuzkTQJHfIOlOpxFAuXIo6hAqEEDAUCYPAoQNQAYBwoI+3gpASvYjL9diCECJMEwUzBEGQMSvOjId6wNA+nPviMruAUAqfWoY1BwAQLGWV8Fz6vw\u002fAL1mw\u002ffv+T9HbQI3NEr3P4inKhwp+fQ\u002fvGvfctb88j\u002fpuSA7PFXxPw6S7nRaAvA\u002fUeiRQGII7j91wF96gLXsP4isRpcPDOw\u002fiKxGlw8M7D92wF96gLXsP1PokUBiCO4\u002fD5LudFoC8D\u002fruSA7PFXxP79r33LW\u002fPI\u002fiKcqHCn59D9KbQI3NEr3PwS9ZsP37\u002fk\u002fsZZXwXPq\u002fD8qfWoY1BwAQPxz74jK7gFAxa86Mh3rA0CJMEwUzBEGQE72Iy\u002fXYghACgHCgj7eCkDAUCYPAoQNQLxyKOoQKhBAk98g6U6nEUDnbnwEuzkTQL0gOzxV4RRADfVckB2eFkDa6+EAFHAYQCoFyo04VxpA8kAVN4tTHEA5n8P8C2UeQAGQam\u002fdRSBAouGk7stjIUCCxBB8UYwiQKE4rhduvyNAESpk3rBTJEDxtcZClCAjQBHTWrUO+CFAb4EgNiDaIEAagi+KkY0fQNIjgcQQfB1ABug1G75\u002fG0C8zk2OmZgZQOzXyB2jxhdAmgOnydoJFkDIUeiRQGIUQHLCjHbUzxJAmlWUd5ZSEUCCFv4pDdUPQMnGmZ1JLw1ADLz7SeKzCkBM9iMv12IIQIZ1Ek0oPAZAvDnHo9U\u002fBEDtQkIz320CQBuRg\u002ftExgBAhUgW+Q2S\u002fj\u002fM+LFsSuz7Pwwz2lE\u002fm\u002fk\u002fQveOqOye9z9uRdBwUvf1P5MdnqpwpPQ\u002frX\u002f4VUem8z+\u002fa99y1vzyP8nhUgEeqPI\u002fyeFSAR6o8j\u002fAa99y1vzyP65\u002f+FVHpvM\u002flB2eqnCk9D9wRdBwUvf1P0T3jqjsnvc\u002fDDPaUT+b+T\u002fP+LFsSuz7P4hIFvkNkv4\u002fG5GD+0TGAEDtQkIz320CQL45x6PVPwRAiHUSTSg8BkBM9iMv12IIQBG8+0niswpAzMaZnUkvDUCCFv4pDdUPQJ5VlHeWUhFAdMKMdtTPEkDIUeiRQGIUQJ4Dp8naCRZA7tfIHaPGF0C8zk2OmZgZQAzoNRu+fxtA1COBxBB8HUAagi+KkY0fQHKBIDYg2iBAE9NatQ74IUDytcZClCAjQBEqZN6wUyRAAD59wSH9JEDgyd8lBcojQADnc5h\u002foSJAXpU5GZGDIUD81DCoOXAgQK5Ls4ryzh5A4w9o4Z\u002fSHECY9n9Ue+saQMj\u002f+uOEGRlAdyvZj7xcF0CleRpYIrUVQE\u002fqvjy2IhRAd33GPXilEkAeMzFbaD0RQIIW\u002fikN1Q9Axgtg1qVZDUAFRoi7mggLQEDFdtnr4QhAdokrMJnlBkCmkqa\u002fohMFQNTg54cIbANA\u002fHPviMruAUAgTL3C6JsAQIDSomrG5v4\u002ftJZXwXPq\u002fD\u002fh5JiJ2UL7Pwa9ZsP37\u002fk\u002fIB\u002fBbs7x+D8yC6iLXUj4PzyBGxql8\u002fc\u002fPIEbGqXz9z8zC6iLXUj4PyEfwW7O8fg\u002fB71mw\u002ffv+T\u002fj5JiJ2UL7P7eWV8Fz6vw\u002fgNKiasbm\u002fj8hTL3C6JsAQP5z74jK7gFA1ODnhwhsA0Cmkqa\u002fohMFQHiJKzCZ5QZAQcV22evhCEAFRoi7mggLQMoLYNalWQ1Ahhb+KQ3VD0AeMzFbaD0RQHp9xj14pRJAUeq+PLYiFECleRpYIrUVQHsr2Y+8XBdAy\u002f\u002f644QZGUCY9n9Ue+saQOgPaOGf0hxAsEuzivLOHkD81DCoOXAgQGCVORmRgyFAAedzmH+hIkDhyd8lBcojQAA+fcEh\u002fSRAa3T5wMC7JUBLAFwlpIgkQGsd8JceYCNAycu1GDBCIkBnC62n2C4hQELc1UQYJiBAunxg4N1PHkBvY3hTuWgcQJ9s8+LClhpATpjRjvrZGEB85hJXYDIXQCZXtzv0nxVATuq+PLYiFED0nylaproSQBh495PEZxFAunIo6hAqEECyH3m5FgMOQO2eZ9dn3AtAJGMcLhXgCUBUbJe9Hg4IQIK62IWEZgZAqk3ghkbpBEDNJa7AZJYDQO1CQjPfbQJACKWc3rVvAUAeTL3C6JsAQGFwSL\u002fv5P8\u002fe9Kiasbm\u002fj+NvomHVT3+P5c0\u002fRWd6P0\u002flzT9FZ3o\u002fT+OvomHVT3+P3zSomrG5v4\u002fYnBIv+\u002fk\u002fz8fTL3C6JsAQAmlnN61bwFA7UJCM99tAkDOJa7AZJYDQKtN4IZG6QRAgrrYhYRmBkBUbJe9Hg4IQCZjHC4V4AlA7p5n12fcC0CyH3m5FgMOQLxyKOoQKhBAGnj3k8RnEUD0nylaproSQFHqvjy2IhRAKFe3O\u002fSfFUB85hJXYDIXQFKY0Y762RhAomzz4sKWGkBvY3hTuWgcQL98YODdTx5ARNzVRBgmIEBnC62n2C4hQMzLtRgwQiJAbB3wlx5gI0BMAFwlpIgkQGt0+cDAuyVAVM3Y3I2PJkA0WTtBcVwlQFR2z7PrMyRAsiSVNP0VI0BQZIzDpQIiQCw1tWDl+SBAjC4fGHj3H0BBFTeLUxAeQHEeshpdPhxAIEqQxpSBGkBOmNGO+tkYQPgIdnOORxdAIJx9dFDKFUDGUeiRQGIUQOoptsteDxNAjCTnIavREUCrQXuUJakQQJEC5UacKw9AyMaZnUkvDUD4zxQtU10LQCYeVvW4tQlATrFd9no4CEBxiSswmeUGQJGmv6ITvQVArAgaTuq+BEDCrzoyHesDQNSbIU+sQQNA4szOpJfCAkDrQkIz320CQO\u002f9e\u002fqCQwJA8P17+oJDAkDrQkIz320CQOLMzqSXwgJA1ZshT6xBA0DDrzoyHesDQK0IGk7qvgRAkaa\u002fohO9BUByiSswmeUGQE+xXfZ6OAhAJh5W9bi1CUD4zxQtU10LQMrGmZ1JLw1AkgLlRpwrD0CrQXuUJakQQI4k5yGr0RFA7Cm2y14PE0DGUeiRQGIUQCOcfXRQyhVA+gh2c45HF0BOmNGO+tkYQCRKkMaUgRpAdB6yGl0+HEBBFTeLUxAeQJEuHxh49x9ALDW1YOX5IEBQZIzDpQIiQLQklTT9FSNAVnbPs+szJEA1WTtBcVwlQFTN2NyNjyZAvUgbFYl4J0Cd1H15bEUmQL3xEezmHCVAG6DXbPj+I0C53877oOsiQJSw95jg4iFArxJSRLfkIEASDLz7SeIfQEIVN4tTEB5A8kAVN4tTHEAfj1b\u002f8KsaQMn\u002f+uOEGRlA8pIC5UacF0CYSG0CNzQWQLwgOzxV4RRAXRtskqGjE0B9OAAFHHsSQBp495PEZxFANdpRP5tpEECbvR4OQAEPQMkLYNalWQ1A8J5n12fcC0AUdzURhokKQDSUyYMAYQlAT\u002fYjL9diCEBlnUQTCo8HQHeJKzCZ5QZAhbrYhYRmBkCOMEwUzBEGQJLrhdtv5wVAk+uF22\u002fnBUCOMEwUzBEGQIW62IWEZgZAeIkrMJnlBkBmnUQTCo8HQFD2Iy\u002fXYghANJTJgwBhCUAWdzURhokKQPKeZ9dn3AtAyQtg1qVZDUCbvR4OQAEPQDbaUT+baRBAG3j3k8RnEUB9OAAFHHsSQGAbbJKhoxNAvSA7PFXhFECYSG0CNzQWQPSSAuVGnBdAy\u002f\u002f644QZGUAfj1b\u002f8KsaQPZAFTeLUxxARhU3i1MQHkASDLz7SeIfQLESUkS35CBAlbD3mODiIUC53877oOsiQB2g12z4\u002fiNAvvER7OYcJUCe1H15bEUmQL1IGxWJeCdAoebAabJ2KECBciPOlUMnQKGPt0AQGyZA\u002fz19wSH9JECdfXRQyukjQHlOne0J4SJAk7D3mODiIUDuo4NSTu8gQIYoQRpTBiBAunxg4N1PHkDoyqGoQ6gcQJI7Ro3XFRtAus5NjpmYGUBhhLiriTAYQIRchuWn3RZAJle3O\u002fSfFUBGdEuubncUQOOzQj0XZBNA\u002fhWd6O1lEkCWmlqw8nwRQK5Be5QlqRBAghb+KQ3VD0Cm7stjK4IOQMYLYNalWQ1A4W26gXxbDED3FNtlr4cLQAkBwoI+3gpAFzJv2ClfCkAgqOJmcQoKQCRjHC4V4AlAJWMcLhXgCUAgqOJmcQoKQBcyb9gpXwpACgHCgj7eCkD4FNtlr4cLQOJtuoF8WwxAxgtg1qVZDUCo7stjK4IOQIQW\u002fikN1Q9ArkF7lCWpEECWmlqw8nwRQP8VnejtZRJA5LNCPRdkE0BGdEuubncUQChXtzv0nxVAhlyG5afdFkBhhLiriTAYQL7OTY6ZmBlAlDtGjdcVG0DoyqGoQ6gcQL58YODdTx5AhyhBGlMGIEDuo4NSTu8gQJaw95jg4iFAek6d7QnhIkCdfXRQyukjQAI+fcEh\u002fSRAo4+3QBAbJkCCciPOlUMnQKHmwGmydihAA6fJ2gmKKUDjMiw\u002f7VYoQANQwLFnLidAYf6FMnkQJkD\u002fPX3BIf0kQNsOpl5h9CNA9XAACjj2IkBQZIzDpQIiQOjoSYuqGSFAv\u002f44YUY7IECsS7OK8s4eQFa8V2+GPB1Afk9fcEi\u002fG0AlBcqNOFcaQEjdl8dWBBlA6tfIHaPGF0AK9VyQHZ4WQKc0VB\u002fGihVAwpauypyMFEBaG2ySoaMTQHLCjHbUzxJABYwQdzUREkAXePeTxGcRQKeGQc2B0xBAtLfuIm1UEEB\u002fFv4pDdUPQJEC5UacKw9AnzOSnIesDkCoqQUrz1cOQKxkP\u002fJyLQ5ArWQ\u002f8nItDkCoqQUrz1cOQJ8zkpyHrA5AkgLlRpwrD0CAFv4pDdUPQLW37iJtVBBAp4ZBzYHTEEAYePeTxGcRQAaMEHc1ERJAcsKMdtTPEkBaG2ySoaMTQMOWrsqcjBRAqDRUH8aKFUAK9VyQHZ4WQOzXyB2jxhdASt2Xx1YEGUAlBcqNOFcaQIJPX3BIvxtAWLxXb4Y8HUCsS7OK8s4eQMH+OGFGOyBA6ehJi6oZIUBQZIzDpQIiQPhwAAo49iJA3A6mXmH0I0D\u002fPX3BIf0kQGT+hTJ5ECZABVDAsWcuJ0DkMiw\u002f7VYoQAOnydoJiilA5ok1aI+yKkDGFZjMcn8pQOYyLD\u002ftVihAROHxv\u002f44J0DiIOlOpyUmQL7xEezmHCVA2FNsl70eJEAyR\u002fhQKysjQMrLtRgwQiJAouGk7stjIUC5iMXS\u002fo8gQByCL4qRjR9ARBU3i1MQHkDqyqGoQ6gcQA6jb+JhVRtAsJ2gOK4XGkDPujSrKO8YQGz6KzrR2xdAiFyG5afdFkAg4UOtrPQVQDeIZJHfIBVAy1HokUBiFEDcPc+uz7gTQG1MGeiMJBNAen3GPXilEkAF0davkTsSQA5HSj7Z5hFAld8g6U6nEUCZmlqw8nwRQBx495PEZxFAHHj3k8RnEUCZmlqw8nwRQJXfIOlOpxFAD0dKPtnmEUAF0davkTsSQHp9xj14pRJAbUwZ6IwkE0DdPc+uz7gTQMxR6JFAYhRAN4hkkd8gFUAg4UOtrPQVQIlchuWn3RZAbforOtHbF0DPujSrKO8YQLKdoDiuFxpAEKNv4mFVG0DqyqGoQ6gcQEcVN4tTEB5AHoIvipGNH0C5iMXS\u002fo8gQKThpO7LYyFAzMu1GDBCIkAyR\u002fhQKysjQNpTbJe9HiRAvvER7OYcJUDiIOlOpyUmQEbh8b\u002f+OCdA6DIsP+1WKEDHFZjMcn8pQOaJNWiPsipARI8EEkPwK0AkG2d2Jr0qQEQ4++iglClAoubAabJ2KEBAJrj4WmMnQBv34JWaWiZANlk7QXFcJUCQTMf63mgkQCjRhMLjfyNAAOdzmH+hIkAWjpR8ss0hQGvG5m58BCFAAJBqb91FIECm1T\u002f8qiMfQMmtDTbJ0B1Aaqg+jBWTHECKxdL+j2obQCgFyo04VxpAQ2ckOQ9ZGUDb6+EAFHAYQPKSAuVGnBdAhlyG5afdFkCYSG0CNzQWQChXtzv0nxVANYhkkd8gFUDA23QD+bYUQMlR6JFAYhRAUOq+PLYiFEBUpfgDWvgTQNeClecr4xNA14KV5yvjE0BUpfgDWvgTQFDqvjy2IhRAylHokUBiFEDA23QD+bYUQDWIZJHfIBVAKFe3O\u002fSfFUCYSG0CNzQWQIdchuWn3RZA8pIC5UacF0Db6+EAFHAYQERnJDkPWRlAKAXKjThXGkCKxdL+j2obQG2oPowVkxxAyq0NNsnQHUCm1T\u002f8qiMfQAGQam\u002fdRSBAbMbmbnwEIUAWjpR8ss0hQALnc5h\u002foSJAKtGEwuN\u002fI0CQTMf63mgkQDhZO0FxXCVAHPfglZpaJkBAJrj4WmMnQKTmwGmydihARTj76KCUKUAkG2d2Jr0qQESPBBJD8CtAHrc22CRDLUD+Qpk8CBAsQB5gLa+C5ypAfA7zL5TJKUAaTuq+PLYoQPYeE1x8rSdAEIFtB1OvJkBrdPnAwLslQAP5tojF0iRA2g6mXmH0I0DxtcZClCAjQEbuGDVeVyJA2recNb+YIUCuElJEt+QgQMD+OGFGOyBAIPiiGNk4H0BAFTeLUxAeQN5ULhr8\u002fBxA+baIxdL+G0CRO0aN1xUbQKjiZnEKQhpAPKzqcWuDGUBOmNGO+tkYQN6mG8i3RRhA69fIHaPGF0B2K9mPvFwXQH+hTB4ECBdABjojyXnIFkAK9VyQHZ4WQI3S+XPviBZAjdL5c++IFkAK9VyQHZ4WQAY6I8l5yBZAgKFMHgQIF0B2K9mPvFwXQOvXyB2jxhdA3qYbyLdFGEBOmNGO+tkYQD2s6nFrgxlAqOJmcQpCGkCRO0aN1xUbQPq2iMXS\u002fhtA3lQuGvz8HEBAFTeLUxAeQCP4ohjZOB9AwP44YUY7IECuElJEt+QgQNy3nDW\u002fmCFAR+4YNV5XIkDxtcZClCAjQNwOpl5h9CNABPm2iMXSJEBrdPnAwLslQBOBbQdTryZA9x4TXHytJ0AaTuq+PLYoQH8O8y+UySlAIGAtr4LnKkAAQ5k8CBAsQB63NtgkQy1AewHMujSrLkBbjS4fGHgtQHuqwpGSTyxA2ViIEqQxK0B3mH+hTB4qQFJpqD6MFSlAbcsC6mIXKEDIvo6j0CMnQGBDTGvVOiZAN1k7QXFcJUBOAFwlpIgkQKM4rhduvyNANwIyGM8AI0AKXecmx0wiQBxJzkNWoyFAbcbmbnwEIUD91DCoOXAgQJbpWN8bzR9AskuzivLOHkBK0HBS9+UdQGF3kTYqEh1A9UAVN4tTHEAGLfxTGqobQJc7Ro3XFRtApGzz4sKWGkAvwANV3CwaQDg2d+Mj2BlAv85NjpmYGUDDiYdVPW4ZQEZnJDkPWRlARmckOQ9ZGUDDiYdVPW4ZQL\u002fOTY6ZmBlAOTZ34yPYGUAvwANV3CwaQKRs8+LClhpAlztGjdcVG0AHLfxTGqobQPZAFTeLUxxAYXeRNioSHUBK0HBS9+UdQLNLs4ryzh5Al+lY3xvNH0D91DCoOXAgQG7G5m58BCFAHUnOQ1ajIUAKXecmx0wiQDgCMhjPACNApDiuF26\u002fI0BOAFwlpIgkQDlZO0FxXCVAYUNMa9U6JkDIvo6j0CMnQHDLAupiFyhAVGmoPowVKUB3mH+hTB4qQNxYiBKkMStAfKrCkZJPLEBcjS4fGHgtQHsBzLo0qy5AKTfiXDkUMEAy+iYeVvUuQFIXu5DQzC1AsMWAEeKuLEBOBXigipsrQCnWoD3KkipARDj76KCUKUCeK4eiDqEoQDawRGoTuCdADsYzQK\u002fZJkAkbVQk4gUmQHmlphasPCVADm8qFw1+JEDhyd8lBcojQPK1xkKUICNAQzPfbbqBIkDTQSmnd+0hQKLhpO7LYyFArxJSRLfkIED81DCoOXAgQIcoQRpTBiBAohoGNQdOH0C0Bu1RlqQeQEQVN4tTEB5AUUbk4D6RHUDcmfRSWCcdQOUPaOGf0hxAbKg+jBWTHEBwY3hTuWgcQPNAFTeLUxxA80AVN4tTHEBwY3hTuWgcQGyoPowVkxxA5g9o4Z\u002fSHEDcmfRSWCcdQFFG5OA+kR1ARBU3i1MQHkC0Bu1RlqQeQKMaBjUHTh9AhyhBGlMGIED81DCoOXAgQLASUkS35CBAouGk7stjIUDTQSmnd+0hQEQz3226gSJA87XGQpQgI0Dhyd8lBcojQA9vKhcNfiRAeqWmFqw8JUAkbVQk4gUmQBDGM0Cv2SZAOLBEahO4J0CeK4eiDqEoQEY4++iglClAKtagPcqSKkBOBXigipsrQLLFgBHirixAUxe7kNDMLUAy+iYeVvUuQCk34lw5FDBA0\u002f6Pam\u002fdMEDDRMEc4UMwQKamFqw8Xy9ABFXcLE5BLkCilNO79i0tQH1l\u002fFg2JSxAmMdWBA0nK0DyuuK9ejMqQIo\u002foIV\u002fSilAYlWPWxtsKEB4\u002fK8\u002fTpgnQM00AjIYzyZAYv6FMnkQJkA1WTtBcVwlQEZFIl4AsyRAl8I6iSYUJEAn0YTC438jQPZwAAo49iJAA6KtXyN3IkBQZIzDpQIiQNu3nDW\u002fmCFApZzetW85IUCuElJEt+QgQPYZ9+CVmiBAfLLNiwtbIEBC3NVEGCYgQI0uHxh49x9AFMf1wu23H0AYgi+KkY0fQJtfzG1jeB9Am1\u002fMbWN4H0AYgi+KkY0fQBTH9cLttx9Aji4fGHj3H0BC3NVEGCYgQH2yzYsLWyBA9hn34JWaIECuElJEt+QgQKWc3rVvOSFA27ecNb+YIUBQZIzDpQIiQASirV8jdyJA9nAACjj2IkAn0YTC438jQJjCOokmFCRAR0UiXgCzJEA1WTtBcVwlQGP+hTJ5ECZAzjQCMhjPJkB4\u002fK8\u002fTpgnQGRVj1sbbChAjD+ghX9KKUDyuuK9ejMqQJrHVgQNJytAfmX8WDYlLECilNO79i0tQAZV3CxOQS5Ap6YWrDxfL0DDRMEc4UMwQNP+j2pv3TBAvldvhjyxMUCunaA4rhcxQD6s6nFrgzBA2gabZOjoL0B4RpLzkNUuQFQXu5DQzC1AbnkVPKfOLEDIbKH1FNsrQGDxXr0Z8ipAOAdOk7UTKkBPrm536D8pQKTmwGmydihAOLBEahO4J0ALC\u002fp4CwQnQB334JWaWiZAbnT5wMC7JUD+gkP6fSclQMwiv0HSnSRA2lNsl70eJEAmFkv7P6ojQLJpW21ZQCNAe06d7QnhIkCExBB8UYwiQMzLtRgwQiJAU2SMw6UCIkAYjpR8ss0hQB1JzkNWoyFAYJU5GZGDIUDjctb8Ym4hQKThpO7LYyFApOGk7stjIUDjctb8Ym4hQGGVORmRgyFAHUnOQ1ajIUAZjpR8ss0hQFNkjMOlAiJAzMu1GDBCIkCFxBB8UYwiQHxOne0J4SJAsmlbbVlAI0AmFkv7P6ojQNpTbJe9HiRAzSK\u002fQdKdJED+gkP6fSclQG90+cDAuyVAHvfglZpaJkALC\u002fp4CwQnQDqwRGoTuCdApebAabJ2KEBPrm536D8pQDoHTpO1EypAYvFevRnyKkDIbKH1FNsrQHB5FTynzixAVBe7kNDMLUB4RpLzkNUuQNwGm2To6C9AP6zqcWuDMECunaA4rhcxQL5Xb4Y8sTFA5kGAsKCPMkDWh7FiEvYxQGaW+5vPYTFAlW1eXNjSMEBkDdqjLEkwQKTr3OSYiS9Avk03kG+LLkAYQcNJ3ZctQLDFgBHirixAiNtv533QK0CfgpDLsPwqQPS64r16MypAiIRmvtt0KUBb3xvN08AoQG3LAupiFyhAvkgbFYl4J0BOV2VORuQmQBz34JWaWiZAKiiO64XbJUB26mxPCGclQAI+fcEh\u002fSRAyyK\u002fQdKdJEDUmDLQGUkkQByg12z4\u002fiNAoziuF26\u002fI0BoYrbQeoojQG0d8JceYCNAsGlbbVlAI0AzR\u002fhQKysjQPS1xkKUICNA9LXGQpQgI0AzR\u002fhQKysjQLFpW21ZQCNAbR3wlx5gI0BpYrbQeoojQKM4rhduvyNAHKDXbPj+I0DVmDLQGUkkQMwiv0HSnSRAAj59wSH9JEB26mxPCGclQCoojuuF2yVAHffglZpaJkBOV2VORuQmQL9IGxWJeCdAbssC6mIXKEBb3xvN08AoQIqEZr7bdClA9brivXozKkCfgpDLsPwqQIrbb+d90CtAssWAEeKuLEAYQcNJ3ZctQMBNN5Bviy5ApOvc5JiJL0BkDdqjLEkwQJZtXlzY0jBAZ5b7m89hMUDWh7FiEvYxQOZBgLCgjzJATL3C6Jt4M0A8A\u002fSaDd8yQMwRPtTKSjJA\u002fOiglNO7MUDKiBzcJzIxQDjxsKrHrTBARiJeALMuMEDmN0i602kvQH68BYLYgC5AVdL0V3SiLUBseRU8p84sQMGxZy5xBSxAVXvrLtJGK0Ao1qA9ypIqQDrCh1pZ6SlAiz+ghX9KKUAbTuq+PLYoQOntZQaRLChA9x4TXHytJ0BD4fG\u002f\u002fjgnQM40AjIYzyZAmBlEsshvJkChj7dAEBsmQOmWXN3u0CVAcC8ziGSRJUA1WTtBcVwlQDoUdQgVMiVAfWDg3U8SJUAAPn3BIf0kQMGsS7OK8iRAwaxLs4ryJEAAPn3BIf0kQH5g4N1PEiVAOhR1CBUyJUA2WTtBcVwlQHAvM4hkkSVA6ZZc3e7QJUCij7dAEBsmQJkZRLLIbyZAzjQCMhjPJkBD4fG\u002f\u002fjgnQPceE1x8rSdA6u1lBpEsKEAbTuq+PLYoQIw\u002foIV\u002fSilAO8KHWlnpKUAo1qA9ypIqQFZ76y7SRitAwrFnLnEFLEBseRU8p84sQFfS9Fd0oi1Af7wFgtiALkDmN0i602kvQEciXgCzLjBAOfGwqsetMEDKiBzcJzIxQP3ooJTTuzFAzRE+1MpKMkA9A\u002fSaDd8yQEy9wuibeDNA9Mk2Ly5sNEDkD2jhn9IzQHQeshpdPjNApPUU22WvMkBylZAiuiUyQOD9JPFZoTFA7i7SRkUiMUCbKJgjfKgwQOfqdof+MzBApevc5JiJL0C8kv3Iy7UuQBHLT7uV7C1ApZTTu\u002fYtLUB474jK7nksQIrbb+d90CtA21iIEqQxK0BrZ9JLYZ0qQDkHTpO1EypARzj76KCUKUCT+tlMIyApQB5O6r48tihA6DIsP+1WKEDxqJ\u002fNNAIoQDmwRGoTuCdAwEgbFYl4J0CFciPOlUMnQIotXZU5GSdAzXnIanT5JkBQV2VORuQmQBHGM0Cv2SZAEcYzQK\u002fZJkBQV2VORuQmQM55yGp0+SZAii1dlTkZJ0CGciPOlUMnQMBIGxWJeCdAObBEahO4J0DyqJ\u002fNNAIoQOkyLD\u002ftVihAHk7qvjy2KECT+tlMIyApQEc4++iglClAOgdOk7UTKkBrZ9JLYZ0qQNxYiBKkMStAi9tv533QK0B474jK7nksQKaU07v2LS1AEstPu5XsLUC8kv3Iy7UuQKfr3OSYiS9A6Op2h\u002f4zMECbKJgjfKgwQO8u0kZFIjFA4f0k8VmhMUBylZAiuiUyQKX1FNtlrzJAdR6yGl0+M0DlD2jhn9IzQPTJNi8ubDRA2Gfcg1dqNUDIrQ02ydA0QFi8V2+GPDRAiJO6L4+tM0BWMzZ34yMzQMSbykWDnzJA0sx3m24gMkB\u002fxj14paYxQMuIHNwnMjFAthMUx\u002fXCMEBCZyQ5D1kwQNkGm2To6C9AbdAeZUkqL0BAK9RzQXYuQFIXu5DQzC1Ao5TTu\u002fYtLUAzox31s5ksQAFDmTwIECxAD3RGkvOQK0BbNiX2dRwrQOaJNWiPsipAsG536D9TKkC55Op2h\u002f4pQAHsjxNmtClAiIRmvtt0KUBNrm536D8pQFJpqD6MFSlAlbUTFMf1KEAYk7D3mOAoQNkBf+kB1ihA2QF\u002f6QHWKEAYk7D3mOAoQJa1ExTH9ShAUmmoPowVKUBOrm536D8pQIiEZr7bdClAAeyPE2a0KUC65Op2h\u002f4pQLFud+g\u002fUypA5ok1aI+yKkBbNiX2dRwrQA90RpLzkCtAAkOZPAgQLEAzox31s5ksQKSU07v2LS1AUxe7kNDMLUBAK9RzQXYuQG7QHmVJKi9A2gabZOjoL0BCZyQ5D1kwQLgTFMf1wjBAzIgc3CcyMUB\u002fxj14paYxQNPMd5tuIDJAxZvKRYOfMkBWMzZ34yMzQImTui+PrTNAWbxXb4Y8NEDJrQ02ydA0QNhn3INXajVA\u002fJaz5hdzNkDs3OSYidk1QHzrLtJGRTVAq8KRkk+2NEB6Yg3aoyw0QOjKoahDqDNA9ftO\u002fi4pM0Ci9RTbZa8yQO638z7oOjJA2kLrKbbLMUBllvubz2ExQJCyJJU0\u002fTBAWpdmFeWdMEDERMEc4UMwQJl1aVZR3i9A6vKBgXc\u002fL0B6Acy6NKsuQEihRwKJIS5AVtL0V3SiLUCilNO79i0tQC7o4y0QxCxA98wlrsBkLEAAQ5k8CBAsQEhKPtnmxStAz+IUhFyGK0CUDB09aVErQJnHVgQNJytA3BPC2UcHK0Bf8V69GfIqQCBgLa+C5ypAIGAtr4LnKkBf8V69GfIqQN0TwtlHBytAmcdWBA0nK0CVDB09aVErQM\u002fiFIRchitASEo+2ebFK0ABQ5k8CBAsQPjMJa7AZCxALujjLRDELECilNO79i0tQFbS9Fd0oi1ASaFHAokhLkB6Acy6NKsuQOvygYF3Py9AmnVpVlHeL0DERMEc4UMwQFuXZhXlnTBAkLIklTT9MEBllvubz2ExQNtC6ym2yzFA77fzPug6MkCi9RTbZa8yQPb7Tv4uKTNA6MqhqEOoM0B6Yg3aoyw0QKzCkZJPtjRAfesu0kZFNUDs3OSYidk1QPyWs+YXczZAYFe8V2+GN0BQne0J4ew2QOCrN0OeWDZAEIOaA6fJNUDeIhZL+z81QEyLqhmbuzRAWrxXb4Y8NEAHth1MvcIzQFN4\u002fK8\u002fTjNAPgP0mg3fMkDKVgQNJ3UyQPRyLQaMEDJAvldvhjyxMUAoBcqNOFcxQDF7PRyAAjFA2bnJMROzMEAhwW7O8WgwQAmRLPIbJDBAH1MGOiPJL0BrFeWdpVQvQPZo9Q+\u002f6i5AwE03kG+LLkDJw6oetzYuQBHLT7uV7C1AmGMmZgutLUBdjS4fGHgtQGJIaOa7TS1ApZTTu\u002fYtLUAocnCfyBgtQOngPpExDi1A6eA+kTEOLUAocnCfyBgtQKaU07v2LS1AYkho5rtNLUBejS4fGHgtQJhjJmYLrS1AEctPu5XsLUDKw6oetzYuQMFNN5Bviy5A9mj1D7\u002fqLkBrFeWdpVQvQB9TBjojyS9ACZEs8hskMEAhwW7O8WgwQNq5yTETszBAMXs9HIACMUAoBcqNOFcxQL9Xb4Y8sTFA9XItBowQMkDKVgQNJ3UyQEAD9JoN3zJAVHj8rz9OM0AHth1MvcIzQFu8V2+GPDRATYuqGZu7NEDeIhZL+z81QBGDmgOnyTVA4as3Q55YNkBRne0J4ew2QGBXvFdvhjdAAqn21l2kOEDy7ieJzwo4QIL9ccKMdjdAsNTUgpXnNkCAdFDK6V02QO3c5JiJ2TVA+g2S7nRaNUCoB1jLq+A0QPTJNi8ubDRA4FQuGvz8M0BrqD6MFZMzQJXEZ4V6LjNAYKmpBSvPMkDJVgQNJ3UyQNLMd5tuIDJAegsEsQHRMUDCEqlN4IYxQKriZnEKQjFAMHs9HIACMUBW3CxOQcgwQBwGNQdOkzBAgfhVR6ZjMECGs48OSjkwQCo34lw5FDBA2gabZOjoL0CfMKMd9bMvQKTr3OSYiS9A5zdIutNpL0BqFeWdpVQvQCuEs48OSi9AK4Szjw5KL0BqFeWdpVQvQOg3SLrTaS9ApOvc5JiJL0CgMKMd9bMvQNoGm2To6C9AKjfiXDkUMECGs48OSjkwQIH4VUemYzBAHAY1B06TMEBW3CxOQcgwQDF7PRyAAjFAquJmcQpCMUDCEqlN4IYxQHsLBLEB0TFA0sx3m24gMkDJVgQNJ3UyQGCpqQUrzzJAlsRnhXouM0BrqD6MFZMzQOBULhr8\u002fDNA9Mk2Ly5sNECoB1jLq+A0QPwNku50WjVA7tzkmInZNUCAdFDK6V02QLLU1IKV5zZAgv1xwox2N0Dy7ieJzwo4QAKp9tZdpDhA4YtiZOPMOUDR0ZMWVTM5QGHg3U8SnzhAkLdAEBsQOEBfV7xXb4Y3QM2\u002fUCYPAjdA2vD9e\u002fqCNkCH6sNYMQk2QNOsoryzlDVAvzeap4ElNUBKi6oZm7s0QHWn0xIAVzRAP4wVk7D3M0CpOXCarJ0zQLKv4yj0SDNAWu5vPof5MkCi9RTbZa8yQInF0v6PajJAEF6pqQUrMkA2v5jbxvAxQPzooJTTuzFAYdvB1CuMMUBllvubz2ExQAkaTuq+PDFATGa5v\u002fkcMUAvez0cgAIxQLJY2v9R7TBA0\u002f6Pam\u002fdMECUbV5c2NIwQPWkRdWMzTBA9aRF1YzNMECUbV5c2NIwQNP+j2pv3TBAslja\u002f1HtMEAvez0cgAIxQE1mub\u002f5HDFACRpO6r48MUBllvubz2ExQGHbwdQrjDFA\u002fOiglNO7MUA2v5jbxvAxQBBeqakFKzJAicXS\u002fo9qMkCi9RTbZa8yQFrubz6H+TJAsq\u002fjKPRIM0CpOXCarJ0zQECMFZOw9zNAdafTEgBXNEBKi6oZm7s0QMA3mqeBJTVA1KyivLOUNUCH6sNYMQk2QNvw\u002fXv6gjZAzb9QJg8CN0BfV7xXb4Y3QJG3QBAbEDhAYuDdTxKfOEDS0ZMWVTM5QOGLYmTjzDlAAAAAAAAAO0DwRTGycWY6QIBUe+su0jlAryveqzdDOUB+y1nzi7k4QOwz7sErNThA+WSbFxe2N0CmXmH0TTw3QPIgQFjQxzZA3qs3Q55YNkBp\u002f0e1t+41QJQbca4cijVAXgCzLs0qNUDIrQ02ydA0QNAjgcQQfDRAeWIN2qMsNEDBabJ2guIzQKg5cJqsnTNAL9JGRSJeM0BVMzZ34yMzQBtdPjDw7jJAgE9fcEi\u002fMkCECpk37JQyQCiO64XbbzJAa9pWWxZQMkBO79q3nDUyQNHMd5tuIDJA8nItBowQMkCz4fv39AUyQBQZ43CpADJAFBnjcKkAMkCz4fv39AUyQPJyLQaMEDJA0cx3m24gMkBO79q3nDUyQGzaVlsWUDJAKI7rhdtvMkCECpk37JQyQIBPX3BIvzJAG10+MPDuMkBVMzZ34yMzQC\u002fSRkUiXjNAqDlwmqydM0DBabJ2guIzQHpiDdqjLDRA0SOBxBB8NEDIrQ02ydA0QF8Asy7NKjVAlBtxrhyKNUBp\u002f0e1t+41QN+rN0OeWDZA8yBAWNDHNkCmXmH0TTw3QPpkmxcXtjdA7DPuwSs1OEB+y1nzi7k4QLAr3qs3QzlAgVR76y7SOUDwRTGycWY6QAAAAAAAADtA","shape":"60, 60"},"type":"surface"},{"line":{"color":"red","width":8},"mode":"lines","x":{"dtype":"f8","bdata":"Z2ZmZmZm9j8AAAAAAAAIQA=="},"y":{"dtype":"f8","bdata":"zczMzMzM\u002fL\u002fNzMzMzMz8vw=="},"z":{"dtype":"f8","bdata":"MzMzMzMzH0CuR+F6FK4tQA=="},"type":"scatter3d"},{"line":{"color":"blue","width":8},"mode":"lines","x":{"dtype":"f8","bdata":"mpmZmZmZAUCamZmZmZkBQA=="},"y":{"dtype":"f8","bdata":"zczMzMzMBMAAAAAAAADwvw=="},"z":{"dtype":"f8","bdata":"Fa5H4XoUMUA9CtejcD0WQA=="},"type":"scatter3d"},{"marker":{"color":"black","size":5},"mode":"markers","x":[2.2],"y":[-1.8],"z":[11.32],"type":"scatter3d"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"margin":{"b":0,"l":0,"r":0,"t":30}}},"margin":{"l":0,"r":0,"t":10,"b":0},"scene":{"xaxis":{"title":{"text":"x1"}},"yaxis":{"title":{"text":"x2"}},"zaxis":{"title":{"text":"f(x1, x2)"}}},"height":550,"showlegend":false},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('b0ccc2cc-2f15-428c-a0d9-cb0d98904af1');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+<ul>
+<li><strong>Red line:</strong> the slope along the <span class="math inline">x_1</span> direction, holding <span class="math inline">x_2</span> fixed — this is <span class="math inline">\frac{\partial f}{\partial x_1}</span></li>
+<li><strong>Blue line:</strong> the slope along the <span class="math inline">x_2</span> direction, holding <span class="math inline">x_1</span> fixed — this is <span class="math inline">\frac{\partial f}{\partial x_2}</span></li>
+<li>The gradient just bundles these two slopes into a single vector</li>
+<li>Drag to rotate — get a feel for the bowl before we build on it</li>
+</ul>
+</section>
+<section id="try-it-yourself" class="slide level2">
+<h2>Try it yourself</h2>
+<p>Same plot, straight from the slide — paste this into your notebook to rotate it live, move the point, or change the function entirely:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb18-2"><a href=""></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb18-3"><a href=""></a></span>
+<span id="cb18-4"><a href=""></a>x1 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">60</span>)</span>
+<span id="cb18-5"><a href=""></a>x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">60</span>)</span>
+<span id="cb18-6"><a href=""></a>X1, X2 <span class="op">=</span> np.meshgrid(x1, x2)</span>
+<span id="cb18-7"><a href=""></a>F <span class="op">=</span> X1 <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> X2 <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb18-8"><a href=""></a></span>
+<span id="cb18-9"><a href=""></a>p1, p2 <span class="op">=</span> <span class="fl">2.2</span>, <span class="op">-</span><span class="fl">1.8</span>          <span class="co"># try moving this point around</span></span>
+<span id="cb18-10"><a href=""></a>fp <span class="op">=</span> p1 <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> p2 <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb18-11"><a href=""></a>t <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">0.8</span>, <span class="fl">0.8</span>, <span class="dv">2</span>)</span>
+<span id="cb18-12"><a href=""></a></span>
+<span id="cb18-13"><a href=""></a>d1 <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> p1  <span class="co"># df/dx1 at (p1, p2)</span></span>
+<span id="cb18-14"><a href=""></a>d2 <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> p2  <span class="co"># df/dx2 at (p1, p2)</span></span>
+<span id="cb18-15"><a href=""></a></span>
+<span id="cb18-16"><a href=""></a>fig <span class="op">=</span> go.Figure()</span>
+<span id="cb18-17"><a href=""></a>fig.add_trace(go.Surface(</span>
+<span id="cb18-18"><a href=""></a>    x<span class="op">=</span>x1, y<span class="op">=</span>x2, z<span class="op">=</span>F, colorscale<span class="op">=</span><span class="st">"Viridis"</span>, opacity<span class="op">=</span><span class="fl">0.85</span>, showscale<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb18-19"><a href=""></a>    contours<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb18-20"><a href=""></a>        x<span class="op">=</span><span class="bu">dict</span>(show<span class="op">=</span><span class="va">True</span>, project<span class="op">=</span><span class="bu">dict</span>(x<span class="op">=</span><span class="va">True</span>), color<span class="op">=</span><span class="st">"gray"</span>, width<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb18-21"><a href=""></a>        y<span class="op">=</span><span class="bu">dict</span>(show<span class="op">=</span><span class="va">True</span>, project<span class="op">=</span><span class="bu">dict</span>(y<span class="op">=</span><span class="va">True</span>), color<span class="op">=</span><span class="st">"gray"</span>, width<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb18-22"><a href=""></a>    ),</span>
+<span id="cb18-23"><a href=""></a>))</span>
+<span id="cb18-24"><a href=""></a>fig.add_trace(go.Scatter3d(x<span class="op">=</span>p1 <span class="op">+</span> t, y<span class="op">=</span>np.full_like(t, p2), z<span class="op">=</span>fp <span class="op">+</span> d1 <span class="op">*</span> t,</span>
+<span id="cb18-25"><a href=""></a>                            mode<span class="op">=</span><span class="st">"lines"</span>, line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"red"</span>, width<span class="op">=</span><span class="dv">8</span>)))</span>
+<span id="cb18-26"><a href=""></a>fig.add_trace(go.Scatter3d(x<span class="op">=</span>np.full_like(t, p1), y<span class="op">=</span>p2 <span class="op">+</span> t, z<span class="op">=</span>fp <span class="op">+</span> d2 <span class="op">*</span> t,</span>
+<span id="cb18-27"><a href=""></a>                            mode<span class="op">=</span><span class="st">"lines"</span>, line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"blue"</span>, width<span class="op">=</span><span class="dv">8</span>)))</span>
+<span id="cb18-28"><a href=""></a>fig.add_trace(go.Scatter3d(x<span class="op">=</span>[p1], y<span class="op">=</span>[p2], z<span class="op">=</span>[fp], mode<span class="op">=</span><span class="st">"markers"</span>,</span>
+<span id="cb18-29"><a href=""></a>                            marker<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">5</span>)))</span>
+<span id="cb18-30"><a href=""></a></span>
+<span id="cb18-31"><a href=""></a>fig.update_layout(scene<span class="op">=</span><span class="bu">dict</span>(xaxis_title<span class="op">=</span><span class="st">"x1"</span>, yaxis_title<span class="op">=</span><span class="st">"x2"</span>, zaxis_title<span class="op">=</span><span class="st">"f(x1, x2)"</span>))</span>
+<span id="cb18-32"><a href=""></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="stats-estimators" class="slide level2 section">
+<h2>Stats: estimators</h2>
+</section>
+<section id="what-is-an-estimator" class="slide level2">
+<h2>What is an “estimator”?</h2>
+<ul>
+<li>An <strong>estimator</strong> is just a formula that turns data into a summary
+<ul>
+<li>Mean: <code>sum(data) / n</code> — estimates “the center”</li>
+<li>Standard deviation — estimates “how spread out”</li>
+</ul></li>
+<li>Nothing exotic here — you’ve been using estimators since intro stats, just not the word</li>
+</ul>
+<div id="cbb74be3" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a>data <span class="op">=</span> torch.tensor([<span class="fl">2.0</span>, <span class="fl">4.0</span>, <span class="fl">4.0</span>, <span class="fl">4.0</span>, <span class="fl">5.0</span>, <span class="fl">5.0</span>, <span class="fl">7.0</span>, <span class="fl">9.0</span>])</span>
+<span id="cb19-2"><a href=""></a></span>
+<span id="cb19-3"><a href=""></a>mean <span class="op">=</span> data.mean()</span>
+<span id="cb19-4"><a href=""></a>std <span class="op">=</span> data.std()</span>
+<span id="cb19-5"><a href=""></a></span>
+<span id="cb19-6"><a href=""></a><span class="bu">print</span>(mean, std)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(5.) tensor(2.1381)</code></pre>
+</div>
+</div>
+<ul>
+<li><code>data.mean()</code> and <code>data.std()</code> are estimators, applied to this particular sample</li>
+<li>A different sample gives a different estimate — that’s expected, it’s still doing its job</li>
+</ul>
+</section>
+<section id="standardization-putting-estimators-to-work" class="slide level2">
+<h2>Standardization: putting estimators to work</h2>
+<ul>
+<li>Raw features live on wildly different scales — <code>age</code> in years, <code>fare</code> in dollars</li>
+<li><strong>Standardization</strong> rescales a feature using its own estimated mean and std: <span class="math display">x' = \frac{x - \hat\mu}{\hat\sigma}</span></li>
+<li>After standardizing, every feature has mean ≈ 0, std ≈ 1 — same footing, comparable scale</li>
+</ul>
+<div id="77e72b90" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a>age <span class="op">=</span> torch.tensor([<span class="fl">22.0</span>, <span class="fl">38.0</span>, <span class="fl">26.0</span>, <span class="fl">35.0</span>, <span class="fl">28.0</span>, <span class="fl">54.0</span>])</span>
+<span id="cb21-2"><a href=""></a></span>
+<span id="cb21-3"><a href=""></a>age_mean <span class="op">=</span> age.mean()</span>
+<span id="cb21-4"><a href=""></a>age_std <span class="op">=</span> age.std()</span>
+<span id="cb21-5"><a href=""></a></span>
+<span id="cb21-6"><a href=""></a>age_standardized <span class="op">=</span> (age <span class="op">-</span> age_mean) <span class="op">/</span> age_std</span>
+<span id="cb21-7"><a href=""></a><span class="bu">print</span>(age_standardized)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([-1.0293,  0.3624, -0.6814,  0.1015, -0.5074,  1.7542])</code></pre>
+</div>
+</div>
+<div class="caution">
+<p>Remember the leakage rule from last time? Fit <code>mean</code>/<code>std</code> on the <em>training</em> split only, then reuse those exact numbers on validation/test.</p>
+</div>
+</section>
+<section id="so-what-is-a-model-statistically" class="slide level2">
+<h2>So what is a model, statistically?</h2>
+<ul>
+<li>Mean and std are estimators for <em>one number</em> — “what’s the center,” “what’s the spread”</li>
+<li>A machine learning model is an estimator too, but for an entire function relating inputs to outputs <span class="math display">\hat{y} = \text{model}(\mathbf{x})</span></li>
+<li>Same idea as <code>data.mean()</code>: fit some parameters to a sample, then use them to make a statement about data you haven’t seen yet</li>
+<li>The parameters <em>are</em> the model’s “mean” — a summary of the training data, generalized into a rule</li>
+</ul>
+</section>
+<section id="the-big-picture-about-what-a-model-is" class="slide level2">
+<h2>The big picture about what a model is</h2>
+<p>That’s the statistical view. Zoomed all the way out, though, it’s simpler than that:</p>
+<p><br></p>
+<div class="box center">
+<p>A model is a mapping from input data to output data</p>
+</div>
+<p><br></p>
+<div class="center">
+<p>We need to specify clearly what our inputs and outputs are going to be</p>
+<p>And be clever with how we think about them!</p>
+</div>
+</section>
+<section id="summary" class="slide level2 section">
+<h2>Summary</h2>
+</section>
+<section id="takeaways" class="slide level2">
+<h2>Takeaways</h2>
+<ul>
+<li>Vectors and matrices are how we represent “a measurement” and “many measurements” — tensors just generalize both</li>
+<li>Norms measure importance, dot products measure agreement, and <code>Ax</code> is evaluating a function — three ideas underneath every linear layer</li>
+<li>The gradient bundles partial derivatives into one vector that points uphill; the chain rule is what lets us compute the gradient of a composed function</li>
+<li>A model is a mapping from inputs to outputs — its parameters are just an estimator, fit on data, generalized into a rule</li>
+</ul>
+</section>
+<section id="coming-up" class="slide level2">
+<h2>Coming up</h2>
+<ul>
+<li>We still don’t have a <em>smart</em> <code>choose_next_value()</code> — just a random one</li>
+<li>Next lecture: gradient descent replaces the random guess with the gradient we just learned to compute</li>
+<li>And PyTorch’s autograd computes that gradient automatically, for functions far more complicated than today’s — no calculus by hand required</li>
+</ul>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>CST463 · Advanced Machine Learning</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="02-linear_algebra_calculus_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3,"chalkWidth":3},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 6.0e-2,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
