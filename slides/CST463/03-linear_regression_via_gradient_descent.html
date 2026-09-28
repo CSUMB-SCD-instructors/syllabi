@@ -103,7 +103,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/theme/quarto-714f1515ce518ade9c0c6f6b6ce33b8c.css">
+  <link rel="stylesheet" href="03-linear_regression_via_gradient_descent_files/libs/revealjs/dist/theme/quarto-ff105ce82bcf17f5734711849a8fa0c6.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -218,7 +218,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-08-31 09:48" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-27 21:46" class="quarto-title-block center">
   <h1 class="title">Linear Regression via Gradient Descent</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -236,6 +236,8 @@ Sam Ogden
 <p>This slide deck is still under active development. Expect changes before it is finalized.</p>
 </section>
 
+<section id="learning-objectives" class="slide level2">
+<h2>Learning objectives</h2>
 <!--
 Assumed prior knowledge, from lectures 01-02 of this course (the deck this
 one picks up from):
@@ -313,8 +315,6 @@ for random search and GD, 1 for SGD, and will be the batch size k for
 mini-batch. This is the fair x-axis for the final "Comparing the four"
 plot: computation spent, not just step count.
 -->
-<section id="learning-objectives" class="slide level2">
-<h2>Learning objectives</h2>
 <ul>
 <li>Reframe fitting a linear model as <strong>training</strong>: iteratively adapting parameters using a loss, not solving for them in one shot</li>
 <li>Explain why we use an iterative approach here even though linear regression has a closed-form solution</li>
@@ -1364,7 +1364,7 @@ plot: computation spent, not just step count.
 </ul></li>
 <li>Notice the difference in how the evaluation budget gets spent</li>
 </ul>
-<div id="4396a158" class="cell" data-execution_count="1">
+<div id="a9471f41" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1401,7 +1401,7 @@ plot: computation spent, not just step count.
 <div class="box center">
 <p>Let’s vary minibatch size with 40 datapoints and a budget of 4000 evaluations</p>
 </div>
-<div id="53ac82f3" class="cell" data-execution_count="2">
+<div id="985c3994" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
