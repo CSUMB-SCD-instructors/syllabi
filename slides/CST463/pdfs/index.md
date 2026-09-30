@@ -18,3 +18,4 @@ Printable slide handouts for CST463.
 | Multilayer Perceptrons, Part 1 | [Open](Multilayer-Perceptrons-Part-1.pdf) |
 | Multilayer Perceptrons, Part 2 | [Open](Multilayer-Perceptrons-Part-2.pdf) |
 | Optimization Beyond Plain SGD | [Open](Optimization-Beyond-Plain-SGD.pdf) |
+| Classes, Models, and the Training Loop | [Open](Classes-Models-and-the-Training-Loop.pdf) |

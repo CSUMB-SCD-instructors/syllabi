@@ -20,3 +20,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Multilayer Perceptrons, Part 1 | beta | [Open](06-multilayer_perceptrons_forward.html) | [PDF](pdfs/Multilayer-Perceptrons-Part-1.pdf) |
 | Multilayer Perceptrons, Part 2 | beta | [Open](07-multilayer_perceptrons_backward.html) | [PDF](pdfs/Multilayer-Perceptrons-Part-2.pdf) |
 | Optimization Beyond Plain SGD | beta | [Open](08-optimization_momentum_and_adaptive_learning_rates.html) | [PDF](pdfs/Optimization-Beyond-Plain-SGD.pdf) |
+| Classes, Models, and the Training Loop | beta | [Open](09-classes_models_and_training_loops.html) | [PDF](pdfs/Classes-Models-and-the-Training-Loop.pdf) |
