@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-09-29 22:25" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-09-30 09:55" class="quarto-title-block center">
   <h1 class="title">Classes, Models, and the Training Loop</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -249,12 +249,13 @@ Deliberate scope decisions:
 - The minimal model is nn.Module with __init__ and forward. NOT using ABC/@abstractmethod (extra concept, nn.Module already raises NotImplementedError if forward is missing) and NOT using *args/**kwargs in __init__ (no role yet -- introduce when a model needs configurable pieces).
 - loss / training_step / configure_optimizers are NOT part of the model contract. They are a d2l packaging convenience, shown at the end as a subclass so students recognize them when reading d2l.
 - Each section ends with a "Reference" slide holding the definitive code for that section, so students have one place to copy from. The final section repeats the whole thing.
+- Habit: a straight-line stack of layers goes in self.network = nn.Sequential(...) and forward is just self.network(X). forward does real wiring only when the structure branches (ParallelLinear now, skip connections later). PyTorch has no separate "functional graph" API: branching is ordinary Python in forward, with named sub-models built in __init__.
 - Never explain autograd internals here; .backward() is a black box that fills in .grad (already covered in the MLP backward lecture).
 - Datasets/DataLoaders are used but not explained beyond "yields batches".
 
 Running example: none, deliberately. This lecture is about code structure, and numeric "plug x through W" or "watch the loss shrink" slides were tried and cut throughout because they only re-showed the math from the multi-output and SGD lectures and taught nothing about classes. The class primer uses a scalar Line(w, b) as its toy (the 1-D version of linear regression); everything after that is structure only. Do not add worked numeric examples back without a code-specific reason.
 
-Time target: under 60 minutes. If short, cut: the nn.Sequential slide, the ReluLine inheritance example (keep the super().__init__() point), and the Classifier subclass slide.
+Time target: under 60 minutes. If short, cut: the ReluLine inheritance example (keep the super().__init__() point), and the Classifier subclass slide.
 -->
 <!--
 Progress tracker:
@@ -302,7 +303,7 @@ Progress tracker:
 </section>
 <section id="anatomy-of-a-class" class="slide level2">
 <h2>Anatomy of a class</h2>
-<div id="8ab7857a" class="cell" data-execution_count="1">
+<div id="4f4772df" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">class</span> Line:</span>
 <span id="cb1-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w, b):</span>
 <span id="cb1-3"><a href=""></a>        <span class="va">self</span>.w <span class="op">=</span> w</span>
@@ -429,7 +430,7 @@ Progress tracker:
 </section>
 <section id="call__-objects-that-act-like-functions" class="slide level2">
 <h2><code>__call__</code>: objects that act like functions</h2>
-<div id="8cf18b92" class="cell" data-execution_count="2">
+<div id="e99d6014" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="kw">class</span> Line:</span>
 <span id="cb6-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w, b):</span>
 <span id="cb6-3"><a href=""></a>        <span class="va">self</span>.w <span class="op">=</span> w</span>
@@ -458,7 +459,7 @@ Progress tracker:
 </section>
 <section id="inheritance-and-super" class="slide level2">
 <h2>Inheritance and <code>super()</code></h2>
-<div id="4b17b834" class="cell" data-execution_count="3">
+<div id="6999e3ac" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="kw">class</span> ReluLine(Line):</span>
 <span id="cb8-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w, b):</span>
 <span id="cb8-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(w, b)</span>
@@ -492,7 +493,7 @@ Progress tracker:
 </section>
 <section id="reference-python-classes" class="slide level2">
 <h2>Reference: Python classes</h2>
-<div id="c9f88fab" class="cell" data-execution_count="4">
+<div id="b46ea4e6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="kw">class</span> Line:</span>
 <span id="cb10-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w, b):       <span class="co"># constructor: remember the numbers</span></span>
 <span id="cb10-3"><a href=""></a>        <span class="va">self</span>.w <span class="op">=</span> w</span>
@@ -534,7 +535,7 @@ Progress tracker:
 </section>
 <section id="the-minimal-model" class="slide level2">
 <h2>The minimal model</h2>
-<div id="cd6734bd" class="cell" data-execution_count="5">
+<div id="b8334472" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb11-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb11-3"><a href=""></a></span>
@@ -588,7 +589,7 @@ Progress tracker:
 </section>
 <section id="a-gotcha-we-have-to-tell-torch-about-our-layers" class="slide level2">
 <h2>A Gotcha: We have to tell <code>torch</code> about our layers!</h2>
-<div id="25176fce" class="cell" data-execution_count="6">
+<div id="71ae93d2" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="kw">class</span> Broken(nn.Module):</span>
 <span id="cb12-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb12-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -606,7 +607,7 @@ Progress tracker:
 </section>
 <section id="reference-the-model-interface" class="slide level2">
 <h2>Reference: the model interface</h2>
-<div id="b7e0e44d" class="cell" data-execution_count="7">
+<div id="770785ed" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb13-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb13-3"><a href=""></a></span>
@@ -637,7 +638,7 @@ Progress tracker:
 </section>
 <section id="model-1-linear-regression-from-scratch" class="slide level2">
 <h2>Model 1: linear regression, from scratch</h2>
-<div id="94eef090" class="cell" data-execution_count="8">
+<div id="fac201a2" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="kw">class</span> LinearRegression(nn.Module):</span>
 <span id="cb14-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features):</span>
 <span id="cb14-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -654,7 +655,7 @@ Progress tracker:
 </section>
 <section id="model-2-several-models-one-model" class="slide level2">
 <h2>Model 2: several models, one model</h2>
-<div id="1d554d91" class="cell" data-execution_count="9">
+<div id="665efd97" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="kw">class</span> ParallelLinear(nn.Module):</span>
 <span id="cb15-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_outputs):</span>
 <span id="cb15-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -693,102 +694,85 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </section>
 <section id="model-3-layer-them-into-an-mlp" class="slide level2">
 <h2>Model 3: layer them into an MLP</h2>
-<div id="c0421def" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
-<span id="cb16-2"><a href=""></a></span>
-<span id="cb16-3"><a href=""></a><span class="kw">class</span> MLP(nn.Module):</span>
-<span id="cb16-4"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs):</span>
-<span id="cb16-5"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb16-6"><a href=""></a>        <span class="va">self</span>.hidden <span class="op">=</span> nn.Linear(num_features, num_hidden)</span>
-<span id="cb16-7"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(num_hidden, num_outputs)</span>
-<span id="cb16-8"><a href=""></a></span>
-<span id="cb16-9"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb16-10"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(F.relu(<span class="va">self</span>.hidden(X)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li><code>__init__</code> <strong>creates</strong> the pieces, <code>forward</code> <strong>wires</strong> them together</li>
-<li>Called the same way: <code>mlp(x)</code>. 26 parameters: <span class="math inline">3 \cdot 4 + 4</span> in the hidden layer, <span class="math inline">4 \cdot 2 + 2</span> in the output</li>
-</ul>
-</section>
-<section id="the-same-thing-with-nn.sequential" class="slide level2">
-<h2>The same thing with <code>nn.Sequential</code></h2>
-<div id="1fe6ecc7" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="kw">class</span> MLP_sequential(nn.Module):</span>
-<span id="cb17-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs):</span>
-<span id="cb17-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb17-4"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(</span>
-<span id="cb17-5"><a href=""></a>            nn.Linear(num_features, num_hidden),</span>
-<span id="cb17-6"><a href=""></a>            nn.ReLU(),</span>
-<span id="cb17-7"><a href=""></a>            nn.Linear(num_hidden, num_outputs),</span>
-<span id="cb17-8"><a href=""></a>        )</span>
-<span id="cb17-9"><a href=""></a></span>
-<span id="cb17-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb17-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span>
-<span id="cb17-12"><a href=""></a></span>
-<span id="cb17-13"><a href=""></a>mlp2 <span class="op">=</span> MLP_sequential(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>)</span>
-<span id="cb17-14"><a href=""></a>X <span class="op">=</span> torch.randn(<span class="dv">5</span>, <span class="dv">3</span>)                 <span class="co"># 5 examples, 3 features</span></span>
-<span id="cb17-15"><a href=""></a><span class="bu">print</span>(mlp2(X).shape, <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> mlp2.parameters()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e8d7cdf4" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="kw">class</span> MLP(nn.Module):</span>
+<span id="cb16-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs):</span>
+<span id="cb16-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb16-4"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(</span>
+<span id="cb16-5"><a href=""></a>            nn.Linear(num_features, num_hidden),</span>
+<span id="cb16-6"><a href=""></a>            nn.ReLU(),</span>
+<span id="cb16-7"><a href=""></a>            nn.Linear(num_hidden, num_outputs),</span>
+<span id="cb16-8"><a href=""></a>        )</span>
+<span id="cb16-9"><a href=""></a></span>
+<span id="cb16-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb16-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span>
+<span id="cb16-12"><a href=""></a></span>
+<span id="cb16-13"><a href=""></a>mlp <span class="op">=</span> MLP(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb16-14"><a href=""></a>X <span class="op">=</span> torch.randn(<span class="dv">5</span>, <span class="dv">3</span>)                 <span class="co"># 5 examples, 3 features</span></span>
+<span id="cb16-15"><a href=""></a><span class="bu">print</span>(mlp(X).shape, <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> mlp.parameters()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch.Size([5, 2]) 26</code></pre>
 </div>
 </div>
 <ul>
-<li><code>nn.Sequential</code> is itself a model whose <code>forward</code> runs its pieces in order, so our <code>forward</code> is one line</li>
-<li>Same shape, same 26 parameters as the explicit version</li>
-<li>Fine for a straight line of layers. Once the wiring branches or loops, we write our own <code>forward</code></li>
+<li><code>__init__</code> <strong>builds</strong> the network once, and <code>forward</code> just <strong>runs</strong> it</li>
+<li><code>nn.Sequential</code> is itself a model that runs its pieces in order. Our habit: a straight line of layers goes in <code>self.network</code></li>
+<li>26 parameters: <span class="math inline">3 \cdot 4 + 4</span> in the first layer, <span class="math inline">4 \cdot 2 + 2</span> in the last</li>
 </ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>When the wiring stops being a straight line (skip connections, coming with CNNs), <code>forward</code> does the wiring, and the pieces it connects are sub-models like <code>self.network</code>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="reference-building-models-1-of-2" class="slide level2">
 <h2>Reference: building models (1 of 2)</h2>
-<div id="5b3a4548" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> torch</span>
-<span id="cb19-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
-<span id="cb19-3"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
-<span id="cb19-4"><a href=""></a></span>
-<span id="cb19-5"><a href=""></a><span class="kw">class</span> LinearRegression(nn.Module):            <span class="co"># 1. a single linear model</span></span>
-<span id="cb19-6"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features):</span>
-<span id="cb19-7"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb19-8"><a href=""></a>        <span class="va">self</span>.w <span class="op">=</span> nn.Parameter(torch.randn(num_features))</span>
-<span id="cb19-9"><a href=""></a>        <span class="va">self</span>.b <span class="op">=</span> nn.Parameter(torch.zeros(<span class="dv">1</span>))</span>
-<span id="cb19-10"><a href=""></a></span>
-<span id="cb19-11"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb19-12"><a href=""></a>        <span class="cf">return</span> X <span class="op">@</span> <span class="va">self</span>.w <span class="op">+</span> <span class="va">self</span>.b</span>
-<span id="cb19-13"><a href=""></a></span>
-<span id="cb19-14"><a href=""></a></span>
-<span id="cb19-15"><a href=""></a><span class="kw">class</span> ParallelLinear(nn.Module):               <span class="co"># 2. a model of models</span></span>
-<span id="cb19-16"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_outputs):</span>
-<span id="cb19-17"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb19-18"><a href=""></a>        <span class="va">self</span>.models <span class="op">=</span> nn.ModuleList(</span>
-<span id="cb19-19"><a href=""></a>            [LinearRegression(num_features) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_outputs)])</span>
-<span id="cb19-20"><a href=""></a></span>
-<span id="cb19-21"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb19-22"><a href=""></a>        <span class="cf">return</span> torch.stack([m(X) <span class="cf">for</span> m <span class="kw">in</span> <span class="va">self</span>.models], dim<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5874e08e" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="im">import</span> torch</span>
+<span id="cb18-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb18-3"><a href=""></a></span>
+<span id="cb18-4"><a href=""></a><span class="kw">class</span> LinearRegression(nn.Module):            <span class="co"># 1. a single linear model</span></span>
+<span id="cb18-5"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features):</span>
+<span id="cb18-6"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb18-7"><a href=""></a>        <span class="va">self</span>.w <span class="op">=</span> nn.Parameter(torch.randn(num_features))</span>
+<span id="cb18-8"><a href=""></a>        <span class="va">self</span>.b <span class="op">=</span> nn.Parameter(torch.zeros(<span class="dv">1</span>))</span>
+<span id="cb18-9"><a href=""></a></span>
+<span id="cb18-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb18-11"><a href=""></a>        <span class="cf">return</span> X <span class="op">@</span> <span class="va">self</span>.w <span class="op">+</span> <span class="va">self</span>.b</span>
+<span id="cb18-12"><a href=""></a></span>
+<span id="cb18-13"><a href=""></a></span>
+<span id="cb18-14"><a href=""></a><span class="kw">class</span> ParallelLinear(nn.Module):               <span class="co"># 2. a model of models</span></span>
+<span id="cb18-15"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_outputs):</span>
+<span id="cb18-16"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb18-17"><a href=""></a>        <span class="va">self</span>.models <span class="op">=</span> nn.ModuleList(</span>
+<span id="cb18-18"><a href=""></a>            [LinearRegression(num_features) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_outputs)])</span>
+<span id="cb18-19"><a href=""></a></span>
+<span id="cb18-20"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb18-21"><a href=""></a>        <span class="cf">return</span> torch.stack([m(X) <span class="cf">for</span> m <span class="kw">in</span> <span class="va">self</span>.models], dim<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="reference-building-models-2-of-2" class="slide level2">
 <h2>Reference: building models (2 of 2)</h2>
-<div id="07c2f913" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="kw">class</span> MLP(nn.Module):                          <span class="co"># 3. layers + a nonlinearity</span></span>
-<span id="cb20-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs):</span>
-<span id="cb20-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb20-4"><a href=""></a>        <span class="va">self</span>.hidden <span class="op">=</span> nn.Linear(num_features, num_hidden)</span>
-<span id="cb20-5"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(num_hidden, num_outputs)</span>
-<span id="cb20-6"><a href=""></a></span>
-<span id="cb20-7"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb20-8"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(F.relu(<span class="va">self</span>.hidden(X)))</span>
-<span id="cb20-9"><a href=""></a></span>
-<span id="cb20-10"><a href=""></a></span>
-<span id="cb20-11"><a href=""></a><span class="kw">class</span> MLP_sequential(nn.Module):               <span class="co"># 4. same MLP, nn.Sequential</span></span>
-<span id="cb20-12"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs):</span>
-<span id="cb20-13"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb20-14"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(</span>
-<span id="cb20-15"><a href=""></a>            nn.Linear(num_features, num_hidden),</span>
-<span id="cb20-16"><a href=""></a>            nn.ReLU(),</span>
-<span id="cb20-17"><a href=""></a>            nn.Linear(num_hidden, num_outputs),</span>
-<span id="cb20-18"><a href=""></a>        )</span>
-<span id="cb20-19"><a href=""></a></span>
-<span id="cb20-20"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb20-21"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a6520e9d" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="kw">class</span> MLP(nn.Module):                          <span class="co"># 3. layers + a nonlinearity</span></span>
+<span id="cb19-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs):</span>
+<span id="cb19-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb19-4"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(</span>
+<span id="cb19-5"><a href=""></a>            nn.Linear(num_features, num_hidden),</span>
+<span id="cb19-6"><a href=""></a>            nn.ReLU(),</span>
+<span id="cb19-7"><a href=""></a>            nn.Linear(num_hidden, num_outputs),</span>
+<span id="cb19-8"><a href=""></a>        )</span>
+<span id="cb19-9"><a href=""></a></span>
+<span id="cb19-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb19-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="the-training-loop" class="slide level2 section">
@@ -851,20 +835,20 @@ Multiple layers are combined into blocks, forming patterns of larger models
 <li>The model knows nothing about the optimizer, and the optimizer knows nothing about the model’s structure. It only sees <code>model.parameters()</code></li>
 </ul>
 </section>
-<section id="the-five-lines" class="slide level2">
-<h2>The five lines</h2>
-<div id="1463bcfd" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):    <span class="co"># one epoch = one full pass over the data</span></span>
-<span id="cb21-2"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> loader:            <span class="co"># one mini-batch</span></span>
-<span id="cb21-3"><a href=""></a>        optimizer.zero_grad()      <span class="co"># 1. clear old gradients</span></span>
-<span id="cb21-4"><a href=""></a>        y_hat <span class="op">=</span> model(X)           <span class="co"># 2. forward pass</span></span>
-<span id="cb21-5"><a href=""></a>        loss <span class="op">=</span> loss_fn(y_hat, y)   <span class="co"># 3. score it</span></span>
-<span id="cb21-6"><a href=""></a>        loss.backward()            <span class="co"># 4. gradients, via autograd</span></span>
-<span id="cb21-7"><a href=""></a>        optimizer.step()           <span class="co"># 5. update the parameters</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="the-core-training-loop" class="slide level2">
+<h2>The core training loop</h2>
+<div id="e54c95e8" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):    <span class="co"># each epoch = one full pass over the data</span></span>
+<span id="cb20-2"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> loader:            <span class="co"># each mini-batch</span></span>
+<span id="cb20-3"><a href=""></a>        optimizer.zero_grad()      <span class="co"># 1. clear old gradients</span></span>
+<span id="cb20-4"><a href=""></a>        y_hat <span class="op">=</span> model(X)           <span class="co"># 2. forward pass</span></span>
+<span id="cb20-5"><a href=""></a>        loss <span class="op">=</span> loss_fn(y_hat, y)   <span class="co"># 3. score it</span></span>
+<span id="cb20-6"><a href=""></a>        loss.backward()            <span class="co"># 4. gradients, via autograd</span></span>
+<span id="cb20-7"><a href=""></a>        optimizer.step()           <span class="co"># 5. update the parameters</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><strong>Outer loop:</strong> epochs. <strong>Inner loop:</strong> mini-batches. Each batch is one SGD step</li>
-<li>This is <strong>the</strong> training loop. Everything else in the course is a variation on these five lines</li>
+<li>This is <strong>the</strong> training loop. Basically the rest of the course uses these five lines, or a variation.</li>
 </ul>
 </section>
 <section id="each-line-in-the-math-we-know" class="slide level2">
@@ -915,19 +899,6 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </tr>
 </tbody>
 </table>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>Nothing new: this is mini-batch SGD from earlier, written as code. <code>lr</code> is <span class="math inline">\eta</span>.</p>
-</div>
-</div>
-</div>
 </section>
 <section id="breakdown-why-zero_grad" class="slide level2">
 <h2>Breakdown: why <code>zero_grad()</code>?</h2>
@@ -977,24 +948,24 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </section>
 <section id="reference-the-training-loop" class="slide level2">
 <h2>Reference: the training loop</h2>
-<div id="77d44f85" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a>model <span class="op">=</span> Model()                                      <span class="co"># any nn.Module subclass</span></span>
-<span id="cb22-2"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss()                               <span class="co"># any loss</span></span>
-<span id="cb22-3"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.1</span>)   <span class="co"># any optimizer</span></span>
-<span id="cb22-4"><a href=""></a></span>
-<span id="cb22-5"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
-<span id="cb22-6"><a href=""></a>    model.train()</span>
-<span id="cb22-7"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> train_loader:</span>
-<span id="cb22-8"><a href=""></a>        optimizer.zero_grad()      <span class="co"># 1. clear old gradients</span></span>
-<span id="cb22-9"><a href=""></a>        y_hat <span class="op">=</span> model(X)           <span class="co"># 2. forward pass</span></span>
-<span id="cb22-10"><a href=""></a>        loss <span class="op">=</span> loss_fn(y_hat, y)   <span class="co"># 3. score it</span></span>
-<span id="cb22-11"><a href=""></a>        loss.backward()            <span class="co"># 4. gradients</span></span>
-<span id="cb22-12"><a href=""></a>        optimizer.step()           <span class="co"># 5. update</span></span>
-<span id="cb22-13"><a href=""></a></span>
-<span id="cb22-14"><a href=""></a>    model.<span class="bu">eval</span>()</span>
-<span id="cb22-15"><a href=""></a>    <span class="cf">with</span> torch.no_grad():          <span class="co"># evaluation: predictions only</span></span>
-<span id="cb22-16"><a href=""></a>        <span class="cf">for</span> X, y <span class="kw">in</span> val_loader:</span>
-<span id="cb22-17"><a href=""></a>            val_loss <span class="op">=</span> loss_fn(model(X), y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="626a033f" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a>model <span class="op">=</span> Model()                                      <span class="co"># any nn.Module subclass</span></span>
+<span id="cb21-2"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss()                               <span class="co"># any loss</span></span>
+<span id="cb21-3"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.1</span>)   <span class="co"># any optimizer</span></span>
+<span id="cb21-4"><a href=""></a></span>
+<span id="cb21-5"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb21-6"><a href=""></a>    model.train()</span>
+<span id="cb21-7"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> train_loader:</span>
+<span id="cb21-8"><a href=""></a>        optimizer.zero_grad()      <span class="co"># 1. clear old gradients</span></span>
+<span id="cb21-9"><a href=""></a>        y_hat <span class="op">=</span> model(X)           <span class="co"># 2. forward pass</span></span>
+<span id="cb21-10"><a href=""></a>        loss <span class="op">=</span> loss_fn(y_hat, y)   <span class="co"># 3. score it</span></span>
+<span id="cb21-11"><a href=""></a>        loss.backward()            <span class="co"># 4. gradients</span></span>
+<span id="cb21-12"><a href=""></a>        optimizer.step()           <span class="co"># 5. update</span></span>
+<span id="cb21-13"><a href=""></a></span>
+<span id="cb21-14"><a href=""></a>    model.<span class="bu">eval</span>()</span>
+<span id="cb21-15"><a href=""></a>    <span class="cf">with</span> torch.no_grad():          <span class="co"># evaluation: predictions only</span></span>
+<span id="cb21-16"><a href=""></a>        <span class="cf">for</span> X, y <span class="kw">in</span> val_loader:</span>
+<span id="cb21-17"><a href=""></a>            val_loss <span class="op">=</span> loss_fn(model(X), y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="making-it-easier-on-ourselves" class="slide level2 section">
@@ -1013,6 +984,7 @@ Multiple layers are combined into blocks, forming patterns of larger models
 <div class="box center">
 <p><strong>Idea:</strong> the model already knows what it’s for, so let it carry its own loss and optimizer setup</p>
 </div>
+<p><br><br></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1029,56 +1001,91 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </section>
 <section id="extending-nn.module-with-a-subclass" class="slide level2">
 <h2>Extending <code>nn.Module</code> with a subclass</h2>
-<div id="65795186" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="kw">class</span> Regressor(nn.Module):</span>
-<span id="cb23-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
-<span id="cb23-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb23-4"><a href=""></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
-<span id="cb23-5"><a href=""></a></span>
-<span id="cb23-6"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
-<span id="cb23-7"><a href=""></a>        <span class="cf">return</span> F.mse_loss(y_hat, y)</span>
-<span id="cb23-8"><a href=""></a></span>
-<span id="cb23-9"><a href=""></a>    <span class="kw">def</span> configure_optimizers(<span class="va">self</span>):</span>
-<span id="cb23-10"><a href=""></a>        <span class="cf">return</span> torch.optim.SGD(<span class="va">self</span>.parameters(), lr<span class="op">=</span><span class="va">self</span>.lr)</span>
-<span id="cb23-11"><a href=""></a></span>
-<span id="cb23-12"><a href=""></a>    <span class="kw">def</span> training_step(<span class="va">self</span>, batch):</span>
-<span id="cb23-13"><a href=""></a>        X, y <span class="op">=</span> batch</span>
-<span id="cb23-14"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.loss(<span class="va">self</span>(X), y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9d01ccfa" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb22-2"><a href=""></a></span>
+<span id="cb22-3"><a href=""></a><span class="kw">class</span> Regressor(nn.Module):</span>
+<span id="cb22-4"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb22-5"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb22-6"><a href=""></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb22-7"><a href=""></a></span>
+<span id="cb22-8"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
+<span id="cb22-9"><a href=""></a>        <span class="cf">return</span> F.mse_loss(y_hat, y)</span>
+<span id="cb22-10"><a href=""></a></span>
+<span id="cb22-11"><a href=""></a>    <span class="kw">def</span> configure_optimizers(<span class="va">self</span>):</span>
+<span id="cb22-12"><a href=""></a>        <span class="cf">return</span> torch.optim.SGD(<span class="va">self</span>.parameters(), lr<span class="op">=</span><span class="va">self</span>.lr)</span>
+<span id="cb22-13"><a href=""></a></span>
+<span id="cb22-14"><a href=""></a>    <span class="kw">def</span> training_step(<span class="va">self</span>, batch):</span>
+<span id="cb22-15"><a href=""></a>        X, y <span class="op">=</span> batch</span>
+<span id="cb22-16"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.loss(<span class="va">self</span>(X), y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
-<li><code>Regressor</code> <strong>is an</strong> <code>nn.Module</code> with three extra methods: <code>loss</code> and <code>configure_optimizers</code> answer “which loss? which optimizer?”, and <code>training_step</code> does forward pass plus loss for one batch</li>
+<li><code>Regressor</code> <strong>is an</strong> <code>nn.Module</code> with three extra methods:
+<ul>
+<li><code>loss</code> and <code>configure_optimizers</code> answer “which loss? which optimizer?”</li>
+<li><code>training_step</code> does forward pass plus loss for one batch</li>
+</ul></li>
 <li>It has no <code>forward</code> yet: a subclass supplies that</li>
 </ul>
 </section>
 <section id="a-concrete-model-one-subclass-down" class="slide level2">
 <h2>A concrete model, one subclass down</h2>
-<div id="08312aa5" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="kw">class</span> MLPRegressor(Regressor):</span>
-<span id="cb24-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
-<span id="cb24-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(lr)                <span class="co"># parent sets up lr</span></span>
-<span id="cb24-4"><a href=""></a>        <span class="va">self</span>.hidden <span class="op">=</span> nn.Linear(num_features, num_hidden)</span>
-<span id="cb24-5"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(num_hidden, num_outputs)</span>
-<span id="cb24-6"><a href=""></a></span>
-<span id="cb24-7"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb24-8"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(F.relu(<span class="va">self</span>.hidden(X)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="84923b26" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="kw">class</span> MLPRegressor(Regressor):</span>
+<span id="cb23-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb23-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(lr)                <span class="co"># parent sets up lr</span></span>
+<span id="cb23-4"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(</span>
+<span id="cb23-5"><a href=""></a>            nn.Linear(num_features, num_hidden),</span>
+<span id="cb23-6"><a href=""></a>            nn.ReLU(),</span>
+<span id="cb23-7"><a href=""></a>            nn.Linear(num_hidden, num_outputs),</span>
+<span id="cb23-8"><a href=""></a>        )</span>
+<span id="cb23-9"><a href=""></a></span>
+<span id="cb23-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb23-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><code>MLPRegressor</code> <strong>is a</strong> <code>Regressor</code> <strong>is an</strong> <code>nn.Module</code></li>
 <li>It inherits the loss and optimizer setup, and only writes what is specific to it: the layers and <code>forward</code></li>
 </ul>
 </section>
+<section id="a-concrete-model-with-branching" class="slide level2">
+<h2>A concrete model with branching</h2>
+<div id="1f024cbd" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="kw">class</span> BranchingRegressor(Regressor):</span>
+<span id="cb24-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb24-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(lr)</span>
+<span id="cb24-4"><a href=""></a>        <span class="va">self</span>.branch_a <span class="op">=</span> nn.Sequential(nn.Linear(num_features, num_hidden), nn.ReLU())</span>
+<span id="cb24-5"><a href=""></a>        <span class="va">self</span>.branch_b <span class="op">=</span> nn.Sequential(nn.Linear(num_features, num_hidden), nn.ReLU())</span>
+<span id="cb24-6"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(<span class="dv">2</span> <span class="op">*</span> num_hidden, num_outputs)</span>
+<span id="cb24-7"><a href=""></a></span>
+<span id="cb24-8"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb24-9"><a href=""></a>        both <span class="op">=</span> torch.cat([<span class="va">self</span>.branch_a(X), <span class="va">self</span>.branch_b(X)], dim<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb24-10"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(both)</span>
+<span id="cb24-11"><a href=""></a></span>
+<span id="cb24-12"><a href=""></a>model <span class="op">=</span> BranchingRegressor(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb24-13"><a href=""></a><span class="bu">print</span>(model(torch.randn(<span class="dv">5</span>, <span class="dv">3</span>)).shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([5, 2])</code></pre>
+</div>
+</div>
+<ul>
+<li>Two parallel hidden layers <strong>both read the same <code>X</code></strong>, and <code>torch.cat</code> joins their outputs</li>
+<li>Not a straight line, so <code>forward</code> does the wiring. Each branch is still a named sub-model built in <code>__init__</code></li>
+<li>Everything inherited from <code>Regressor</code> is unchanged: same <code>loss</code>, same <code>training_step</code>, same loop</li>
+</ul>
+</section>
 <section id="using-the-packaged-model" class="slide level2">
 <h2>Using the packaged model</h2>
-<div id="ccff9c56" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a>model <span class="op">=</span> MLPRegressor(num_features<span class="op">=</span><span class="dv">3</span>, num_hidden<span class="op">=</span><span class="dv">4</span>, num_outputs<span class="op">=</span><span class="dv">2</span>, lr<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb25-2"><a href=""></a>optimizer <span class="op">=</span> model.configure_optimizers()     <span class="co"># the model picks its optimizer</span></span>
-<span id="cb25-3"><a href=""></a></span>
-<span id="cb25-4"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
-<span id="cb25-5"><a href=""></a>    <span class="cf">for</span> batch <span class="kw">in</span> loader:</span>
-<span id="cb25-6"><a href=""></a>        optimizer.zero_grad()</span>
-<span id="cb25-7"><a href=""></a>        loss <span class="op">=</span> model.training_step(batch)    <span class="co"># forward pass + loss, in one call</span></span>
-<span id="cb25-8"><a href=""></a>        loss.backward()</span>
-<span id="cb25-9"><a href=""></a>        optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="780227ac" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a>model <span class="op">=</span> MLPRegressor(num_features<span class="op">=</span><span class="dv">3</span>, num_hidden<span class="op">=</span><span class="dv">4</span>, num_outputs<span class="op">=</span><span class="dv">2</span>, lr<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb26-2"><a href=""></a>optimizer <span class="op">=</span> model.configure_optimizers()     <span class="co"># the model picks its optimizer</span></span>
+<span id="cb26-3"><a href=""></a></span>
+<span id="cb26-4"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb26-5"><a href=""></a>    <span class="cf">for</span> batch <span class="kw">in</span> loader:</span>
+<span id="cb26-6"><a href=""></a>        optimizer.zero_grad()</span>
+<span id="cb26-7"><a href=""></a>        loss <span class="op">=</span> model.training_step(batch)    <span class="co"># forward pass + loss, in one call</span></span>
+<span id="cb26-8"><a href=""></a>        loss.backward()</span>
+<span id="cb26-9"><a href=""></a>        optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>The <strong>same five steps</strong>. No <code>loss_fn</code> appears anywhere: the model supplies its own loss and optimizer</li>
@@ -1087,10 +1094,10 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </section>
 <section id="why-subclassing-pays-off" class="slide level2">
 <h2>Why subclassing pays off</h2>
-<div id="fadc7589" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a><span class="kw">class</span> Classifier(Regressor):</span>
-<span id="cb26-2"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
-<span id="cb26-3"><a href=""></a>        <span class="cf">return</span> F.cross_entropy(y_hat, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="eff197a2" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a><span class="kw">class</span> Classifier(Regressor):</span>
+<span id="cb27-2"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
+<span id="cb27-3"><a href=""></a>        <span class="cf">return</span> F.cross_entropy(y_hat, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>One method overridden, and <strong>the same loop</strong> now trains a classifier</li>
@@ -1112,47 +1119,52 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </section>
 <section id="reference-packaging-with-subclasses-1-of-2" class="slide level2">
 <h2>Reference: packaging with subclasses (1 of 2)</h2>
-<div id="e014d37e" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a><span class="kw">class</span> Regressor(nn.Module):                      <span class="co"># adds training conveniences</span></span>
-<span id="cb27-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
-<span id="cb27-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb27-4"><a href=""></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
-<span id="cb27-5"><a href=""></a></span>
-<span id="cb27-6"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
-<span id="cb27-7"><a href=""></a>        <span class="cf">return</span> F.mse_loss(y_hat, y)</span>
-<span id="cb27-8"><a href=""></a></span>
-<span id="cb27-9"><a href=""></a>    <span class="kw">def</span> configure_optimizers(<span class="va">self</span>):</span>
-<span id="cb27-10"><a href=""></a>        <span class="cf">return</span> torch.optim.SGD(<span class="va">self</span>.parameters(), lr<span class="op">=</span><span class="va">self</span>.lr)</span>
-<span id="cb27-11"><a href=""></a></span>
-<span id="cb27-12"><a href=""></a>    <span class="kw">def</span> training_step(<span class="va">self</span>, batch):</span>
-<span id="cb27-13"><a href=""></a>        X, y <span class="op">=</span> batch</span>
-<span id="cb27-14"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.loss(<span class="va">self</span>(X), y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c674a037" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb28-2"><a href=""></a></span>
+<span id="cb28-3"><a href=""></a><span class="kw">class</span> Regressor(nn.Module):                      <span class="co"># adds training conveniences</span></span>
+<span id="cb28-4"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb28-5"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb28-6"><a href=""></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb28-7"><a href=""></a></span>
+<span id="cb28-8"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
+<span id="cb28-9"><a href=""></a>        <span class="cf">return</span> F.mse_loss(y_hat, y)</span>
+<span id="cb28-10"><a href=""></a></span>
+<span id="cb28-11"><a href=""></a>    <span class="kw">def</span> configure_optimizers(<span class="va">self</span>):</span>
+<span id="cb28-12"><a href=""></a>        <span class="cf">return</span> torch.optim.SGD(<span class="va">self</span>.parameters(), lr<span class="op">=</span><span class="va">self</span>.lr)</span>
+<span id="cb28-13"><a href=""></a></span>
+<span id="cb28-14"><a href=""></a>    <span class="kw">def</span> training_step(<span class="va">self</span>, batch):</span>
+<span id="cb28-15"><a href=""></a>        X, y <span class="op">=</span> batch</span>
+<span id="cb28-16"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.loss(<span class="va">self</span>(X), y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="reference-packaging-with-subclasses-2-of-2" class="slide level2">
 <h2>Reference: packaging with subclasses (2 of 2)</h2>
-<div id="93a35d2d" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href=""></a><span class="kw">class</span> MLPRegressor(Regressor):                   <span class="co"># a concrete model</span></span>
-<span id="cb28-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
-<span id="cb28-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(lr)</span>
-<span id="cb28-4"><a href=""></a>        <span class="va">self</span>.hidden <span class="op">=</span> nn.Linear(num_features, num_hidden)</span>
-<span id="cb28-5"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(num_hidden, num_outputs)</span>
-<span id="cb28-6"><a href=""></a></span>
-<span id="cb28-7"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
-<span id="cb28-8"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(F.relu(<span class="va">self</span>.hidden(X)))</span>
-<span id="cb28-9"><a href=""></a></span>
-<span id="cb28-10"><a href=""></a></span>
-<span id="cb28-11"><a href=""></a><span class="kw">class</span> Classifier(Regressor):                     <span class="co"># same loop, different loss</span></span>
-<span id="cb28-12"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
-<span id="cb28-13"><a href=""></a>        <span class="cf">return</span> F.cross_entropy(y_hat, y)</span>
-<span id="cb28-14"><a href=""></a></span>
-<span id="cb28-15"><a href=""></a></span>
-<span id="cb28-16"><a href=""></a>model <span class="op">=</span> MLPRegressor(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, lr<span class="op">=</span><span class="fl">0.1</span>)            <span class="co"># using the packaged model</span></span>
-<span id="cb28-17"><a href=""></a>optimizer <span class="op">=</span> model.configure_optimizers()</span>
-<span id="cb28-18"><a href=""></a><span class="cf">for</span> batch <span class="kw">in</span> loader:</span>
-<span id="cb28-19"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb28-20"><a href=""></a>    model.training_step(batch).backward()</span>
-<span id="cb28-21"><a href=""></a>    optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="72e309e5" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a><span class="kw">class</span> MLPRegressor(Regressor):                   <span class="co"># a concrete model</span></span>
+<span id="cb29-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_features, num_hidden, num_outputs, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb29-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(lr)</span>
+<span id="cb29-4"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(</span>
+<span id="cb29-5"><a href=""></a>            nn.Linear(num_features, num_hidden),</span>
+<span id="cb29-6"><a href=""></a>            nn.ReLU(),</span>
+<span id="cb29-7"><a href=""></a>            nn.Linear(num_hidden, num_outputs),</span>
+<span id="cb29-8"><a href=""></a>        )</span>
+<span id="cb29-9"><a href=""></a></span>
+<span id="cb29-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):</span>
+<span id="cb29-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span>
+<span id="cb29-12"><a href=""></a></span>
+<span id="cb29-13"><a href=""></a></span>
+<span id="cb29-14"><a href=""></a><span class="kw">class</span> Classifier(Regressor):                     <span class="co"># same loop, different loss</span></span>
+<span id="cb29-15"><a href=""></a>    <span class="kw">def</span> loss(<span class="va">self</span>, y_hat, y):</span>
+<span id="cb29-16"><a href=""></a>        <span class="cf">return</span> F.cross_entropy(y_hat, y)</span>
+<span id="cb29-17"><a href=""></a></span>
+<span id="cb29-18"><a href=""></a></span>
+<span id="cb29-19"><a href=""></a>model <span class="op">=</span> MLPRegressor(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, lr<span class="op">=</span><span class="fl">0.1</span>)            <span class="co"># using the packaged model</span></span>
+<span id="cb29-20"><a href=""></a>optimizer <span class="op">=</span> model.configure_optimizers()</span>
+<span id="cb29-21"><a href=""></a><span class="cf">for</span> batch <span class="kw">in</span> loader:</span>
+<span id="cb29-22"><a href=""></a>    optimizer.zero_grad()</span>
+<span id="cb29-23"><a href=""></a>    model.training_step(batch).backward()</span>
+<span id="cb29-24"><a href=""></a>    optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="summary" class="slide level2 section">
@@ -1217,28 +1229,30 @@ Multiple layers are combined into blocks, forming patterns of larger models
 </section>
 <section id="reference-everything-on-one-page" class="slide level2">
 <h2>Reference: everything on one page</h2>
-<div id="f13a0599" class="cell" data-execution_count="22">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a><span class="im">import</span> torch</span>
-<span id="cb29-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
-<span id="cb29-3"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
-<span id="cb29-4"><a href=""></a><span class="kw">class</span> Model(nn.Module):</span>
-<span id="cb29-5"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb29-6"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()                       <span class="co"># always first</span></span>
-<span id="cb29-7"><a href=""></a>        <span class="va">self</span>.hidden <span class="op">=</span> nn.Linear(<span class="dv">3</span>, <span class="dv">4</span>)            <span class="co"># sub-models / parameters</span></span>
-<span id="cb29-8"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(<span class="dv">4</span>, <span class="dv">2</span>)</span>
-<span id="cb29-9"><a href=""></a></span>
-<span id="cb29-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):                        <span class="co"># inputs -&gt; predictions</span></span>
-<span id="cb29-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(F.relu(<span class="va">self</span>.hidden(X)))</span>
-<span id="cb29-12"><a href=""></a>model <span class="op">=</span> Model()</span>
-<span id="cb29-13"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss()</span>
-<span id="cb29-14"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb29-15"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
-<span id="cb29-16"><a href=""></a>    model.train()</span>
-<span id="cb29-17"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> train_loader:</span>
-<span id="cb29-18"><a href=""></a>        optimizer.zero_grad()                    <span class="co"># 1. clear gradients</span></span>
-<span id="cb29-19"><a href=""></a>        loss <span class="op">=</span> loss_fn(model(X), y)              <span class="co"># 2-3. forward, score</span></span>
-<span id="cb29-20"><a href=""></a>        loss.backward()                          <span class="co"># 4. gradients</span></span>
-<span id="cb29-21"><a href=""></a>        optimizer.step()                         <span class="co"># 5. update</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="290b7846" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href=""></a><span class="im">import</span> torch</span>
+<span id="cb30-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb30-3"><a href=""></a></span>
+<span id="cb30-4"><a href=""></a><span class="kw">class</span> Model(nn.Module):</span>
+<span id="cb30-5"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb30-6"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()                       <span class="co"># always first</span></span>
+<span id="cb30-7"><a href=""></a>        <span class="va">self</span>.network <span class="op">=</span> nn.Sequential(            <span class="co"># sub-models / parameters</span></span>
+<span id="cb30-8"><a href=""></a>            nn.Linear(<span class="dv">3</span>, <span class="dv">4</span>), nn.ReLU(), nn.Linear(<span class="dv">4</span>, <span class="dv">2</span>))</span>
+<span id="cb30-9"><a href=""></a></span>
+<span id="cb30-10"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, X):                        <span class="co"># inputs -&gt; predictions</span></span>
+<span id="cb30-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.network(X)</span>
+<span id="cb30-12"><a href=""></a></span>
+<span id="cb30-13"><a href=""></a>model <span class="op">=</span> Model()</span>
+<span id="cb30-14"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss()</span>
+<span id="cb30-15"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb30-16"><a href=""></a></span>
+<span id="cb30-17"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb30-18"><a href=""></a>    model.train()</span>
+<span id="cb30-19"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> train_loader:</span>
+<span id="cb30-20"><a href=""></a>        optimizer.zero_grad()                    <span class="co"># 1. clear gradients</span></span>
+<span id="cb30-21"><a href=""></a>        loss <span class="op">=</span> loss_fn(model(X), y)              <span class="co"># 2-3. forward, score</span></span>
+<span id="cb30-22"><a href=""></a>        loss.backward()                          <span class="co"># 4. gradients</span></span>
+<span id="cb30-23"><a href=""></a>        optimizer.step()                         <span class="co"># 5. update</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
