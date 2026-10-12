@@ -22,3 +22,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Optimization Beyond Plain SGD | beta | [Open](08-optimization_momentum_and_adaptive_learning_rates.html) | [PDF](pdfs/Optimization-Beyond-Plain-SGD.pdf) |
 | Classes, Models, and the Training Loop | beta | [Open](09-classes_models_and_training_loops.html) | [PDF](pdfs/Classes-Models-and-the-Training-Loop.pdf) |
 | Convolutions and CNN Layers | beta | [Open](10-convolutions_and_cnn_layers.html) | [PDF](pdfs/Convolutions-and-CNN-Layers.pdf) |
+| When Training Goes Wrong | beta | [Open](11-diagnosing_training_problems.html) | [PDF](pdfs/When-Training-Goes-Wrong.pdf) |

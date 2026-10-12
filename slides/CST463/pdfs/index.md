@@ -20,3 +20,4 @@ Printable slide handouts for CST463.
 | Optimization Beyond Plain SGD | [Open](Optimization-Beyond-Plain-SGD.pdf) |
 | Classes, Models, and the Training Loop | [Open](Classes-Models-and-the-Training-Loop.pdf) |
 | Convolutions and CNN Layers | [Open](Convolutions-and-CNN-Layers.pdf) |
+| When Training Goes Wrong | [Open](When-Training-Goes-Wrong.pdf) |
