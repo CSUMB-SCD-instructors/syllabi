@@ -21,3 +21,4 @@ Printable slide handouts for CST463.
 | Classes, Models, and the Training Loop | [Open](Classes-Models-and-the-Training-Loop.pdf) |
 | Convolutions and CNN Layers | [Open](Convolutions-and-CNN-Layers.pdf) |
 | When Training Goes Wrong | [Open](When-Training-Goes-Wrong.pdf) |
+| Deeper Networks, Built from Blocks | [Open](Deeper-Networks-Built-from-Blocks.pdf) |

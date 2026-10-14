@@ -23,3 +23,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Classes, Models, and the Training Loop | beta | [Open](09-classes_models_and_training_loops.html) | [PDF](pdfs/Classes-Models-and-the-Training-Loop.pdf) |
 | Convolutions and CNN Layers | beta | [Open](10-convolutions_and_cnn_layers.html) | [PDF](pdfs/Convolutions-and-CNN-Layers.pdf) |
 | When Training Goes Wrong | beta | [Open](11-diagnosing_training_problems.html) | [PDF](pdfs/When-Training-Goes-Wrong.pdf) |
+| Deeper Networks, Built from Blocks | beta | [Open](12-modern_cnns.html) | [PDF](pdfs/Deeper-Networks-Built-from-Blocks.pdf) |
