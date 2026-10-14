@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-10-14 09:39" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-10-14 09:45" class="quarto-title-block center">
   <h1 class="title">Deeper Networks, Built from Blocks</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -234,7 +234,7 @@ Sam Ogden
 <section id="learning-objectives" class="slide level2">
 <h2>Learning objectives</h2>
 <!--
-Why this lecture exists: the small CNN from the CNN lecture has two convolutional layers and reads 28x28 grey digits. Real image models have tens of layers and read colour photographs. This lecture is the d2l "modern CNNs" chapter (https://d2l.ai/chapter_convolutional-modern/index.html), but NOT all of it. The through-line is the representation idea foreshadowed at the end of the CNN lecture: conv layers stacked on conv layers see larger and larger structures, and the way to build (and train) something that deep is to design a BLOCK and repeat it. Maps to the overview's Week 7A (the residual-connection learning objective; augmentation and batch norm were already covered in the diagnosing-training-problems lecture) and sets up Week 7B (error analysis and transfer learning: the final section ends on 'a trained network is a feature extractor').
+Why this lecture exists: the small CNN from the CNN lecture has two convolutional layers and reads 28x28 gray digits. Real image models have tens of layers and read color photographs. This lecture is the d2l "modern CNNs" chapter (https://d2l.ai/chapter_convolutional-modern/index.html), but NOT all of it. The through-line is the representation idea foreshadowed at the end of the CNN lecture: conv layers stacked on conv layers see larger and larger structures, and the way to build (and train) something that deep is to design a BLOCK and repeat it. Maps to the overview's Week 7A (the residual-connection learning objective; augmentation and batch norm were already covered in the diagnosing-training-problems lecture) and sets up Week 7B (error analysis and transfer learning: the final section ends on 'a trained network is a feature extractor').
 
 Companion reading: d2l VGG (https://d2l.ai/chapter_convolutional-modern/vgg.html), NiN (.../nin.html), GoogLeNet (.../googlenet.html), ResNet (.../resnet.html).
 
@@ -258,7 +258,7 @@ Running example:
 - Channels: c = 64 throughout the 3x3-stack arithmetic. Two 3x3 convs, c -> c: 2 * 9 * 64 * 64 = 73,728 weights. One 5x5: 25 * 64 * 64 = 102,400 weights (biases ignored in both).
 - The head: 512 x 7 x 7 = 25,088 features into a 4096-unit linear layer = 102,760,448 weights, for the head's first layer alone.
 - The depth: 8 layers, per-layer gradient factor 0.1: plain 0.1^8 = 10^-8, residual 1.1^8 = 2.14.
-- Image: 3 x 224 x 224 (a colour photo at ImageNet size), 1000 classes.
+- Image: 3 x 224 x 224 (a color photo at ImageNet size), 1000 classes.
 
 Figures: vgg.svg, nin.svg and resnet-block.svg (assets/12-modern_cnns/) are copied unmodified from the d2l repository (https://github.com/d2l-ai/d2l-en, img/), CC BY-SA 4.0, with attribution on each slide. As with the LeNet figure, verify before publishing whether share-alike affects the license on these slides. The original ResNet paper's figures are not openly licensed, so they are not used; d2l's resnet-block figure covers the same ground and matches the code on the slides (3x3 conv, batch norm, ReLU, 3x3 conv, batch norm, add, ReLU). d2l's resnet18 figure was NOT used: its repeat counts do not match the ResNet-18 table here.
 
@@ -275,7 +275,7 @@ Progress tracker:
 ## What the layers learned {.section}                   [drafted]   ~5 min    (3 slides: the head is still the linear classifier, a trained network is a feature extractor, takeaway; sets up transfer learning)
 ## Summary {.section}                                   [drafted]   ~3 min    (4 slides: table, key ideas, one idea taken to the extreme, where residuals show up next)
 
-TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'why 3x3' with real numbers, ResNet-18 layout table
+TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'why 3x3' with real numbers, ResNet-18 layout table
 -->
 <ul>
 <li>Explain what a receptive field is, and why stacked small convolutions can recognize large structures</li>
@@ -294,15 +294,15 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 <section id="a-small-filter-a-big-picture" class="slide level2">
 <h2>A small filter, a big picture</h2>
 <ul>
-<li>The CNN we built had two convolutional layers and read <span class="math inline">28 \times 28</span> grey digits</li>
-<li>A photograph is <span class="math inline">224 \times 224</span> and in colour, and the thing we want to recognize (a dog, a face) can fill most of it</li>
+<li>The CNN we built had two convolutional layers and read <span class="math inline">28 \times 28</span> gray digits</li>
+<li>A photograph is <span class="math inline">224 \times 224</span> and in color, and the thing we want to recognize (a dog, a face) can fill most of it</li>
 <li>But every filter we have looks at a <strong><span class="math inline">3 \times 3</span> patch</strong></li>
 <li>How can a model made of tiny windows recognize something large?</li>
 </ul>
 </section>
 <section id="what-one-output-value-can-see" class="slide level2">
 <h2>What one output value can see</h2>
-<div id="1e780312" class="cell" data-execution_count="2">
+<div id="53da3ee4" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -319,10 +319,15 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 <section id="the-receptive-field-with-pooling" class="slide level2 smaller">
 <h2>The receptive field, with pooling</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Layer</th>
-<th>Feature map</th>
+<th>Feature map (<span class="math inline">C</span> channels)</th>
 <th>Region of the image one value sees</th>
 </tr>
 </thead>
@@ -396,7 +401,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </div><div class="column">
 <p><strong>What the 2012 ImageNet winner (AlexNet) added</strong></p>
 <ul>
-<li>5 convolutional layers and 3 linear layers, for <span class="math inline">224 \times 224</span> colour photos and 1,000 classes</li>
+<li>5 convolutional layers and 3 linear layers, for <span class="math inline">224 \times 224</span> color photos and 1,000 classes</li>
 <li>ReLU, instead of sigmoid, so a deeper stack still trains</li>
 <li>Dropout in the linear layers, and data augmentation</li>
 <li>GPUs, and 1.2 million training images</li>
@@ -439,12 +444,12 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 <section id="the-big-idea" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Design one small repeating <strong>block</strong>, then stack it. The network is described by how many blocks, and how wide each one is.</p>
+<p>Design one small repeating <strong>block</strong>, then stack it. The network is then a short list: for each block, how many convolutions and how many channels.</p>
 </div>
 </section>
 <section id="the-vgg-block" class="slide level2">
 <h2>The VGG block</h2>
-<div id="3c584520" class="cell" data-execution_count="4">
+<div id="3d10fd80" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -511,7 +516,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-block-in-pytorch" class="slide level2">
 <h2>The block in PyTorch</h2>
-<div id="811d1586" class="cell" data-execution_count="6">
+<div id="1a94d3ef" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">def</span> vgg_block(num_convs, in_channels, out_channels):</span>
 <span id="cb1-2"><a href=""></a>    layers <span class="op">=</span> []</span>
 <span id="cb1-3"><a href=""></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_convs):</span>
@@ -528,7 +533,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="a-network-from-a-list" class="slide level2">
 <h2>A network from a list</h2>
-<div id="739d439c" class="cell" data-execution_count="7">
+<div id="1a325516" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="kw">def</span> vgg(conv_arch, in_channels<span class="op">=</span><span class="dv">3</span>, num_classes<span class="op">=</span><span class="dv">1000</span>):</span>
 <span id="cb2-2"><a href=""></a>    blocks <span class="op">=</span> []</span>
 <span id="cb2-3"><a href=""></a>    <span class="cf">for</span> num_convs, out_channels <span class="kw">in</span> conv_arch:</span>
@@ -659,7 +664,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 <h2>The <span class="math inline">1 \times 1</span> convolution</h2>
 <ul>
 <li>A kernel of size <span class="math inline">1 \times 1</span> looks at <strong>one position</strong> and <strong>all the channels</strong> at that position</li>
-<li>It is a linear layer applied <strong>independently at every pixel</strong>, mixing the channels and ignoring neighbours</li>
+<li>It is a linear layer applied <strong>independently at every pixel</strong>, mixing the channels and ignoring neighbors</li>
 <li>Shape: <span class="math inline">c_{in} \times H \times W \to c_{out} \times H \times W</span>. The height and width do not change</li>
 <li>Parameters: <span class="math inline">c_{in} \cdot c_{out}</span> (plus <span class="math inline">c_{out}</span> biases), no matter how big the picture is</li>
 </ul>
@@ -697,7 +702,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-new-head-in-pytorch" class="slide level2">
 <h2>The new head in PyTorch</h2>
-<div id="5539595c" class="cell" data-execution_count="10">
+<div id="a0dff535" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>head <span class="op">=</span> nn.Sequential(</span>
 <span id="cb3-2"><a href=""></a>    nn.Conv2d(<span class="dv">512</span>, <span class="dv">1000</span>, kernel_size<span class="op">=</span><span class="dv">1</span>),    <span class="co"># mix channels at each position</span></span>
 <span id="cb3-3"><a href=""></a>    nn.AdaptiveAvgPool2d(<span class="dv">1</span>),                <span class="co"># average each map over all positions</span></span>
@@ -800,7 +805,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 <section id="gradients-shrink-on-the-way-back" class="slide level2">
 <h2>Gradients shrink on the way back</h2>
 <ul>
-<li>Backprop reaches an early layer by multiplying one factor per layer on the way back, so the gradient there is a <strong>product</strong> of many numbers</li>
+<li>One reason a deep stack is hard to train: backprop reaches an early layer by multiplying one factor per layer on the way back, so the gradient there is a <strong>product</strong> of many numbers</li>
 <li>If each factor is below 1, the product shrinks fast. A sigmoid’s slope is at most <span class="math inline">0.25</span>, and over 8 layers <span class="math inline">0.25^8 \approx 0.000015</span></li>
 <li>Early layers then get almost no signal and learn very slowly. This is the <strong>vanishing gradient</strong> problem</li>
 <li>ReLU and batch norm help, but a very deep stack is still hard to train. We want the gradient to have a way <strong>past</strong> the layers</li>
@@ -824,7 +829,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="breakdown-the-skip-connection" class="slide level2">
 <h2>Breakdown: the skip connection</h2>
-<div id="007ddf66" class="cell" data-execution_count="12">
+<div id="611c7063" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -843,7 +848,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 <ul>
 <li><span class="math inline">f</span> only has to learn <strong>what to add to <span class="math inline">\mathbf{x}</span></strong>, not to rebuild <span class="math inline">\mathbf{x}</span> from scratch</li>
 <li>If the best thing for this block is to do nothing, <span class="math inline">f</span> only has to produce zeros. For a plain stack, the layers would have to learn the identity exactly</li>
-<li>So adding a block can never make the network <em>start</em> worse: with <span class="math inline">f \approx 0</span>, it is the same network as before</li>
+<li>So a block that is not needed can learn to do nothing: with <span class="math inline">f \approx 0</span>, the network behaves as it did without the block</li>
 </ul>
 </section>
 <section id="one-value-through-a-block" class="slide level2">
@@ -896,7 +901,7 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-block-in-pytorch-1" class="slide level2">
 <h2>The block in PyTorch</h2>
-<div id="20f23ed1" class="cell" data-execution_count="13">
+<div id="bbeab312" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">class</span> Residual(nn.Module):</span>
 <span id="cb4-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels, out_channels, stride<span class="op">=</span><span class="dv">1</span>):</span>
 <span id="cb4-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -1004,8 +1009,8 @@ TOTAL: ~68 min (2 + 9 + 14 + 13 + 22 + 5 + 3); cut candidates in rough order: 'w
 </tbody>
 </table>
 <ul>
-<li>Each stage’s first block halves the size and doubles the channels. 18 weight layers: 1 in the stem, 16 in the blocks, 1 in the head</li>
-<li>About 11.7M parameters, roughly one-eleventh of VGG-11’s, and it trains better</li>
+<li>In stages 2 to 4, the first block halves the size and doubles the channels, and it is the one with the <span class="math inline">1 \times 1</span> skip. 18 weight layers: 1 in the stem, 16 in the blocks, 1 in the head</li>
+<li>About 11.7M parameters, roughly one-eleventh of VGG-11’s, and at least as accurate on ImageNet</li>
 </ul>
 </section>
 <section id="takeaway-3" class="slide level2">
