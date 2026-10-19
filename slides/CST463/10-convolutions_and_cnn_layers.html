@@ -291,7 +291,7 @@ TOTAL: ~84 min across 73 slides (target 75-80 for a 2 hour slot; trim with the c
 </section>
 <section id="a-very-small-image" class="slide level2">
 <h2>A very small image</h2>
-<div id="6213e5d8" class="cell" data-execution_count="2">
+<div id="46626abf" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -307,7 +307,7 @@ TOTAL: ~84 min across 73 slides (target 75-80 for a 2 hour slot; trim with the c
 </section>
 <section id="step-1-flatten" class="slide level2">
 <h2>Step 1: flatten</h2>
-<div id="116cb8d8" class="cell" data-execution_count="3">
+<div id="ddf42a61" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -334,7 +334,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 </section>
 <section id="the-model-drawn-out" class="slide level2">
 <h2>The model, drawn out</h2>
-<div id="9b2a8ef8" class="cell" data-execution_count="4">
+<div id="a78093ea" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -351,7 +351,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 </section>
 <section id="now-move-the-pipe-one-pixel" class="slide level2">
 <h2>Now move the pipe one pixel</h2>
-<div id="b4f5774b" class="cell" data-execution_count="5">
+<div id="bfcca5b2" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -367,7 +367,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 </section>
 <section id="a-different-model-for-the-middle" class="slide level2">
 <h2>A different model for the middle</h2>
-<div id="0e2b7c46" class="cell" data-execution_count="6">
+<div id="57a23a98" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -420,7 +420,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 </section>
 <section id="why-not-one-model-for-every-position" class="slide level2">
 <h2>Why not one model for every position?</h2>
-<div id="c51ca131" class="cell" data-execution_count="7">
+<div id="d19f80ce" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -442,7 +442,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 <p>The MLP doesn’t know what’s next to what</p>
 </div>
 <p><br></p>
-<div id="ed2eb993" class="cell" data-execution_count="8">
+<div id="a07353b5" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -457,7 +457,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 </section>
 <section id="the-same-digit-moved-a-little" class="slide level2">
 <h2>The same digit, moved a little</h2>
-<div id="d44f9ec4" class="cell" data-execution_count="9">
+<div id="0e80125b" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -477,7 +477,7 @@ z = w_0 x_0 + w_1 x_1 + \dots + w_8 x_8 + b, \qquad \text{output} = \begin{cases
 <li>A <span class="math inline">28 \times 28</span> digit is 784 inputs, so each hidden unit has <strong>784 weights</strong>, one per pixel position</li>
 <li>For a modest photo, the weights alone become a problem:</li>
 </ul>
-<div id="33c1aead" class="cell" data-execution_count="10">
+<div id="857df3f6" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>224 x 224 color photo -&gt; 150,528 inputs
 1000 hidden units     -&gt; 150,528,000 weights in the first layer alone</code></pre>
@@ -534,7 +534,7 @@ Y[i, j] \;=\; \sum_{a=0}^{k_h - 1} \sum_{b=0}^{k_w - 1} K[a, b] \cdot X[i + a,\;
 <p><span class="math display">
 Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </span></p>
-<div id="4b6c1e18" class="cell" data-execution_count="11">
+<div id="bf1cf5fe" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -549,7 +549,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="breakdown-slide-the-window" class="slide level2">
 <h2>Breakdown: slide the window</h2>
-<div id="211d5929" class="cell" data-execution_count="12">
+<div id="e4acd197" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -577,7 +577,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="worked-example-our-setup" class="slide level2">
 <h2>Worked example: our setup</h2>
-<div id="e9f62872" class="cell" data-execution_count="13">
+<div id="c58ded80" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -593,7 +593,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="worked-example-first-position" class="slide level2">
 <h2>Worked example: first position</h2>
-<div id="12bd6ee6" class="cell" data-execution_count="14">
+<div id="2274fd5e" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -608,7 +608,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="worked-example-slide-one-step-right" class="slide level2">
 <h2>Worked example: slide one step right</h2>
-<div id="01d1a2bd" class="cell" data-execution_count="15">
+<div id="fcc6acd2" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -623,7 +623,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="worked-example-slide-once-more" class="slide level2">
 <h2>Worked example: slide once more</h2>
-<div id="f1466620" class="cell" data-execution_count="16">
+<div id="653aa141" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -639,7 +639,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="worked-example-every-position" class="slide level2">
 <h2>Worked example: every position</h2>
-<div id="5c99975f" class="cell" data-execution_count="17">
+<div id="d25b45c9" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -655,7 +655,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="a-single-filter-on-a-real-image" class="slide level2">
 <h2>A single filter on a real image</h2>
-<div id="91ca6dc2" class="cell" data-execution_count="18">
+<div id="d407271b" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -671,7 +671,7 @@ Y[i] = \sum_{a} K[a] \cdot X[i + a]
 </section>
 <section id="what-filters-see" class="slide level2">
 <h2>What filters see</h2>
-<div id="60a3503f" class="cell" data-execution_count="19">
+<div id="cb07dbeb" class="cell" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -710,7 +710,7 @@ y = \sum_i w_i x_i + b
 </section>
 <section id="far-fewer-parameters" class="slide level2">
 <h2>Far fewer parameters</h2>
-<div id="83248cc5" class="cell" data-execution_count="20">
+<div id="33365770" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-stdout">
 <pre><code>Map a 28 x 28 image to six 26 x 26 feature maps:
   fully connected layer: 3,183,960 parameters
@@ -738,7 +738,7 @@ y = \sum_i w_i x_i + b
 </section>
 <section id="padding-add-a-border-of-zeros" class="slide level2">
 <h2>Padding: add a border of zeros</h2>
-<div id="a14689e0" class="cell" data-execution_count="21">
+<div id="a63d8341" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -773,7 +773,7 @@ y = \sum_i w_i x_i + b
 </section>
 <section id="worked-example-padding-1-stride-2" class="slide level2">
 <h2>Worked example: padding 1, stride 2</h2>
-<div id="51e16a88" class="cell" data-execution_count="22">
+<div id="ffe0d82f" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -828,7 +828,7 @@ y = \sum_i w_i x_i + b
 </section>
 <section id="this-is-one-line-in-pytorch" class="slide level2">
 <h2>This is one line in PyTorch</h2>
-<div id="792d2f33" class="cell" data-execution_count="23">
+<div id="7fef4eeb" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>x <span class="op">=</span> torch.zeros(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">5</span>)        <span class="co"># (batch, channels, height, width)</span></span>
 <span id="cb3-2"><a href=""></a></span>
 <span id="cb3-3"><a href=""></a><span class="cf">for</span> p, s <span class="kw">in</span> [(<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">1</span>, <span class="dv">1</span>), (<span class="dv">0</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>)]:</span>
@@ -863,7 +863,7 @@ padding=1, stride=2 -&gt; (3, 3)</code></pre>
 </section>
 <section id="multiple-filters-multiple-output-channels" class="slide level2">
 <h2>Multiple filters: multiple output channels</h2>
-<div id="d52b1ec4" class="cell" data-execution_count="24">
+<div id="0ed3ed30" class="cell" data-execution_count="24">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -886,7 +886,7 @@ padding=1, stride=2 -&gt; (3, 3)</code></pre>
 </section>
 <section id="multiple-input-channels-the-data-flow" class="slide level2">
 <h2>Multiple input channels: the data flow</h2>
-<div id="e999dcf5" class="cell" data-execution_count="25">
+<div id="9ec834ef" class="cell" data-execution_count="25">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -990,7 +990,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 </section>
 <section id="max-pooling-example" class="slide level2">
 <h2>Max pooling example</h2>
-<div id="bc749177" class="cell" data-execution_count="26">
+<div id="ec8e21d6" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1005,7 +1005,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 </section>
 <section id="pooling-on-a-real-feature-map" class="slide level2">
 <h2>Pooling on a real feature map</h2>
-<div id="e1ab0778" class="cell" data-execution_count="27">
+<div id="2545b93e" class="cell" data-execution_count="27">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1056,7 +1056,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 </section>
 <section id="step-1-the-operation-from-scratch" class="slide level2">
 <h2>Step 1: the operation from scratch</h2>
-<div id="63f29d6a" class="cell" data-execution_count="28">
+<div id="7cad6334" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="kw">def</span> corr2d(X, K):</span>
 <span id="cb5-2"><a href=""></a>    h, w <span class="op">=</span> K.shape</span>
 <span id="cb5-3"><a href=""></a>    Y <span class="op">=</span> torch.zeros(X.shape[<span class="dv">0</span>] <span class="op">-</span> h <span class="op">+</span> <span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">-</span> w <span class="op">+</span> <span class="dv">1</span>)</span>
@@ -1080,7 +1080,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 </section>
 <section id="step-2-a-layer-is-a-module" class="slide level2">
 <h2>Step 2: a layer is a Module</h2>
-<div id="4ce0ec82" class="cell" data-execution_count="29">
+<div id="050bc834" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="kw">class</span> Conv2D(nn.Module):</span>
 <span id="cb7-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, kernel_size):</span>
 <span id="cb7-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -1097,7 +1097,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 </section>
 <section id="step-3-the-kernel-can-be-learned" class="slide level2">
 <h2>Step 3: the kernel can be learned</h2>
-<div id="5ad3953f" class="cell" data-execution_count="30">
+<div id="60156f73" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>x <span class="op">=</span> torch.tensor(digit)</span>
 <span id="cb8-2"><a href=""></a>target <span class="op">=</span> corr2d(x, K)               <span class="co"># "what the right filter would produce"</span></span>
 <span id="cb8-3"><a href=""></a></span>
@@ -1124,7 +1124,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 <section id="the-built-in-version-nn.conv2d" class="slide level2">
 <h2>The built-in version: <code>nn.Conv2d</code></h2>
 <p>PyTorch ships the same operation. Does it agree with ours?</p>
-<div id="15fbfdd5" class="cell" data-execution_count="31">
+<div id="fb392d10" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>ours <span class="op">=</span> Conv2D((<span class="dv">3</span>, <span class="dv">3</span>))</span>
 <span id="cb10-2"><a href=""></a>theirs <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb10-3"><a href=""></a></span>
@@ -1145,7 +1145,7 @@ c_{out} \cdot (c_{in} \cdot k \cdot k + 1) \;=\; \underbrace{c_{out} \cdot c_{in
 </section>
 <section id="nn.conv2d-shapes-and-arguments" class="slide level2">
 <h2><code>nn.Conv2d</code>: shapes and arguments</h2>
-<div id="c11b6267" class="cell" data-execution_count="32">
+<div id="9a0fb625" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>conv <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb12-2"><a href=""></a></span>
 <span id="cb12-3"><a href=""></a><span class="bu">print</span>(<span class="st">"weight:"</span>, <span class="bu">tuple</span>(conv.weight.shape))   <span class="co"># (c_out, c_in, k, k)</span></span>
@@ -1167,7 +1167,7 @@ output: (8, 6, 26, 26)</code></pre>
 </section>
 <section id="stacking-into-a-small-cnn" class="slide level2">
 <h2>Stacking into a small CNN</h2>
-<div id="280c6fa6" class="cell" data-execution_count="33">
+<div id="26612a68" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>net <span class="op">=</span> nn.Sequential(</span>
 <span id="cb14-2"><a href=""></a>    nn.Conv2d(<span class="dv">1</span>, <span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">3</span>), nn.ReLU(), nn.MaxPool2d(<span class="dv">2</span>),</span>
 <span id="cb14-3"><a href=""></a>    nn.Conv2d(<span class="dv">6</span>, <span class="dv">16</span>, kernel_size<span class="op">=</span><span class="dv">3</span>), nn.ReLU(), nn.MaxPool2d(<span class="dv">2</span>),</span>
@@ -1201,7 +1201,7 @@ Linear     -&gt; (1, 10)</code></pre>
 <li><strong>Shape mismatches here are the most common CNN bug</strong>: trace the shapes by hand first</li>
 </ul></li>
 </ul>
-<div id="3e87780a" class="cell" data-execution_count="34">
+<div id="4347d67e" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="bu">print</span>(<span class="ss">f"total parameters: </span><span class="sc">{</span><span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> net.parameters())<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>total parameters: 4,950</code></pre>
@@ -1210,7 +1210,7 @@ Linear     -&gt; (1, 10)</code></pre>
 </section>
 <section id="throwback-the-same-input-through-an-mlp" class="slide level2">
 <h2>Throwback: the same input through an MLP</h2>
-<div id="035ca157" class="cell" data-execution_count="35">
+<div id="008087d0" class="cell" data-execution_count="35">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a>mlp <span class="op">=</span> nn.Sequential(nn.Flatten(), nn.Linear(<span class="dv">784</span>, <span class="dv">16</span>), nn.ReLU(), nn.Linear(<span class="dv">16</span>, <span class="dv">10</span>))</span>
 <span id="cb18-2"><a href=""></a></span>
 <span id="cb18-3"><a href=""></a><span class="kw">def</span> count(model):</span>
@@ -1230,7 +1230,7 @@ small CNN from the last slide:         4,950 parameters</code></pre>
 </section>
 <section id="reference-a-cnn-is-just-another-nn.module" class="slide level2">
 <h2>Reference: a CNN is just another <code>nn.Module</code></h2>
-<div id="6f82f565" class="cell" data-execution_count="36">
+<div id="8a9609e2" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="kw">class</span> SmallCNN(nn.Module):</span>
 <span id="cb20-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_classes<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb20-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -1256,7 +1256,7 @@ small CNN from the last slide:         4,950 parameters</code></pre>
 </section>
 <section id="the-diagram-as-code-lenet" class="slide level2">
 <h2>The diagram as code: LeNet</h2>
-<div id="97bea16e" class="cell" data-execution_count="37">
+<div id="39659dcc" class="cell" data-execution_count="37">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="kw">class</span> LeNet(nn.Module):</span>
 <span id="cb22-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_classes<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb22-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -1281,7 +1281,7 @@ small CNN from the last slide:         4,950 parameters</code></pre>
 </section>
 <section id="lenet-tracing-shapes-against-the-diagram" class="slide level2">
 <h2>LeNet: tracing shapes against the diagram</h2>
-<div id="68cf2b26" class="cell" data-execution_count="38">
+<div id="d855c43b" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>lenet <span class="op">=</span> LeNet()</span>
 <span id="cb23-2"><a href=""></a>X <span class="op">=</span> torch.zeros(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>)</span>
 <span id="cb23-3"><a href=""></a><span class="cf">for</span> layer <span class="kw">in</span> lenet.network:</span>
@@ -1312,7 +1312,7 @@ total parameters: 61,706</code></pre>
 </section>
 <section id="the-model-has-two-parts" class="slide level2">
 <h2>The model has two parts</h2>
-<div id="b2d1ba34" class="cell" data-execution_count="39">
+<div id="930b14d7" class="cell" data-execution_count="39">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

@@ -316,7 +316,7 @@ TOTAL: ~82 min across all sections (2 + 6 + 10 + 9 + 9 + 20 + 16 + 6 + 3; a litt
 </section>
 <section id="the-loop-with-a-check-after-every-epoch" class="slide level2">
 <h2>The loop, with a check after every epoch</h2>
-<div id="68b79b55" class="cell" data-execution_count="2">
+<div id="8fbb5a38" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
 <span id="cb1-2"><a href=""></a>    model.train()</span>
 <span id="cb1-3"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> train_loader:</span>
@@ -336,7 +336,7 @@ TOTAL: ~82 min across all sections (2 + 6 + 10 + 9 + 9 + 20 + 16 + 6 + 3; a litt
 </section>
 <section id="one-healthy-run" class="slide level2">
 <h2>One healthy run</h2>
-<div id="4a9a4fd0" class="cell" data-execution_count="3">
+<div id="a7b4b77d" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -428,7 +428,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="a-second-baseline-a-comparable-mlp-model" class="slide level2">
 <h2>A second baseline: a comparable MLP model</h2>
-<div id="2643942c" class="cell" data-execution_count="4">
+<div id="4bc79598" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -513,7 +513,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="what-the-curves-show" class="slide level2">
 <h2>What the curves show</h2>
-<div id="ff213e08" class="cell" data-execution_count="5">
+<div id="92cb5c09" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -530,7 +530,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="which-digits-go-wrong" class="slide level2">
 <h2>Which digits go wrong?</h2>
-<div id="a608b6c4" class="cell" data-execution_count="6">
+<div id="2e37b391" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -586,7 +586,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="check-before-you-train" class="slide level2">
 <h2>Check before you train</h2>
-<div id="a943d2ef" class="cell" data-execution_count="7">
+<div id="83d3e9ce" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="bu">print</span>(torch.bincount(y_train))     <span class="co"># how many of each class did we keep?</span></span>
 <span id="cb2-2"><a href=""></a><span class="bu">print</span>(torch.bincount(y_val))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -621,7 +621,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="learning-rate-too-small" class="slide level2">
 <h2>Learning rate too small</h2>
-<div id="494e25a3" class="cell" data-execution_count="9">
+<div id="6a4846f3" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -637,7 +637,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="learning-rate-too-large" class="slide level2">
 <h2>Learning rate too large</h2>
-<div id="4c224bc1" class="cell" data-execution_count="10">
+<div id="16dce918" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -656,7 +656,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="two-opposite-causes-one-symptom" class="slide level2">
 <h2>Two opposite causes, one symptom</h2>
-<div id="6bfa024c" class="cell" data-execution_count="11">
+<div id="0e3c818e" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -675,7 +675,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="it-can-get-worse-than-chance" class="slide level2">
 <h2>It can get worse than chance</h2>
-<div id="b244b4cf" class="cell" data-execution_count="12">
+<div id="8857ab0a" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -742,7 +742,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="what-the-curves-show-1" class="slide level2">
 <h2>What the curves show</h2>
-<div id="1de34dc5" class="cell" data-execution_count="14">
+<div id="a356c2d5" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -772,7 +772,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="fix-1-more-data" class="slide level2">
 <h2>Fix 1: more data</h2>
-<div id="092aa804" class="cell" data-execution_count="15">
+<div id="f6f7323e" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -788,7 +788,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="fix-2-make-more-data-out-of-the-data-we-have" class="slide level2">
 <h2>Fix 2: make more data out of the data we have</h2>
-<div id="4ad9a101" class="cell" data-execution_count="16">
+<div id="37eee5b9" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -804,7 +804,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="data-augmentation-does-it-help" class="slide level2">
 <h2>Data augmentation: does it help?</h2>
-<div id="4ca3d470" class="cell" data-execution_count="17">
+<div id="b605e26e" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -847,7 +847,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="augmentation-in-pytorch" class="slide level2">
 <h2>Augmentation in PyTorch</h2>
-<div id="e160bd3e" class="cell" data-execution_count="18">
+<div id="602b39d7" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> torchvision.transforms <span class="im">import</span> v2</span>
 <span id="cb3-2"><a href=""></a></span>
 <span id="cb3-3"><a href=""></a>augment <span class="op">=</span> v2.RandomAffine(degrees<span class="op">=</span><span class="dv">15</span>, translate<span class="op">=</span>(<span class="fl">0.07</span>, <span class="fl">0.07</span>), scale<span class="op">=</span>(<span class="fl">0.9</span>, <span class="fl">1.1</span>))</span>
@@ -866,7 +866,7 @@ print(f"untrained CNN, validation accuracy at epoch 0: {R['cnn']['val_acc'][0]:.
 </section>
 <section id="fix-3-dropout" class="slide level2">
 <h2>Fix 3: dropout</h2>
-<div id="82af0d97" class="cell" data-execution_count="19">
+<div id="a1aa0858" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>model <span class="op">=</span> nn.Sequential(</span>
 <span id="cb4-2"><a href=""></a>    ...,                                 <span class="co"># the convolutional layers, as before</span></span>
 <span id="cb4-3"><a href=""></a>    nn.Flatten(),</span>
@@ -944,7 +944,7 @@ w \;\leftarrow\; w - \eta\,\big(\nabla L + \lambda w\big) \;=\; \underbrace{(1 -
 </section>
 <section id="how-much-did-each-fix-help" class="slide level2">
 <h2>How much did each fix help?</h2>
-<div id="7955d7b3" class="cell" data-execution_count="20">
+<div id="5be1e997" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -960,7 +960,7 @@ w \;\leftarrow\; w - \eta\,\big(\nabla L + \lambda w\big) \;=\; \underbrace{(1 -
 </section>
 <section id="one-more-thing-stop-early" class="slide level2">
 <h2>One more thing: stop early</h2>
-<div id="1ba21d19" class="cell" data-execution_count="21">
+<div id="74d11333" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1000,7 +1000,7 @@ w \;\leftarrow\; w - \eta\,\big(\nabla L + \lambda w\big) \;=\; \underbrace{(1 -
 </section>
 <section id="same-network-different-activation" class="slide level2">
 <h2>Same network, different activation</h2>
-<div id="23132744" class="cell" data-execution_count="23">
+<div id="acc9f44c" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1075,7 +1075,7 @@ y_i = \gamma\, \hat{x}_i + \beta
 </section>
 <section id="worked-example-one-channel-a-batch-of-four" class="slide level2">
 <h2>Worked example: one channel, a batch of four</h2>
-<div id="47c08fb0" class="cell" data-execution_count="24">
+<div id="db125c72" class="cell" data-execution_count="24">
 <div class="cell-output cell-output-stdout">
 <pre><code>x     = [2. 4. 6. 8.]
 mean  = 5, variance = 5
@@ -1090,7 +1090,7 @@ y     = [-1.683  0.106  1.894  3.683]     with gamma = 2, beta = 1</code></pre>
 </section>
 <section id="batch-norm-in-pytorch" class="slide level2">
 <h2>Batch norm in PyTorch</h2>
-<div id="639c831b" class="cell" data-execution_count="25">
+<div id="9c4dfb90" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>nn.Sequential(</span>
 <span id="cb6-2"><a href=""></a>    nn.Conv2d(<span class="dv">8</span>, <span class="dv">8</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
 <span id="cb6-3"><a href=""></a>    nn.BatchNorm2d(<span class="dv">8</span>),                  <span class="co"># one gamma and one beta for each of the 8 channels</span></span>
@@ -1138,7 +1138,7 @@ y     = [-1.683  0.106  1.894  3.683]     with gamma = 2, beta = 1</code></pre>
 </section>
 <section id="does-it-help" class="slide level2">
 <h2>Does it help?</h2>
-<div id="7c9074bc" class="cell" data-execution_count="26">
+<div id="c2dac26a" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1155,7 +1155,7 @@ y     = [-1.683  0.106  1.894  3.683]     with gamma = 2, beta = 1</code></pre>
 </section>
 <section id="it-also-forgives-the-learning-rate" class="slide level2">
 <h2>It also forgives the learning rate</h2>
-<div id="3d142993" class="cell" data-execution_count="27">
+<div id="6c64877a" class="cell" data-execution_count="27">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1193,7 +1193,7 @@ y     = [-1.683  0.106  1.894  3.683]     with gamma = 2, beta = 1</code></pre>
 </section>
 <section id="the-test-overfit-one-batch" class="slide level2">
 <h2>The test: overfit one batch</h2>
-<div id="de9419fc" class="cell" data-execution_count="28">
+<div id="bc6788cc" class="cell" data-execution_count="28">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1210,7 +1210,7 @@ y     = [-1.683  0.106  1.894  3.683]     with gamma = 2, beta = 1</code></pre>
 </section>
 <section id="a-bug-can-look-like-a-hard-problem" class="slide level2">
 <h2>A bug can look like a hard problem</h2>
-<div id="ff6301c8" class="cell" data-execution_count="29">
+<div id="4672693b" class="cell" data-execution_count="29">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
