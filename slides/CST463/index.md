@@ -24,3 +24,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Convolutions and CNN Layers | beta | [Open](10-convolutions_and_cnn_layers.html) | [PDF](pdfs/Convolutions-and-CNN-Layers.pdf) |
 | When Training Goes Wrong | beta | [Open](11-diagnosing_training_problems.html) | [PDF](pdfs/When-Training-Goes-Wrong.pdf) |
 | Deeper Networks, Built from Blocks | beta | [Open](12-modern_cnns.html) | [PDF](pdfs/Deeper-Networks-Built-from-Blocks.pdf) |
+| Representations and Twin Networks | beta | [Open](13-representations_and_twin_networks.html) | [PDF](pdfs/Representations-and-Twin-Networks.pdf) |
