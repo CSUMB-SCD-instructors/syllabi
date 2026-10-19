@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-10-19 08:54" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-10-19 09:21" class="quarto-title-block center">
   <h1 class="title">Representations and Twin Networks</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -239,7 +239,7 @@ Why this lecture exists: the last lecture ended on "a trained network's features
 Companion reading: d2l has no twin-network section. Candidates: Koch et al., "Siamese Neural Networks for One-shot Image Recognition" (2015); Hadsell, Chopra & LeCun, "Dimensionality Reduction by Learning an Invariant Mapping" (2006; the contrastive loss); Schroff et al., "FaceNet" (2015; the triplet loss). d2l on PCA: none in the main text; the linear algebra appendix has eigendecomposition (https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/eigendecomposition.html).
 
 Assumed prior knowledge:
-- 02: vectors, matrices, dot products, norms. Eigenvectors and covariance were NOT covered there, so the PCA recipe states them as the answer to 'find the dimension with the most spread' and does not teach them.
+- 02: vectors, matrices, dot products, norms. Eigenvectors and covariance were NOT covered there, so the PCA recipe states them as the answer to 'find the dimension with the most variance' and does not teach them.
 - 05: the linear classifier and softmax (the head), cross-entropy.
 - 10 / 12: conv layers as feature detectors, the last layers as 'the same linear classifier', the representation Big Idea, a trained network as a feature extractor (this lecture's lead-in), weight sharing across positions.
 - 11: the sampling section: a CNN trained on digits 0-6 only scores exactly 0 on 7, 8, 9. This lecture reuses that exact setup, so the twin network's payoff is seen against a failure the students already know.
@@ -277,10 +277,10 @@ Progress tracker:
 ## Same or different? {.section}                         [drafted]    ~8 min    (strips, shape back, distances as heat maps, what a representation is, pixels are a poor one)
 ## Principal component analysis (PCA) {.section}      [drafted]    ~20 min   (one dimension to keep, linear combination, dot product, rebuilding, recipe, NumPy, breakdowns, how many components, applying it to a CNN's features, the odd ones out, all ten digits)
 ## Reusing a representation {.section}                 [drafted]    ~10 min   (Big Idea, the setup, the 100 labeled images, freeze + new head, results, labels curve, nearest neighbors)
-## Twin networks {.section}                            [drafted]    ~30 min   (problem, Big Idea, one network applied twice, PyTorch, the contrastive loss, pull and push, with numbers, making the pairs, before/after, unseen digits, verification, one-shot, more classes, why the push, takeaway)
+## Twin networks {.section}                            [drafted]    ~30 min   (problem, Big Idea, what an embedding is, one network applied twice, PyTorch, the contrastive loss, pull and push, with numbers, making the pairs, before/after, unseen digits, verification, one-shot, more classes, why the push, takeaway)
 ## Summary {.section}                                  [drafted]    ~4 min    (recap table, key ideas, where embeddings return)
 
-TOTAL: roughly 75-85 min at about 1.5 min per content slide (55 slides). Over the 75-80 target if it runs long; cut candidates in order: the labels-per-digit curve, the more-classes plot, the odd ones out, the PyTorch code slide, the explained-variance curve.
+TOTAL: roughly 75-85 min at about 1.5 min per content slide (56 slides). Over the 75-80 target if it runs long; cut candidates in order: the labels-per-digit curve, the more-classes plot, the odd ones out, the PyTorch code slide, the explained-variance curve.
 
 Findings that shaped the twin section (all numbers live in results.json, from demos/06_representations-and-twin-networks/notebook.ipynb):
 - A 2-D twin trained on digits 0-6 is good on those digits and weak on 7, 8, 9: same-or-different 65% on pairs of 7/8/9 vs 70% for the classifier's features; one-shot 25% (2-D) / 48% (8-D) vs 44% for the features, 33% for pixels. The planned hero picture (held-out digits forming their own clusters) did NOT happen.
@@ -302,7 +302,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="which-two-are-the-same-digit" class="slide level2">
 <h2>Which two are the same digit?</h2>
-<div id="af717e96" class="cell" data-execution_count="2">
+<div id="f5508fe4" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -318,7 +318,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="now-with-the-shape-back" class="slide level2">
 <h2>Now with the shape back</h2>
-<div id="a291d1ac" class="cell" data-execution_count="3">
+<div id="85e89d9c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -335,7 +335,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="how-far-apart-are-these-vectors" class="slide level2">
 <h2>How far apart are these vectors?</h2>
-<div id="23560761" class="cell" data-execution_count="4">
+<div id="d37af76d" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -400,26 +400,26 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="representations" class="slide level2">
 <h2>Representations</h2>
-<p>We’re going to talk about two ways to do representations:</p>
+<p>Three steps, each about representations:</p>
 <ol type="1">
-<li>Principal Component Analysis (PCA): linear algebra, no labels</li>
-<li>Learned: train a network to produce one</li>
+<li><strong>PCA:</strong> a representation chosen from the data with linear algebra, and a way to look at one</li>
+<li><strong>Reuse:</strong> take a representation a network already learned and use it on a new task</li>
+<li><strong>Twin networks:</strong> train a representation for the comparison itself, so “same or different” becomes a distance</li>
 </ol>
-<p>Then we’ll apply them to image comparison</p>
 </section>
 <section id="principal-component-analysis-pca" class="slide level2 section">
 <h2>Principal component analysis (PCA)</h2>
-<p>A linear representation in less dimensions</p>
+<p>A linear representation in fewer dimensions</p>
 </section>
 <section id="the-big-idea" class="slide level2">
 <h2>The Big Idea</h2>
 <div class="big-idea">
-<p>Describe each image using only the most relevant dimensions</p>
+<p>Describe each image using only the few dimensions that keep the most variance</p>
 </div>
 </section>
 <section id="if-we-keep-only-one-dimension" class="slide level2">
 <h2>If we keep only one dimension</h2>
-<div id="a80f10b6" class="cell" data-execution_count="6">
+<div id="79ab7c4e" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -434,14 +434,14 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <ul>
 <li>The data has two <em>original</em> dimensions, <span class="math inline">x_1</span> and <span class="math inline">x_2</span>
 <ul>
-<li>Either original dimension alone keeps about half of how the points differ</li>
+<li>Either original dimension alone keeps about half of the <strong>variance</strong>: how much the points’ values differ from their average</li>
 </ul></li>
 <li><strong>Component 1</strong> is a new dimension – a linear combination of <span class="math inline">x_1</span> and <span class="math inline">x_2</span></li>
 </ul>
 </section>
 <section id="a-new-dimension-is-just-a-linear-combination" class="slide level2">
 <h2>A new dimension is <em>just</em> a linear combination</h2>
-<div id="72bac9b8" class="cell" data-execution_count="7">
+<div id="eb05ea62" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -463,7 +463,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="each-value-is-a-dot-product" class="slide level2">
 <h2>Each value is a dot product</h2>
-<div id="f153a54d" class="cell" data-execution_count="8">
+<div id="96e3ab4f" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -480,7 +480,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="rebuilding-an-image-from-a-few-components" class="slide level2">
 <h2>Rebuilding an image from a few components</h2>
-<div id="3b1a4687" class="cell" data-execution_count="9">
+<div id="b04f3178" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -497,7 +497,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="three-digits-through-pca" class="slide level2">
 <h2>Three digits through PCA</h2>
-<div id="53a43159" class="cell" data-execution_count="10">
+<div id="958fba5a" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -543,7 +543,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="pca-in-numpy" class="slide level2">
 <h2>PCA in NumPy</h2>
-<div id="fb79b6fb" class="cell" data-execution_count="11">
+<div id="5b4b2080" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>X <span class="op">=</span> Xs                                      <span class="co"># (3000, 784), one image per row</span></span>
 <span id="cb1-2"><a href=""></a>mean <span class="op">=</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb1-3"><a href=""></a>_, _, Vt <span class="op">=</span> np.linalg.svd(X <span class="op">-</span> mean, full_matrices<span class="op">=</span><span class="va">False</span>)   <span class="co"># rows of Vt: the components</span></span>
@@ -561,7 +561,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="breakdown-center-the-data" class="slide level2">
 <h2>Breakdown: center the data</h2>
-<div id="2c40cc32" class="cell" data-execution_count="12">
+<div id="60e74f1c" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -571,13 +571,13 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </div>
 </div>
 <ul>
-<li>We care about how the data <strong>spreads</strong>, so measure from its center. Subtract the mean (orange X) from every point</li>
+<li>We care about how the data varies around its center, so measure from it. Subtract the mean (orange X) from every point</li>
 <li>For images: subtract the average digit, which is why component weights were drawn as differences from it</li>
 </ul>
 </section>
 <section id="breakdown-find-the-components" class="slide level2">
 <h2>Breakdown: find the components</h2>
-<div id="f03235c0" class="cell" data-execution_count="13">
+<div id="fa7cccd2" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -587,9 +587,9 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </div>
 </div>
 <ul>
-<li>Try candidate dimensions <span class="math inline">\mathbf{w}</span>. Each point gets a value <span class="math inline">z = \mathbf{w}^\top \mathbf{x}</span> (bottom row). More spread means more of the differences kept</li>
-<li>Component 1 has the most spread. Component 2 is the best one <strong>perpendicular</strong> to it, and so on</li>
-<li>The best candidates are the eigenvectors of <span class="math inline">C</span>. Each eigenvalue is the spread along its component</li>
+<li>Try candidate dimensions <span class="math inline">\mathbf{w}</span>. Each point gets a value <span class="math inline">z = \mathbf{w}^\top \mathbf{x}</span> (bottom row). More variance means more of the differences kept</li>
+<li>Component 1 has the most variance. Component 2 is the best one <strong>perpendicular</strong> to it, and so on</li>
+<li>The best candidates are the eigenvectors of <span class="math inline">C</span>. Each eigenvalue is the variance along its component</li>
 </ul>
 </section>
 <section id="breakdown-project-and-keep-the-top-k" class="slide level2">
@@ -627,12 +627,12 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </table>
 <ul>
 <li>Each row of <span class="math inline">W^\top</span> is one component, so each entry of <span class="math inline">\mathbf{z}</span> is one dot product</li>
-<li>The eigenvalues say how much each component keeps, so the <strong>first <span class="math inline">k</span></strong> keep the most spread of any <span class="math inline">k</span> perpendicular dimensions</li>
+<li>The eigenvalues say how much each component keeps, so the <strong>first <span class="math inline">k</span></strong> keep the most variance of any <span class="math inline">k</span> perpendicular dimensions</li>
 </ul>
 </section>
 <section id="how-many-components-do-we-need" class="slide level2">
 <h2>How many components do we need?</h2>
-<div id="6dae9c5e" class="cell" data-execution_count="15">
+<div id="55671440" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -642,13 +642,13 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </div>
 </div>
 <ul>
-<li>On these 3,000 images, 2 components keep 17% of the spread, 30 keep 73%, and 100 keep 92%</li>
+<li>On these 3,000 images, 2 components keep 17% of the variance, 30 keep 73%, and 100 keep 92%</li>
 <li>That matches the reconstructions: a blur at 2, a clear 7 at 30, close to the original at 100</li>
 </ul>
 </section>
 <section id="applying-pca-to-a-cnns-features" class="slide level2">
 <h2>Applying PCA to a CNN’s features</h2>
-<div id="597b2696" class="cell" data-execution_count="17">
+<div id="ef884a05" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -665,7 +665,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="the-odd-ones-out" class="slide level2">
 <h2>The odd ones out</h2>
-<div id="b2b17462" class="cell" data-execution_count="18">
+<div id="e7db947c" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -682,7 +682,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="all-ten-digits" class="slide level2">
 <h2>All ten digits</h2>
-<div id="106fa164" class="cell" data-execution_count="20">
+<div id="e0981266" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -719,7 +719,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <section id="takeaway" class="slide level2">
 <h2>Takeaway</h2>
 <div class="big-idea">
-<p>PCA builds new dimensions, out of a linear combination of the original ones, maximizing information per dimension.</p>
+<p>PCA builds new dimensions, each a linear combination of the original ones, that keep as much of the variance as possible.</p>
 <p><br></p>
 <p>It keeps the biggest differences, not necessarily the ones we care about.</p>
 </div>
@@ -755,7 +755,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="the-new-tasks-100-labeled-images" class="slide level2">
 <h2>The new task’s 100 labeled images</h2>
-<div id="d5a9cc0f" class="cell" data-execution_count="23">
+<div id="df625fc5" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -771,7 +771,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="freeze-the-features-train-a-new-head" class="slide level2">
 <h2>Freeze the features, train a new head</h2>
-<div id="a5187bc1" class="cell" data-execution_count="24">
+<div id="afb36d9f" class="cell" data-execution_count="24">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -828,7 +828,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="how-many-labels-do-we-need" class="slide level2">
 <h2>How many labels do we need?</h2>
-<div id="805e677b" class="cell" data-execution_count="26">
+<div id="b742edf2" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -844,7 +844,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="another-way-to-reuse-the-features-knn" class="slide level2">
 <h2>Another way to reuse the features: KNN</h2>
-<div id="edb0614f" class="cell" data-execution_count="28">
+<div id="044cb920" class="cell" data-execution_count="28">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -865,7 +865,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="same-or-different-1" class="slide level2">
 <h2>Same or different?</h2>
-<div id="37e966d0" class="cell" data-execution_count="30">
+<div id="0d48d980" class="cell" data-execution_count="30">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -886,9 +886,20 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <p>Instead of learning to name the classes, learn an <em>embedding</em> where things that are the same are close together and things that are different are far apart.</p>
 </div>
 </section>
+<section id="what-is-an-embedding" class="slide level2">
+<h2>What is an embedding?</h2>
+<div class="big-idea">
+<p>An <strong>embedding</strong> is a representation trained so that closeness between vectors says how similar the things are.</p>
+</div>
+<ul>
+<li>Close (small distance, high similarity) means similar. Far means different</li>
+<li>Not every representation is one: pixels are a vector, but nearby pixel vectors need not be the same digit</li>
+<li>The vector a twin network gives an image is that image’s embedding</li>
+</ul>
+</section>
 <section id="one-network-applied-twice" class="slide level2">
 <h2>One network, applied twice</h2>
-<div id="959ef97e" class="cell" data-execution_count="31">
+<div id="0179998c" class="cell" data-execution_count="31">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -904,7 +915,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="the-twin-network-in-pytorch" class="slide level2">
 <h2>The twin network in PyTorch</h2>
-<div id="f89efb99" class="cell" data-execution_count="32">
+<div id="777208d5" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb3-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb3-3"><a href=""></a></span>
@@ -976,7 +987,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <h2>Breakdown: pull and push</h2>
 <div class="columns">
 <div class="column">
-<div id="1e35e9fa" class="cell" data-execution_count="33">
+<div id="61d468e0" class="cell" data-execution_count="33">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -991,7 +1002,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <li>At <span class="math inline">d = 0</span> the loss is 0: nothing left to fix</li>
 </ul>
 </div><div class="column">
-<div id="aedbbe92" class="cell" data-execution_count="34">
+<div id="3fe2296a" class="cell" data-execution_count="34">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1060,7 +1071,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="making-the-training-data-pairs" class="slide level2">
 <h2>Making the training data: pairs</h2>
-<div id="a3394ffd" class="cell" data-execution_count="36">
+<div id="56461422" class="cell" data-execution_count="36">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1077,7 +1088,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="before-and-after-training" class="slide level2">
 <h2>Before and after training</h2>
-<div id="e954a95e" class="cell" data-execution_count="37">
+<div id="ecf838d3" class="cell" data-execution_count="37">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1093,7 +1104,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="digits-it-never-saw" class="slide level2">
 <h2>Digits it never saw</h2>
-<div id="48643a96" class="cell" data-execution_count="38">
+<div id="fb6dcabb" class="cell" data-execution_count="38">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1109,7 +1120,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="same-or-different-as-a-distance" class="slide level2">
 <h2>Same or different, as a distance</h2>
-<div id="0afd4304" class="cell" data-execution_count="39">
+<div id="f00cbfed" class="cell" data-execution_count="39">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1162,13 +1173,14 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </tbody>
 </table>
 <ul>
-<li>Suppose we have just <strong>one labeled image of each digit</strong>, ten in all, 7, 8 and 9 included. A new image gets the label of the closest one, measured in the space on the left. Entries: the share labeled correctly</li>
-<li>Digits 0 to 6: the twin trained on them. Digits 7 to 9: it never saw them, and it only just beats the classifier’s features</li>
+<li>One labeled image of each digit, ten in all, 7, 8 and 9 included. Each new image gets the label of the closest one. Entries: share labeled correctly</li>
+<li>Digits 7 to 9 are ones the twin never saw, and there it only just beats the classifier’s features</li>
+<li>“Closest” is cosine similarity for pixels and features, and straight-line distance for the twin, which is how it was trained</li>
 </ul>
 </section>
 <section id="does-it-help-to-train-on-more-classes" class="slide level2">
 <h2>Does it help to train on more classes?</h2>
-<div id="c4d22329" class="cell" data-execution_count="42">
+<div id="166b4961" class="cell" data-execution_count="42">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1185,7 +1197,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </section>
 <section id="why-we-need-the-push-term" class="slide level2">
 <h2>Why we need the push term</h2>
-<div id="436d508b" class="cell" data-execution_count="43">
+<div id="5c982ea1" class="cell" data-execution_count="43">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1195,7 +1207,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 </div>
 </div>
 <ul>
-<li>With only the pull term, the cheapest way to make same pairs close is to put <strong>everything</strong> in one place. The spread falls from 0.50 to 0.0003</li>
+<li>With only the pull term, the cheapest way to make same pairs close is to put <strong>everything</strong> in one place. The standard deviation falls from 0.50 to 0.0003</li>
 <li>We removed the push on purpose, to show why it is there. With both terms and a margin, as in everything before this slide, it does not happen</li>
 </ul>
 </section>
@@ -1228,7 +1240,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <tbody>
 <tr class="odd">
 <td>Built by</td>
-<td>Keeping the most spread</td>
+<td>Keeping the most variance</td>
 <td>Training to name the classes</td>
 <td>Training on same / different pairs</td>
 </tr>
@@ -1257,7 +1269,7 @@ Findings that shaped the twin section (all numbers live in results.json, from de
 <h2>Recap: key ideas</h2>
 <ul>
 <li>A <strong>representation</strong> is a vector that describes an input, and the same input can be described in many ways</li>
-<li><strong>PCA</strong> builds new dimensions, each a linear combination of the originals, that keep the most spread. It uses no labels</li>
+<li><strong>PCA</strong> builds new dimensions, each a linear combination of the originals, that keep the most variance. It uses no labels</li>
 <li>A trained network’s features can be <strong>reused</strong>: freeze them and train a new head on a few labeled examples, or compare with nearest neighbors</li>
 <li>A <strong>twin network</strong> trains the representation for the comparison itself: one network applied to both images, with a loss that pulls same pairs together and pushes different pairs apart, up to a margin</li>
 <li>How well that carries over to <strong>new classes</strong> depends on how many different classes it learned from</li>
