@@ -302,7 +302,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="what-one-output-value-can-see" class="slide level2">
 <h2>What one output value can see</h2>
-<div id="8e29848a" class="cell" data-execution_count="2">
+<div id="111f22d8" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -449,7 +449,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-vgg-block" class="slide level2">
 <h2>The VGG block</h2>
-<div id="7aadd670" class="cell" data-execution_count="4">
+<div id="64ddc5c9" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -516,7 +516,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-block-in-pytorch" class="slide level2">
 <h2>The block in PyTorch</h2>
-<div id="53da5989" class="cell" data-execution_count="6">
+<div id="e595180b" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">def</span> vgg_block(num_convs, in_channels, out_channels):</span>
 <span id="cb1-2"><a href=""></a>    layers <span class="op">=</span> []</span>
 <span id="cb1-3"><a href=""></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_convs):</span>
@@ -533,7 +533,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="a-network-from-a-list" class="slide level2">
 <h2>A network from a list</h2>
-<div id="fff9770d" class="cell" data-execution_count="7">
+<div id="e0ee945e" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="kw">def</span> vgg(conv_arch, in_channels<span class="op">=</span><span class="dv">3</span>, num_classes<span class="op">=</span><span class="dv">1000</span>):</span>
 <span id="cb2-2"><a href=""></a>    blocks <span class="op">=</span> []</span>
 <span id="cb2-3"><a href=""></a>    <span class="cf">for</span> num_convs, out_channels <span class="kw">in</span> conv_arch:</span>
@@ -702,7 +702,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-new-head-in-pytorch" class="slide level2">
 <h2>The new head in PyTorch</h2>
-<div id="7785f5ff" class="cell" data-execution_count="10">
+<div id="3dc68989" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>head <span class="op">=</span> nn.Sequential(</span>
 <span id="cb3-2"><a href=""></a>    nn.Conv2d(<span class="dv">512</span>, <span class="dv">1000</span>, kernel_size<span class="op">=</span><span class="dv">1</span>),    <span class="co"># mix channels at each position</span></span>
 <span id="cb3-3"><a href=""></a>    nn.AdaptiveAvgPool2d(<span class="dv">1</span>),                <span class="co"># average each map over all positions</span></span>
@@ -829,7 +829,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="breakdown-the-skip-connection" class="slide level2">
 <h2>Breakdown: the skip connection</h2>
-<div id="877f0d16" class="cell" data-execution_count="12">
+<div id="0277b2cd" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -901,7 +901,7 @@ TOTAL: ~68 min (2 + 8 + 14 + 13 + 23 + 5 + 3); cut candidates in rough order: 'w
 </section>
 <section id="the-block-in-pytorch-1" class="slide level2">
 <h2>The block in PyTorch</h2>
-<div id="11e7b999" class="cell" data-execution_count="13">
+<div id="a94b5aab" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">class</span> Residual(nn.Module):</span>
 <span id="cb4-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels, out_channels, stride<span class="op">=</span><span class="dv">1</span>):</span>
 <span id="cb4-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>

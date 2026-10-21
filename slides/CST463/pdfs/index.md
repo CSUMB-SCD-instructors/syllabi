@@ -23,3 +23,4 @@ Printable slide handouts for CST463.
 | When Training Goes Wrong | [Open](When-Training-Goes-Wrong.pdf) |
 | Deeper Networks, Built from Blocks | [Open](Deeper-Networks-Built-from-Blocks.pdf) |
 | Representations and Twin Networks | [Open](Representations-and-Twin-Networks.pdf) |
+| Sequence Data and Embeddings | [Open](Sequence-Data-and-Embeddings.pdf) |
