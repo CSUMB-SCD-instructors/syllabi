@@ -85,8 +85,7 @@ The major topics covered in class are:
     - [By appointment](https://calendar.app.google/5TL35A3Nc1pjewD29)
 
 
-- Alejandro Larson (TA)
-  - Email: alarson@csumb.edu
+- Olga Bradford
   - Office Hours:
     - TBD
 
