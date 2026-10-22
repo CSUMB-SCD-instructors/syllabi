@@ -24,6 +24,7 @@ To pass this course you must (1) earn an overall grade of at least 60%, **and** 
 Late submissions are accepted only for Programming assignments and Labs, and have a 10% deduction per calendar day late.
 *Details can be found in [late policy](#late-policy).*
 
+
 - **Getting help:**
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
 In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0CARNWTNHM) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
