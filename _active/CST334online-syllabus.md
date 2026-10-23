@@ -3,7 +3,7 @@ layout: default
 course_code: CST334online
 course_name: Introduction to Operating Systems
 title: CST334online - Introduction to Operating Systems
-last_updated: '2026-10-22'
+last_updated: '2026-10-23'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -81,7 +81,8 @@ The major topics covered in class are:
   - Office: BIT205
 
   - Office Hours:
-
+    - Thursdays 9-10am [on zoom](https://csumb.zoom.us/j/86454892981)
+    - Sundays 6-7pm [on zoom](https://csumb.zoom.us/j/86454892981)
     - TBD
     - [By appointment](https://calendar.app.google/5TL35A3Nc1pjewD29)
 
