@@ -3,10 +3,11 @@ layout: default
 course_code: CST334online
 course_name: Introduction to Operating Systems
 title: CST334online - Introduction to Operating Systems
-last_updated: '2026-10-23'
+last_updated: '2026-10-25'
 ---
 
 # CST334 (Operating Systems) Syllabus
+
 
 ## Summary
 
@@ -71,7 +72,7 @@ The major topics covered in class are:
 3.  **Memory Management** – How memory is divided up among various processes.
 4.  **Concurrency** – How we can achieve high-performance sharing of memory.
 5.  **IO and Persistence** – How we interface with external components.
-6.  **Language Parsing** – How compilers and interpreters work.
+
 
 ### Personnel
 
@@ -87,9 +88,10 @@ The major topics covered in class are:
     - [By appointment](https://calendar.app.google/5TL35A3Nc1pjewD29)
 
 
-- Olga Bradford
+- [Olga Bradford](mailto:obradford@csumb.edu)
   - Office Hours:
-    - TBD
+    - Tuesdays 9:00 - 10:00 AM
+    - Saturdays 6:00 - 7:00 PM
 
 
 **Getting Help:** Office hours are available throughout the week - make use of them! 
