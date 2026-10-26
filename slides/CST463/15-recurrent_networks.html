@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="15-recurrent_networks_files/libs/clipboard/clipboard.min.js"></script>
+<script src="15-recurrent_networks_files/libs/quarto-html/tabby.min.js"></script>
+<script src="15-recurrent_networks_files/libs/quarto-html/popper.min.js"></script>
+<script src="15-recurrent_networks_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="15-recurrent_networks_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="15-recurrent_networks_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="15-recurrent_networks_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
+
+  <meta name="author" content="Sam Ogden">
+  <title>Recurrent Networks</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="15-recurrent_networks_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="15-recurrent_networks_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="15-recurrent_networks_files/libs/revealjs/dist/theme/quarto-ff105ce82bcf17f5734711849a8fa0c6.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="15-recurrent_networks_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="15-recurrent_networks_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="15-recurrent_networks_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="15-recurrent_networks_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="15-recurrent_networks_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="15-recurrent_networks_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-last-updated="2026-10-26 10:24" class="quarto-title-block center">
+  <h1 class="title">Recurrent Networks</h1>
+  <p class="subtitle">Advanced Machine Learning</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Sam Ogden 
+</div>
+</div>
+</div>
+
+</section>
+<section id="draft" class="title-slide slide level1 draft-slide center">
+<h1>DRAFT</h1>
+<p>This slide deck is still under active development. Expect changes before it is finalized.</p>
+</section>
+
+<section id="learning-objectives" class="slide level2">
+<h2>Learning objectives</h2>
+<!--
+Every section is drafted. The Language modeling section was moved here from deck 14, which class did not reach. This is deck 2 of 2 on sequences. Deck 14 (14-sequences_and_embeddings.qmd) covers what a sequence is and how to ENCODE it (tokens, one-hot, bag of words, embeddings, word2vec). This deck covers the models that use it: next-word prediction with a fixed window, then the RNN. The lab (labs/05-sequences_and_embeddings) runs after this lecture: sentiment analysis on IMDB with an RNN, one-hot inputs first, then an embedding layer.
+
+Why this lecture exists: the language-modeling section ends on a limit: a fixed window cannot see anything older than the window, and a longer window does not fix it, because long windows rarely repeat in the text. The fix is a model that carries a summary of everything seen so far and updates it with each new token: the hidden state of a recurrent network. Takes d2l chapter 9 sections 9.4 (RNNs), 9.5/9.6 (implementations, used for shapes and code), and 9.7 (backpropagation through time). The overview treats RNNs as a bridge to attention, not an implementation destination: the end of the lecture makes the limit of one fixed-size state concrete and points ahead: the next lecture is applications of RNNs (including sequence-to-sequence), then attention.
+
+Maps to the overview's Week 9B (RNNs, BPTT, and their limits).
+
+Companion reading: d2l 9.4, 9.7; Hochreiter & Schmidhuber (1997) and Cho et al. (2014) only as names for LSTM and GRU, not required.
+
+Assumed prior knowledge:
+- 07/08: backpropagation and why gradients vanish or explode in a long chain of multiplications.
+- 12: shared weights applied at many positions (convolution); residual connections and the vanishing-gradient argument (reused for backpropagation through time); 'keep the old and add a correction'.
+- 13: one network applied twice with shared weights (the twin network); a representation as a vector that describes an input.
+- 14: tokens, ids, embeddings, next-token prediction with a softmax over the vocabulary, the fixed-window model and its limit, the running sentence.
+
+Genuinely new (the language-modeling section is the moved material from deck 14: next-token pairs, the fixed window, softmax over the vocabulary): the hidden state and the recurrence, the same cell applied at every step (unrolling), the shapes of an RNN language model, backpropagation through time, vanishing and exploding gradients over time, gradient clipping, a one-slide intuition for gating.
+
+Deliberate scope decisions:
+- Same running sentence as deck 14 ("the cat sat on the mat and the cat ran", confirm), so the hidden state on slide N is the thing the window model could not do. Numbers come from tiny arrays in the cell or the demo's results file; none invented.
+- The one-step-by-hand slide uses hidden size 2 and embedding size 2 so the arithmetic fits on a slide.
+- LSTM/GRU: one slide on what a gate is (a learned 0-to-1 gate on what to keep), no equations to memorize. Do not require from-scratch LSTM/GRU, per the overview.
+- Backpropagation through time is conceptual: unrolling makes a deep network with shared weights, the gradient for a shared weight is a sum over steps, and a long chain of the same factor vanishes or explodes. No full derivation.
+- NOT covering here: seq2seq / encoder-decoder, beam search, bidirectional and stacked RNNs, generating text, from-scratch LSTM, truncated BPTT, perplexity. The next lecture (16) is applications of RNNs and takes the sequence-to-sequence material; attention follows it. Here attention is only foreshadowed.
+- The lab uses the RNN for SENTIMENT classification (read a review, classify from the last hidden state), because the lecture leans on next-word prediction and the lab should show another use.
+
+Pictures (picture-first, notation after):
+- RNN: the cell drawing (x_t and h_{t-1} in, h_t out, same weights), then the same cell unrolled over the running sentence (own drawing, same style as the twin-network and skip-connection diagrams); hidden-state values over time for the tiny sentence.
+- BPTT: the unrolled drawing with the gradient arrow running backward through every step; gradient norm vs. how far back (from the demo) showing it shrinking.
+- Limits: loss or accuracy against how far back the needed context is (from the demo).
+- Plot colors: colorblind-safe only (blue #0072B2, orange #E69F00).
+
+Demo: none for this deck. The numbers on the slides come from tiny arrays and a small random RNN computed in the slide cells, and the hands-on work is the lab.
+
+Time target: ~55-60 minutes of slides; the rest of the 2-hour slot is the lab.
+-->
+<!--
+Progress tracker:
+
+## Title + Learning objectives                          [drafted]    ~2 min
+## Language modeling {.section}                          [drafted]   ~15 min   (moved from deck 14: what task, next-token pairs, the fixed window, softmax over the vocabulary, the limit of a window, its cost, same table trained inside a task)
+## Recurrent networks {.section}                         [drafted]    ~25 min   (a window is not memory, the Big Idea of a hidden state, the cell and its breakdown, two steps with real numbers, unrolled, hidden state over the sentence, PyTorch shapes, two ways to use the states)
+## Training through time {.section}                      [drafted]    ~8 min    (unrolling makes a deep network, BPTT in one picture, the long chain, measured gradients, clipping)
+## Limits of RNNs {.section}                             [drafted]    ~6 min    (the list of limits, long-range dependencies, one state for everything, slow)
+## What comes next {.section}                            [drafted]    ~5 min    (gates, LSTM and GRU, beyond the RNN)
+## Summary {.section}                                    [drafted]    ~2 min    (recap table: window vs. RNN vs. attention-next; key ideas)
+
+TOTAL: ~63 min. Cut candidates if long: gates, the exploding-gradients slide, the longer-window slide, the second step by hand.
+
+No demo notebook: everything numeric is computed in the slide cells (tiny weights, torch gradient norms), and the lab (labs/05-sequences_and_embeddings) is the hands-on RNN work.
+-->
+<ul>
+<li>Build next-token pairs, and say why a fixed-window language model is limited</li>
+<li>Describe an RNN: a hidden state updated from the previous state and the current input, with the same weights at every step</li>
+<li>Trace one step of a recurrent cell with real numbers</li>
+<li>Explain backpropagation through time conceptually, and why gradients over long sequences vanish or explode</li>
+<li>Say what a gate does in an LSTM or GRU, and why one fixed-size state limits long-range dependencies</li>
+</ul>
+</section>
+<section id="language-modeling" class="slide level2 section">
+<h2>Language modeling</h2>
+<p>Predicting what comes next</p>
+</section>
+<section id="predicting-the-next-word" class="slide level2">
+<h2>Predicting the next word</h2>
+<p>Words are now vectors. What do we ask a model to do with them?</p>
+<ul>
+<li>The task from last time: given the words so far, predict the next one. “the cat sat on the ___”</li>
+<li>It is a <strong>classification</strong> problem. The input is the words so far, the classes are all the words in the vocabulary, and the correct class is the word that actually came next</li>
+<li>The labels cost nothing: any text already contains the right answer at every position</li>
+<li>A model that does this is a <strong>language model</strong></li>
+</ul>
+</section>
+<section id="a-window-of-context" class="slide level2">
+<h2>A window of context</h2>
+<div id="5842f529" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="1134" height="241"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The <strong>window</strong> is the last <span class="math inline">k</span> words, the only part of the sentence we hand the model. With <span class="math inline">k = 2</span> we pass in “on the” and ask for the next word. The text says “mat”</li>
+<li>The window <strong>slides</strong>: after “mat” it becomes “the mat”, and we predict again</li>
+</ul>
+</section>
+<section id="next-token-pairs" class="slide level2">
+<h2>Next-token pairs</h2>
+<div id="1f11fbcb" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" width="1106" height="308"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Slide a window of the last 2 words along the sentence. Each position gives one training example: the window is the input, and the word after it is the target</li>
+<li>10 examples from 12 tokens, and every one comes straight from the text. Skip-gram used neighbours on both sides. Here only the past counts</li>
+</ul>
+</section>
+<section id="the-window-model" class="slide level2">
+<h2>The window model</h2>
+<div id="a9883f23" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="222"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Look up the embeddings of the last <span class="math inline">k</span> words, join them, and feed them to a small network that scores every word. Other models combine them differently</li>
+<li>The same network is used at every position. It works when a little context is enough</li>
+<li>A <strong>prediction</strong> model: trained to guess the next word. The embeddings are trained along the way, as a by-product</li>
+</ul>
+</section>
+<section id="the-models-output" class="slide level2">
+<h2>The model’s output</h2>
+<div id="dce74af4" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-7-output-1.png" class="quarto-figure quarto-figure-center" width="953" height="222"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Trained on the whole novel. One score per word (2,124 of them), turned into probabilities by softmax</li>
+<li>Embeddings go in, but the output is not an embedding: it is a score per word id, trained with cross-entropy against the true next word (a one-hot). Classification with 2,124 classes</li>
+<li>The probabilities spread over <em>plausible</em> words</li>
+</ul>
+</section>
+<section id="breakdown-softmax-over-the-vocabulary" class="slide level2 smaller">
+<h2>Breakdown: softmax over the vocabulary</h2>
+<p><span class="math display">p_i = \frac{e^{z_i}}{\sum_j e^{z_j}} \qquad \text{loss} = -\log p_{\text{true}}</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Piece</th>
+<th>What it does</th>
+<th>After “the”</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">z_i</span></td>
+<td>Score for word <span class="math inline">i</span></td>
+<td>cat 2, mat 1, ran -1</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">e^{z_i}</span> and <span class="math inline">\sum_j e^{z_j}</span></td>
+<td>Make positive, divide by the total</td>
+<td>7.39, 2.72, 0.37; total 10.48</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">p_i</span></td>
+<td>Probability of word <span class="math inline">i</span></td>
+<td>0.71, 0.26, 0.04</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">-\log p_{\text{true}}</span></td>
+<td>Small if the true word got a high share</td>
+<td>cat: 0.35, ran: 3.35</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Same softmax and cross-entropy as classification, with all the words as the classes. The scores here are made up</li>
+</ul>
+</section>
+<section id="measuring-a-language-model" class="slide level2">
+<h2>Measuring a language model</h2>
+<p>The softmax slide gave the loss for <strong>one</strong> prediction, <span class="math inline">-\log p_{\text{true}}</span>. A model’s loss is the average of that over every position in a text.</p>
+<ul>
+<li><strong>Training loss</strong>: the average on text the model was trained on</li>
+<li><strong>Held-out loss</strong>: the average on text it never saw. This is the one we care about, because it says how well the model predicts new text. Lower is better</li>
+<li>A guess that gives every word equal probability scores <span class="math inline">\log 2,124 = 7.66</span> on a vocabulary of 2,124 words, so a useful model must beat that</li>
+</ul>
+</section>
+<section id="the-limit-of-a-fixed-window" class="slide level2">
+<h2>The limit of a fixed window</h2>
+<div id="ef9f6bc2" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-11-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="395"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Real text always has something that matters from further back than any window we pick: the subject of a long sentence, a name from a paragraph ago</li>
+<li>A longer window sees more, but everything older than the window is still invisible, and long windows rarely repeat (see the next slide)</li>
+</ul>
+</section>
+<section id="does-a-longer-window-help" class="slide level2">
+<h2>Does a longer window help?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Window <span class="math inline">k</span></th>
+<th>Held-out loss</th>
+<th>Windows seen in training</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>no context</td>
+<td>5.84</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>5.00</td>
+<td>100%</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>4.92</td>
+<td>75%</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>4.96</td>
+<td>1%</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>5.01</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>One word helps a lot, two a little more, and past that more words do not help</li>
+<li>The last column: the share of held-out windows that also occur in the training text. Long windows almost never repeat: at <span class="math inline">k = 5</span> the model has no example of 99% of them</li>
+</ul>
+</section>
+<section id="same-text-two-embedding-tables" class="slide level2">
+<h2>Same text, two embedding tables</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Word</th>
+<th>word2vec: nearest words</th>
+<th>Window model: nearest words</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mother</td>
+<td>father, sister, commendation</td>
+<td>arose, stand, reason</td>
+</tr>
+<tr class="even">
+<td>london</td>
+<td>town, meryton, scotland</td>
+<td>eliza, rejoice, choose</td>
+</tr>
+<tr class="odd">
+<td>mr</td>
+<td>collins, miss, wickham</td>
+<td>mrs, drawn, favourite</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Both have an <strong>embedding table</strong>, one vector per word, trained on the same text. The table shows each word’s nearest neighbours by vector</li>
+<li>What differs is what the training <strong>rewards</strong>. word2vec’s loss rewards nearby words having similar vectors. The window model’s loss rewards guessing the next word</li>
+<li>word2vec is an <strong>embedding model</strong>: the vectors are the goal. The window model is a <strong>prediction model</strong>: the vectors are a by-product, and far less tidy here</li>
+</ul>
+</section>
+<section id="takeaway" class="slide level2">
+<h2>Takeaway</h2>
+<div class="big-idea">
+<p>A language model is a next-word classifier over the whole vocabulary.</p>
+<p>A fixed window sees only a fixed amount of the past.</p>
+</div>
+</section>
+<section id="recurrent-networks" class="slide level2 section">
+<h2>Recurrent networks</h2>
+<p>A memory that moves with the sequence</p>
+</section>
+<section id="a-window-is-not-memory" class="slide level2">
+<h2>A window is not memory</h2>
+<p>We want a model that uses <strong>everything</strong> it has seen so far, without its input growing with the length of the history.</p>
+<ul>
+<li>A window of <span class="math inline">k</span> words sees exactly <span class="math inline">k</span> words. Everything older is gone</li>
+<li>Making the window longer does not fix it: long windows rarely repeat in the text, so the model has little to learn from</li>
+</ul>
+<p><br></p>
+<div class="box">
+<p><strong>What we want: </strong></p>
+<p>A short, fixed-size note about the past that gets <strong>updated</strong> as each new word arrives, so the model reads only the note and the new word</p>
+</div>
+</section>
+<section id="the-big-idea" class="slide level2">
+<h2>The Big Idea</h2>
+<div class="big-idea">
+<p>Carry a small summary of everything seen so far, and update it with each new word.</p>
+</div>
+<ul>
+<li>The summary is a vector, the <strong>hidden state</strong>. It is a representation of the past, built one step at a time</li>
+<li>The same update is used at every step, so it works for a sentence of any length</li>
+</ul>
+</section>
+<section id="the-recurrent-cell" class="slide level2">
+<h2>The recurrent cell</h2>
+<div id="0dfe517e" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-14-output-1.png" class="quarto-figure quarto-figure-center" width="841" height="337"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math display">\mathbf{h}_t = \tanh\!\big(W_{xh}\,\mathbf{x}_t + W_{hh}\,\mathbf{h}_{t-1} + \mathbf{b}\big)</span></p>
+<ul>
+<li>It is a layer of ordinary neurons: a weighted sum of the inputs, then <span class="math inline">\tanh</span>. The one twist is the loop: the output is also fed back in as an input at the next step</li>
+</ul>
+</section>
+<section id="breakdown-the-new-state" class="slide level2 smaller">
+<h2>Breakdown: the new state</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Piece</th>
+<th>What it is</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\mathbf{x}_t</span></td>
+<td>This word’s embedding</td>
+<td>What is new</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\mathbf{h}_{t-1}</span></td>
+<td>The summary so far</td>
+<td>What we keep from the past</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">W_{xh}\,\mathbf{x}_t</span></td>
+<td>A linear layer on the word</td>
+<td>What this word contributes</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">W_{hh}\,\mathbf{h}_{t-1}</span></td>
+<td>A linear layer on the old state</td>
+<td>How much of the past carries over, and how it is mixed</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\mathbf{b}</span></td>
+<td>A bias vector</td>
+<td>A constant shift</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\tanh</span></td>
+<td>Squashes each number into <span class="math inline">(-1, 1)</span></td>
+<td>Keeps the state from growing without bound</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Same shape as before: a linear layer, then a nonlinearity. The input is the word and the old state side by side</li>
+<li><span class="math inline">W_{xh}</span>, <span class="math inline">W_{hh}</span> and <span class="math inline">\mathbf{b}</span> are the parameters, and they are the same at every step</li>
+</ul>
+</section>
+<section id="a-layer-of-neurons-fed-back" class="slide level2">
+<h2>A layer of neurons, fed back</h2>
+<div id="d65f8953" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-15-output-1.png" class="quarto-figure quarto-figure-center" width="834" height="347"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The cell is not one neuron. It is a <strong>layer</strong> of neurons, like the hidden layer of an MLP, and the state <span class="math inline">\mathbf{h}_t</span> has one number per neuron (2 on these slides, 64 in the lab)</li>
+<li>The only difference from an MLP layer: the output is pushed back in as an input at the next step. More neurons, more layers and an output layer all work as usual</li>
+</ul>
+</section>
+<section id="two-steps-on-the-diagram" class="slide level2">
+<h2>Two steps on the diagram</h2>
+<div id="b76e8907" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-16-output-1.png" class="quarto-figure quarto-figure-center" width="1171" height="336"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Each step is the same layer of two neurons. It takes the word’s vector and the previous state, and produces the new state</li>
+<li>The new state from step 1 is fed back in at step 2 (orange). The next two slides do the arithmetic</li>
+</ul>
+</section>
+<section id="one-step-with-real-numbers" class="slide level2">
+<h2>One step with real numbers</h2>
+<p>First word is <code>&lt;bos&gt;</code>, with the state starting at zero. Hidden size 2, embedding size 3.</p>
+<p><span class="math display">\begin{aligned}\mathbf{h}_1 &amp;= \tanh\!\big(W_{xh}\,\mathbf{x}_1 + W_{hh}\,\mathbf{h}_0\big) \\ &amp;= \tanh\!\left(\begin{bmatrix}0.5 &amp; -0.4 &amp; 0.3 \\ 0.2 &amp; 0.6 &amp; -0.5\end{bmatrix}\begin{bmatrix}0.6 \\ -0.1 \\ -0.6\end{bmatrix} + \begin{bmatrix}0.6 &amp; -0.3 \\ 0.4 &amp; 0.5\end{bmatrix}\begin{bmatrix}0 \\ 0\end{bmatrix}\right) \\ &amp;= \tanh\begin{bmatrix}0.16 \\ 0.36\end{bmatrix} = \begin{bmatrix}0.16 \\ 0.35\end{bmatrix}\end{aligned}</span></p>
+<ul>
+<li>First row: <span class="math inline">0.5(0.6) + (-0.4)(-0.1) + 0.3(-0.6) = 0.16</span>, and <span class="math inline">\tanh(0.16) = 0.16</span></li>
+<li>The old state is zero, so the <span class="math inline">W_{hh}</span> term adds nothing yet. The state holds only what <code>&lt;bos&gt;</code> contributed</li>
+</ul>
+</section>
+<section id="a-second-step-the-past-comes-in" class="slide level2">
+<h2>A second step: the past comes in</h2>
+<p>Next word is “the”, and the old state is the one we just computed.</p>
+<p><span class="math display">\begin{aligned}\mathbf{h}_2 &amp;= \tanh\!\big(W_{xh}\,\mathbf{x}_2 + W_{hh}\,\mathbf{h}_1\big) \\ &amp;= \tanh\!\left(\begin{bmatrix}0.5 &amp; -0.4 &amp; 0.3 \\ 0.2 &amp; 0.6 &amp; -0.5\end{bmatrix}\begin{bmatrix}-0.8 \\ -1.3 \\ -0.2\end{bmatrix} + \begin{bmatrix}0.6 &amp; -0.3 \\ 0.4 &amp; 0.5\end{bmatrix}\begin{bmatrix}0.16 \\ 0.35\end{bmatrix}\right) \\ &amp;= \tanh\begin{bmatrix}0.05 \\ -0.60\end{bmatrix} = \begin{bmatrix}0.05 \\ -0.54\end{bmatrix}\end{aligned}</span></p>
+<ul>
+<li>First row: <span class="math inline">0.5(-0.8) + (-0.4)(-1.3) + 0.3(-0.2) + 0.6(0.16) + (-0.3)(0.35) = 0.05</span></li>
+<li>The new state mixes “the” with what came before it. The same <span class="math inline">W_{xh}</span> and <span class="math inline">W_{hh}</span> were used in both steps</li>
+</ul>
+</section>
+<section id="the-cell-unrolled" class="slide level2">
+<h2>The cell, unrolled</h2>
+<div id="ee6005ad" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-19-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="320"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Open out the loop: the same neurons, copied once per word, with the output of each copy (orange) passed to the next. It is <strong>one</strong> set of weights used at every step, like the twin network and like a convolution applied at every position</li>
+<li>The dashed arrows are the next-word scores, the output we want at each position</li>
+</ul>
+</section>
+<section id="the-hidden-state-over-the-sentence" class="slide level2">
+<h2>The hidden state over the sentence</h2>
+<div id="89e44d3d" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-20-output-1.png" class="quarto-figure quarto-figure-center" width="798" height="366"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The 2-number state at each step of our sentence, using the same small weights as the last slides, so the picture shows what a cell does and not a trained result</li>
+<li>“the” (orange) appears three times and lands in three different places, because the state also holds what came before it. A window of one word could not do that</li>
+</ul>
+</section>
+<section id="an-rnn-language-model-in-pytorch" class="slide level2">
+<h2>An RNN language model in PyTorch</h2>
+<div id="c727d304" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">class</span> RNNLM(nn.Module):</span>
+<span id="cb1-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, vocab_size, dim, hidden):</span>
+<span id="cb1-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb1-4"><a href=""></a>        <span class="va">self</span>.embedding <span class="op">=</span> nn.Embedding(vocab_size, dim)</span>
+<span id="cb1-5"><a href=""></a>        <span class="va">self</span>.rnn <span class="op">=</span> nn.RNN(dim, hidden, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-6"><a href=""></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(hidden, vocab_size)</span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, ids):                  <span class="co"># ids: (batch, length)</span></span>
+<span id="cb1-9"><a href=""></a>        x <span class="op">=</span> <span class="va">self</span>.embedding(ids)              <span class="co"># (batch, length, dim)</span></span>
+<span id="cb1-10"><a href=""></a>        states, _ <span class="op">=</span> <span class="va">self</span>.rnn(x)              <span class="co"># (batch, length, hidden)</span></span>
+<span id="cb1-11"><a href=""></a>        <span class="cf">return</span> <span class="va">self</span>.out(states)              <span class="co"># (batch, length, vocab)</span></span>
+<span id="cb1-12"><a href=""></a></span>
+<span id="cb1-13"><a href=""></a>model <span class="op">=</span> RNNLM(vocab_size<span class="op">=</span><span class="dv">9</span>, dim<span class="op">=</span><span class="dv">3</span>, hidden<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb1-14"><a href=""></a>ids <span class="op">=</span> torch.tensor([[ID[w] <span class="cf">for</span> w <span class="kw">in</span> SEQ]])</span>
+<span id="cb1-15"><a href=""></a><span class="bu">print</span>(ids.shape, <span class="st">"-&gt;"</span>, model(ids).shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([1, 12]) -&gt; torch.Size([1, 12, 9])</code></pre>
+</div>
+</div>
+<ul>
+<li><code>nn.RNN</code> loops over the length for us and returns the state after <strong>every</strong> step</li>
+<li>A linear layer turns each state into scores over the vocabulary</li>
+</ul>
+</section>
+<section id="two-ways-to-use-the-states" class="slide level2">
+<h2>Two ways to use the states</h2>
+<div class="columns">
+<div class="column">
+<p><strong>1. Predict at every step</strong></p>
+<div id="454b0f50" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-22-output-1.png" class="quarto-figure quarto-figure-center" width="577" height="270"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>A <strong>language model</strong>: every state predicts the word after it</li>
+<li>The state at each step is used on its own</li>
+</ul>
+</div><div class="column">
+<p><strong>2. Read it all, then decide</strong></p>
+<div id="dd1243e9" class="cell" data-execution_count="22">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-23-output-1.png" class="quarto-figure quarto-figure-center" width="577" height="270"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>A <strong>classifier</strong>, such as a movie review: use only the <strong>last</strong> state</li>
+<li>That state is an <strong>embedding of the whole sequence</strong>. This is what the lab does</li>
+</ul>
+</div></div>
+</section>
+<section id="takeaway-1" class="slide level2">
+<h2>Takeaway</h2>
+<div class="big-idea">
+<p>The hidden state is a fixed-size summary of the past, updated by the same cell at every step.</p>
+</div>
+</section>
+<section id="training-through-time" class="slide level2 section">
+<h2>Training through time</h2>
+<p>Learning across steps</p>
+</section>
+<section id="unrolling-makes-a-deep-network" class="slide level2">
+<h2>Unrolling makes a deep network</h2>
+<p>Copy the cell once per word, and the RNN is a network as deep as the sequence is long, with the <strong>same weights</strong> in every layer.</p>
+<ul>
+<li>A sentence of 12 words is a 12-layer network. A review of 130 words is a 130-layer network</li>
+<li>So the problems of deep networks come back, in particular gradients that shrink or grow as they travel through many layers</li>
+<li>We met this with very deep networks and fixed it with residual connections. Here the weights are shared, which makes it harder</li>
+</ul>
+</section>
+<section id="backpropagation-through-time" class="slide level2">
+<h2>Backpropagation through time</h2>
+<div id="658fc6e7" class="cell" data-execution_count="23">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-24-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="336"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The loss is at the end. To learn from it we ask how much each earlier input <span class="math inline">\mathbf{x}_t</span> affected it, so the gradient goes back through every step</li>
+<li>The weights are shared, so their gradient is the <strong>sum</strong> of each step’s contribution</li>
+</ul>
+</section>
+<section id="a-long-chain-of-the-same-weight" class="slide level2 smaller">
+<h2>A long chain of the same weight</h2>
+<p>Take the simplest possible RNN: one number as the state, and no <span class="math inline">\tanh</span>. Each step multiplies by one weight <span class="math inline">w</span>.</p>
+<p><span class="math display">h_t = w\,h_{t-1} \qquad\Rightarrow\qquad \frac{\partial h_T}{\partial h_0} = \underbrace{w \cdot w \cdots w}_{T \text{ steps}} = w^T</span></p>
+<p>How much does the state <span class="math inline">n</span> steps back affect the last state? It is the weight, multiplied <span class="math inline">n</span> times:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Weight <span class="math inline">w</span></th>
+<th>After 10 steps</th>
+<th>After 50 steps</th>
+<th>After 100 steps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.9</td>
+<td><span class="math inline">0.9^{10} = 0.349</span></td>
+<td><span class="math inline">0.9^{50} = 5.15 \times 10^{-3}</span></td>
+<td><span class="math inline">0.9^{100} = 2.66 \times 10^{-5}</span></td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+<td><span class="math inline">1.0^{10} = 1</span></td>
+<td><span class="math inline">1.0^{50} = 1</span></td>
+<td><span class="math inline">1.0^{100} = 1</span></td>
+</tr>
+<tr class="odd">
+<td>1.1</td>
+<td><span class="math inline">1.1^{10} = 2.59</span></td>
+<td><span class="math inline">1.1^{50} = 117</span></td>
+<td><span class="math inline">1.1^{100} = 1.38 \times 10^{4}</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="math inline">w &lt; 1</span>: the influence of far-back words <strong>vanishes</strong>. The loss cannot tell the model that an early word mattered</li>
+<li><span class="math inline">w &gt; 1</span>: it <strong>explodes</strong>. A few huge gradients can wreck training</li>
+<li>A real RNN has a matrix <span class="math inline">W_{hh}</span> and a <span class="math inline">\tanh</span>, but the same thing happens: the same factor, many times</li>
+</ul>
+</section>
+<section id="how-far-back-can-the-gradient-reach" class="slide level2">
+<h2>How far back can the gradient reach?</h2>
+<div id="01f318ef" class="cell" data-execution_count="25">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-26-output-1.png" class="quarto-figure quarto-figure-center" width="846" height="284"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>A small RNN over 40 steps. Each curve is how strongly the state <span class="math inline">n</span> steps back influences the last state: the learning signal that step can receive (log axis)</li>
+<li>Small weights <strong>vanish</strong>: after 20 steps it is about a millionth, so far-back words cannot be learned from</li>
+<li>Large weights <strong>explode</strong>: it grows by orders of magnitude</li>
+</ul>
+</section>
+<section id="clipping-a-training-trick-for-exploding-gradients" class="slide level2">
+<h2>Clipping: a training trick for exploding gradients</h2>
+<div id="d1edb0b5" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>loss.backward()</span>
+<span id="cb3-2"><a href=""></a>torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb3-3"><a href=""></a>optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>This changes <strong>how we train</strong>, not the model. Before each update, if the gradient is longer than a limit (here 1), scale it down to that length. The direction stays the same</li>
+<li>One huge gradient can no longer throw the weights far away, so training is steadier. You use it in the lab</li>
+<li>It fixes exploding gradients only. A vanished gradient is just small, and there is nothing to scale back up</li>
+<li>Vanishing needs a change to the model itself, which is where the next section goes</li>
+</ul>
+</section>
+<section id="takeaway-2" class="slide level2">
+<h2>Takeaway</h2>
+<div class="big-idea">
+<p>Training an RNN is training a very deep network with shared weights, and long chains make the gradient vanish or explode.</p>
+</div>
+</section>
+<section id="limits-of-rnns" class="slide level2 section">
+<h2>Limits of RNNs</h2>
+<p>What one state, read one step at a time, costs us</p>
+</section>
+<section id="where-rnns-struggle" class="slide level2">
+<h2>Where RNNs struggle</h2>
+<p>An RNN predicts at every step, embeds a whole sequence, and uses the same weights for any length. It also has three limits:</p>
+<ol type="1">
+<li><strong>Long-range dependencies</strong>: a detail from far back has to survive many updates, and the gradient that would teach the model to keep it is the one that vanishes</li>
+<li><strong>One state for everything</strong>: all of the past has to fit in one fixed-size vector that is overwritten at every step</li>
+<li><strong>Slow</strong>: step <span class="math inline">t</span> needs step <span class="math inline">t-1</span>, so the steps cannot run in parallel</li>
+</ol>
+<ul>
+<li>Each one in turn, then what was done about them</li>
+</ul>
+</section>
+<section id="long-range-dependencies" class="slide level2">
+<h2>Long-range dependencies</h2>
+<div id="be9f848e" class="cell" data-execution_count="27">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-28-output-1.png" class="quarto-figure quarto-figure-center" width="1170" height="270"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The verb has to match a word that came several steps earlier, so that word has to survive every update in between</li>
+<li>The gradient that would teach the model to keep it has to travel back the same distance, and that is the gradient that vanishes</li>
+</ul>
+</section>
+<section id="one-state-for-everything" class="slide level2">
+<h2>One state for everything</h2>
+<div id="01bb7961" class="cell" data-execution_count="28">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-29-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="251"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>A 5-word review and a 500-word review both end as the same 64 numbers (the size in the lab)</li>
+<li>Each new word is written into the same state, so something old has to be overwritten</li>
+<li>The longer the text, the more has to be squeezed out, and the model decides what to drop</li>
+</ul>
+</section>
+<section id="slow-one-step-at-a-time" class="slide level2">
+<h2>Slow: one step at a time</h2>
+<div id="96aeaf75" class="cell" data-execution_count="29">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-30-output-1.png" class="quarto-figure quarto-figure-center" width="1038" height="308"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Step <span class="math inline">t</span> needs the state from step <span class="math inline">t-1</span>, so a 500-word review takes 500 steps in a row</li>
+<li>GPUs are fast because they do many things at once. An RNN cannot use that along a sequence, though it can across many reviews in a batch</li>
+<li>Long texts are slow to train on, and that limit gets worse as the data grows</li>
+</ul>
+</section>
+<section id="what-comes-next" class="slide level2 section">
+<h2>What comes next</h2>
+<p>Gates, then what RNNs are used for</p>
+</section>
+<section id="gates-how-much-to-keep" class="slide level2">
+<h2>Gates: how much to keep</h2>
+<div id="34f30142" class="cell" data-execution_count="30">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="15-recurrent_networks_files/figure-revealjs/cell-31-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="327"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>A gate is <strong>another layer</strong>, reading the same two inputs as the proposal: the new word and the old state. Its output <span class="math inline">\mathbf{g}</span> is a number between 0 and 1 per unit</li>
+<li>Per unit, it says how much of the <strong>old</strong> value to keep. The rest is replaced by the proposal</li>
+</ul>
+</section>
+<section id="gates-the-update-with-real-numbers" class="slide level2">
+<h2>Gates: the update, with real numbers</h2>
+<p><span class="math display">\mathbf{h}_t = \mathbf{g} \odot \mathbf{h}_{t-1} + (1 - \mathbf{g}) \odot \tilde{\mathbf{h}}_t</span></p>
+<p><span class="math display">\underbrace{\begin{bmatrix}0.80 \\ 0.76\end{bmatrix}}_{\text{new state}} = \underbrace{\begin{bmatrix}1.0 \\ 0.1\end{bmatrix}}_{\text{gate}} \odot \underbrace{\begin{bmatrix}0.8 \\ -0.5\end{bmatrix}}_{\text{old state}} + \underbrace{\begin{bmatrix}0.0 \\ 0.9\end{bmatrix}}_{1 - \text{gate}} \odot \underbrace{\begin{bmatrix}0.3 \\ 0.9\end{bmatrix}}_{\text{new proposal}}</span></p>
+<ul>
+<li>The gate <span class="math inline">\mathbf{g}</span> has one number per unit, between 0 and 1: how much of the old value to <strong>keep</strong>. <span class="math inline">\odot</span> multiplies element by element</li>
+<li>It is not a fixed constant. It is <strong>computed at every step</strong> from the word and the old state</li>
+</ul>
+<div class="box center">
+<p><span class="math inline">\mathbf{g} = \sigma(W_g[\mathbf{x}_t, \mathbf{h}_{t-1}] + \mathbf{b}_g)</span></p>
+</div>
+<p>#- First number: gate 1.0, so the old value (0.8) is <strong>kept</strong>. Second number: gate 0.1, so the old value is mostly <strong>replaced</strong></p>
+</section>
+<section id="lstm-and-gru" class="slide level2">
+<h2>LSTM and GRU</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>GRU</th>
+<th>LSTM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gates</td>
+<td>2 (update, reset)</td>
+<td>3 (forget, input, output)</td>
+</tr>
+<tr class="even">
+<td>State</td>
+<td>One vector</td>
+<td>Hidden state plus a separate memory</td>
+</tr>
+<tr class="odd">
+<td>Cost</td>
+<td>Fewer weights</td>
+<td>More weights</td>
+</tr>
+</tbody>
+</table>
+<div id="6ff6676f" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="va">self</span>.rnn <span class="op">=</span> nn.GRU(dim, hidden, batch_first<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Gated recurrent cells: the standard for sequences before attention, still used for small or streaming problems</li>
+<li>In PyTorch, <code>nn.GRU</code> or <code>nn.LSTM</code> replaces <code>nn.RNN</code>. (<code>nn.LSTM</code> also returns its memory)</li>
+<li>The idea to keep is the <strong>gate</strong>: a learned 0-to-1 dial on what to keep and what to write</li>
+</ul>
+</section>
+<section id="beyond-the-rnn" class="slide level2">
+<h2>Beyond the RNN</h2>
+<ul>
+<li><strong>Gates</strong> fix the first limit: a detail can survive many steps. But there is still one state, and one step at a time</li>
+<li><strong>Next lecture</strong>: what RNNs are used for in practice, including <strong>sequence to sequence</strong>: one RNN reads a text and another writes a new one. It also shows the one-state limit at its clearest</li>
+<li>After that comes <strong>attention</strong>: let the model <strong>look back</strong> at any earlier word directly, and weigh how much each one matters. It is the idea behind transformers and helps the second and third limits</li>
+</ul>
+</section>
+<section id="summary" class="slide level2 section">
+<h2>Summary</h2>
+</section>
+<section id="recap-three-ways-to-use-the-past" class="slide level2">
+<h2>Recap: three ways to use the past</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Fixed window</th>
+<th>RNN</th>
+<th>Attention (later)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What it sees</td>
+<td>The last <span class="math inline">k</span> words</td>
+<td>A summary of everything so far</td>
+<td>Any earlier word, directly</td>
+</tr>
+<tr class="even">
+<td>Input size</td>
+<td>Grows with <span class="math inline">k</span></td>
+<td>Fixed</td>
+<td>Grows with the length</td>
+</tr>
+<tr class="odd">
+<td>Main weakness</td>
+<td>Blind past <span class="math inline">k</span></td>
+<td>One state to carry it all, vanishing gradients</td>
+<td>Costs more as the text grows</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recap-key-ideas" class="slide level2">
+<h2>Recap: key ideas</h2>
+<ul>
+<li>A language model predicts the next word: a classifier over the whole vocabulary, with free labels from the text</li>
+<li>A fixed window is blind beyond <span class="math inline">k</span> words, and a longer window does not fix it</li>
+<li>An <strong>RNN</strong> carries a hidden state updated by the <strong>same</strong> cell at every step. The state is a fixed-size summary of the past</li>
+<li>Unrolled, an RNN is a deep network with shared weights. Backpropagation through time sums the gradient over steps, and long chains make it vanish or explode</li>
+<li>Clipping tames exploding gradients. Gates (LSTM, GRU) help details survive</li>
+</ul>
+</section>
+<section id="where-this-goes-next" class="slide level2">
+<h2>Where this goes next</h2>
+<ul>
+<li>Next lecture: applications of RNNs, including sequence to sequence (one RNN reads a text, another writes one)</li>
+<li>Then attention and transformers: look back at any word, instead of squeezing the past into one state</li>
+</ul>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>CST463 · Advanced Machine Learning</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="15-recurrent_networks_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="15-recurrent_networks_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3,"chalkWidth":3},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 6.0e-2,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
