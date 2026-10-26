@@ -16,116 +16,129 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The full history lets us compare a push's before and after commits,
+          # including pushes that contain more than one commit.
+          fetch-depth: 0
+
+      - name: Find changed syllabus sources
+        id: sources
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          source_list="$RUNNER_TEMP/pdf-sources"
+
+          # A manual run is deliberately a full rebuild. A new branch has no
+          # usable "before" commit, so it is also treated as a full rebuild.
+          if [[ "$EVENT_NAME" == "workflow_dispatch" || "$BEFORE_SHA" =~ ^0+$ ]]; then
+            find _active _proposed -type f -name '*.md' -print0 > "$source_list"
+          else
+            git diff --no-renames --name-only -z "$BEFORE_SHA" "$AFTER_SHA" -- _active _proposed > "$source_list"
+          fi
+
+          count=0
+          while IFS= read -r -d '' source; do
+            echo "Selected: $source"
+            ((count += 1))
+          done < "$source_list"
+
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "Selected $count syllabus source file(s)."
 
       - name: Install Pandoc
+        if: ${{ steps.sources.outputs.count != '0' }}
         uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: '3.2'
 
       - name: Install TinyTeX
+        if: ${{ steps.sources.outputs.count != '0' }}
         uses: r-lib/actions/setup-tinytex@v2
 
-      - name: Updated tlmgr
+      - name: Update tlmgr
+        if: ${{ steps.sources.outputs.count != '0' }}
         run: tlmgr update --self
 
       - name: Install LaTeX packages
+        if: ${{ steps.sources.outputs.count != '0' }}
         run: tlmgr install collection-latexrecommended xetex
 
-      - name: Create pdfs directory
-        run: mkdir -p pdfs
-
-      - name: Build PDFs from active syllabi
+      - name: Build PDFs for changed syllabi
+        if: ${{ steps.sources.outputs.count != '0' }}
         shell: bash
         run: |
-          set +e  # Disable exit on error for this step
+          set +e  # Continue building other syllabi if one source is invalid.
           success_count=0
           failure_count=0
+          removed_count=0
           failed_files=""
 
-          for f in $(find _active -name "*.md" -type f); do
-            base=$(basename "${f%.*}")
-            echo "Processing: $f -> pdfs/$base.pdf"
+          mkdir -p pdfs
+          while IFS= read -r -d '' source; do
+            filename=$(basename "${source%.*}")
+            case "$source" in
+              _active/*)
+                output="pdfs/$filename.pdf"
+                resource_path=".:_active:assets:images"
+                ;;
+              _proposed/*)
+                output="pdfs/proposed-$filename.pdf"
+                resource_path=".:_proposed:assets:images"
+                ;;
+              *)
+                echo "Skipping unexpected path: $source"
+                continue
+                ;;
+            esac
 
-            if pandoc "$f" -o "pdfs/$base.pdf" \
+            # A deleted or renamed source should not leave its old PDF behind.
+            if [ ! -f "$source" ]; then
+              rm -f "$output"
+              echo "Removed: $output (source deleted or renamed)"
+              ((removed_count++))
+              continue
+            fi
+
+            temporary_output="${output}.tmp"
+            echo "Processing: $source -> $output"
+            if pandoc "$source" -o "$temporary_output" \
               --pdf-engine=xelatex \
               -V geometry:margin=1in \
-              --resource-path=".:_active:assets:images" 2>&1; then
-              echo "✓ Success: $f"
+              --resource-path="$resource_path" 2>&1; then
+              mv "$temporary_output" "$output"
+              echo "✓ Success: $source"
               ((success_count++))
             else
-              echo "✗ Failed: $f"
-              failed_files="$failed_files\n  - $f"
+              rm -f "$temporary_output"
+              echo "✗ Failed: $source"
+              failed_files="$failed_files\n  - $source"
               ((failure_count++))
             fi
-          done
+          done < "$RUNNER_TEMP/pdf-sources"
 
-          echo "Active syllabi: $success_count succeeded, $failure_count failed"
-          if [ $failure_count -gt 0 ]; then
+          echo "PDFs: $success_count built, $removed_count removed, $failure_count failed"
+          if [ "$failure_count" -gt 0 ]; then
             echo "Failed files:$failed_files"
-          fi
-
-      - name: Build PDFs from proposed syllabi
-        shell: bash
-        run: |
-          set +e  # Disable exit on error for this step
-          success_count=0
-          failure_count=0
-          failed_files=""
-
-          for f in $(find _proposed -name "*.md" -type f); do
-            base=$(basename "${f%.*}")
-            echo "Processing: $f -> pdfs/proposed-$base.pdf"
-
-            if pandoc "$f" -o "pdfs/proposed-$base.pdf" \
-              --pdf-engine=xelatex \
-              -V geometry:margin=1in \
-              --resource-path=".:_proposed:assets:images" 2>&1; then
-              echo "✓ Success: $f"
-              ((success_count++))
-            else
-              echo "✗ Failed: $f"
-              failed_files="$failed_files\n  - $f"
-              ((failure_count++))
-            fi
-          done
-
-          echo "Proposed: $success_count succeeded, $failure_count failed"
-          if [ $failure_count -gt 0 ]; then
-            echo "Failed files:$failed_files"
-          fi
-
-      - name: Generate build summary
-        run: |
-          pdf_count=$(find pdfs -name "*.pdf" -type f | wc -l)
-          echo "📄 Generated $pdf_count PDF(s) total"
-
-          if [ $pdf_count -gt 0 ]; then
-            echo "Generated PDFs:"
-            for pdf in pdfs/*.pdf; do
-              if [ -f "$pdf" ]; then
-                size=$(du -h "$pdf" | cut -f1)
-                echo "  - $(basename "$pdf") ($size)"
-              fi
-            done
           fi
 
       - name: Commit and push PDFs
+        if: ${{ steps.sources.outputs.count != '0' }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          # Only add PDFs that were successfully generated
-          if find pdfs -name "*.pdf" -type f | grep -q .; then
-            git add pdfs/*.pdf
-            if git diff --staged --quiet; then
-              echo "No new or changed PDFs to commit"
-            else
-              pdf_count=$(git diff --staged --name-only | wc -l)
-              git commit -m "Auto-generate PDFs - $pdf_count files 🤖"
-              git push
-            fi
+          # -A includes PDFs removed because their source was deleted or renamed.
+          git add -A pdfs
+          if git diff --staged --quiet; then
+            echo "No new or changed PDFs to commit"
           else
-            echo "No PDFs were generated successfully - nothing to commit"
+            pdf_count=$(git diff --staged --name-only | wc -l)
+            git commit -m "Auto-generate PDFs - $pdf_count files 🤖"
+            git push
           fi
 
       - name: Upload PDFs (artifact)
