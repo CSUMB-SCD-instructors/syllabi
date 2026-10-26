@@ -3,7 +3,7 @@ layout: default
 course_code: CST334
 course_name: Introduction to Operating Systems
 title: CST334 - Introduction to Operating Systems
-last_updated: '2026-10-22'
+last_updated: '2026-10-25'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -23,6 +23,7 @@ To pass this course you must (1) earn an overall grade of at least 60%, **and** 
 - **Late work:**
 Late submissions are accepted only for Programming assignments and Labs, and have a 10% deduction per calendar day late.
 *Details can be found in [late policy](#late-policy).*
+
 
 - **Getting help:**
 There are a ton of office hours spread throughout the week so make use of them if you have any questions!
@@ -74,7 +75,9 @@ The major topics covered in class are:
 3.  **Memory Management** – How memory is divided up among various processes.
 4.  **Concurrency** – How we can achieve high-performance sharing of memory.
 5.  **IO and Persistence** – How we interface with external components.
+
 6.  **Language Parsing** – How compilers and interpreters work.
+
 
 ### Personnel
 
