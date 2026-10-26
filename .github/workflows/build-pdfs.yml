@@ -25,6 +25,9 @@ jobs:
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2
 
+      - name: Updated tlmgr
+        run: tlmgr update --self
+
       - name: Install LaTeX packages
         run: tlmgr install collection-latexrecommended xetex
 
