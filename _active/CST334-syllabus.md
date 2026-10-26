@@ -27,7 +27,7 @@ Late submissions are accepted only for Programming assignments and Labs, and hav
 
 
 - **Getting help:**
-There are a ton of office hours spread throughout the week so make use of them if you have any questions!
+There are a bunch of office hours spread throughout the week so make use of them if you have any questions!
 In general, you can use the [class slack channel](https://cs-you-monterey.slack.com/archives/C0BSVGKAAKS) to ask questions (but not post code!), or send me questions (code okay!) via slack or my email.
 Anything you submit, you should be able to explain and discuss — see the [Academic Honor Code](#academic-honor-code) for the full policy and why.
 *Details on office hours can be found in [personnel](#personnel).*
