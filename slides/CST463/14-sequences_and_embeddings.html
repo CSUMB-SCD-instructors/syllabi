@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-10-21 09:22" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-10-25 12:24" class="quarto-title-block center">
   <h1 class="title">Sequence Data and Embeddings</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -258,7 +258,7 @@ Deliberate scope decisions:
 - Context-free vs. contextual: every encoding in this lecture gives a word the same vector wherever it appears. One slide says that, and that deck 15 and attention are where the vector starts to depend on context.
 - Character-level vs. word-level vs. subword: ONE slide on the tradeoff, with subword (BPE) described in a sentence, not implemented. Vocabulary size and context length tradeoffs are a stated learning objective of Week 9A.
 - CNNs over sequences (1-D convolution): possibly ONE optional slide as a callback ('a convolution can also slide over a sequence'); deliberately not developed, to avoid complicating the story. Decide when drafting.
-- NOT covering: seq2seq, beam search, subword training algorithms, text generation, and a full treatment of perplexity (deck 15 defines it properly and compares the RNN; here it appears as one line on the window model). Fine-tuning / transfer learning / error analysis from the previous deck's 'not covered' note are still not here.
+- NOT covering: seq2seq, beam search, subword training algorithms, text generation, and perplexity (deck 15 introduces it; this deck reports held-out cross-entropy loss only). Fine-tuning / transfer learning / error analysis from the previous deck's 'not covered' note are still not here.
 
 Pictures (picture-first, notation after, same as the last deck):
 - Sequences: a sentence with its words shuffled (order matters); a time-series line with 'predict the next point'.
@@ -280,7 +280,7 @@ Progress tracker:
 ## Text to numbers {.section}                            [drafted]    ~13 min   (tokens, vocabulary and ids, special tokens, what a choice loses, characters vs words vs subwords)
 ## Encoding words {.section}                             [drafted]   ~12 min   (a token is a category so one-hot it, bag of words, what they cannot say)
 ## Embeddings {.section}                                 [drafted]   ~22 min   (Firth quote, word2vec window, skip-gram pairs, a word in terms of its neighbours, the embedding table, lookup = linear layer, PyTorch, two ways to train, the skip-gram loss (formula, breakdown, numbers), what the vectors look like, nearest neighbours, a sentence as a sequence of vectors, one word one vector)
-## Language modeling {.section}                          [drafted]   ~12 min   (what task, next-token pairs, the fixed-window model, its output and softmax, the limit of a window, its cost, same table trained inside a task)
+## (Language modeling moved to deck 15: next-token pairs, the fixed-window model, softmax, the limit of a window)
 ## Summary {.section}                                    [drafted]   ~3 min    (recap table of encodings, key ideas, forward pointer to deck 15)
 
 TOTAL: ~75 min. Cut candidates if long: special tokens, subwords slide, bag-of-words/TF-IDF mention, the optional 1-D convolution slide, the softmax breakdown.
@@ -293,7 +293,6 @@ Reminder for every section: words are the main example, but say where it applies
 <li>Turn text into tokens and ids, and say what each choice gains and loses</li>
 <li>Encode text as one-hot and bag-of-words vectors, and say what each cannot represent</li>
 <li>Describe an embedding as a learned vector per symbol, and explain how word2vec learns one from neighbours</li>
-<li>Build next-token pairs, and say why a fixed-window language model is limited</li>
 </ul>
 </section>
 <section id="sequences" class="slide level2 section">
@@ -302,7 +301,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="sequences-are-everywhere" class="slide level2">
 <h2>Sequences are everywhere</h2>
-<div id="ce46adfe" class="cell" data-execution_count="2">
+<div id="52e78700" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -319,7 +318,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="order-matters" class="slide level2">
 <h2>Order matters</h2>
-<div id="64bf6fbe" class="cell" data-execution_count="3">
+<div id="bafb3989" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -359,7 +358,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="predict-the-next-item" class="slide level2">
 <h2>Predict the next item</h2>
-<div id="88898159" class="cell" data-execution_count="4">
+<div id="4d49e366" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -382,7 +381,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="our-running-sentence" class="slide level2">
 <h2>Our running sentence</h2>
-<div id="e0ef5ba9" class="cell" data-execution_count="5">
+<div id="02959889" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -408,7 +407,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="from-text-to-tokens" class="slide level2">
 <h2>From text to tokens</h2>
-<div id="e63eb02a" class="cell" data-execution_count="7">
+<div id="17fb2535" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -585,7 +584,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="one-hot-vectors" class="slide level2">
 <h2>One-hot vectors</h2>
-<div id="eeb08394" class="cell" data-execution_count="12">
+<div id="1bfff3d8" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -693,7 +692,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="word2vec-predict-the-neighbours" class="slide level2">
 <h2>word2vec: predict the neighbours</h2>
-<div id="94a20832" class="cell" data-execution_count="15">
+<div id="a145d9d8" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -709,7 +708,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="skip-gram-pairs" class="slide level2">
 <h2>Skip-gram pairs</h2>
-<div id="f0295da1" class="cell" data-execution_count="16">
+<div id="f7e59ab5" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -726,7 +725,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="a-word-in-terms-of-its-neighbours" class="slide level2">
 <h2>A word, in terms of its neighbours</h2>
-<div id="28042a1c" class="cell" data-execution_count="18">
+<div id="0e17d4f8" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -743,7 +742,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="where-the-vectors-live-the-embedding-table" class="slide level2">
 <h2>Where the vectors live: the embedding table</h2>
-<div id="7055b8bb" class="cell" data-execution_count="19">
+<div id="971ebd71" class="cell" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -759,7 +758,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="breakdown-a-lookup-is-a-matrix-product" class="slide level2">
 <h2>Breakdown: a lookup is a matrix product</h2>
-<div id="15e634ec" class="cell" data-execution_count="21">
+<div id="6a3b72a8" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -775,7 +774,7 @@ Reminder for every section: words are the main example, but say where it applies
 </section>
 <section id="the-embedding-layer-in-pytorch" class="slide level2">
 <h2>The embedding layer in PyTorch</h2>
-<div id="f17c0c20" class="cell" data-execution_count="23">
+<div id="be82ae56" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb1-3"><a href=""></a></span>
@@ -918,7 +917,7 @@ True</code></pre>
 </section>
 <section id="what-the-vectors-look-like" class="slide level2">
 <h2>What the vectors look like</h2>
-<div id="b9b87483" class="cell" data-execution_count="26">
+<div id="0afb2db2" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -971,7 +970,7 @@ True</code></pre>
 </section>
 <section id="a-sentence-becomes-a-sequence-of-vectors" class="slide level2">
 <h2>A sentence becomes a sequence of vectors</h2>
-<div id="a955bbca" class="cell" data-execution_count="29">
+<div id="07c48f61" class="cell" data-execution_count="29">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1011,236 +1010,6 @@ True</code></pre>
 <h2>Takeaway</h2>
 <div class="big-idea">
 <p>An embedding layer turns ids into vectors, and word2vec trains them so that words used in similar company end up close.</p>
-</div>
-</section>
-<section id="language-modeling" class="slide level2 section">
-<h2>Language modeling</h2>
-<p>Predicting what comes next</p>
-</section>
-<section id="predicting-the-next-word" class="slide level2">
-<h2>Predicting the next word</h2>
-<p>Words are now vectors. What do we ask a model to do with them?</p>
-<ul>
-<li>The task from the start of the lecture: given the words so far, predict the next one. “the cat sat on the ___”</li>
-<li>It is a <strong>classification</strong> problem. The input is the words so far, the classes are all the words in the vocabulary, and the correct class is the word that actually came next</li>
-<li>The labels cost nothing: any text already contains the right answer at every position</li>
-<li>A model that does this is a <strong>language model</strong></li>
-</ul>
-</section>
-<section id="next-token-pairs" class="slide level2">
-<h2>Next-token pairs</h2>
-<div id="96b3aaaf" class="cell" data-execution_count="31">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="14-sequences_and_embeddings_files/figure-revealjs/cell-32-output-1.png" class="quarto-figure quarto-figure-center" width="1106" height="308"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>Slide a window of the last 2 words along the sentence. Each position gives one training example: the window is the input, and the word after it is the target</li>
-<li>10 examples from 12 tokens, and every one comes straight from the text. Skip-gram used neighbours on both sides. Here only the past counts</li>
-</ul>
-</section>
-<section id="a-fixed-window-of-context" class="slide level2">
-<h2>A fixed window of context</h2>
-<div id="1860654c" class="cell" data-execution_count="33">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="14-sequences_and_embeddings_files/figure-revealjs/cell-34-output-1.png" class="quarto-figure quarto-figure-center" width="1182" height="260"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>Look up the embeddings of the last <span class="math inline">k</span> words and feed them to a small network that scores every word. Here we join them into one vector of <span class="math inline">k \times d</span> numbers. Other models combine them differently</li>
-<li>The same network is used at every position, as the Big Idea said. It works when a little context is enough</li>
-<li>Training: backpropagation updates the network and the table rows it used</li>
-</ul>
-</section>
-<section id="the-models-output" class="slide level2">
-<h2>The model’s output</h2>
-<div id="0c4bec4a" class="cell" data-execution_count="34">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="14-sequences_and_embeddings_files/figure-revealjs/cell-35-output-1.png" class="quarto-figure quarto-figure-center" width="953" height="222"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>Trained on the whole novel. One score per word (2,124 of them), turned into probabilities by softmax</li>
-<li>Embeddings go in, but the output is not an embedding: it is a score per word id, trained with cross-entropy against the true next word (a one-hot). Classification with 2,124 classes</li>
-<li>The probabilities spread over plausible words, as they should: no model knows which one the author wrote</li>
-</ul>
-</section>
-<section id="breakdown-softmax-over-the-vocabulary" class="slide level2">
-<h2>Breakdown: softmax over the vocabulary</h2>
-<p><span class="math display">p_i = \frac{e^{z_i}}{\sum_j e^{z_j}} \qquad \text{loss} = -\log p_{\text{true}}</span></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Piece</th>
-<th>What it does</th>
-<th>After “the”</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">z_i</span></td>
-<td>Score for word <span class="math inline">i</span></td>
-<td>cat 2, mat 1, ran -1</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">e^{z_i}</span> and <span class="math inline">\sum_j e^{z_j}</span></td>
-<td>Make positive, divide by the total</td>
-<td>7.39, 2.72, 0.37; total 10.48</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">p_i</span></td>
-<td>Probability of word <span class="math inline">i</span></td>
-<td>0.71, 0.26, 0.04</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">-\log p_{\text{true}}</span></td>
-<td>Small if the true word got a high share</td>
-<td>cat: 0.35, ran: 3.35</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Same softmax and cross-entropy as classification, with all the words as the classes</li>
-</ul>
-</section>
-<section id="the-limit-of-a-fixed-window" class="slide level2">
-<h2>The limit of a fixed window</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Window</th>
-<th>Contexts followed by more than one word in our sentence</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1 word</td>
-<td>“the” → cat, mat; “cat” → ran, sat</td>
-</tr>
-<tr class="even">
-<td>2 words</td>
-<td>“the cat” → ran, sat</td>
-</tr>
-<tr class="odd">
-<td>3 words</td>
-<td>none</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>With 1 word we cannot tell what follows “the” or “cat”. With 2 words, “the cat” is still followed by both sat and ran. It takes 3 words here to tell them apart</li>
-<li>Real text always has something that matters from further back than any window we pick: the subject of a long sentence, a name from a paragraph ago</li>
-<li>A longer window means a bigger input, and everything older than the window is invisible</li>
-</ul>
-</section>
-<section id="what-a-longer-window-costs" class="slide level2 smaller">
-<h2>What a longer window costs</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Window <span class="math inline">k</span></th>
-<th>Input size</th>
-<th>Held-out perplexity</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>none (word frequencies only)</td>
-<td>0</td>
-<td>343</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>32</td>
-<td>148</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>64</td>
-<td>138</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>96</td>
-<td>140</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>160</td>
-<td>143</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>256</td>
-<td>150</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Perplexity is <span class="math inline">e</span> to the held-out cross-entropy. Lower is better: roughly how many equally likely words the model chooses between</li>
-<li>One word of context helps a lot. Past 2 words, on this much text, a longer window does not</li>
-</ul>
-</section>
-<section id="same-table-different-training-signal" class="slide level2 smaller">
-<h2>Same table, different training signal</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 44%">
-<col style="width: 44%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Word</th>
-<th>Trained on neighbours (word2vec)</th>
-<th>Trained inside a next-word model</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>mother</td>
-<td>father, sister, commendation, husband</td>
-<td>arose, stand, reason, child</td>
-</tr>
-<tr class="even">
-<td>london</td>
-<td>town, meryton, scotland, hertfordshire</td>
-<td>eliza, rejoice, choose, while</td>
-</tr>
-<tr class="odd">
-<td>mr</td>
-<td>collins, miss, wickham, steward</td>
-<td>mrs, drawn, favourite, chiefly</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>The window model’s embedding table is trained inside a task, the first route from earlier. word2vec’s is trained on neighbours alone</li>
-<li>Same text, same kind of table: the training signal decides what the vectors reward</li>
-<li>Trained only to predict the next word on this little text, they are far less tidy. word2vec asks for neighbours directly</li>
-</ul>
-</section>
-<section id="takeaway-3" class="slide level2">
-<h2>Takeaway</h2>
-<div class="big-idea">
-<p>A language model is a next-word classifier over the whole vocabulary, and a fixed window sees only a fixed amount of the past.</p>
 </div>
 </section>
 <section id="summary" class="slide level2 section">
@@ -1298,15 +1067,15 @@ True</code></pre>
 <h2>Recap: key ideas</h2>
 <ul>
 <li>A <strong>sequence</strong> is data where order matters, and the basic task is to predict the next item. Items can be numbers, or symbols such as words, letters in DNA, pages, notes</li>
-<li>Symbols become <strong>tokens</strong>, then <strong>ids</strong>. Every choice (case, punctuation, characters or words) throws something away</li>
+<li>Symbols become <strong>tokens</strong>, then <strong>ids</strong>. Every choice (case, punctuation, characters or words) throws something away. Special tokens (<code>&lt;unk&gt;</code>, <code>&lt;pad&gt;</code>, <code>&lt;bos&gt;</code>, <code>&lt;eos&gt;</code>) cover the unknown, padding and the ends</li>
 <li><strong>One-hot</strong> and <strong>bag of words</strong> are simple encodings with no sense of similarity or order</li>
 <li>An <strong>embedding</strong> is a learned vector per token. A lookup is a one-hot vector times a table. <strong>word2vec</strong> trains it with the skip-gram loss on neighbours</li>
-<li>A <strong>language model</strong> predicts the next word. A fixed window sees only a fixed amount of the past</li>
 </ul>
 </section>
 <section id="where-this-goes-next" class="slide level2">
 <h2>Where this goes next</h2>
 <ul>
+<li>A language model: use the vectors to predict the next word, first from a fixed window of words, and see where a window runs out</li>
 <li>A model that carries a summary of everything seen so far, and updates it with each new word: a recurrent network</li>
 <li>Then attention: a vector that depends on the words around it, so “bank” can differ</li>
 <li>Not covered here: how subwords are built, seq2seq, and pretrained embeddings</li>
