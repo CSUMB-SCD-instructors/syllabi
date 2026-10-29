@@ -3,7 +3,7 @@ layout: default
 course_code: CST334online
 course_name: Introduction to Operating Systems
 title: CST334online - Introduction to Operating Systems
-last_updated: '2026-10-26'
+last_updated: '2026-10-29'
 ---
 
 # CST334 (Operating Systems) Syllabus
@@ -90,8 +90,8 @@ The major topics covered in class are:
 
 - [Olga Bradford](mailto:obradford@csumb.edu)
   - Office Hours:
-    - Tuesdays 9:00 - 10:00 AM
-    - Saturdays 6:00 - 7:00 PM
+    - Tuesdays 9:00 - 10:00 AM [on zoom](https://csumb.zoom.us/j/9371082800)
+    - Saturdays 6:00 - 7:00 PM [on zoom](https://csumb.zoom.us/j/9371082800)
 
 
 **Getting Help:** Office hours are available throughout the week - make use of them! 
