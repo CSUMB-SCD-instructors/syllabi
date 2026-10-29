@@ -27,3 +27,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Representations and Twin Networks | beta | [Open](13-representations_and_twin_networks.html) | [PDF](pdfs/Representations-and-Twin-Networks.pdf) |
 | Sequence Data and Embeddings | beta | [Open](14-sequences_and_embeddings.html) | [PDF](pdfs/Sequence-Data-and-Embeddings.pdf) |
 | Recurrent Networks | beta | [Open](15-recurrent_networks.html) | [PDF](pdfs/Recurrent-Networks.pdf) |
+| Applications of Recurrent Networks | beta | [Open](16-rnn_applications.html) | [PDF](pdfs/Applications-of-Recurrent-Networks.pdf) |
