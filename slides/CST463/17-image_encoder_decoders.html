@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-11-02 08:21" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-11-02 08:50" class="quarto-title-block center">
   <h1 class="title">Image Encoder-Decoders</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -273,9 +273,10 @@ Progress tracker:
 ## Shrink, then grow {.section}                          [drafted]   ~16 min   (the encoder is a CNN we know; the decoder needs upsampling; transposed convolution by hand; prediction at every pixel with a picture, per-pixel loss, PyTorch, IoU, results)
 ## Recovering lost detail {.section}                      [drafted]   ~10 min   (the problem: a coarse summary, measured at edges; skip connections / U-Net; with vs. without skips on the toy; the analogy to attention)
 ## Other image-to-image tasks {.section}                 [drafted]    ~3 min   (colorization, denoising, depth: same shape, different loss)
+## Autoencoders {.section}                               [drafted]    ~5 min   (target = input; diagram; real toy results: no skips drops the noise, skips copy it; diffusion mention)
 ## Summary {.section}                                    [drafted]    ~3 min   (recap: encoder-decoder across sequences and images, key ideas, where this goes next)
 
-TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired with the RNN lab: removed the mid-deck Takeaway (the recap covers it), the "Where the skips help" bar chart (the numbers table has the edge column), and the skip-connections PyTorch slide (folded into "Tracing the shapes"). Cut candidates if still long: "Other image-to-image tasks", the PyTorch network slide.
+TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from assets/17-image_encoder_decoders/make_autoencoder.py). Trimmed after the end-to-end pass because this lecture is paired with the RNN lab: removed the mid-deck Takeaway (the recap covers it), the "Where the skips help" bar chart (the numbers table has the edge column), and the skip-connections PyTorch slide (folded into "Tracing the shapes"). Cut candidates if still long: "Other image-to-image tasks", the PyTorch network slide.
 -->
 <ul>
 <li>Describe a task where the output is an image the same size as the input (segmentation)</li>
@@ -315,7 +316,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="the-task-segmentation" class="slide level2">
 <h2>The task: segmentation</h2>
-<div id="0ea50772" class="cell" data-execution_count="2">
+<div id="64100562" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -335,7 +336,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="encoder-a-cnn-we-know" class="slide level2">
 <h2>Encoder: a CNN we know</h2>
-<div id="969a3297" class="cell" data-execution_count="4">
+<div id="e1cd09e9" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -351,7 +352,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="transposed-convolution-growing-a-map" class="slide level2">
 <h2>Transposed convolution: growing a map</h2>
-<div id="0c2aa9c8" class="cell" data-execution_count="5">
+<div id="fa51e2ef" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -388,7 +389,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="the-whole-network" class="slide level2">
 <h2>The whole network</h2>
-<div id="495ce7ee" class="cell" data-execution_count="6">
+<div id="9f9eb990" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -404,7 +405,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="a-prediction-at-every-pixel" class="slide level2">
 <h2>A prediction at every pixel</h2>
-<div id="4cbd0c38" class="cell" data-execution_count="7">
+<div id="e167998e" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -439,7 +440,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="the-loss-at-three-pixels" class="slide level2">
 <h2>The loss at three pixels</h2>
-<div id="0e22268b" class="cell" data-execution_count="8">
+<div id="3a3cab8c" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -488,7 +489,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="the-segmentation-network-in-pytorch" class="slide level2">
 <h2>The segmentation network in PyTorch</h2>
-<div id="1120ffae" class="cell" data-execution_count="10">
+<div id="2471c3fb" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">def</span> conv_block(c_in, c_out):                 <span class="co"># two 3x3 convs, same size</span></span>
 <span id="cb1-2"><a href=""></a>    <span class="cf">return</span> nn.Sequential(nn.Conv2d(c_in, c_out, <span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>), nn.ReLU(),</span>
 <span id="cb1-3"><a href=""></a>                         nn.Conv2d(c_out, c_out, <span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>), nn.ReLU())</span>
@@ -510,7 +511,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="scoring-a-segmentation" class="slide level2">
 <h2>Scoring a segmentation</h2>
-<div id="91bcd5be" class="cell" data-execution_count="11">
+<div id="b0138893" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -527,7 +528,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="predictions-on-images-it-never-saw" class="slide level2">
 <h2>Predictions on images it never saw</h2>
-<div id="052a1465" class="cell" data-execution_count="13">
+<div id="34ba716f" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -547,7 +548,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="the-problem-a-coarse-summary" class="slide level2">
 <h2>The problem: a coarse summary</h2>
-<div id="2f4e581b" class="cell" data-execution_count="15">
+<div id="1f8a5f19" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -563,7 +564,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="where-does-it-go-wrong" class="slide level2">
 <h2>Where does it go wrong?</h2>
-<div id="acd9eb66" class="cell" data-execution_count="16">
+<div id="4394b85f" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -593,7 +594,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="skip-connections" class="slide level2">
 <h2>Skip connections</h2>
-<div id="517dbb30" class="cell" data-execution_count="17">
+<div id="ed03512f" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -658,7 +659,7 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </section>
 <section id="with-and-without-skips" class="slide level2">
 <h2>With and without skips</h2>
-<div id="eae7a984" class="cell" data-execution_count="18">
+<div id="7061c25d" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -708,51 +709,42 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 <li>Overall accuracy moves a little, since most pixels are easy. The <strong>edge pixels and IoU</strong> show the real gain, exactly where the 4×4 summary was missing detail</li>
 </ul>
 </section>
-<section id="same-fix-two-settings" class="slide level2">
-<h2>Same fix, two settings</h2>
+<section id="skip-connections-and-resnet-shortcuts" class="slide level2">
+<h2>Skip connections, and ResNet shortcuts</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th></th>
-<th>Sequence to sequence</th>
-<th>Image to image</th>
+<th>ResNet shortcut</th>
+<th>U-Net skip</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Encoder</td>
-<td>An RNN reads the words</td>
-<td>A CNN shrinks the image</td>
+<td>Copies</td>
+<td>The input of a block</td>
+<td>An encoder map</td>
 </tr>
 <tr class="even">
-<td>Summary</td>
-<td>The final state, one vector</td>
-<td>The smallest feature map</td>
+<td>Delivers it to</td>
+<td>That block’s output</td>
+<td>The decoder (same size)</td>
 </tr>
 <tr class="odd">
-<td>Decoder</td>
-<td>Writes one word at a time</td>
-<td>Grows the map back, every pixel at once</td>
+<td>Combined by</td>
+<td>Adding</td>
+<td>Stacking (concatenating)</td>
 </tr>
 <tr class="even">
-<td>What the bottleneck loses</td>
-<td>Early parts of a long input</td>
-<td>Exact positions of edges</td>
-</tr>
-<tr class="odd">
-<td>Fix</td>
-<td>Look back at the encoder (next)</td>
-<td>Copy the encoder’s maps across (skips)</td>
+<td>Main purpose</td>
+<td>Easier training</td>
+<td>Recover lost detail</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>The two bottlenecks look different, but the cure is the same: <strong>let the decoder see the encoder, not only the summary</strong></li>
+<li>Both are a fixed copy of an earlier map: nothing is chosen, and the same map always arrives at the same place</li>
+<li>Sequence to sequence has a similar challenge and a similar fix: let the decoder look back at the encoder. There it <strong>chooses</strong> what to look at for each output. That is attention, next</li>
 </ul>
 </section>
 <section id="other-image-to-image-tasks" class="slide level2 section">
@@ -799,7 +791,77 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 </table>
 <ul>
 <li>The encoder-decoder stays. Only the <strong>number of output channels</strong> and the <strong>loss</strong> change, as with regression versus classification earlier</li>
-<li>An encoder-decoder trained to rebuild its own input is called an autoencoder</li>
+<li>What if the target is the input itself? That is an autoencoder, next</li>
+</ul>
+</section>
+<section id="an-aside-autoencoders" class="slide level2 section">
+<h2>An Aside: Autoencoders</h2>
+<p>When the small summary is the point</p>
+</section>
+<section id="autoencoder-rebuild-the-input" class="slide level2">
+<h2>Autoencoder: rebuild the input</h2>
+<div id="6f921038" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="17-image_encoder_decoders_files/figure-revealjs/cell-21-output-1.png" class="quarto-figure quarto-figure-center" width="747" height="337"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Same encoder and decoder as before, but now the output is the <strong>input image again</strong>. The loss is squared error between the two, and no labels are needed</li>
+<li>The code is only 64 numbers, for an image of 1,024 pixels. To rebuild the image from it, the code has to keep what matters. It is a learned summary of the image, like the embeddings we have seen</li>
+</ul>
+</section>
+<section id="what-the-code-can-hold" class="slide level2">
+<h2>What the code can hold</h2>
+<div id="2f1b5585" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="17-image_encoder_decoders_files/figure-revealjs/cell-22-output-1.png" class="quarto-figure quarto-figure-center" width="750" height="395"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>No skips:</strong> the shapes come back, and the noise does not. Random noise cannot be squeezed into 64 numbers, so the code keeps the shapes</li>
+<li><strong>With skips:</strong> a near-perfect copy of the input, noise and all. The decoder can read the input through the skips and never needs the code</li>
+</ul>
+</section>
+<section id="skips-defeat-the-bottleneck" class="slide level2">
+<h2>Skips defeat the bottleneck</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Error against its input</th>
+<th>Error against the clean image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Copy the input</td>
+<td>0.0000</td>
+<td>0.090</td>
+</tr>
+<tr class="even">
+<td>Autoencoder, no skips</td>
+<td>0.1003</td>
+<td>0.013</td>
+</tr>
+<tr class="odd">
+<td>Autoencoder, with skips</td>
+<td>0.0001</td>
+<td>0.090</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The autoencoder never sees the clean image, yet <strong>without skips</strong> it lands close to it (0.013): the small code throws the noise away</li>
+<li><strong>With skips</strong> it copies the noise too, so its error is the noise itself (0.090). Skips help segmentation because we want the detail, and hurt here for the same reason</li>
+<li>Removing noise is also the core of <strong>diffusion models</strong>: a U-Net trained to denoise, run step by step from pure noise to make an image. Not covered here</li>
 </ul>
 </section>
 <section id="summary" class="slide level2 section">
@@ -847,6 +909,12 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 <td>Encoder, decoder, and skips</td>
 <td>Squared error</td>
 </tr>
+<tr class="odd">
+<td>Autoencode an image</td>
+<td>The image again</td>
+<td>Encoder, small code, decoder</td>
+<td>Squared error</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -856,15 +924,16 @@ TOTAL: ~38 min. Trimmed after the end-to-end pass because this lecture is paired
 <li>A CNN can produce an <strong>image-sized output</strong>: an encoder shrinks the image, and a decoder of <strong>transposed convolutions</strong> grows it back</li>
 <li>Segmentation gives one class score per pixel, and the loss is cross-entropy averaged over the pixels</li>
 <li>The small summary loses detail, so boundaries blur. <strong>Skip connections</strong> copy encoder maps to the decoder at matching sizes, and sharpened the boundaries on our toy</li>
-<li>The pattern is the same as sequence to sequence: encoder, summary, decoder, and a fix that lets the decoder look back</li>
+<li>Sequence to sequence has a similar bottleneck and a similar fix: let the decoder look back at the encoder</li>
+<li>An <strong>autoencoder</strong> is an encoder-decoder whose target is its own input. Its small code is the useful part, and skips would defeat it</li>
 </ul>
 </section>
 <section id="where-this-goes-next" class="slide level2">
 <h2>Where this goes next</h2>
 <ul>
-<li>Attention: let a decoder look back at <strong>every</strong> encoder step, weighted by how relevant each is. Skip connections are the image version</li>
+<li>Attention: let a decoder look back at <strong>every</strong> encoder step, weighted by how relevant each is. Skip connections are a fixed version of this: the same map, at the same position, with nothing chosen</li>
 <li>Attention without any recurrence leads to the transformer</li>
-<li>Not covered here: object detection, instance segmentation, generating images, and applying transformers to images</li>
+<li>Not covered here: object detection, instance segmentation, generating images with diffusion models, and applying transformers to images</li>
 </ul>
 
 </section>
