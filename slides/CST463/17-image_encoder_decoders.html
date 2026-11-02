@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-11-02 08:50" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-11-02 09:07" class="quarto-title-block center">
   <h1 class="title">Image Encoder-Decoders</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -272,11 +272,11 @@ Progress tracker:
 ## Images in, images out {.section}                      [drafted]    ~6 min   (classification gives one label; segmentation gives one per pixel; output size = input size; problem statement and Big Idea)
 ## Shrink, then grow {.section}                          [drafted]   ~16 min   (the encoder is a CNN we know; the decoder needs upsampling; transposed convolution by hand; prediction at every pixel with a picture, per-pixel loss, PyTorch, IoU, results)
 ## Recovering lost detail {.section}                      [drafted]   ~10 min   (the problem: a coarse summary, measured at edges; skip connections / U-Net; with vs. without skips on the toy; the analogy to attention)
+## An Aside: Autoencoders {.section}                    [drafted]    ~6 min   (target = input; diagram; PyTorch; real toy results: no skips drops the noise, skips copy it; diffusion mention)
 ## Other image-to-image tasks {.section}                 [drafted]    ~3 min   (colorization, denoising, depth: same shape, different loss)
-## Autoencoders {.section}                               [drafted]    ~5 min   (target = input; diagram; real toy results: no skips drops the noise, skips copy it; diffusion mention)
 ## Summary {.section}                                    [drafted]    ~3 min   (recap: encoder-decoder across sequences and images, key ideas, where this goes next)
 
-TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from assets/17-image_encoder_decoders/make_autoencoder.py). Trimmed after the end-to-end pass because this lecture is paired with the RNN lab: removed the mid-deck Takeaway (the recap covers it), the "Where the skips help" bar chart (the numbers table has the edge column), and the skip-connections PyTorch slide (folded into "Tracing the shapes"). Cut candidates if still long: "Other image-to-image tasks", the PyTorch network slide.
+TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from assets/17-image_encoder_decoders/make_autoencoder.py). Trimmed after the end-to-end pass because this lecture is paired with the RNN lab: removed the mid-deck Takeaway (the recap covers it), the "Where the skips help" bar chart (the numbers table has the edge column), and the skip-connections PyTorch slide (folded into "Tracing the shapes"). Cut candidates if still long: "Other image-to-image tasks", the PyTorch network slide.
 -->
 <ul>
 <li>Describe a task where the output is an image the same size as the input (segmentation)</li>
@@ -316,7 +316,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-task-segmentation" class="slide level2">
 <h2>The task: segmentation</h2>
-<div id="64100562" class="cell" data-execution_count="2">
+<div id="d5d91c36" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -336,7 +336,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="encoder-a-cnn-we-know" class="slide level2">
 <h2>Encoder: a CNN we know</h2>
-<div id="e1cd09e9" class="cell" data-execution_count="4">
+<div id="50c82a6a" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -352,7 +352,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="transposed-convolution-growing-a-map" class="slide level2">
 <h2>Transposed convolution: growing a map</h2>
-<div id="fa51e2ef" class="cell" data-execution_count="5">
+<div id="6bfcdc8c" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -389,7 +389,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-whole-network" class="slide level2">
 <h2>The whole network</h2>
-<div id="9f9eb990" class="cell" data-execution_count="6">
+<div id="77225ac9" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -405,7 +405,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="a-prediction-at-every-pixel" class="slide level2">
 <h2>A prediction at every pixel</h2>
-<div id="e167998e" class="cell" data-execution_count="7">
+<div id="5c3de770" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -440,7 +440,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-loss-at-three-pixels" class="slide level2">
 <h2>The loss at three pixels</h2>
-<div id="3a3cab8c" class="cell" data-execution_count="8">
+<div id="04d868cb" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -489,7 +489,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-segmentation-network-in-pytorch" class="slide level2">
 <h2>The segmentation network in PyTorch</h2>
-<div id="2471c3fb" class="cell" data-execution_count="10">
+<div id="c5b6e33e" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">def</span> conv_block(c_in, c_out):                 <span class="co"># two 3x3 convs, same size</span></span>
 <span id="cb1-2"><a href=""></a>    <span class="cf">return</span> nn.Sequential(nn.Conv2d(c_in, c_out, <span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>), nn.ReLU(),</span>
 <span id="cb1-3"><a href=""></a>                         nn.Conv2d(c_out, c_out, <span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>), nn.ReLU())</span>
@@ -511,7 +511,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="scoring-a-segmentation" class="slide level2">
 <h2>Scoring a segmentation</h2>
-<div id="b0138893" class="cell" data-execution_count="11">
+<div id="f57f8f11" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -528,7 +528,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="predictions-on-images-it-never-saw" class="slide level2">
 <h2>Predictions on images it never saw</h2>
-<div id="34ba716f" class="cell" data-execution_count="13">
+<div id="44f5d905" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -548,7 +548,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-problem-a-coarse-summary" class="slide level2">
 <h2>The problem: a coarse summary</h2>
-<div id="1f8a5f19" class="cell" data-execution_count="15">
+<div id="9f69dc20" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -564,7 +564,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="where-does-it-go-wrong" class="slide level2">
 <h2>Where does it go wrong?</h2>
-<div id="4394b85f" class="cell" data-execution_count="16">
+<div id="c25e57b9" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -594,7 +594,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="skip-connections" class="slide level2">
 <h2>Skip connections</h2>
-<div id="ed03512f" class="cell" data-execution_count="17">
+<div id="ac45438c" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -659,7 +659,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="with-and-without-skips" class="slide level2">
 <h2>With and without skips</h2>
-<div id="7061c25d" class="cell" data-execution_count="18">
+<div id="cf7302c8" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -744,7 +744,104 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </table>
 <ul>
 <li>Both are a fixed copy of an earlier map: nothing is chosen, and the same map always arrives at the same place</li>
-<li>Sequence to sequence has a similar challenge and a similar fix: let the decoder look back at the encoder. There it <strong>chooses</strong> what to look at for each output. That is attention, next</li>
+<li>Sequence to sequence has a similar challenge and a similar fix: let the decoder look back at the encoder. There it <strong>chooses</strong> what to look at for each output. That idea is attention, which comes later</li>
+</ul>
+</section>
+<section id="an-aside-autoencoders" class="slide level2 section">
+<h2>An Aside: Autoencoders</h2>
+<p>When the small summary is the point</p>
+</section>
+<section id="autoencoder-rebuild-the-input" class="slide level2">
+<h2>Autoencoder: rebuild the input</h2>
+<div id="f87b07f2" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="17-image_encoder_decoders_files/figure-revealjs/cell-21-output-1.png" class="quarto-figure quarto-figure-center" width="747" height="337"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Same encoder and decoder as before, but now the output is the <strong>input image again</strong>. The loss is squared error between the two, and no labels are needed</li>
+<li>The code is only 64 numbers, for an image of 1,024 pixels. To rebuild the image from it, the code has to keep what matters. It is a learned summary of the image, like the embeddings we have seen</li>
+</ul>
+</section>
+<section id="the-autoencoder-in-pytorch" class="slide level2">
+<h2>The autoencoder in PyTorch</h2>
+<div id="a9e2dae2" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># conv_block, down and up: the helpers from the segmentation network</span></span>
+<span id="cb2-2"><a href=""></a>encoder <span class="op">=</span> nn.Sequential(conv_block(<span class="dv">1</span>, <span class="dv">8</span>), down(<span class="dv">8</span>, <span class="dv">16</span>), down(<span class="dv">16</span>, <span class="dv">32</span>), down(<span class="dv">32</span>, <span class="dv">32</span>))  <span class="co"># 32x32 -&gt; 4x4</span></span>
+<span id="cb2-3"><a href=""></a>decoder <span class="op">=</span> nn.Sequential(                  up(<span class="dv">32</span>, <span class="dv">32</span>),  up(<span class="dv">32</span>, <span class="dv">16</span>),   up(<span class="dv">16</span>, <span class="dv">8</span>))     <span class="co"># 4x4 -&gt; 32x32</span></span>
+<span id="cb2-4"><a href=""></a></span>
+<span id="cb2-5"><a href=""></a>code <span class="op">=</span> nn.Sequential(nn.Conv2d(<span class="dv">32</span>, <span class="dv">4</span>, <span class="dv">1</span>), nn.Conv2d(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">1</span>)) <span class="co"># squeeze to 4 channels</span></span>
+<span id="cb2-6"><a href=""></a></span>
+<span id="cb2-7"><a href=""></a>model <span class="op">=</span> nn.Sequential(</span>
+<span id="cb2-8"><a href=""></a>    encoder,</span>
+<span id="cb2-9"><a href=""></a>    code,</span>
+<span id="cb2-10"><a href=""></a>    decoder,</span>
+<span id="cb2-11"><a href=""></a>    nn.Conv2d(<span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># 1 value per pixel</span></span>
+<span id="cb2-12"><a href=""></a>)</span>
+<span id="cb2-13"><a href=""></a></span>
+<span id="cb2-14"><a href=""></a>loss <span class="op">=</span> F.mse_loss(model(x), x)  <span class="co"># the target is x itself</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Three changes from the segmentation network:
+<ul>
+<li>1×1 convolutions squeeze 32 channels down to 4: 4 × 4 × 4 = <strong>64 numbers</strong>, the code</li>
+<li>The output has 1 channel instead of 4</li>
+<li>The loss compares the output with the input</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-the-code-can-hold" class="slide level2">
+<h2>What the code can hold</h2>
+<div id="9a4b1fa0" class="cell" data-execution_count="22">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="17-image_encoder_decoders_files/figure-revealjs/cell-23-output-1.png" class="quarto-figure quarto-figure-center" width="750" height="395"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>No skips:</strong> the shapes come back, and the noise does not. Random noise cannot be squeezed into 64 numbers, so the code keeps the shapes</li>
+<li><strong>With skips:</strong> a near-perfect copy of the input, noise and all. The decoder can read the input through the skips and never needs the code</li>
+</ul>
+</section>
+<section id="skips-defeat-the-bottleneck" class="slide level2">
+<h2>Skips defeat the bottleneck</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Error against its input</th>
+<th>Error against the clean image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Copy the input</td>
+<td>0.0000</td>
+<td>0.090</td>
+</tr>
+<tr class="even">
+<td>Autoencoder, no skips</td>
+<td>0.1003</td>
+<td>0.013</td>
+</tr>
+<tr class="odd">
+<td>Autoencoder, with skips</td>
+<td>0.0001</td>
+<td>0.090</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The autoencoder never sees the clean image, yet <strong>without skips</strong> it lands close to it (0.013): the small code throws the noise away</li>
+<li><strong>With skips</strong> it copies the noise too, so its error is the noise itself (0.090). Skips help segmentation because we want the detail, and hurt here for the same reason</li>
+<li>Removing noise is also the core of <strong>diffusion models</strong>: a U-Net trained to denoise, run step by step from pure noise to make an image. Not covered here</li>
 </ul>
 </section>
 <section id="other-image-to-image-tasks" class="slide level2 section">
@@ -791,77 +888,7 @@ TOTAL: ~43 min with the autoencoder section (autoencoder numbers come from asset
 </table>
 <ul>
 <li>The encoder-decoder stays. Only the <strong>number of output channels</strong> and the <strong>loss</strong> change, as with regression versus classification earlier</li>
-<li>What if the target is the input itself? That is an autoencoder, next</li>
-</ul>
-</section>
-<section id="an-aside-autoencoders" class="slide level2 section">
-<h2>An Aside: Autoencoders</h2>
-<p>When the small summary is the point</p>
-</section>
-<section id="autoencoder-rebuild-the-input" class="slide level2">
-<h2>Autoencoder: rebuild the input</h2>
-<div id="6f921038" class="cell" data-execution_count="20">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="17-image_encoder_decoders_files/figure-revealjs/cell-21-output-1.png" class="quarto-figure quarto-figure-center" width="747" height="337"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>Same encoder and decoder as before, but now the output is the <strong>input image again</strong>. The loss is squared error between the two, and no labels are needed</li>
-<li>The code is only 64 numbers, for an image of 1,024 pixels. To rebuild the image from it, the code has to keep what matters. It is a learned summary of the image, like the embeddings we have seen</li>
-</ul>
-</section>
-<section id="what-the-code-can-hold" class="slide level2">
-<h2>What the code can hold</h2>
-<div id="2f1b5585" class="cell" data-execution_count="21">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="17-image_encoder_decoders_files/figure-revealjs/cell-22-output-1.png" class="quarto-figure quarto-figure-center" width="750" height="395"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li><strong>No skips:</strong> the shapes come back, and the noise does not. Random noise cannot be squeezed into 64 numbers, so the code keeps the shapes</li>
-<li><strong>With skips:</strong> a near-perfect copy of the input, noise and all. The decoder can read the input through the skips and never needs the code</li>
-</ul>
-</section>
-<section id="skips-defeat-the-bottleneck" class="slide level2">
-<h2>Skips defeat the bottleneck</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>Error against its input</th>
-<th>Error against the clean image</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Copy the input</td>
-<td>0.0000</td>
-<td>0.090</td>
-</tr>
-<tr class="even">
-<td>Autoencoder, no skips</td>
-<td>0.1003</td>
-<td>0.013</td>
-</tr>
-<tr class="odd">
-<td>Autoencoder, with skips</td>
-<td>0.0001</td>
-<td>0.090</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>The autoencoder never sees the clean image, yet <strong>without skips</strong> it lands close to it (0.013): the small code throws the noise away</li>
-<li><strong>With skips</strong> it copies the noise too, so its error is the noise itself (0.090). Skips help segmentation because we want the detail, and hurt here for the same reason</li>
-<li>Removing noise is also the core of <strong>diffusion models</strong>: a U-Net trained to denoise, run step by step from pure noise to make an image. Not covered here</li>
+<li>Denoising is the autoencoder from before with one change: the target is the clean image, not the input</li>
 </ul>
 </section>
 <section id="summary" class="slide level2 section">
