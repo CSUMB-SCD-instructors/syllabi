@@ -26,3 +26,4 @@ Printable slide handouts for CST463.
 | Sequence Data and Embeddings | [Open](Sequence-Data-and-Embeddings.pdf) |
 | Recurrent Networks | [Open](Recurrent-Networks.pdf) |
 | Applications of Recurrent Networks | [Open](Applications-of-Recurrent-Networks.pdf) |
+| Image Encoder-Decoders | [Open](Image-Encoder-Decoders.pdf) |
