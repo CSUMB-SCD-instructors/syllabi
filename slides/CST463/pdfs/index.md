@@ -27,3 +27,4 @@ Printable slide handouts for CST463.
 | Recurrent Networks | [Open](Recurrent-Networks.pdf) |
 | Applications of Recurrent Networks | [Open](Applications-of-Recurrent-Networks.pdf) |
 | Image Encoder-Decoders | [Open](Image-Encoder-Decoders.pdf) |
+| Attention | [Open](Attention.pdf) |

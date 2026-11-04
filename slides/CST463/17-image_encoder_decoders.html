@@ -316,7 +316,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-task-segmentation" class="slide level2">
 <h2>The task: segmentation</h2>
-<div id="d5d91c36" class="cell" data-execution_count="2">
+<div id="7cdaa124" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -336,7 +336,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="encoder-a-cnn-we-know" class="slide level2">
 <h2>Encoder: a CNN we know</h2>
-<div id="50c82a6a" class="cell" data-execution_count="4">
+<div id="6e0ebcd3" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -352,7 +352,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="transposed-convolution-growing-a-map" class="slide level2">
 <h2>Transposed convolution: growing a map</h2>
-<div id="6bfcdc8c" class="cell" data-execution_count="5">
+<div id="d2b5b961" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -389,7 +389,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-whole-network" class="slide level2">
 <h2>The whole network</h2>
-<div id="77225ac9" class="cell" data-execution_count="6">
+<div id="d3b1f2c8" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -405,7 +405,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="a-prediction-at-every-pixel" class="slide level2">
 <h2>A prediction at every pixel</h2>
-<div id="5c3de770" class="cell" data-execution_count="7">
+<div id="4b57ba58" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -440,7 +440,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-loss-at-three-pixels" class="slide level2">
 <h2>The loss at three pixels</h2>
-<div id="04d868cb" class="cell" data-execution_count="8">
+<div id="d15519d4" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -489,7 +489,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-segmentation-network-in-pytorch" class="slide level2">
 <h2>The segmentation network in PyTorch</h2>
-<div id="c5b6e33e" class="cell" data-execution_count="10">
+<div id="16593ad2" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">def</span> conv_block(c_in, c_out):                 <span class="co"># two 3x3 convs, same size</span></span>
 <span id="cb1-2"><a href=""></a>    <span class="cf">return</span> nn.Sequential(nn.Conv2d(c_in, c_out, <span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>), nn.ReLU(),</span>
 <span id="cb1-3"><a href=""></a>                         nn.Conv2d(c_out, c_out, <span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>), nn.ReLU())</span>
@@ -511,7 +511,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="scoring-a-segmentation" class="slide level2">
 <h2>Scoring a segmentation</h2>
-<div id="f57f8f11" class="cell" data-execution_count="11">
+<div id="49459730" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -528,7 +528,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="predictions-on-images-it-never-saw" class="slide level2">
 <h2>Predictions on images it never saw</h2>
-<div id="44f5d905" class="cell" data-execution_count="13">
+<div id="f1afcfc2" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -548,7 +548,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-problem-a-coarse-summary" class="slide level2">
 <h2>The problem: a coarse summary</h2>
-<div id="9f69dc20" class="cell" data-execution_count="15">
+<div id="7907aeea" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -564,7 +564,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="where-does-it-go-wrong" class="slide level2">
 <h2>Where does it go wrong?</h2>
-<div id="c25e57b9" class="cell" data-execution_count="16">
+<div id="f43f8033" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -594,7 +594,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="skip-connections" class="slide level2">
 <h2>Skip connections</h2>
-<div id="ac45438c" class="cell" data-execution_count="17">
+<div id="d5f82f48" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -659,7 +659,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="with-and-without-skips" class="slide level2">
 <h2>With and without skips</h2>
-<div id="cf7302c8" class="cell" data-execution_count="18">
+<div id="5b70f825" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -753,7 +753,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="autoencoder-rebuild-the-input" class="slide level2">
 <h2>Autoencoder: rebuild the input</h2>
-<div id="f87b07f2" class="cell" data-execution_count="20">
+<div id="681b1eba" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -769,7 +769,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="the-autoencoder-in-pytorch" class="slide level2">
 <h2>The autoencoder in PyTorch</h2>
-<div id="a9e2dae2" class="cell" data-execution_count="21">
+<div id="6bc1b86d" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># conv_block, down and up: the helpers from the segmentation network</span></span>
 <span id="cb2-2"><a href=""></a>encoder <span class="op">=</span> nn.Sequential(conv_block(<span class="dv">1</span>, <span class="dv">8</span>), down(<span class="dv">8</span>, <span class="dv">16</span>), down(<span class="dv">16</span>, <span class="dv">32</span>), down(<span class="dv">32</span>, <span class="dv">32</span>))  <span class="co"># 32x32 -&gt; 4x4</span></span>
 <span id="cb2-3"><a href=""></a>decoder <span class="op">=</span> nn.Sequential(                  up(<span class="dv">32</span>, <span class="dv">32</span>),  up(<span class="dv">32</span>, <span class="dv">16</span>),   up(<span class="dv">16</span>, <span class="dv">8</span>))     <span class="co"># 4x4 -&gt; 32x32</span></span>
@@ -796,7 +796,7 @@ TOTAL: ~44 min with the autoencoder section (autoencoder numbers come from asset
 </section>
 <section id="what-the-code-can-hold" class="slide level2">
 <h2>What the code can hold</h2>
-<div id="9a4b1fa0" class="cell" data-execution_count="22">
+<div id="21f218be" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

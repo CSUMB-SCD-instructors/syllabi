@@ -29,3 +29,4 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Recurrent Networks | beta | [Open](15-recurrent_networks.html) | [PDF](pdfs/Recurrent-Networks.pdf) |
 | Applications of Recurrent Networks | beta | [Open](16-rnn_applications.html) | [PDF](pdfs/Applications-of-Recurrent-Networks.pdf) |
 | Image Encoder-Decoders | beta | [Open](17-image_encoder_decoders.html) | [PDF](pdfs/Image-Encoder-Decoders.pdf) |
+| Attention | beta | [Open](18-attention.html) | [PDF](pdfs/Attention.pdf) |
