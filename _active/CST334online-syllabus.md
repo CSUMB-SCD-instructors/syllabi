@@ -3,7 +3,7 @@ layout: default
 course_code: CST334online
 course_name: Introduction to Operating Systems
 title: CST334online - Introduction to Operating Systems
-last_updated: '2026-11-05'
+last_updated: '2026-11-13'
 ---
 
 # CST334 (Operating Systems) Syllabus
