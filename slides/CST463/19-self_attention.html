@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-11-15 21:41" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-11-16 08:56" class="quarto-title-block center">
   <h1 class="title">Self-attention</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -289,7 +289,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 <section id="the-problem-a-small-window-misses-connections" class="slide level2">
 <h2>The problem: a small window misses connections</h2>
 <p>Earlier, word2vec learned embeddings from a window of 2 words on each side.</p>
-<div id="de304cf9" class="cell" data-execution_count="2">
+<div id="d000309e" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -319,7 +319,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="every-word-attends-to-every-word" class="slide level2">
 <h2>Every word attends to every word</h2>
-<div id="94c5929a" class="cell" data-execution_count="4">
+<div id="fd9b9c8d" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -335,7 +335,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="where-queries-keys-and-values-come-from" class="slide level2">
 <h2>Where queries, keys and values come from</h2>
-<div id="31936484" class="cell" data-execution_count="5">
+<div id="08964227" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -351,7 +351,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="all-the-words-at-once" class="slide level2">
 <h2>All the words at once</h2>
-<div id="c927cd61" class="cell" data-execution_count="6">
+<div id="a1bf9ef4" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -367,7 +367,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="what-a-new-vector-is-made-of" class="slide level2">
 <h2>What a new vector is made of</h2>
-<div id="dcc6db50" class="cell" data-execution_count="7">
+<div id="5308cce3" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -574,7 +574,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 <section id="self-attention-in-pytorch" class="slide level2">
 <h2>Self-attention in PyTorch</h2>
 <style>#self-attention-in-pytorch pre code, #masked-self-attention-in-pytorch pre code, #multi-head-self-attention-in-pytorch pre code { max-height: none; }</style>
-<div id="eb11e8c2" class="cell" data-execution_count="12">
+<div id="adbe8903" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">class</span> SelfAttention(nn.Module):</span>
 <span id="cb1-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim):</span>
 <span id="cb1-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -653,7 +653,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="the-task-reversing-eight-digits" class="slide level2">
 <h2>The task: reversing eight digits</h2>
-<div id="651d3b39" class="cell" data-execution_count="14">
+<div id="d867a25a" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -670,7 +670,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="learned-positions" class="slide level2">
 <h2>Learned positions</h2>
-<div id="29ff3a50" class="cell" data-execution_count="15">
+<div id="67b72aa5" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -741,7 +741,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="what-sinusoidal-positions-look-like" class="slide level2">
 <h2>What sinusoidal positions look like</h2>
-<div id="f0cf14ee" class="cell" data-execution_count="17">
+<div id="805341c3" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -790,7 +790,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="what-attention-does-with-position" class="slide level2">
 <h2>What attention does with position</h2>
-<div id="831e59cb" class="cell" data-execution_count="19">
+<div id="3f89a95c" class="cell" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -806,7 +806,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="position-in-pytorch" class="slide level2">
 <h2>Position in PyTorch</h2>
-<div id="dbf81380" class="cell" data-execution_count="20">
+<div id="c705b861" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="kw">class</span> Embed(nn.Module):</span>
 <span id="cb2-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, vocab, dim, max_len):</span>
 <span id="cb2-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -825,7 +825,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="aside-what-our-model-looks-like-now" class="slide level2">
 <h2>Aside: what our model looks like now</h2>
-<div id="d59f89ef" class="cell" data-execution_count="21">
+<div id="a2914e60" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -845,7 +845,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="the-problem-the-future-is-visible" class="slide level2">
 <h2>The problem: the future is visible</h2>
-<div id="2b1c55f7" class="cell" data-execution_count="22">
+<div id="e6bdef81" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -880,7 +880,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="the-causal-mask-an-example" class="slide level2">
 <h2>The causal mask: an example</h2>
-<div id="728cba6b" class="cell" data-execution_count="23">
+<div id="28082c68" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -894,9 +894,9 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 <li><span class="math inline">e^{-\infty} = 0</span>, so a blocked score gets weight 0 and the row still adds up to 1</li>
 </ul>
 </section>
-<section id="a-test-does-the-mask-matter" class="slide level2">
-<h2>A test: does the mask matter?</h2>
-<div id="2d227e5b" class="cell" data-execution_count="25">
+<section id="the-task-predict-the-next-word" class="slide level2">
+<h2>The task: predict the next word</h2>
+<div id="d1fa4f88" class="cell" data-execution_count="25">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -906,9 +906,9 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </div>
 </div>
 <ul>
-<li>A made-up language where the second half repeats the animal and place of the first. The verbs are random, so the only way to predict the repeated words is to <strong>look back</strong> at the earlier ones</li>
-<li>Train to predict each next word, then <strong>generate</strong>, when only earlier words exist. Does it still get the animal and place right?</li>
-<li>Three models: attention <strong>with</strong> the mask, attention trained <strong>without</strong> it (free to peek), and <strong>no</strong> attention</li>
+<li><strong>Task</strong>: given the words so far, predict the next word, for sentences like this one</li>
+<li><strong>Pattern</strong>: the second half repeats the animal and place of the first (“cat”, “mat”). The verbs are random, so they cannot be predicted</li>
+<li><strong>Why it is hard</strong>: the repeated words <strong>should</strong> be predicted by <strong>looking back</strong> at earlier words, so it tests whether attention does</li>
 </ul>
 </section>
 <section id="results-with-and-without-the-mask" class="slide level2">
@@ -946,7 +946,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="training-generating" class="slide level2">
 <h2>Training / generating</h2>
-<div id="f8d69030" class="cell" data-execution_count="27">
+<div id="8d3177a8" class="cell" data-execution_count="27">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -962,7 +962,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="masked-self-attention-in-pytorch" class="slide level2">
 <h2>Masked self-attention in PyTorch</h2>
-<div id="78d3db85" class="cell" data-execution_count="28">
+<div id="6295998e" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> forward(<span class="va">self</span>, x):                            <span class="co"># x: (batch, n, dim)</span></span>
 <span id="cb3-2"><a href=""></a>    q, k, v <span class="op">=</span> <span class="va">self</span>.q(x), <span class="va">self</span>.k(x), <span class="va">self</span>.v(x)</span>
 <span id="cb3-3"><a href=""></a>    scores <span class="op">=</span> q <span class="op">@</span> k.transpose(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">/</span> math.sqrt(x.shape[<span class="op">-</span><span class="dv">1</span>])    <span class="co"># (batch, n, n)</span></span>
@@ -986,7 +986,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="the-problem-one-set-of-weights" class="slide level2">
 <h2>The problem: one set of weights</h2>
-<div id="3800aa9b" class="cell" data-execution_count="29">
+<div id="b98f3a25" class="cell" data-execution_count="29">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1008,7 +1008,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="multiple-heads-1" class="slide level2">
 <h2>Multiple heads</h2>
-<div id="67c0544e" class="cell" data-execution_count="30">
+<div id="56c2a41d" class="cell" data-execution_count="30">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1024,7 +1024,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="what-two-heads-look-at" class="slide level2">
 <h2>What two heads look at</h2>
-<div id="3bac4c47" class="cell" data-execution_count="31">
+<div id="05df23ae" class="cell" data-execution_count="31">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1040,7 +1040,7 @@ TOTAL: ~65 min. Cut candidates if long: "Self-attention versus a recurrent netwo
 </section>
 <section id="multi-head-self-attention-in-pytorch" class="slide level2">
 <h2>Multi-head self-attention in PyTorch</h2>
-<div id="f96d9785" class="cell" data-execution_count="33">
+<div id="f867004f" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> forward(<span class="va">self</span>, x):                                   <span class="co"># x: (batch, n, dim)</span></span>
 <span id="cb4-2"><a href=""></a>    b, n, dim <span class="op">=</span> x.shape</span>
 <span id="cb4-3"><a href=""></a>    h <span class="op">=</span> dim <span class="op">//</span> <span class="va">self</span>.heads                               <span class="co"># numbers per head</span></span>
