@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-11-18 11:09" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-11-18 11:07" class="quarto-title-block center">
   <h1 class="title">The Transformer</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -321,7 +321,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="what-a-sequence-model-looks-like" class="slide level2">
 <h2>What a sequence model looks like</h2>
-<div id="4d8b2c39" class="cell" data-execution_count="2">
+<div id="c18bd4f2" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -337,7 +337,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="where-we-are-going-an-encoder-and-a-decoder" class="slide level2">
 <h2>Where we are going: an encoder and a decoder</h2>
-<div id="2e1944bf" class="cell" data-execution_count="3">
+<div id="6b44e420" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -357,7 +357,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-problem-attention-only-mixes" class="slide level2">
 <h2>The problem: attention only mixes</h2>
-<div id="e271bdac" class="cell" data-execution_count="4">
+<div id="c794a3d3" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -383,7 +383,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-feed-forward-layer" class="slide level2">
 <h2>The feed-forward layer</h2>
-<div id="e58d1d98" class="cell" data-execution_count="5">
+<div id="8b465956" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -412,7 +412,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="residual-connections" class="slide level2">
 <h2>Residual connections</h2>
-<div id="be1ebb0f" class="cell" data-execution_count="6">
+<div id="a91c1769" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -428,7 +428,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-problem-the-scale-drifts" class="slide level2">
 <h2>The problem: the scale drifts</h2>
-<div id="d782d7c3" class="cell" data-execution_count="7">
+<div id="d26fa3db" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -499,7 +499,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-transformer-block" class="slide level2">
 <h2>The Transformer block</h2>
-<div id="db25fabc" class="cell" data-execution_count="10">
+<div id="25e778c1" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -516,9 +516,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <section id="the-transformer-block-in-pytorch" class="slide level2">
 <h2>The Transformer block in PyTorch</h2>
 <style>#the-transformer-block-in-pytorch pre code { max-height: none; }</style>
-
-<style>.reveal-viewport::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 7px; z-index: 50; background: linear-gradient(to bottom, #5BCEFA 0 20%, #F5A9B8 20% 40%, #ffffff 40% 60%, #F5A9B8 60% 80%, #5BCEFA 80% 100%); }</style>
-<div id="5f8a19f1" class="cell" data-execution_count="11">
+<div id="c7bcfd6a" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">class</span> Block(nn.Module):</span>
 <span id="cb1-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim, heads, hidden):</span>
 <span id="cb1-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -543,7 +541,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="stacking-blocks-the-encoder" class="slide level2">
 <h2>Stacking blocks: the encoder</h2>
-<div id="052680f3" class="cell" data-execution_count="12">
+<div id="ad1caa08" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -560,7 +558,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="no-mask-in-the-encoder" class="slide level2">
 <h2>No mask in the encoder</h2>
-<div id="ec150d1a" class="cell" data-execution_count="13">
+<div id="355c6b49" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -591,7 +589,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-problem-a-decoder-needs-two-things" class="slide level2">
 <h2>The problem: a decoder needs two things</h2>
-<div id="70e8fad5" class="cell" data-execution_count="14">
+<div id="bd2bde38" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -613,7 +611,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="cross-attention" class="slide level2">
 <h2>Cross-attention</h2>
-<div id="cf8efbee" class="cell" data-execution_count="15">
+<div id="73270c5f" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -688,7 +686,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>The decoder block</h2>
 <div class="columns">
 <div class="column" style="width:52%;">
-<div id="fe269b70" class="cell" data-execution_count="17">
+<div id="3117934e" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -708,7 +706,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-output-layer-and-the-loop" class="slide level2">
 <h2>The output layer and the loop</h2>
-<div id="d1834829" class="cell" data-execution_count="18">
+<div id="6e942c6c" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -725,7 +723,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <section id="cross-attention-in-pytorch" class="slide level2">
 <h2>Cross-attention in PyTorch</h2>
 <style>#cross-attention-in-pytorch pre code { max-height: none; }</style>
-<div id="fe94ba51" class="cell" data-execution_count="19">
+<div id="93e2bc0b" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="kw">class</span> CrossAttention(nn.Module):</span>
 <span id="cb2-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim):</span>
 <span id="cb2-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -751,7 +749,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <section id="the-decoder-block-in-pytorch" class="slide level2">
 <h2>The decoder block in PyTorch</h2>
 <style>#the-decoder-block-in-pytorch pre code { max-height: none; }</style>
-<div id="467ea0d7" class="cell" data-execution_count="20">
+<div id="456d9a88" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> DecoderBlock(nn.Module):</span>
 <span id="cb3-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim, heads, hidden):</span>
 <span id="cb3-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -837,7 +835,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>Encoder-only</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div id="f8f39629" class="cell" data-execution_count="21">
+<div id="7b5e272f" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -857,7 +855,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>Encoder-decoder</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div id="26c2d5cb" class="cell" data-execution_count="22">
+<div id="f3714114" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -877,7 +875,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>Decoder-only</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div id="8906f8d2" class="cell" data-execution_count="23">
+<div id="5ee55177" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
