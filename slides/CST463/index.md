@@ -32,3 +32,5 @@ PDF handouts are available in [pdfs/](pdfs/).
 | Image Encoder-Decoders | beta | [Open](17-image_encoder_decoders.html) | [PDF](pdfs/Image-Encoder-Decoders.pdf) |
 | Attention | beta | [Open](18-attention.html) | [PDF](pdfs/Attention.pdf) |
 | Self-attention | beta | [Open](19-self_attention.html) | [PDF](pdfs/Self-attention.pdf) |
+| The Transformer | beta | [Open](20-transformer.html) | [PDF](pdfs/The-Transformer.pdf) |
+| CST463 Advanced Machine Learning | final | [Open](index.html) | [PDF](pdfs/CST463-Advanced-Machine-Learning.pdf) |

@@ -30,3 +30,5 @@ Printable slide handouts for CST463.
 | Image Encoder-Decoders | [Open](Image-Encoder-Decoders.pdf) |
 | Attention | [Open](Attention.pdf) |
 | Self-attention | [Open](Self-attention.pdf) |
+| The Transformer | [Open](The-Transformer.pdf) |
+| CST463 Advanced Machine Learning | [Open](CST463-Advanced-Machine-Learning.pdf) |
