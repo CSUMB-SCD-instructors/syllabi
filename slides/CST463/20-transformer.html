@@ -213,7 +213,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-last-updated="2026-11-18 08:52" class="quarto-title-block center">
+<section id="title-slide" data-last-updated="2026-11-18 09:51" class="quarto-title-block center">
   <h1 class="title">The Transformer</h1>
   <p class="subtitle">Advanced Machine Learning</p>
 
@@ -241,7 +241,7 @@ Sam Ogden
 <li>Connect decoder-only generation to the generation loop from the recurrent decks</li>
 </ul>
 <!--
-DRAFT. Slides written, not yet reviewed with Sam. Follows 19 (self-attention, position, causal mask, heads) and 18 (attention, cross-attention named).
+Reviewed with Sam section by section; final pass done. Follows 19 (self-attention, position, causal mask, heads) and 18 (attention, cross-attention named).
 
 Why this lecture exists: 19 built the attention machinery. A block also needs a per-word feed-forward layer, residual connections and layer normalization, and a decoder needs cross-attention. Then the three designs (encoder-only, encoder-decoder, decoder-only) fall out of which pieces are used.
 
@@ -260,18 +260,18 @@ Deliberate scope decisions:
 - NOT covering: pretraining, fine-tuning, prompting (21); scale and evaluation (22); relative and rotary positions; efficient attention.
 - Reading: D2L chapter_attention-mechanisms-and-transformers/transformer (see lecture-roadmap.md).
 
-Time target: about 70 minutes. Drafted at about 40 slides including section pages.
+Time target: about 70 minutes. 41 slides including section pages.
 
 Progress tracker:
 
-## Title + Learning objectives                          [drafted]    ~2 min
-## Where we are {.section}                              [drafted]    ~6 min    (review only: what we have so far; what a model typically looks like; "where we're going" = the encoder and decoder components)
-## Around attention {.section}                          [drafted]   ~20 min    (attention gives a context-aware vector per word; feed-forward, residual and layer norm turn it into a useful representation; the block; PyTorch block)
-## The encoder {.section}                               [drafted]    ~7 min    (stack of blocks = the meaning of the input; one vector per input word; what it is good for)
-## The decoder {.section}                               [drafted]   ~18 min    (output generation as in 16, now with attention: masked self-attention, cross-attention [problem, Big Idea, picture], decoder block, output layer, generation loop)
-## Three designs {.section}                             [drafted]   ~14 min    (encoder-only, encoder-decoder, decoder-only: what each keeps, and use cases for each; comparison table)
+## Title + Learning objectives                          [reviewed]   ~2 min
+## Where we are {.section}                              [reviewed]    ~6 min    (review only: what we have so far; what a model typically looks like; "where we're going" = the encoder and decoder components)
+## Around attention {.section}                          [reviewed]   ~20 min    (attention gives a context-aware vector per word; feed-forward, residual and layer norm turn it into a useful representation; the block; PyTorch block)
+## The encoder {.section}                               [reviewed]    ~7 min    (stack of blocks = the meaning of the input; one vector per input word; what it is good for)
+## The decoder {.section}                               [reviewed]   ~18 min    (output generation as in 16, now with attention: masked self-attention, cross-attention [problem, Big Idea, picture], decoder block, output layer, generation loop)
+## Three designs {.section}                             [reviewed]   ~14 min    (encoder-only, encoder-decoder, decoder-only: what each keeps, and use cases for each; comparison table)
 ## A small experiment                                   [not drafted: cut; no experiment in this deck]    (e.g. depth, or removing the feed-forward layer; optional, cut first)
-## Summary {.section}                                   [drafted]    ~3 min    (recap table, key ideas, where this goes next)
+## Summary {.section}                                   [reviewed]    ~3 min    (recap table, key ideas, where this goes next)
 
 Order decided with Sam: review first, then the shared block, then encoder, then decoder (where cross-attention lives), then the designs as a way of choosing parts, with use cases.
 
@@ -321,7 +321,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="what-a-sequence-model-looks-like" class="slide level2">
 <h2>What a sequence model looks like</h2>
-<div id="441b6c24" class="cell" data-execution_count="2">
+<div id="d72e369c" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -337,7 +337,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="where-we-are-going-an-encoder-and-a-decoder" class="slide level2">
 <h2>Where we are going: an encoder and a decoder</h2>
-<div id="85ea0e2b" class="cell" data-execution_count="3">
+<div id="3f628e76" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -357,7 +357,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-problem-attention-only-mixes" class="slide level2">
 <h2>The problem: attention only mixes</h2>
-<div id="1bf07206" class="cell" data-execution_count="4">
+<div id="d1cb44a3" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -383,7 +383,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-feed-forward-layer" class="slide level2">
 <h2>The feed-forward layer</h2>
-<div id="a9e028c6" class="cell" data-execution_count="5">
+<div id="f874350d" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -412,7 +412,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="residual-connections" class="slide level2">
 <h2>Residual connections</h2>
-<div id="3690ac4b" class="cell" data-execution_count="6">
+<div id="a0a97503" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -428,7 +428,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-problem-the-scale-drifts" class="slide level2">
 <h2>The problem: the scale drifts</h2>
-<div id="395fb233" class="cell" data-execution_count="7">
+<div id="e63e053f" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -499,7 +499,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-transformer-block" class="slide level2">
 <h2>The Transformer block</h2>
-<div id="03fdadd5" class="cell" data-execution_count="10">
+<div id="709d1a6f" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -516,7 +516,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <section id="the-transformer-block-in-pytorch" class="slide level2">
 <h2>The Transformer block in PyTorch</h2>
 <style>#the-transformer-block-in-pytorch pre code { max-height: none; }</style>
-<div id="02653850" class="cell" data-execution_count="11">
+<div id="cb10bbbd" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">class</span> Block(nn.Module):</span>
 <span id="cb1-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim, heads, hidden):</span>
 <span id="cb1-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -541,7 +541,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="stacking-blocks-the-encoder" class="slide level2">
 <h2>Stacking blocks: the encoder</h2>
-<div id="64a1ae28" class="cell" data-execution_count="12">
+<div id="4f2c9e04" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -558,7 +558,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="no-mask-in-the-encoder" class="slide level2">
 <h2>No mask in the encoder</h2>
-<div id="80964f54" class="cell" data-execution_count="13">
+<div id="c91f09be" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -589,7 +589,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-problem-a-decoder-needs-two-things" class="slide level2">
 <h2>The problem: a decoder needs two things</h2>
-<div id="0005d29a" class="cell" data-execution_count="14">
+<div id="27ff3f6c" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -611,7 +611,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="cross-attention" class="slide level2">
 <h2>Cross-attention</h2>
-<div id="a30b46ac" class="cell" data-execution_count="15">
+<div id="233221ae" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -686,7 +686,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>The decoder block</h2>
 <div class="columns">
 <div class="column" style="width:52%;">
-<div id="ad3cf619" class="cell" data-execution_count="17">
+<div id="868c8b78" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -706,7 +706,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </section>
 <section id="the-output-layer-and-the-loop" class="slide level2">
 <h2>The output layer and the loop</h2>
-<div id="e8ebfaea" class="cell" data-execution_count="18">
+<div id="946283b6" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -723,7 +723,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <section id="cross-attention-in-pytorch" class="slide level2">
 <h2>Cross-attention in PyTorch</h2>
 <style>#cross-attention-in-pytorch pre code { max-height: none; }</style>
-<div id="13e36c93" class="cell" data-execution_count="19">
+<div id="0ceafd54" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="kw">class</span> CrossAttention(nn.Module):</span>
 <span id="cb2-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim):</span>
 <span id="cb2-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -749,7 +749,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <section id="the-decoder-block-in-pytorch" class="slide level2">
 <h2>The decoder block in PyTorch</h2>
 <style>#the-decoder-block-in-pytorch pre code { max-height: none; }</style>
-<div id="f3a58124" class="cell" data-execution_count="20">
+<div id="4470b90f" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> DecoderBlock(nn.Module):</span>
 <span id="cb3-2"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim, heads, hidden):</span>
 <span id="cb3-3"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -835,7 +835,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>Encoder-only</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div id="4b9a517e" class="cell" data-execution_count="21">
+<div id="75b60f8e" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -855,7 +855,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>Encoder-decoder</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div id="9de22ec6" class="cell" data-execution_count="22">
+<div id="8797cad5" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -875,7 +875,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <h2>Decoder-only</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div id="8ada7f93" class="cell" data-execution_count="23">
+<div id="1f336c27" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -886,7 +886,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 </div>
 </div><div class="column" style="width:45%;">
 <ul>
-<li>Parts: the decoder without cross-attention. The input is a <strong>prompt</strong>, the start of the sequence. Every new word sees it through masked self-attention</li>
+<li>Parts: the decoder without cross-attention. The input is a <strong>prompt</strong>, the start of the sequence, and the response begins after a <strong>marker</strong>. Every new word sees the prompt through masked self-attention</li>
 <li>Uses: chat, writing, code. GPT-style models and most large language models. Our copying model was one</li>
 <li>Generation is the same loop as before. Training runs every position at once, thanks to the mask</li>
 </ul>
@@ -964,7 +964,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <tbody>
 <tr class="odd">
 <td>Feed-forward</td>
-<td>Attention only gathers</td>
+<td>Attention only mixes</td>
 <td>An MLP on each word</td>
 </tr>
 <tr class="even">
@@ -1001,7 +1001,7 @@ Cut candidates if long: the experiment; the layer normalization example.
 <li>A <strong>transformer block</strong> is attention, then add and norm, then a feed-forward layer, then add and norm. It keeps the shape, so a model <strong>stacks</strong> them</li>
 <li>The <strong>encoder</strong> is a stack with no mask. The <strong>decoder</strong> adds masked self-attention and <strong>cross-attention</strong>, and ends in a softmax over the vocabulary</li>
 <li><strong>Cross-attention</strong> takes its queries from the decoder and its keys and values from the encoder</li>
-<li>The three designs keep different parts. <strong>Encoder-only</strong> reads, <strong>encoder-decoder</strong> translates one sequence into another, and <strong>decoder-only</strong> continues text, in the generation loop we already know</li>
+<li>The three designs keep different parts. <strong>Encoder-only</strong> reads, <strong>encoder-decoder</strong> translates one sequence into another, and <strong>decoder-only</strong> continues text: the prompt is part of the sequence, and generation is the loop we already know</li>
 </ul>
 </section>
 <section id="where-this-goes-next" class="slide level2">
